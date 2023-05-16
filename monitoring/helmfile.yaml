@@ -1,0 +1,114 @@
+
+bases:
+  - ../_common/inheritHelmDefaults.yaml.gotmpl
+
+# Repositories for Charts used for Releases in this namespace
+repositories:
+  - name: prometheus-community
+    url: https://prometheus-community.github.io/helm-charts
+  - name: deliveryhero
+    url: https://charts.deliveryhero.io
+  - name: graphops
+    url: https://graphops.github.io/helm-charts
+  - name: grafana
+    url: https://grafana.github.io/helm-charts
+
+# Import common YAML template definitions
+{{ $_tplDefaults := tpl (readFile "../_common/tplDefaults.yaml") dict -}}
+
+#set default namespace
+{{ $_defaultNamespace := "monitoring" }}
+
+{{ $_labels := dict
+  "launchpad.graphops.xyz/namespace" $_defaultNamespace
+}}
+
+{{ $_tplTransforms :=
+  tpl (readFile "../_common/tplTransforms.yaml.gotmpl") (dict
+    "annotations" ( .Values | get "annotations" dict)
+    "labels" ( merge $_labels ( .Values | get "labels" dict) )
+    )
+-}}
+
+# Anchors for each default release definition, their default values, and any inner resources that are relevant
+templates:
+  transforms:
+    {{- $_tplTransforms | nindent 4 }}
+
+  defaults:
+    {{- $_tplDefaults | nindent 4 -}}
+    namespace: {{ .Values | get "targetNamespace" $_defaultNamespace }}
+    inherit:
+      - template: transforms
+
+  resource-injector:
+    chart: graphops/resource-injector
+    version: 0.2.0
+    inherit:
+      - template: defaults
+
+  kube-prometheus-stack:
+    chart: prometheus-community/kube-prometheus-stack
+    version: 41.3.2
+    inherit:
+      - template: defaults
+    disableValidationOnInstall: true # For CRDs https://github.com/helmfile/helmfile/blob/main/pkg/state/state.go#L236
+
+  loki:
+    chart: grafana/loki-distributed
+    version: 0.55.4
+    inherit:
+      - template: defaults
+
+  promtail:
+    chart: grafana/promtail
+    version: 6.2.3
+    inherit:
+      - template: defaults
+
+  node-problem-detector:
+    chart: deliveryhero/node-problem-detector
+    version: 2.2.2
+    inherit:
+      - template: defaults
+
+releases:
+    {{ $release := "kube-prometheus-stack" }}
+  - name: {{ $release }}
+    inherit:
+      - template: {{ $release }}
+    labels:
+      feature: "metrics"
+    values:
+      - ./values/{{`{{ .Release.Name }}`}}.yaml
+      - {{ .Values | get $release dict | get "values" dict | toYaml }}
+
+    {{ $release := "loki" }}
+  - name: {{ $release }}
+    inherit:
+      - template: {{ $release }}
+    labels:
+      feature: "logs"
+    values:
+      - ./values/{{`{{ .Release.Name }}`}}.yaml
+      - {{ .Values | get $release dict | get "values" dict | toYaml }}
+
+    {{ $release := "promtail" }}
+  - name: {{ $release }}
+    inherit:
+      - template: {{ $release }}
+    labels:
+      feature: "logs"
+    values:
+      - ./values/{{`{{ .Release.Name }}`}}.yaml
+      - {{ .Values | get $release dict | get "values" dict | toYaml }}
+
+    {{ $release := "node-problem-detector" }}
+  - name: {{ $release }}
+    inherit:
+      - template: {{ $release }}
+    labels:
+      feature: "metrics"
+    values:
+      - ./values/{{`{{ .Release.Name }}`}}.yaml
+      - {{ .Values | get $release dict | get "values" dict | toYaml }}

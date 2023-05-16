@@ -1,0 +1,120 @@
+
+bases:
+  - ../_common/inheritHelmDefaults.yaml.gotmpl
+
+# Repositories for Charts used for Releases in this namespace
+repositories:
+  - name: openebs
+    url: https://openebs.github.io/charts
+  - name: openebs-zfs-localpv
+    url: https://openebs.github.io/zfs-localpv
+  - name: openebs-monitoring
+    url: https://openebs.github.io/monitoring/
+  - name: graphops
+    url: https://graphops.github.io/helm-charts
+
+# Import common YAML template definitions
+{{ $_tplDefaults := tpl (readFile "../_common/tplDefaults.yaml") dict -}}
+
+#set default namespace
+{{ $_defaultNamespace := "storage" }}
+
+{{ $_labels := dict
+  "launchpad.graphops.xyz/namespace" $_defaultNamespace
+}}
+
+{{ $_tplTransforms :=
+  tpl (readFile "../_common/tplTransforms.yaml.gotmpl") (dict
+    "annotations" ( .Values | get "annotations" dict)
+    "labels" ( merge $_labels ( .Values | get "labels" dict) )
+    )
+-}}
+
+templates:
+  transforms:
+    {{- $_tplTransforms | nindent 4 }}
+
+  defaults:
+    {{- $_tplDefaults | nindent 4 -}}
+    namespace: {{ .Values | get "targetNamespace" $_defaultNamespace }}
+    inherit:
+      - template: transforms
+
+  resource-injector:
+    chart: graphops/resource-injector
+    version: 0.2.0
+    inherit:
+      - template: defaults
+
+  openebs:
+    chart: openebs/openebs
+    version: 3.6.0
+    inherit:
+      - template: defaults
+
+  openebs-rawfile-localpv:
+    chart: graphops/openebs-rawfile-localpv
+    version: 0.8.0
+    inherit:
+      - template: defaults
+
+  openebs-zfs-localpv:
+    chart: openebs-zfs-localpv/zfs-localpv
+    version: 2.1.0
+    inherit:
+      - template: defaults
+
+  openebs-monitoring:
+    chart: openebs-monitoring/openebs-monitoring
+    version: 0.4.10
+    inherit:
+      - template: defaults
+
+releases:
+    {{ $release := "openebs" }}
+  - name: {{ $release }}
+    inherit:
+      - template: {{ $release }}
+    labels:
+      feature: "core"
+    values:
+      - ./values/{{`{{ .Release.Name }}`}}.yaml
+      - {{ .Values | get $release dict | get "values" dict | toYaml }}
+
+    {{ $release := "openebs-rawfile-localpv" }}
+  - name: {{ $release }}
+    inherit:
+      - template: {{ $release }}
+    labels:
+      feature: "rawfile"
+    values:
+      - ./values/{{`{{ .Release.Name }}`}}.yaml
+      - {{ .Values | get $release dict | get "values" dict | toYaml }}
+
+    {{ $release := "openebs-rawfile-storageclass" }}
+  - name: {{ $release }}
+    inherit:
+      - template: resource-injector
+    labels:
+      feature: "rawfile"
+    values:
+      - ./values/{{`{{ .Release.Name }}`}}.yaml
+
+    {{ $release := "openebs-zfs-localpv" }}
+  - name: {{ $release }}
+    inherit:
+      - template: {{ $release }}
+    labels:
+      feature: "zfs"
+    values:
+      - ./values/{{`{{ .Release.Name }}`}}.yaml
+      - {{ .Values | get $release dict | get "values" dict | toYaml }}
+
+    {{ $release := "openebs-zfs-storageclass" }}
+  - name: {{ $release }}
+    inherit:
+      - template: resource-injector
+    labels:
+      feature: "zfs"
+    values:
+      - ./values/{{`{{ .Release.Name }}`}}.yaml
