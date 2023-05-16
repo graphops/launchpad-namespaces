@@ -2,6 +2,12 @@
 bases:
   - ../_common/inheritHelmDefaults.yaml.gotmpl
 
+#set default namespace
+{{ $_defaultNamespace := "ingress" }}
+
+commonLabels:
+  namespace: {{ $_defaultNamespace }}
+
 # Repositories for Charts used for Releases in this namespace
 repositories:
   - name: ingress-nginx
@@ -13,9 +19,6 @@ repositories:
 
 # Import common YAML template definitions
 {{ $_tplDefaults := tpl (readFile "../_common/tplDefaults.yaml") dict -}}
-
-#set default namespace
-{{ $_defaultNamespace := "ingress" }}
 
 {{ $_labels := dict
   "launchpad.graphops.xyz/namespace" $_defaultNamespace
@@ -59,7 +62,16 @@ templates:
     disableValidationOnInstall: true # For CRDs https://github.com/helmfile/helmfile/blob/main/pkg/state/state.go#L236
     wait: true
 
+# Define default features when undefined
+{{ if not (hasKey .Values "features") }}
+{{ $_ := set .Values "features" (list
+  "ingress"
+  "cert-manager"
+) }}
+{{ end }}
+
 releases:
+  {{ if has "ingress" ( .Values | get "features" list ) }}
     {{ $release := "ingress-nginx" }}
   - name: {{ $release }}
     inherit:
@@ -69,7 +81,9 @@ releases:
     values:
       - ./values/{{`{{ .Release.Name }}`}}.yaml
       - {{ .Values | get $release dict | get "values" dict | toYaml }}
+  {{ end }}
 
+  {{ if has "cert-manager" ( .Values | get "features" list ) }}
     {{ $release := "cert-manager" }}
   - name: {{ $release }}
     inherit:
@@ -89,3 +103,4 @@ releases:
       - ./values/{{`{{ .Release.Name }}`}}.yaml
       - {{ .Values | get $release dict | get "values" dict | toYaml }}
     disableValidationOnInstall: true # For CRDs https://github.com/helmfile/helmfile/blob/main/pkg/state/state.go#L236
+  {{ end }}

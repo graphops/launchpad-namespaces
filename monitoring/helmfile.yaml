@@ -2,6 +2,12 @@
 bases:
   - ../_common/inheritHelmDefaults.yaml.gotmpl
 
+#set default namespace
+{{ $_defaultNamespace := "monitoring" }}
+
+commonLabels:
+  namespace: {{ $_defaultNamespace }}
+
 # Repositories for Charts used for Releases in this namespace
 repositories:
   - name: prometheus-community
@@ -15,9 +21,6 @@ repositories:
 
 # Import common YAML template definitions
 {{ $_tplDefaults := tpl (readFile "../_common/tplDefaults.yaml") dict -}}
-
-#set default namespace
-{{ $_defaultNamespace := "monitoring" }}
 
 {{ $_labels := dict
   "launchpad.graphops.xyz/namespace" $_defaultNamespace
@@ -72,7 +75,16 @@ templates:
     inherit:
       - template: defaults
 
+# Define default features when undefined
+{{ if not (hasKey .Values "features") }}
+{{ $_ := set .Values "features" (list
+  "metrics"
+  "logs"
+) }}
+{{ end }}
+
 releases:
+  {{ if has "metrics" ( .Values | get "features" list ) }}
     {{ $release := "kube-prometheus-stack" }}
   - name: {{ $release }}
     inherit:
@@ -83,6 +95,18 @@ releases:
       - ./values/{{`{{ .Release.Name }}`}}.yaml
       - {{ .Values | get $release dict | get "values" dict | toYaml }}
 
+    {{ $release := "node-problem-detector" }}
+  - name: {{ $release }}
+    inherit:
+      - template: {{ $release }}
+    labels:
+      feature: "metrics"
+    values:
+      - ./values/{{`{{ .Release.Name }}`}}.yaml
+      - {{ .Values | get $release dict | get "values" dict | toYaml }}
+  {{ end }}
+
+  {{ if has "logs" ( .Values | get "features" list ) }}
     {{ $release := "loki" }}
   - name: {{ $release }}
     inherit:
@@ -102,13 +126,4 @@ releases:
     values:
       - ./values/{{`{{ .Release.Name }}`}}.yaml
       - {{ .Values | get $release dict | get "values" dict | toYaml }}
-
-    {{ $release := "node-problem-detector" }}
-  - name: {{ $release }}
-    inherit:
-      - template: {{ $release }}
-    labels:
-      feature: "metrics"
-    values:
-      - ./values/{{`{{ .Release.Name }}`}}.yaml
-      - {{ .Values | get $release dict | get "values" dict | toYaml }}
+  {{ end }}

@@ -2,6 +2,13 @@
 bases:
   - ../_common/inheritHelmDefaults.yaml.gotmpl
 
+
+#set default namespace
+{{ $_defaultNamespace := "storage" }}
+
+commonLabels:
+  namespace: {{ $_defaultNamespace }}
+
 # Repositories for Charts used for Releases in this namespace
 repositories:
   - name: openebs
@@ -15,9 +22,6 @@ repositories:
 
 # Import common YAML template definitions
 {{ $_tplDefaults := tpl (readFile "../_common/tplDefaults.yaml") dict -}}
-
-#set default namespace
-{{ $_defaultNamespace := "storage" }}
 
 {{ $_labels := dict
   "launchpad.graphops.xyz/namespace" $_defaultNamespace
@@ -70,17 +74,28 @@ templates:
     inherit:
       - template: defaults
 
+# Define default features when undefined
+{{ if not (hasKey .Values "features") }}
+{{ $_ := set .Values "features" (list
+  "openebs"
+  "rawfile"
+) }}
+{{ end }}
+
 releases:
+  {{ if has "openebs" ( .Values | get "features" list ) }}
     {{ $release := "openebs" }}
   - name: {{ $release }}
     inherit:
       - template: {{ $release }}
     labels:
-      feature: "core"
+      feature: "openebs"
     values:
       - ./values/{{`{{ .Release.Name }}`}}.yaml
       - {{ .Values | get $release dict | get "values" dict | toYaml }}
+  {{ end }}
 
+  {{ if has "rawfile" ( .Values | get "features" list ) }}
     {{ $release := "openebs-rawfile-localpv" }}
   - name: {{ $release }}
     inherit:
@@ -99,7 +114,9 @@ releases:
       feature: "rawfile"
     values:
       - ./values/{{`{{ .Release.Name }}`}}.yaml
+  {{ end }}
 
+  {{ if has "zfs" ( .Values | get "features" list ) }}
     {{ $release := "openebs-zfs-localpv" }}
   - name: {{ $release }}
     inherit:
@@ -118,3 +135,4 @@ releases:
       feature: "zfs"
     values:
       - ./values/{{`{{ .Release.Name }}`}}.yaml
+  {{ end }}
