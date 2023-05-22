@@ -6,7 +6,8 @@ bases:
 {{ $_defaultNamespace := "ingress" }}
 
 commonLabels:
-  namespace: {{ $_defaultNamespace }}
+  launchpad.graphops.xyz/namespace: {{ $_defaultNamespace }}
+  launchpad.graphops.xyz/layer: "base"
 
 # Repositories for Charts used for Releases in this namespace
 repositories:
@@ -72,35 +73,24 @@ templates:
 
 releases:
   {{ if has "ingress" ( .Values | get "features" list ) }}
-    {{ $release := "ingress-nginx" }}
+    {{- $release := "ingress-nginx" }}
   - name: {{ $release }}
-    inherit:
-      - template: {{ $release }}
     labels:
       feature: "ingress"
-    values:
-      - ./values/{{`{{ .Release.Name }}`}}.yaml
-      - {{ .Values | get $release dict | get "values" dict | toYaml }}
+    {{- tpl (readFile "../_common/tplRelease.yaml.gotmpl") (dict "Values" .Values "release" $release)  | nindent 4 -}}
   {{ end }}
 
   {{ if has "cert-manager" ( .Values | get "features" list ) }}
     {{ $release := "cert-manager" }}
   - name: {{ $release }}
-    inherit:
-      - template: {{ $release }}
     labels:
       feature: "cert-manager"
-    values:
-      - ./values/{{`{{ .Release.Name }}`}}.yaml
-      - {{ .Values | get $release dict | get "values" dict | toYaml }}
+    {{- tpl (readFile "../_common/tplRelease.yaml.gotmpl") (dict "Values" .Values "release" $release)  | nindent 4 -}}
 
-  - name: cert-manager-resources
-    inherit:
-      - template: resource-injector
+    {{ $release := "cert-manager-resources" }}
+  - name: {{ $release }}
+    disableValidationOnInstall: true # For CRDs https://github.com/helmfile/helmfile/blob/main/pkg/state/state.go#L236
     labels:
       feature: "cert-manager"
-    values:
-      - ./values/{{`{{ .Release.Name }}`}}.yaml
-      - {{ .Values | get $release dict | get "values" dict | toYaml }}
-    disableValidationOnInstall: true # For CRDs https://github.com/helmfile/helmfile/blob/main/pkg/state/state.go#L236
+    {{- tpl (readFile "../_common/tplRelease.yaml.gotmpl") (dict "Values" .Values "release" $release "resource-injector" true)  | nindent 4 -}}
   {{ end }}

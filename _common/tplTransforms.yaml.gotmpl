@@ -1,3 +1,4 @@
+{{ $_TemplatedResources := list "Deployment" "StatefulSet" "DaemonSet" }}
 transformers:
   - apiVersion: builtin
     kind: AnnotationsTransformer
@@ -8,7 +9,7 @@ transformers:
     fieldSpecs:
     - path: metadata/annotations
       create: true
-    {{- range $kind := list "Deployment" "StatefulSet" "DaemonSet" }}
+    {{- range $kind := $_TemplatedResources }}
     - kind: {{ $kind }}
       path: spec/template/metadata/annotations
       create: true
@@ -22,7 +23,7 @@ transformers:
     fieldSpecs:
     - path: metadata/labels
       create: true
-    {{- range $kind := list "Deployment" "StatefulSet" "DaemonSet" }}
+    {{- range $kind := $_TemplatedResources }}
     - kind: {{ $kind }}
       path: spec/template/metadata/labels
       create: true

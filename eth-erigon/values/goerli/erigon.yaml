@@ -1,0 +1,8 @@
+statefulNode:
+  extraArgs:
+    - --chain=goerli
+
+  volumeClaimSpec:
+    resources:
+      requests:
+        storage: 500Gi
