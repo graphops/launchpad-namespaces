@@ -45,6 +45,8 @@ templates:
     chart: postgres-operator-charts/postgres-operator
     version: 1.8.2
     disableValidationOnInstall: true # https://github.com/roboll/helmfile/issues/1600
+    inherit:
+      - template: defaults
 
 releases:
     {{- $release := "postgres-operator" }}
