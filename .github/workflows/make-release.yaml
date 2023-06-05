@@ -1,0 +1,135 @@
+name: Make Release
+
+on:
+  workflow_call:
+    inputs:
+      tag:
+        type: string
+        required: true
+        description: "What tag to release"
+  workflow_dispatch:
+    inputs:
+      tag:
+        type: string
+        required: true
+        description: "What tag to release"
+
+jobs:
+  init:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # for creating releases
+    outputs:
+      name: ${{ steps.parse_tag.outputs.name }}
+      version: ${{ steps.parse_tag.outputs.version }}
+      fullversion: ${{ steps.parse_tag.outputs.fullversion }}
+      prerelease: ${{ steps.parse_tag.outputs.prerelease }}
+      tag: ${{ steps.parse_tag.outputs.tag }}
+    steps:
+      # TODO: build an action leveraging semver (npm), which parses this robustly and offer more outputs
+      - name: Parse tag
+        id: parse_tag
+        run: |
+          echo "tag=${{ inputs.tag }}" >> $GITHUB_OUTPUT
+          name=$(echo "${{ inputs.tag }}" | sed -r 's/^(.*)-([v]?[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+)(-pre\.)?([[:digit:]]+)?$/\1/g')
+          echo "name=$name" >> $GITHUB_OUTPUT
+          version=$(echo "${{ inputs.tag }}" | sed -r 's/^(.*)-([v]?[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+)(-pre\.)?([[:digit:]]+)?$/\2/g')
+          echo "version=$version" >> $GITHUB_OUTPUT
+          prerelease=$(echo "${{ inputs.tag }}" | sed -r 's/^(.*)-([v]?[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+)(-pre\.)?([[:digit:]]+)?$/\4/g')
+          echo "prerelease=$prerelease" >> $GITHUB_OUTPUT
+          fullversion=$(echo "${{ inputs.tag }}" | sed -r 's/^(.*)-([v]?[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+(-pre\.[[:digit:]]+)?)/\2/g')
+          echo "fullversion=$fullversion" >> $GITHUB_OUTPUT
+
+  changelog:
+    needs: init
+    runs-on: ubuntu-latest
+    container: quay.io/git-chglog/git-chglog:0.15.0
+    steps:
+      - name: Install dependencies
+        run: |
+          apk --upgrade add bash
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Generate changelog
+        id: gen_chglog
+        shell: bash
+        run: |
+          set -x
+          namespace="${{ needs.init.outputs.name }}"
+          version="${{ needs.init.outputs.fullversion }}"
+          tag="${{ needs.init.outputs.tag }}"
+
+          if [[ "${tag}" =~ ^.*-[0-9]+\.[0-9]+\.[0-9]+-* ]]; then
+            # on pre-releases we want the changelog to span all pre-releases from .1 to current
+            first_pre="$(echo ${tag} | sed -r 's/(.*-[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+-pre\.).*/\11/g')"
+            query_tag="${first_pre}..${tag}"
+          else
+            query_tag="${tag}"
+          fi
+
+          # Generate RELEASE-NOTES.md file (used for Github release notes).
+          git-chglog                                   \
+              --output "RELEASE-NOTES.md" \
+              --tag-filter-pattern "${namespace}"      \
+              --path "${namespace}/" --path "_common/" \
+              "${query_tag}"
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: "${{ needs.init.outputs.tag }}.release-notes"
+          path: RELEASE-NOTES.md
+
+  release:
+    needs:
+      - init
+      - changelog
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # for creating releases
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor}}@users.noreply.github.com"
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: "${{ needs.init.outputs.tag }}.release-notes"
+          path: "."
+
+      - name: Generate namespace release
+        id: release
+        run: |
+          tar -czf ${{ needs.init.outputs.tag }}.tar.gz "_common/" "RELEASE-NOTES.md" "${{ needs.init.outputs.name}}/"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: "${{ needs.init.outputs.tag }}.release"
+          path: "${{ needs.init.outputs.tag }}.tar.gz"
+
+      - name: Create release and update latest tags
+        run: |
+          if [ -z "${{ needs.init.outputs.prerelease }}" ]; then
+            gh release create -t ${{ needs.init.outputs.tag }} --verify-tag -F RELEASE-NOTES.md ${{ needs.init.outputs.tag }} ${{ needs.init.outputs.tag }}.tar.gz
+
+            git tag -f -a "${{ needs.init.outputs.name }}-latest" -m "Latest stable is ${{ needs.init.outputs.tag }}"
+            git tag -f -a "${{ needs.init.outputs.name }}-latest/stable" -m "Latest stable is ${{ needs.init.outputs.tag }}"
+          else
+            gh release create -t ${{ needs.init.outputs.tag }} --verify-tag --prerelease -F RELEASE-NOTES.md ${{ needs.init.outputs.tag }} ${{ needs.init.outputs.tag }}.tar.gz
+
+            git tag -f -a "${{ needs.init.outputs.name }}-latest/canary" -m "Latest canary is ${{ needs.init.outputs.tag }}"
+          fi
+
+          git push --tags -f
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
