@@ -1,0 +1,16 @@
+{
+  "name": "launchpad-namespaces",
+  "version": "1.0.0",
+  "repository": "https://github.com/graphops/launchpad-namespaces.git",
+  "license": "Apache 2",
+  "private": true,
+  "packageManager": "yarn@3.6.0",
+  "devDependencies": {
+    "@commitlint/cli": "^17.6.5",
+    "@commitlint/config-conventional": "^17.6.5",
+    "husky": "^8.0.3"
+  },
+  "scripts": {
+    "postinstall": "husky install"
+  }
+}
