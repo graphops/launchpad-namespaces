@@ -1,1 +1,1 @@
-module: "graphops.xyz/launchpad"
+module: "graphops.xyz/launchpad/namespaces"
