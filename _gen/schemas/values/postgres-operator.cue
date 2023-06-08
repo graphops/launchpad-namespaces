@@ -1,15 +1,16 @@
-package postgresOperatorValues
+package launchpadNamespacesValues
 
-import common "graphops.xyz/launchpad:launchpadNamespaceValues"
+_releases: {postgresOperator: ["postgres-operator"]}
 
-_releases: ["postgres-operator"]
-
-#postgresOperatorNamespaceValues: common.#launchpadNamespaceValues & {
-	targetNamespace: *"postgres-operator" | string
-	for release in _releases {
-		"\(release)"?: {
-			mergeValues?: bool
-			values?:      common.#map | [...common.#map]
+#launchpadNamespacesValues: {
+	// Postgres-Operator namespace values interface schema
+	#postgresOperator: #launchpadNamespacesValues.#base & {
+		targetNamespace: *"postgres-operator" | string
+		for release in _releases.postgresOperator {
+			"\(release)"?: {
+				mergeValues?: bool
+				values?:      #map | [...#map]
+			}
 		}
 	}
 }

@@ -1,17 +1,16 @@
-package sealedSecretsValues
+package launchpadNamespaceValues
 
-import common "graphops.xyz/launchpad:launchpadNamespaceValues"
+_releases: {sealedSecrets: ["sealed-secrets"]}
 
-_releases: ["sealed-secrets"]
-
-#sealedSecretsNamespaceValues: common.#launchpadNamespaceValues & {
-	targetNamespace: *"sealed-secrets" | string
-	features:        null
-	flavor:          null
-	for release in _releases {
-		"\(release)"?: {
-			mergeValues?: bool
-			values?:      common.#map | [...common.#map]
+#launchpadNamespacesValues: {
+	// Sealed-Secrets namespace values schema
+	#sealedSecrets: #launchpadNamespacesValues.#base & {
+		targetNamespace: *"sealed-secrets" | string
+		for release in _releases.sealedSecrets {
+			"\(release)"?: {
+				mergeValues?: bool
+				values?:      #map | [...#map]
+			}
 		}
 	}
 }

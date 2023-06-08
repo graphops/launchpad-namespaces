@@ -1,40 +1,35 @@
-package launchpadHelmfile
+package launchpadNamespacesHelmfiles
 
 import (
 	baseHelmfile "github.com/SchemaStore:helmfile"
-	"graphops.xyz/launchpad/namespaces/storage:storageValues"
-	"graphops.xyz/launchpad/namespaces/eth-erigon:ethErigonValues"
-	"graphops.xyz/launchpad/namespaces/sealed-secrets:sealedSecretsValues"
-	"graphops.xyz/launchpad/namespaces/postgres-operator:postgresOperatorValues"
-	"graphops.xyz/launchpad/namespaces/ingress:ingressValues"
-	"graphops.xyz/launchpad/namespaces/monitoring:monitoringValues"
+	values "graphops.xyz/launchpad:launchpadNamespacesValues"
 )
 
-#launchpadHelmfile: ( baseHelmfile.#helmfile |
+#launchpadNamespacesHelmfiles: ( baseHelmfile.#helmfile |
 	{
 		baseHelmfile.#helmfile
 		path:   =~"*github.com/graphops/launchpad-namespaces.git@storage/helmfile.yaml*"
-		values: {storageValues.#storageNamespaceValues} | [...{storageValues.#storageNamespaceValues}]
+		values: {values.#launchpadNamespacesValues.#storage} | [...values.#launchpadNamespacesValues.#storage]
 	} | {
 		baseHelmfile.#helmfile
 		path:   =~"*github.com/graphops/launchpad-namespaces.git@eth-erigon/helmfile.yaml*"
-		values: {ethErigonValues.#ethErigonNamespaceValues} | [...{ethErigonValues.#ethErigonNamespaceValues}]
+		values: {values.#launchpadNamespacesValues.#ethErigon} | [...{values.#launchpadNamespacesValues.ethErigon}]
 	} | {
 		baseHelmfile.#helmfile
 		path:   =~"*github.com/graphops/launchpad-namespaces.git@sealed-secrets/helmfile.yaml*"
-		values: {sealedSecretsValues.#sealedSecretsNamespaceValues} | [...{sealedSecretsValues.#sealedSecretsNamespaceValues}]
+		values: {values.#launchpadNamespacesValues.#sealedSecrets} | [...{values.#launchpadNamespacesValues.sealedSecrets}]
 	} | {
 		baseHelmfile.#helmfile
 		path:   =~"*github.com/graphops/launchpad-namespaces.git@postgres-operator/helmfile.yaml*"
-		values: {postgresOperatorValues.#postgresOperatorNamespaceValues} | [...{postgresOperatorValues.#postgresOperatorNamespaceValues}]
+		values: {values.#launchpadNamespacesValues.#postgresOperator} | [...{values.#launchpadNamespacesValues.#postgresOperator}]
 	} | {
 		baseHelmfile.#helmfile
 		path:   =~"*github.com/graphops/launchpad-namespaces.git@ingress/helmfile.yaml*"
-		values: {ingressValues.#ingressNamespaceValues} | [...{ingressValues.#ingressNamespaceValues}]
+		values: {values.#launchpadNamespacesValues.#ingress} | [...{values.#launchpadNamespacesValues.#ingress}]
 	} | {
 		baseHelmfile.#helmfile
 		path:   =~"*github.com/graphops/launchpad-namespaces.git@monitoring/helmfile.yaml*"
-		values: {monitoringValues.#monitoringNamespaceValues} | [...{monitoringValues.#monitoringNamespaceValues}]
+		values: {values.#launchpadNamespacesValues.#monitoring} | [...{values.#launchpadNamespacesValues.#monitoring}]
 	})
 
 helmfiles?: [...(string | #launchpadHelmfile)]

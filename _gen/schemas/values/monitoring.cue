@@ -1,24 +1,30 @@
-package monitoringValues
+package launchpadNamespacesValues
 
-import common "graphops.xyz/launchpad:launchpadNamespaceValues"
+_releases: {
+	monitoring: ["kube-prometheus-stack", "node-problem-detector", "loki", "promtail"]
+}
 
-_releases: ["kube-prometheus-stack", "node-problem-detector", "loki", "promtail"]
+#launchpadNamespacesValues: {
+	// Monitoring namespace values interface schema
+	#monitoring: #launchpadNamespacesValues.#base & {
 
-// metrics: add kube-prometheus stack and node-problem-detector
-#featureMetrics: "metrics"
+		// Monitoring namespace features schema
+		#features: {
+			// metrics: add kube-prometheus stack and node-problem-detector
+			#metrics: "metrics"
 
-// logs: add Loki and promtail for logging
-#featureLogs: "logs"
+			// logs: add Loki and promtail for logging
+			#logs: "logs"
+			#enum: ( #metrics | #logs )
+		}
 
-#features: ( #featureMetrics | #featureLogs )
-
-#monitoringNamespaceValues: common.#launchpadNamespaceValues & {
-	targetNamespace: *"monitoring" | string
-	features?:       *[#featureMetrics, #featureLogs] | [...#features]
-	for release in _releases {
-		"\(release)"?: {
-			mergeValues?: bool
-			values?:      common.#map | [...common.#map]
+		targetNamespace: *"monitoring" | string
+		features?:       *[#features.#metrics, #features.#logs] | [...#features.#enum]
+		for release in _releases.monitoring {
+			"\(release)"?: {
+				mergeValues?: bool
+				values?:      #map | [...#map]
+			}
 		}
 	}
 }

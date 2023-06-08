@@ -1,24 +1,29 @@
-package ingressValues
+package launchpadNamespacesValues
 
-import common "graphops.xyz/launchpad:launchpadNamespaceValues"
+_releases: {
+	ingress: ["ingress-nginx", "cert-manager", "cert-manager-resources"]
+}
 
-_releases: ["ingress-nginx", "cert-manager", "cert-manager-resources"]
+#launchpadNamespacesValues: {#ingress: #launchpadNamespacesValues.#base & {
+	#features: {
+		// cert-manager: include cert-manager
+		#certManager: "cert-manager"
 
-// ingress: for the ingress-nginx release
-#featureIngress: "ingress"
+		// ingress: for the ingress-nginx release
+		#ingress: "ingress"
 
-// cert-manager: include cert-manager
-#featureCertManager: "cert-manager"
+		// ingress features enum
+		#enum: ( #ingress | #certManager )
+	}
 
-#features: ( #featureIngress | #featureCertManager )
-
-#ingressNamespaceValues: common.#launchpadNamespaceValues & {
 	targetNamespace: *"ingress" | string
-	features?:       *[#featureIngress, #featureCertManager] | [...#features]
-	for release in _releases {
+	features?:       *[#features.#ingress, #features.#certManager] | [...#features.#ingress]
+	for release in _releases.ingress {
 		"\(release)"?: {
 			mergeValues?: bool
-			values?:      common.#map | [...common.#map]
+			values?:      #map | [...#map]
 		}
 	}
+}
+
 }
