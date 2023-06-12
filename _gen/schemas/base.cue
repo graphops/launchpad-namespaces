@@ -1,21 +1,20 @@
-package launchpadNamespacesValues
+package LaunchpadNamespaces
 
 import (
-	helmfile "github.com/SchemaStore:helmfile"
+	upstreamHelmfile "github.com/SchemaStore:helmfile"
 )
 
 info: {
 	description: """
-		My long description
-		test
+		TODO
 		"""
 }
 
 // Launchpad Namespaces schemas, by GraphOps
-#launchpadNamespacesValues: {
+#base: {
 	// Base namespace values interface schema
-	#base: {
-		helmDefaults?: helmfile.#helmDefaults
+	#values: {
+		helmDefaults?: upstreamHelmfile.#helmDefaults
 		// Sets the cluster namespace in which the releases will be deployed
 		targetNamespace: string
 		// Add annotations
@@ -24,6 +23,9 @@ info: {
 		labels?: {...} & #map
 		...
 	}
+	#helmfiles: upstreamHelmfile
+
+	#labels: {}
 }
 
 #map: {
