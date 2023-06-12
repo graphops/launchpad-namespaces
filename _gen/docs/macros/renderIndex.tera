@@ -13,7 +13,7 @@
 {%- endmacro renderIndex -%}
 
 {%- macro renderName(namespaceMeta) -%}
-### [{{ namespaceMeta.name.enum.0 }}]({{ namespaceMeta.url.enum.0 }})
+### [:{{ namespaceMeta.name.enum.0 }}]({{ namespaceMeta.url.enum.0 }})
 {%- endmacro renderName -%}
 
 {%- macro renderDesc(namespaceMeta) -%}
@@ -22,7 +22,7 @@
 
 {%- macro renderReleases(releasesProp) -%}
 {% for key, _ in releasesProp %}
-- {{ self::renderReleaseName(releaseProp=releasesProp[key].properties) }}
+- {{ self::renderReleaseName(releaseProp=releasesProp[key].properties) }}<br>
 {{ self::renderReleaseDesc(releaseProp=releasesProp[key].properties) }}
 {%- endfor %}
 {%- endmacro renderReleases -%}
