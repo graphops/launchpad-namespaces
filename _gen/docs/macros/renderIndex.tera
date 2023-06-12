@@ -1,0 +1,40 @@
+{% import "utils.tera" as utils %}
+{%- macro renderIndex(schemas) -%}
+{%- set namespaceKeys = utils::getKeysMatching(schemas=schemas, pattern="^namespaces\.[^\.]+$") | split(pat="|") -%}
+{%- for key in namespaceKeys -%}
+{%- set metaKey = key ~ ".meta" -%}
+{%- set releasesKey = key ~ ".releases" -%}
+{#schemas[key] | get(key="releases") | get(key="properties") -%#}
+{%- set numReleases = utils::getKeysMatching(schemas=schemas[releasesKey].properties, pattern="^.*$") | split(pat="|") | length  -%}
+{{ self::renderName(namespaceMeta=schemas[metaKey].properties) }}
+{{ self::renderDesc(namespaceMeta=schemas[metaKey].properties) }}
+{{ self::renderReleases(releasesProp=schemas[releasesKey].properties) }}
+{% endfor -%}
+{%- endmacro renderIndex -%}
+
+{%- macro renderName(namespaceMeta) -%}
+### [{{ namespaceMeta.name.enum.0 }}]({{ namespaceMeta.url.enum.0 }})
+{%- endmacro renderName -%}
+
+{%- macro renderDesc(namespaceMeta) -%}
+{{ namespaceMeta.description.enum.0 | default (value="") }}
+{%- endmacro renderDesc -%}
+
+{%- macro renderReleases(releasesProp) -%}
+{% for key, _ in releasesProp %}
+- {{ self::renderReleaseName(releaseProp=releasesProp[key].properties) }}
+{{ self::renderReleaseDesc(releaseProp=releasesProp[key].properties) }}
+{%- endfor %}
+{%- endmacro renderReleases -%}
+
+{%- macro renderReleaseName(releaseProp) -%}
+[{{ releaseProp.name.enum.0 }}]({{ releaseProp.chart.properties.url.enum.0 | default(value="") }})
+{%- endmacro renderReleaseName -%}
+
+{%- macro renderReleaseDesc(releaseProp) -%}
+{%- set _desc = releaseProp.description.enum.0 | default(value="") -%}
+{%- if _desc == "" -%}
+{%- set _desc = releaseProp.chart.properties.description.enum.0 | default(value="") -%}
+{%- endif -%}
+{{ _desc }}
+{%- endmacro renderReleaseDesc -%}

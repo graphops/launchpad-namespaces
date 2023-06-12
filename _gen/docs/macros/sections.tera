@@ -1,0 +1,19 @@
+{%- import "utils.tera" as utils -%}
+{%- macro graphopsTitle(namespace) -%}
+{{ "# " ~ namespace ~ " Namespace" | title }}
+{%- endmacro graphopsTitle -%}
+
+{%- macro graphopsBadges() -%}
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)[![latest:stable](https://img.shields.io/badge/latest:stable-v1.0.0-blue)](https://github.com/graphops/launchpad-namespaces/releases)[![latest:canary](https://img.shields.io/badge/latest:canary-v1.0.1--pre.1-orange)](https://github.com/graphops/launchpad-namespaces/releases)
+{%- endmacro graphopsBadges -%}
+
+{%- macro sectionDescription(namespace, schemas) -%}
+{%- set _section_name = utils::getSchemaName(namespace=namespace, schemas=schemas) -%}
+{{ schemas[_section_name] | get(key="description", default="") }}
+{%- endmacro sectionDescription -%}
+
+{%- macro sectionContributing() -%}
+## Contributing
+
+We welcome and appreciate your contributions! Please see the [Contributor Guide](/CONTRIBUTING.md), [Code Of Conduct](/CODE_OF_CONDUCT.md) and [Security Notes](/SECURITY.md) for this repository.
+{%- endmacro sectionContributing -%}

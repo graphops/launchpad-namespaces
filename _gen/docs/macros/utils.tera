@@ -1,0 +1,32 @@
+{%- macro getSchemaName(namespace, schemas) -%}
+{%- set sanitizedName = self::sanitizeName(name=namespace) -%}
+{{ "namespaces." ~ sanitizedName ~ ".values" }}
+{%- endmacro getSchemaName -%}
+
+{%- macro sanitizeName(name) -%}
+{%- if name is containing('-') -%}
+{%- set_global _arrayName = name | split(pat='-') -%}
+{%- else -%}
+{%- set_global _arrayName = [name] -%}
+{%- endif -%}
+{%- for elem in _arrayName -%}
+{%- if loop.first -%}
+{%- set_global _partialName = elem | lower -%}
+{%- set_global _sanitizedName = [_partialName] -%}
+{%- else -%}
+{%- set_global _partialName = elem | capitalize -%}
+{%- set_global _sanitizedName = _sanitizedName | concat(with=[_partialName]) -%}
+{%- endif -%}
+{%- endfor -%}
+{{ _sanitizedName | join(pat='') }}
+{%- endmacro sanitizeName -%}
+
+{%- macro getKeysMatching(schemas, pattern) -%}
+{%- set_global _matches = [] -%}
+{%- for key, _ in schemas -%}
+{%- if key is matching(pattern) -%}
+{%- set_global _matches = _matches | concat(with=[key]) -%}
+{%- endif -%}
+{%- endfor -%}
+{{ _matches | join(sep="|") }}
+{%- endmacro getKeysMatching -%}

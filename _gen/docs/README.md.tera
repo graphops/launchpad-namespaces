@@ -1,0 +1,42 @@
+{% import "renderIndex.tera" as index %}
+# Launchpad Namespaces
+
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+## Introduction
+
+Launchpad Namespaces, part of Launchpad Toolkit, is... and aims too....
+
+- Actively maintained by [GraphOps](https://graphops.xyz) 
+
+## Features
+
+- Common values interfaces
+- Two release channels
+- list of namespaces?
+
+## Getting Started
+
+Please see the [Quick Start](https://docs.graphops.xyz/launchpad/quick-start) guide in the [Documentation](https://docs.graphops.xyz/launchpad/intro).
+
+- example usage with helmfile
+
+## Updates
+
+- use version bumping tools
+- latest and latest-canary moving tags
+
+## Namespaces
+
+The following namespaces are supported:
+
+{{ index::renderIndex(schemas=components.schemas) }}
+
+## Contributing
+
+We welcome and appreciate your contributions! Please see the [Contributor Guide](/CONTRIBUTING.md), [Code Of Conduct](/CODE_OF_CONDUCT.md) and [Security Notes](/SECURITY.md) for this repository.
+
+## See also
+
+- [`graphops/launchpad-charts`](https://github.com/graphops/launchpad-charts)
+- [`graphops/launchpad-starter`](https://github.com/graphops/launchpad-starter)
