@@ -1,3 +1,4 @@
+// schema:type=namespace schema:namespace=monitoring
 package LaunchpadNamespaces
 
 import (
@@ -16,27 +17,27 @@ import (
 
 		#releases: {
 			kubePrometheusStack: {
-				name:  "kube-prometheus-stack"
-				chart: charts.#repositories["prometheus-community"].charts["kube-prometheus-stack"]
-				//				feature: #features.metrics
+				name:    "kube-prometheus-stack"
+				chart:   charts.#repositories["prometheus-community"].charts["kube-prometheus-stack"]
+				feature: #features.metrics
 				_template: {version: "41.3.2"}
 			}
 			nodeProblemDetector: {
-				name:  "node-problem-detector"
-				chart: charts.#repositories.deliveryhero.charts["node-problem-detector"]
-				//				feature: #features.metrics
+				name:    "node-problem-detector"
+				chart:   charts.#repositories.deliveryhero.charts["node-problem-detector"]
+				feature: #features.metrics
 				_template: {version: "2.2.2"}
 			}
 			loki: {
-				name:  "loki"
-				chart: charts.#repositories.grafana.charts["loki-distributed"]
-				//				feature: #features.logs
+				name:    "loki"
+				chart:   charts.#repositories.grafana.charts["loki-distributed"]
+				feature: #features.logs
 				_template: {version: "0.55.4"}
 			}
 			promtail: {
-				name:  "promtail"
-				chart: charts.#repositories.grafana.charts.promtail
-				//				feature: #features.logs
+				name:    "promtail"
+				chart:   charts.#repositories.grafana.charts.promtail
+				feature: #features.logs
 				_template: {version: "6.2.3"}
 			}
 		}
@@ -80,6 +81,9 @@ _namespaces: monitoring: {
 	meta:     #namespaces.#monitoring.#meta
 	releases: #namespaces.#monitoring.#releases
 	features: #namespaces.#monitoring.#features
-	values:   #namespaces.#monitoring.#values
-	labels:   #namespaces.#monitoring.labels
+	values:   #namespaces.#monitoring.#values & {
+		targetNamespace: #namespaces.#monitoring.#values.targetNamespace
+		features: [...#namespaces.#monitoring.#values.#features.#enum]
+	}
+	labels: #namespaces.#monitoring.labels
 }

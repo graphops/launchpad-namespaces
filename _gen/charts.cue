@@ -1,7 +1,18 @@
 package LaunchpadCharts
 
 #repositories: {
-	graphops: {
+	// link all charts to their repo and add name
+	//
+	[repoName=string]: {
+		charts: {
+			[chartName=string]: {
+				repository: repoName
+				name:       chartName
+			}
+		}
+	}
+
+	"graphops": {
 		url: "https://graphops.github.io/launchpad-charts"
 		description: """
 			lorem ipsolum
@@ -49,14 +60,14 @@ package LaunchpadCharts
 		}
 	}
 
-	vouch: {
+	"vouch": {
 		url: "https://vouch.github.io/helm-charts/"
 		description: """
 			Helm charts for vouch: An SSO solution for Nginx using the auth_request module. Vouch Proxy can protect all of your websites at once.
 			"""
 	}
 
-	jetstack: {
+	"jetstack": {
 		url:         "https://charts.jetstack.io"
 		description: ""
 		charts: {
@@ -82,7 +93,7 @@ package LaunchpadCharts
 		}
 	}
 
-	deliveryhero: {
+	"deliveryhero": {
 		url: "https://charts.deliveryhero.io"
 		description: """
 			Delivery Hero are big fans of Kubernetes and use Helm extensively. Here we have collected a few charts that are used across our organisation.
@@ -96,7 +107,7 @@ package LaunchpadCharts
 		}
 	}
 
-	grafana: {
+	"grafana": {
 		url:         "https://grafana.github.io/helm-charts"
 		description: ""
 		charts: {
@@ -133,7 +144,7 @@ package LaunchpadCharts
 		}
 	}
 
-	openebs: {
+	"openebs": {
 		url: "https://openebs.github.io/charts"
 		description: """
 			OpenEBS Helm Repository:

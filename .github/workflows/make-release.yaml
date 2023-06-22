@@ -75,7 +75,7 @@ jobs:
           git-chglog                                   \
               --output "RELEASE-NOTES.md" \
               --tag-filter-pattern "${namespace}"      \
-              --path "${namespace}/" --path "_common/" \
+              --path "${namespace}/" \
               "${query_tag}"
 
       - uses: actions/upload-artifact@v3
