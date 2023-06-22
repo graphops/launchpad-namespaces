@@ -2,6 +2,7 @@ package LaunchpadNamespaces
 
 import (
 	upstreamHelmfile "github.com/SchemaStore:helmfile"
+	charts "graphops.xyz/launchpad/namespaces:LaunchpadCharts"
 )
 
 info: {
@@ -37,3 +38,6 @@ info: {
 	}
 	...
 }
+
+// instantiate a repositories oject for internal usage
+_repositories: {charts.#repositories}

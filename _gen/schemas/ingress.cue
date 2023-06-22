@@ -1,3 +1,4 @@
+// schema:type=namespace schema:namespace=ingress
 package LaunchpadNamespaces
 
 import (
@@ -18,21 +19,21 @@ import (
 
 		#releases: {
 			ingressNginx: {
-				name:  "ingress-nginx"
-				chart: charts.#repositories["ingress-nginx"].charts["ingress-nginx"]
-				//				feature: #features.ingress
+				name:    "ingress-nginx"
+				chart:   charts.#repositories["ingress-nginx"].charts["ingress-nginx"]
+				feature: #features.ingress
 				_template: {version: "4.3.0"}
 			}
 			certManager: {
-				name:  "cert-manager"
-				chart: charts.#repositories.jetstack.charts["cert-manager"]
-				//				feature: #features.certManager
+				name:    "cert-manager"
+				chart:   charts.#repositories.jetstack.charts["cert-manager"]
+				feature: #features.certManager
 				_template: {version: "v1.10.0"}
 			}
 			certManagerResources: {
-				name:  "cert-manager-resources"
-				chart: charts.#repositories.graphops.charts["resource-injector"]
-				//				feature: #features.certManager
+				name:    "cert-manager-resources"
+				chart:   charts.#repositories.graphops.charts["resource-injector"]
+				feature: #features.certManager
 				_template: {version: "0.2.0"}
 			}
 		}
@@ -75,6 +76,9 @@ _namespaces: ingress: {
 	meta:     #namespaces.#ingress.#meta
 	releases: #namespaces.#ingress.#releases
 	features: #namespaces.#ingress.#features
-	values:   #namespaces.#ingress.#values
-	labels:   #namespaces.#ingress.labels
+	values:   #namespaces.#ingress.#values & {
+		targetNamespace: #namespaces.#ingress.#values.targetNamespace
+		features: [...#namespaces.#ingress.#values.#features.#enum]
+	}
+	labels: #namespaces.#ingress.labels
 }

@@ -1,3 +1,4 @@
+// schema:type=namespace schema:namespace=postgres-operator
 package LaunchpadNamespaces
 
 import (
@@ -49,5 +50,8 @@ _namespaces: postgresOperator: {
 	meta:     #namespaces.#postgresOperator.#meta
 	releases: #namespaces.#postgresOperator.#releases
 	values:   #namespaces.#postgresOperator.#values
-	labels:   #namespaces.#postgresOperator.labels
+	values:   #namespaces.#postgresOperator.#values & {
+		targetNamespace: #namespaces.#postgresOperator.#values.targetNamespace
+	}
+	labels: #namespaces.#postgresOperator.labels
 }

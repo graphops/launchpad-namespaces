@@ -1,96 +1,139 @@
+{{- $_tplTransforms := `
+{{- $_TemplatedResources := list "Deployment" "StatefulSet" "DaemonSet" -}}
+transformers:
+- apiVersion: builtin
+  kind: AnnotationsTransformer
+  metadata:
+    name: AddAnnotations
+  annotations:
+  {{- . | get "annotations" dict | toYaml | nindent 6 }}
+  fieldSpecs:
+  - path: metadata/annotations
+    create: true
+  {{- range $kind := $_TemplatedResources }}
+  - kind: {{ $kind }}
+    path: spec/template/metadata/annotations
+    create: true
+  {{- end }}
+- apiVersion: builtin
+  kind: LabelTransformer
+  metadata:
+    name: AddLabels
+  labels:
+  {{- . | get "labels" dict | toYaml | nindent 6 }}
+  fieldSpecs:
+  - path: metadata/labels
+    create: true
+  {{- range $kind := $_TemplatedResources }}
+  - kind: {{ $kind }}
+    path: spec/template/metadata/labels
+    create: true
+  {{- end }}
+` -}}
 
-bases:
-  - ../_common/inheritHelmDefaults.yaml.gotmpl
+{{- $_tplReleaseValues := (print `
+{{- if ( hasKey .Values "flavor" ) }}
+- ./values/_common/{{` "`{{ .Release.Name }}`" `}}.yaml
+- ./values/{{ .Values.flavor }}/{{` "`{{ .Release.Name }}`" `}}.yaml
+{{- else }}
+- ./values/{{` "`{{ .Release.Name }}`" `}}.yaml
+{{- end -}}
+{{- if typeIs ( typeOf list ) ( .Values | get .release dict | get "values" dict ) -}}
+ {{- range $element := ( .Values | get .release dict | get "values" dict ) }}
+- {{- $element | toYaml | nindent 4 }}
+ {{- end -}}
+{{- else }}
+- {{- .Values | get .release dict | get "values" dict | toYaml | nindent 4 }}
+{{- end -}}
+`) -}}
+
+{{ $__helmDefaults := `{"recreatePods":true}` | fromJson }}
+
+{{ with ( .Values | get "helmDefaults" dict ) }}
+{{ $_ := (deepCopy . | mergeOverwrite $__helmDefaults) }}
+{{ end }}
+
+helmDefaults:
+{{ $__helmDefaults | toYaml | indent 2 }}
 
 #set default namespace
-{{ $_defaultNamespace := "ingress" }}
+{{ $_defaultNamespace := `ingress` }}
+
+
+# Define default features when undefined
+{{ if not (hasKey .Values "features") }}
+{{ $_ := set .Values "features" (list
+
+) }}
+{{ end }}
 
 commonLabels:
-  launchpad.graphops.xyz/namespace: {{ $_defaultNamespace }}
-  launchpad.graphops.xyz/layer: "base"
+  launchpad.graphops.xyz/namespace: ingress
 
-# Repositories for Charts used for Releases in this namespace
+{{ $_labels := dict 
+  `launchpad.graphops.xyz/namespace` `ingress`
+}}
 repositories:
   - name: ingress-nginx
     url: https://kubernetes.github.io/ingress-nginx
-  - name: vouch
-    url: https://vouch.github.io/helm-charts/
   - name: jetstack
     url: https://charts.jetstack.io
-
-# Import common YAML template definitions
-{{ $_tplDefaults := tpl (readFile "../_common/tplDefaults.yaml") dict -}}
-
-{{ $_labels := dict
-  "launchpad.graphops.xyz/namespace" $_defaultNamespace
-}}
-
-{{ $_tplTransforms :=
-  tpl (readFile "../_common/tplTransforms.yaml.gotmpl") (dict
-    "annotations" ( .Values | get "annotations" dict)
-    "labels" ( merge $_labels ( .Values | get "labels" dict) )
-    )
--}}
-
-# Anchors for each default release definition, their default values, and any inner resources that are relevant
+  - name: graphops
+    url: https://graphops.github.io/launchpad-charts
+  
 templates:
   transforms:
-    {{- $_tplTransforms | nindent 4 }}
-
+    {{ tpl $_tplTransforms (dict
+    "annotations" ( .Values | get "annotations" dict)
+    "labels" ( merge $_labels ( .Values | get "labels" dict) )
+    ) | nindent 4 }}
+  
   defaults:
-    {{- $_tplDefaults | nindent 4 -}}
-    namespace: {{ .Values | get "targetNamespace" $_defaultNamespace }}
+    namespace: '{{ .Values | get "targetNamespace" $_defaultNamespace }}'
+    missingFileHandler: Warn
     inherit:
       - template: transforms
-
-  resource-injector:
-    chart: graphops/resource-injector
-    version: 0.2.0
-    inherit:
-      - template: defaults
-
+  
   ingress-nginx:
     chart: ingress-nginx/ingress-nginx
     version: 4.3.0
     inherit:
       - template: defaults
-
+  
   cert-manager:
     chart: jetstack/cert-manager
     version: v1.10.0
     inherit:
       - template: defaults
-    disableValidationOnInstall: true # For CRDs https://github.com/helmfile/helmfile/blob/main/pkg/state/state.go#L236
-    wait: true
-
-# Define default features when undefined
-{{ if not (hasKey .Values "features") }}
-{{ $_ := set .Values "features" (list
-  "ingress"
-  "cert-manager"
-) }}
-{{ end }}
-
+  
+  cert-manager-resources:
+    chart: graphops/resource-injector
+    version: 0.2.0
+    inherit:
+      - template: defaults
+  
 releases:
   {{ if has "ingress" ( .Values | get "features" list ) }}
-    {{- $release := "ingress-nginx" }}
-  - name: {{ $release }}
-    labels:
-      feature: "ingress"
-    {{- tpl (readFile "../_common/tplRelease.yaml.gotmpl") (dict "Values" .Values "release" $release)  | nindent 4 -}}
-  {{ end }}
-
+  {{- $release := "ingress-nginx" }}
+  - name: 'ingress-nginx'
+    inherit:
+    - template: 'ingress-nginx'
+    values:
+    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | nindent 4 -}}
+  {{- end -}}
   {{ if has "cert-manager" ( .Values | get "features" list ) }}
-    {{ $release := "cert-manager" }}
-  - name: {{ $release }}
-    labels:
-      feature: "cert-manager"
-    {{- tpl (readFile "../_common/tplRelease.yaml.gotmpl") (dict "Values" .Values "release" $release)  | nindent 4 -}}
-
-    {{ $release := "cert-manager-resources" }}
-  - name: {{ $release }}
-    disableValidationOnInstall: true # For CRDs https://github.com/helmfile/helmfile/blob/main/pkg/state/state.go#L236
-    labels:
-      feature: "cert-manager"
-    {{- tpl (readFile "../_common/tplRelease.yaml.gotmpl") (dict "Values" .Values "release" $release "resource-injector" true)  | nindent 4 -}}
-  {{ end }}
+  {{- $release := "cert-manager" }}
+  - name: 'cert-manager'
+    inherit:
+    - template: 'cert-manager'
+    values:
+    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | nindent 4 -}}
+  {{- end -}}
+  {{ if has "cert-manager" ( .Values | get "features" list ) }}
+  {{- $release := "cert-manager-resources" }}
+  - name: 'cert-manager-resources'
+    inherit:
+    - template: 'cert-manager-resources'
+    values:
+    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | nindent 4 -}}
+  {{- end -}}

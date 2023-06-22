@@ -1,3 +1,4 @@
+// schema:type=namespace schema:namespace=sealed-secrets
 package LaunchpadNamespaces
 
 import (
@@ -49,6 +50,8 @@ import (
 _namespaces: sealedSecrets: {
 	meta:     #namespaces.#sealedSecrets.#meta
 	releases: #namespaces.#sealedSecrets.#releases
-	values:   #namespaces.#sealedSecrets.#values
-	labels:   #namespaces.#sealedSecrets.labels
+	values:   #namespaces.#sealedSecrets.#values & {
+		targetNamespace: #namespaces.#sealedSecrets.#values.targetNamespace
+	}
+	labels: #namespaces.#sealedSecrets.labels
 }

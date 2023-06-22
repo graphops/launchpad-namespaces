@@ -1,3 +1,4 @@
+// schema:type=namespace schema:namespace=ethereum
 package LaunchpadNamespaces
 
 import (
@@ -46,9 +47,10 @@ import (
 
 		// eth-erigon namespace values schema
 		#values: #base.#values & {
-			// the default is eth-[flavor]
-			targetNamespace: *"eth-mainnet" | string
-			flavor?:         *"mainnet" | #flavor.#enum
+			// the default is eth-<flavor>
+			targetNamespace:           *"eth-mainnet" | string
+			_templatedTargetNamespace: '( print "eth-" .Values.flavor )'
+			flavor:                    *"mainnet" | #flavor.#enum
 			for key, release in #releases {
 				"\(release.name)"?: {
 					mergeValues?: bool
@@ -75,6 +77,9 @@ _namespaces: ethereum: {
 	meta:     #namespaces.#ethereum.#meta
 	releases: #namespaces.#ethereum.#releases
 	flavor:   #namespaces.#ethereum.#flavor
-	values:   #namespaces.#ethereum.#values
-	labels:   #namespaces.#ethereum.labels
+	values:   #namespaces.#ethereum.#values & {
+		targetNamespace: #namespaces.#ethereum.#values.targetNamespace
+		flavor:          #namespaces.#ethereum.#flavor.#enum
+	}
+	labels: #namespaces.#ethereum.labels
 }

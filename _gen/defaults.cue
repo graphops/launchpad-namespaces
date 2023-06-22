@@ -3,6 +3,6 @@ package LaunchpadNamespaces
 _defaults: {
 	helmDefaults:
 		recreatePods: true
-	releaseDefaults:
+	releases:
 		missingFileHandler: "Warn"
 }

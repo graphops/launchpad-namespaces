@@ -1,122 +1,165 @@
+{{- $_tplTransforms := `
+{{- $_TemplatedResources := list "Deployment" "StatefulSet" "DaemonSet" -}}
+transformers:
+- apiVersion: builtin
+  kind: AnnotationsTransformer
+  metadata:
+    name: AddAnnotations
+  annotations:
+  {{- . | get "annotations" dict | toYaml | nindent 6 }}
+  fieldSpecs:
+  - path: metadata/annotations
+    create: true
+  {{- range $kind := $_TemplatedResources }}
+  - kind: {{ $kind }}
+    path: spec/template/metadata/annotations
+    create: true
+  {{- end }}
+- apiVersion: builtin
+  kind: LabelTransformer
+  metadata:
+    name: AddLabels
+  labels:
+  {{- . | get "labels" dict | toYaml | nindent 6 }}
+  fieldSpecs:
+  - path: metadata/labels
+    create: true
+  {{- range $kind := $_TemplatedResources }}
+  - kind: {{ $kind }}
+    path: spec/template/metadata/labels
+    create: true
+  {{- end }}
+` -}}
 
-bases:
-  - ../_common/inheritHelmDefaults.yaml.gotmpl
+{{- $_tplReleaseValues := (print `
+{{- if ( hasKey .Values "flavor" ) }}
+- ./values/_common/{{` "`{{ .Release.Name }}`" `}}.yaml
+- ./values/{{ .Values.flavor }}/{{` "`{{ .Release.Name }}`" `}}.yaml
+{{- else }}
+- ./values/{{` "`{{ .Release.Name }}`" `}}.yaml
+{{- end -}}
+{{- if typeIs ( typeOf list ) ( .Values | get .release dict | get "values" dict ) -}}
+ {{- range $element := ( .Values | get .release dict | get "values" dict ) }}
+- {{- $element | toYaml | nindent 4 }}
+ {{- end -}}
+{{- else }}
+- {{- .Values | get .release dict | get "values" dict | toYaml | nindent 4 }}
+{{- end -}}
+`) -}}
 
+{{ $__helmDefaults := `{"recreatePods":true}` | fromJson }}
+
+{{ with ( .Values | get "helmDefaults" dict ) }}
+{{ $_ := (deepCopy . | mergeOverwrite $__helmDefaults) }}
+{{ end }}
+
+helmDefaults:
+{{ $__helmDefaults | toYaml | indent 2 }}
 
 #set default namespace
-{{ $_defaultNamespace := "storage" }}
+{{ $_defaultNamespace := `storage` }}
+
+
+# Define default features when undefined
+{{ if not (hasKey .Values "features") }}
+{{ $_ := set .Values "features" (list
+`rawfile`
+) }}
+{{ end }}
 
 commonLabels:
-  launchpad.graphops.xyz/namespace: {{ $_defaultNamespace }}
-  launchpad.graphops.xyz/layer: "base"
+  launchpad.graphops.xyz/namespace: storage
 
-
-# Repositories for Charts used for Releases in this namespace
+{{ $_labels := dict 
+  `launchpad.graphops.xyz/namespace` `storage`
+}}
 repositories:
   - name: openebs
     url: https://openebs.github.io/charts
-  - name: openebs-zfs-localpv
-    url: https://openebs.github.io/zfs-localpv
-  - name: openebs-monitoring
-    url: https://openebs.github.io/monitoring/
   - name: graphops
     url: https://graphops.github.io/launchpad-charts
-
-# Import common YAML template definitions
-{{ $_tplDefaults := tpl (readFile "../_common/tplDefaults.yaml") dict -}}
-
-{{ $_labels := dict
-  "launchpad.graphops.xyz/namespace" $_defaultNamespace
-}}
-
-{{ $_tplTransforms :=
-  tpl (readFile "../_common/tplTransforms.yaml.gotmpl") (dict
-    "annotations" ( .Values | get "annotations" dict)
-    "labels" ( merge $_labels ( .Values | get "labels" dict) )
-    )
--}}
-
+  - name: openebs-zfs-localpv
+    url: https://openebs.github.io/zfs-localpv
+  
 templates:
   transforms:
-    {{- $_tplTransforms | nindent 4 }}
-
+    {{ tpl $_tplTransforms (dict
+    "annotations" ( .Values | get "annotations" dict)
+    "labels" ( merge $_labels ( .Values | get "labels" dict) )
+    ) | nindent 4 }}
+  
   defaults:
-    {{- $_tplDefaults | nindent 4 -}}
-    namespace: {{ .Values | get "targetNamespace" $_defaultNamespace }}
+    namespace: '{{ .Values | get "targetNamespace" $_defaultNamespace }}'
+    missingFileHandler: Warn
     inherit:
       - template: transforms
-
-  resource-injector:
-    chart: graphops/resource-injector
-    version: 0.2.0
-    inherit:
-      - template: defaults
-
+  
   openebs:
     chart: openebs/openebs
     version: 3.6.0
     inherit:
       - template: defaults
-
+  
   openebs-rawfile-localpv:
     chart: graphops/openebs-rawfile-localpv
     version: 0.8.0
     inherit:
       - template: defaults
-
+  
+  openebs-rawfile-storageclass:
+    chart: graphops/resource-injector
+    version: 0.2.0
+    inherit:
+      - template: defaults
+  
   openebs-zfs-localpv:
     chart: openebs-zfs-localpv/zfs-localpv
     version: 2.1.0
     inherit:
       - template: defaults
-
-  openebs-monitoring:
-    chart: openebs-monitoring/openebs-monitoring
-    version: 0.4.10
+  
+  openebs-zfs-storageclass:
+    chart: graphops/resource-injector
+    version: 0.2.0
     inherit:
       - template: defaults
-
-# Define default features when undefined
-{{ if not (hasKey .Values "features") }}
-{{ $_ := set .Values "features" (list
-  "openebs"
-  "rawfile"
-) }}
-{{ end }}
-
+  
 releases:
-  {{- if has "openebs" ( .Values | get "features" list ) }}
-    {{- $release := "openebs" }}
-  - name: {{ $release }}
-    labels:
-      feature: "openebs"
-    {{- tpl (readFile "../_common/tplRelease.yaml.gotmpl") (dict "Values" .Values "release" $release)  | nindent 4 -}}
-  {{- end -}}
-
+  {{- $release := "openebs" }}
+  - name: 'openebs'
+    inherit:
+    - template: 'openebs'
+    values:
+    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | nindent 4 -}}
   {{ if has "rawfile" ( .Values | get "features" list ) }}
-    {{- $release := "openebs-rawfile-localpv" }}
-  - name: {{ $release }}
-    labels:
-      feature: "rawfile"
-    {{- tpl (readFile "../_common/tplRelease.yaml.gotmpl") (dict "Values" .Values "release" $release)  | nindent 4 -}}
-
-    {{- $release := "openebs-rawfile-storageclass" }}
-  - name: {{ $release }}
-    labels:
-      feature: "rawfile"
-    {{- tpl (readFile "../_common/tplRelease.yaml.gotmpl") (dict "Values" .Values "release" $release "resource-injector" true)  | nindent 4 -}}
+  {{- $release := "openebs-rawfile-localpv" }}
+  - name: 'openebs-rawfile-localpv'
+    inherit:
+    - template: 'openebs-rawfile-localpv'
+    values:
+    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | nindent 4 -}}
   {{- end -}}
-
+  {{ if has "rawfile" ( .Values | get "features" list ) }}
+  {{- $release := "openebs-rawfile-storageclass" }}
+  - name: 'openebs-rawfile-storageclass'
+    inherit:
+    - template: 'openebs-rawfile-storageclass'
+    values:
+    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | nindent 4 -}}
+  {{- end -}}
   {{ if has "zfs" ( .Values | get "features" list ) }}
-    {{- $release := "openebs-zfs-localpv" }}
-  - name: {{ $release }}
-    labels:
-      feature: "zfs"
-    {{- tpl (readFile "../_common/tplRelease.yaml.gotmpl") (dict "Values" .Values "release" $release)  | nindent 4 -}}
-
-    {{- $release := "openebs-zfs-storageclass" }}
-  - name: {{ $release }}
-    labels:
-      feature: "zfs"
-    {{- tpl (readFile "../_common/tplRelease.yaml.gotmpl") (dict "Values" .Values "release" $release "resource-injector" true)  | nindent 4 -}}
+  {{- $release := "openebs-zfs-localpv" }}
+  - name: 'openebs-zfs-localpv'
+    inherit:
+    - template: 'openebs-zfs-localpv'
+    values:
+    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | nindent 4 -}}
+  {{- end -}}
+  {{ if has "zfs" ( .Values | get "features" list ) }}
+  {{- $release := "openebs-zfs-storageclass" }}
+  - name: 'openebs-zfs-storageclass'
+    inherit:
+    - template: 'openebs-zfs-storageclass'
+    values:
+    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | nindent 4 -}}
   {{- end -}}

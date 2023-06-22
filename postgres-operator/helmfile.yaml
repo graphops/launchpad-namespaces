@@ -1,54 +1,99 @@
+{{- $_tplTransforms := `
+{{- $_TemplatedResources := list "Deployment" "StatefulSet" "DaemonSet" -}}
+transformers:
+- apiVersion: builtin
+  kind: AnnotationsTransformer
+  metadata:
+    name: AddAnnotations
+  annotations:
+  {{- . | get "annotations" dict | toYaml | nindent 6 }}
+  fieldSpecs:
+  - path: metadata/annotations
+    create: true
+  {{- range $kind := $_TemplatedResources }}
+  - kind: {{ $kind }}
+    path: spec/template/metadata/annotations
+    create: true
+  {{- end }}
+- apiVersion: builtin
+  kind: LabelTransformer
+  metadata:
+    name: AddLabels
+  labels:
+  {{- . | get "labels" dict | toYaml | nindent 6 }}
+  fieldSpecs:
+  - path: metadata/labels
+    create: true
+  {{- range $kind := $_TemplatedResources }}
+  - kind: {{ $kind }}
+    path: spec/template/metadata/labels
+    create: true
+  {{- end }}
+` -}}
 
-bases:
-  - ../_common/inheritHelmDefaults.yaml.gotmpl
+{{- $_tplReleaseValues := (print `
+{{- if ( hasKey .Values "flavor" ) }}
+- ./values/_common/{{` "`{{ .Release.Name }}`" `}}.yaml
+- ./values/{{ .Values.flavor }}/{{` "`{{ .Release.Name }}`" `}}.yaml
+{{- else }}
+- ./values/{{` "`{{ .Release.Name }}`" `}}.yaml
+{{- end -}}
+{{- if typeIs ( typeOf list ) ( .Values | get .release dict | get "values" dict ) -}}
+ {{- range $element := ( .Values | get .release dict | get "values" dict ) }}
+- {{- $element | toYaml | nindent 4 }}
+ {{- end -}}
+{{- else }}
+- {{- .Values | get .release dict | get "values" dict | toYaml | nindent 4 }}
+{{- end -}}
+`) -}}
 
+{{ $__helmDefaults := `{"recreatePods":true}` | fromJson }}
+
+{{ with ( .Values | get "helmDefaults" dict ) }}
+{{ $_ := (deepCopy . | mergeOverwrite $__helmDefaults) }}
+{{ end }}
+
+helmDefaults:
+{{ $__helmDefaults | toYaml | indent 2 }}
 
 #set default namespace
-{{ $_defaultNamespace := "postgres-operator" }}
+{{ $_defaultNamespace := `postgres-operator` }}
+
+
 
 commonLabels:
-  launchpad.graphops.xyz/namespace: {{ $_defaultNamespace }}
-  launchpad.graphops.xyz/layer: "base"
+  launchpad.graphops.xyz/namespace: postgres-operator
 
-# Repositories for Charts used for Releases in this namespace
+{{ $_labels := dict 
+  `launchpad.graphops.xyz/namespace` `postgres-operator`
+}}
 repositories:
   - name: postgres-operator-charts
     url: https://opensource.zalando.com/postgres-operator/charts/postgres-operator
-
-# Import common YAML template definitions
-{{ $_tplDefaults := tpl (readFile "../_common/tplDefaults.yaml") dict -}}
-
-{{ $_labels := dict
-  "launchpad.graphops.xyz/namespace" $_defaultNamespace
-}}
-
-#  "launchpad.graphops.xyz/targetNamespace" .Release.Namespace
-#
-{{ $_tplTransforms :=
-  tpl (readFile "../_common/tplTransforms.yaml.gotmpl") (dict
-    "annotations" ( .Values | get "annotations" dict)
-    "labels" ( merge $_labels ( .Values | get "labels" dict) )
-    )
--}}
-
+  
 templates:
   transforms:
-    {{- $_tplTransforms | nindent 4 }}
-
+    {{ tpl $_tplTransforms (dict
+    "annotations" ( .Values | get "annotations" dict)
+    "labels" ( merge $_labels ( .Values | get "labels" dict) )
+    ) | nindent 4 }}
+  
   defaults:
-    {{- $_tplDefaults | nindent 4 -}}
-    namespace: {{ .Values | get "targetNamespace" $_defaultNamespace }}
+    namespace: '{{ .Values | get "targetNamespace" $_defaultNamespace }}'
+    missingFileHandler: Warn
     inherit:
       - template: transforms
-
+  
   postgres-operator:
     chart: postgres-operator-charts/postgres-operator
     version: 1.8.2
-    disableValidationOnInstall: true # https://github.com/roboll/helmfile/issues/1600
     inherit:
       - template: defaults
-
+  
 releases:
-    {{- $release := "postgres-operator" }}
-  - name: {{ $release }}
-    {{- tpl (readFile "../_common/tplRelease.yaml.gotmpl") (dict "Values" .Values "release" $release)  | nindent 4 -}}
+  {{- $release := "postgres-operator" }}
+  - name: 'postgres-operator'
+    inherit:
+    - template: 'postgres-operator'
+    values:
+    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | nindent 4 -}}
