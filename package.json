@@ -8,6 +8,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.6.5",
     "@commitlint/config-conventional": "^17.6.5",
+    "git-cliff": "^1.2.0",
     "husky": "^8.0.3"
   },
   "scripts": {
