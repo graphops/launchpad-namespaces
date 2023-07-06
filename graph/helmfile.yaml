@@ -1,0 +1,125 @@
+{{- $_tplTransforms := `
+{{- $_TemplatedResources := list "Deployment" "StatefulSet" "DaemonSet" -}}
+transformers:
+- apiVersion: builtin
+  kind: AnnotationsTransformer
+  metadata:
+    name: AddAnnotations
+  annotations:
+  {{- . | get "annotations" dict | toYaml | nindent 6 }}
+  fieldSpecs:
+  - path: metadata/annotations
+    create: true
+  {{- range $kind := $_TemplatedResources }}
+  - kind: {{ $kind }}
+    path: spec/template/metadata/annotations
+    create: true
+  {{- end }}
+- apiVersion: builtin
+  kind: LabelTransformer
+  metadata:
+    name: AddLabels
+  labels:
+  {{- . | get "labels" dict | toYaml | nindent 6 }}
+  fieldSpecs:
+  - path: metadata/labels
+    create: true
+  {{- range $kind := $_TemplatedResources }}
+  - kind: {{ $kind }}
+    path: spec/template/metadata/labels
+    create: true
+  {{- end }}
+` -}}
+
+{{- $_tplReleaseValues := (print `
+{{- if ( .Values | get .release dict | get "mergeValues" true ) -}}
+{{- if ( hasKey .Values "flavor" ) }}
+- ./values/_common/{{` "`{{ .Release.Name }}`" `}}.yaml
+- ./values/{{ .Values.flavor }}/{{` "`{{ .Release.Name }}`" `}}.yaml
+{{- else }}
+- ./values/{{` "`{{ .Release.Name }}`" `}}.yaml
+{{- end -}}
+{{- end -}}
+{{- if typeIs ( typeOf list ) ( .Values | get .release dict | get "values" dict ) -}}
+ {{- range $element := ( .Values | get .release dict | get "values" dict ) }}
+- {{- $element | toYaml | nindent 2 }}
+ {{- end -}}
+{{- else }}
+- {{- .Values | get .release dict | get "values" dict | toYaml | nindent 2 }}
+{{- end -}}
+`) -}}
+
+{{ $__helmDefaults := `{"recreatePods":true}` | fromJson }}
+
+{{ with ( .Values | get "helmDefaults" dict ) }}
+{{ $_ := (deepCopy . | mergeOverwrite $__helmDefaults) }}
+{{ end }}
+
+helmDefaults:
+{{ $__helmDefaults | toYaml | indent 2 }}
+
+#set default namespace
+{{ $_defaultNamespace := ( print "graph-" .Values.flavor ) }}
+
+
+
+commonLabels:
+  launchpad.graphops.xyz/namespace: graph
+
+{{ $_labels := dict 
+  `launchpad.graphops.xyz/namespace` `graph`
+}}
+repositories:
+  - name: graphops
+    url: https://graphops.github.io/launchpad-charts/canary
+  
+templates:
+  transforms:
+    {{ tpl $_tplTransforms (dict
+    "annotations" ( .Values | get "annotations" dict)
+    "labels" ( merge $_labels ( .Values | get "labels" dict) )
+    ) | nindent 4 }}
+  
+  defaults:
+    namespace: '{{ .Values | get "targetNamespace" $_defaultNamespace }}'
+    missingFileHandler: Warn
+    inherit:
+      - template: transforms
+  
+  graph-node:
+    chart: graphops/graph-node
+    version: 0.1.5
+    inherit:
+      - template: defaults
+  
+  graph-network-indexer:
+    chart: graphops/graph-network-indexer
+    version: 0.1.2
+    inherit:
+      - template: defaults
+  
+  graph-toolbox:
+    chart: graphops/graph-toolbox
+    version: 0.1.0
+    inherit:
+      - template: defaults
+  
+releases:
+  {{- $release := "graph-node" }}
+  - name: 'graph-node'
+    inherit:
+    - template: 'graph-node'
+    values:
+    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
+  {{- $release := "graph-network-indexer" }}
+  - name: 'graph-network-indexer'
+    inherit:
+    - template: 'graph-network-indexer'
+    values:
+    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
+  {{- $release := "graph-toolbox" }}
+  - name: 'graph-toolbox'
+    inherit:
+    - template: 'graph-toolbox'
+    values:
+    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
