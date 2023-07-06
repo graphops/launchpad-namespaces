@@ -5,7 +5,7 @@ Hello! :wave: and thank you for considering investing your time in contributing 
 Some of the ways to contribute:
 - **Community:** by hanging with our community at ![Discord](https://avatars.githubusercontent.com/u/1965106?s=12&v=4) [Discord *(The Graph)*](https://discord.com/channels/438038660412342282/1029379955307585568), even if just to let us know you're using *Namespaces* we would appreciate to hear from you. We don't bite, promise!
 - **Opening Issues:** by being a user and taking the time to report issues (or feature requests) you've ran into. Please see the [Opening Issues](/CONTRIBUTING.md#opening-issues) section below on how to do just that.
-- **Code:** - channel your skills and knowledge by crafting valuable pull requests (PRs). We wholeheartedly welcome your contributions. Please see the [Contributing Code](/CONTRIBUTING.md#contributing-code) section below on how to do just that.
+- **Code:** by channeling your skills and knowledge to craft valuable pull requests (PRs). We wholeheartedly welcome your contributions. Please see the [Contributing Code](/CONTRIBUTING.md#contributing-code) section below on how to do just that.
 
 # Opening Issues
 
@@ -16,17 +16,17 @@ Some of the ways to contribute:
 
 To contribute code, there's a few requirements you need to go through first:
 
-### [yarn](https://github.com/yarnpkg/berry)
+### yarn
 
-Our Git hooks system and some of our dependencies for tasks such as code generating or templating are being managed by yarn, so that will be required
+Our Git hooks system and some of our dependencies for tasks such as code generating or templating are being managed by [yarn](https://github.com/yarnpkg/berry), so that will be required
 
-### [tera-cli](https://github.com/chevdor/tera-cli)
+### tera-cli
 
-Some of our documentation is templated with this tool, and for those tasks to run sucessfully tera-cli must be available
+Some of our documentation is templated with this tool, and for those tasks to run sucessfully [tera-cli](https://github.com/chevdor/tera-cli) must be available
 
-### [CUE](https://github.com/cue-lang/cue)
+### CUE
 
-Namespaces schemas are written in cue-lang and you will need this tool.
+Namespaces schemas are written in [cue-lang](https://github.com/cue-lang/cue) and you will need this tool.
 
 Once you have successfully fulfilled the previous requirements in your operating system, the next logical step is to clone this repository and initialize the yarn packages using the following command:
 
@@ -78,7 +78,7 @@ Please do not merge main into your branch as you develop your pull request; inst
 TL;DR
 
 ```
-1. Make sure both `dev` and `main` are up-to their respective heads
+1. Make sure both `dev` and `main` are up-to their respective head
 2. Checkout a release branch from `dev` branch
 	1. update version in Cargo.toml
 	2. run `scripts/release.sh`
@@ -144,7 +144,7 @@ The schema files completely define the namespace in its many characteristics, su
 - the features it supports
 - the labels its releases get deployed with
 
-### values merging
+### Values Merging
 
 This is often implemented in the helmfiles in code such as
 ```
@@ -154,7 +154,7 @@ This is often implemented in the helmfiles in code such as
 {{ end }}
 ```which consists of declaring a variable holding a default value, and deep merging with the user passed values, giving precedence to those. Injecting the default value, recreatePods in this example, is done by the CUE tool when building the helmfiles.
 
-### flavors
+### Flavors
 
 Flavors are implemented by having different sets of values in different subfolders, and having the helmfile lookup the folder dynamically, as shown in this example
 ```
@@ -166,7 +166,7 @@ Flavors are implemented by having different sets of values in different subfolde
 {{- end -}}
 ```
 
-### features
+### Features
 
 Features are implemented by wrapping releases in the helmfile with a conditional, as seen in the following example:
 ```
