@@ -3,9 +3,9 @@
 Hello! :wave: and thank you for considering investing your time in contributing to Launchpad Namespaces! As an open source project, it depends on a strong community to florish, and we welcome any type of contribution (not just code) that aligns with our [Code of Conduct].
 
 Some of the ways to contribute:
-- **Community:** by hanging with our community at ![Discord](https://avatars.githubusercontent.com/u/1965106?s=12&v=4) [Discord *(The Graph)*](https://thegraph.com/discord), even if just to let us know you're using *Namespaces* we would appreciate to hear from you. We don't bite, promise!
+- **Community:** by hanging with our community at ![Discord](https://avatars.githubusercontent.com/u/1965106?s=12&v=4) [Discord *(The Graph)*](https://discord.com/channels/438038660412342282/1029379955307585568), even if just to let us know you're using *Namespaces* we would appreciate to hear from you. We don't bite, promise!
 - **Opening Issues:** by being a user and taking the time to report issues (or feature requests) you've ran into. Please see the [Opening Issues](/CONTRIBUTING.md#opening-issues) section below on how to do just that.
-- **Code:** by putting your hands and brain to work in crafting much welcomed PRs. Please see the [Contributing Code](/CONTRIBUTING.md#contributing-code) section below on how to do just that.
+- **Code:** - channel your skills and knowledge by crafting valuable pull requests (PRs). We wholeheartedly welcome your contributions. Please see the [Contributing Code](/CONTRIBUTING.md#contributing-code) section below on how to do just that.
 
 # Opening Issues
 
@@ -16,23 +16,23 @@ Some of the ways to contribute:
 
 To contribute code, there's a few requirements you need to go through first:
 
-### yarn
+### [yarn](https://github.com/yarnpkg/berry)
 
 Our Git hooks system and some of our dependencies for tasks such as code generating or templating are being managed by yarn, so that will be required
 
-### tera-cli
+### [tera-cli](https://github.com/chevdor/tera-cli)
 
 Some of our documentation is templated with this tool, and for those tasks to run sucessfully tera-cli must be available
 
-### CUE
+### [CUE](https://github.com/cue-lang/cue)
 
 Namespaces schemas are written in cue-lang and you will need this tool.
 
-After having taken care of satisfying the previous requirements in an appropriate way in your OS, your next step should be to clone this repository and initialize yarn packages with
+Once you have successfully fulfilled the previous requirements in your operating system, the next logical step is to clone this repository and initialize the yarn packages using the following command:
 
 > yarn install
 
-From a setup point of view you should be ready to go. Keep reading for a brief overview of the repository layout and implementation details.
+You're all set up and ready to go! Continue reading for a concise overview of the repository layout and implementation details.
 
 ## Commit messages and pull requests
 
@@ -69,7 +69,7 @@ Make sure to include an exclamation mark after the commit type and scope if ther
 
 `<footer>` contain any information about Breaking Changes and reference GitHub issues that this commit closes
 
-Commits in a pull request should be structured in such a way that each commit consists of a small logical step towards the overall goal of the pull request. Your pull request should make it as easy as possible for the reviewer to follow each change you are making. For example, it is a good idea to separate simple mechanical changes like renaming a method that touches many files from logic changes. Your pull request should not be structured into commits according to how you implemented your feature, often indicated by commit messages like 'Fix problem' or 'Cleanup'. Flex a bit, and make the world think that you implemented your feature perfectly, in small logical steps, in one sitting without ever having to touch up something you did earlier in the pull request. (In reality, that means you'll use `git rebase -i` a lot).
+Commits in a pull request should be structured in such a way that each commit consists of a small logical step towards the overall goal of the pull request. Your pull request should make it as easy as possible for the reviewer to follow each change you made. For example, it is a good idea to separate simple mechanical changes like renaming a method that touches many files from logic changes. Your pull request should not be structured into commits according to how you implemented your feature, often indicated by commit messages like 'Fix problem' or 'Cleanup'. Flex a bit, and make the world think that you implemented your feature perfectly, in small logical steps, in one sitting without ever having to touch up something you did earlier in the pull request. (In reality, that means you'll use `git rebase -i` a lot).
 
 Please do not merge main into your branch as you develop your pull request; instead, rebase your branch on top of the latest main if your pull request branch is long-lived.
 
@@ -78,7 +78,7 @@ Please do not merge main into your branch as you develop your pull request; inst
 TL;DR
 
 ```
-1. Make sure both `dev` and `main` are up-to their respective head
+1. Make sure both `dev` and `main` are up-to their respective heads
 2. Checkout a release branch from `dev` branch
 	1. update version in Cargo.toml
 	2. run `scripts/release.sh`
@@ -111,37 +111,37 @@ This repository has a lot of dynamically generated content and artifacts, and th
 
 ### `/src/schemas`
 
-In here you'll find all the schemas which are the source of truth for every namespace helmfile. Amon them also resides `generate_tool.cue`, which implements the logic for actually generating all the outputs from the schemas.
+In here you'll discover a collection of schemas which are the source of truth for each namespace helmfile. Amongst them also resides `generate_tool.cue`, which implements the logic for actually generating all the outputs from the schemas.
 
 ### `/src/scripts`
 
-Here reside convenience scripts to regen helmfiles, docs, openAPI JSON schema files, ...
+Here, you will find a repository containing convenient scripts for regenerating helmfiles, documentation, OpenAPI JSON schema files, and more. These scripts are designed to streamline the process and make it easier for you to update and maintain these essential components.
 
 ### `/src/docs`
 
-Base templates for several document files, and some macros used in the templating
+Here, you will find base templates for several document files, and some macros used in the templating.
 
 ### `/<namespace>`
 
-Each namespace has its own folder where their artifacts reside
+Each namespace has its own folder where their specific artifacts reside
 
 ### `/<namespace>/values`
 
-The default values for the namespace. In case the namespace has more than one flavor (different sets of defaults), then those reside in `/<namespace>/values/<flavor>`, and the `_common` folder contains the common values shared by all flavors.
+The default values for a given namespace. In case the namespace has more than one flavor (different sets of defaults), then those reside in `/<namespace>/values/<flavor>`, and the `_common` folder contains the common values shared by all flavors.
 
 ## Implementation Details
 
 A Namespace is comprised of two things:
 - A set (or more, when the namespace has different flavors) of default values for the releases (helm charts)
-- An helmfile.yaml with some templating logic evaluated client-side "at runtime", by helmfile. This templating logic implements the interface and features available (... like dictionary merging the user-passed values on top of the default ones, or toggling some releases on/off depending on features)
+- A `helmfile.yaml` file that incorporates client-side templating logic, evaluated dynamically by helmfile during runtime. This templating logic provides a rich set of features and interfaces, such as dictionary merging of user-provided values with default values, as well as the ability to toggle specific releases on or off based on feature requirements. It empowers you to efficiently customize and configure your deployments with ease.
 
 The default values are static data, and can be found in the `{namespace}/values` folders.
 
-The helmfile.yaml file is dynamically built from schema files written in CUE (check the repository layout for a more compreensive description of the structure).
+The helmfile.yaml file is dynamically built from schema files written in CUE (check the repository layout for a more comprehensive description of the structure).
 
-Those schema files completely define the namespace in its many characteristics, such as:
+The schema files completely define the namespace in its many characteristics, such as:
 - what releases they bundle, and the helm chart repos in which to find those releases
-- what features it supports
+- the features it supports
 - the labels its releases get deployed with
 
 ### values merging
@@ -164,9 +164,11 @@ Flavors are implemented by having different sets of values in different subfolde
 {{- else }}
 - ./values/{{` "`{{ .Release.Name }}`" `}}.yaml
 {{- end -}}
-```### features
+```
 
-Features are implemented by wrapping the releases in the helmfile with a conditional, as seen in the following example:
+### features
+
+Features are implemented by wrapping releases in the helmfile with a conditional, as seen in the following example:
 ```
 {{ if has "metrics" ( .Values | get "features" list ) }}
 {{- $release := "kube-prometheus-stack" }}
