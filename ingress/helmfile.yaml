@@ -32,18 +32,20 @@ transformers:
 ` -}}
 
 {{- $_tplReleaseValues := (print `
+{{- if ( .Values | get .release dict | get "mergeValues" true ) -}}
 {{- if ( hasKey .Values "flavor" ) }}
 - ./values/_common/{{` "`{{ .Release.Name }}`" `}}.yaml
 - ./values/{{ .Values.flavor }}/{{` "`{{ .Release.Name }}`" `}}.yaml
 {{- else }}
 - ./values/{{` "`{{ .Release.Name }}`" `}}.yaml
 {{- end -}}
+{{- end -}}
 {{- if typeIs ( typeOf list ) ( .Values | get .release dict | get "values" dict ) -}}
  {{- range $element := ( .Values | get .release dict | get "values" dict ) }}
-- {{- $element | toYaml | nindent 4 }}
+- {{- $element | toYaml | nindent 2 }}
  {{- end -}}
 {{- else }}
-- {{- .Values | get .release dict | get "values" dict | toYaml | nindent 4 }}
+- {{- .Values | get .release dict | get "values" dict | toYaml | nindent 2 }}
 {{- end -}}
 `) -}}
 
@@ -63,7 +65,8 @@ helmDefaults:
 # Define default features when undefined
 {{ if not (hasKey .Values "features") }}
 {{ $_ := set .Values "features" (list
-
+`ingress`
+`cert-manager`
 ) }}
 {{ end }}
 
@@ -79,7 +82,7 @@ repositories:
   - name: jetstack
     url: https://charts.jetstack.io
   - name: graphops
-    url: https://graphops.github.io/launchpad-charts
+    url: https://graphops.github.io/launchpad-charts/canary
   
 templates:
   transforms:
@@ -119,7 +122,7 @@ releases:
     inherit:
     - template: 'ingress-nginx'
     values:
-    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | nindent 4 -}}
+    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- end -}}
   {{ if has "cert-manager" ( .Values | get "features" list ) }}
   {{- $release := "cert-manager" }}
@@ -127,7 +130,7 @@ releases:
     inherit:
     - template: 'cert-manager'
     values:
-    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | nindent 4 -}}
+    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- end -}}
   {{ if has "cert-manager" ( .Values | get "features" list ) }}
   {{- $release := "cert-manager-resources" }}
@@ -135,5 +138,5 @@ releases:
     inherit:
     - template: 'cert-manager-resources'
     values:
-    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | nindent 4 -}}
+    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- end -}}

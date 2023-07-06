@@ -4,11 +4,11 @@
 
 eth-erigon namespace values schema
 
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)[![latest:stable](https://img.shields.io/badge/latest:stable-v1.0.0-blue)](https://github.com/graphops/launchpad-namespaces/releases)[![latest:canary](https://img.shields.io/badge/latest:canary-v1.0.1--pre.1-orange)](https://github.com/graphops/launchpad-namespaces/releases)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Features
 
-- Actively maintained by [![GraphOps](https://avatars.githubusercontent.com/u/85314764?s=12&v=4) *GraphOps*](https://graphops.xyz) [and contributors](https://github.com/graphops/launchpad-namespaces/graphs/contributors)
+- Actively maintained by [![GraphOps](https://avatars.githubusercontent.com/u/85314764?s=12&v=4) *GraphOps*](https://graphops.xyz) [and contributors](/graphs/contributors)
 - Common values interfaces across all namespaces
 - Flexible and adaptable, allowing defaults to be overriden
 - Two release channels: `main` and `canary`
@@ -31,6 +31,10 @@ helmfiles:
     selectorsInherited: true
 ```
 
+> **Note**
+> On the path to the helmfile, you can use the query string's ref `(?ref=storage:latest)` to track one of the release streams: `main` and `canary`, pin to a specific version or just track a particular major or minor semantic version.
+> For more on this, check the [*Updates*](/README.md#Updates) section
+
 This is a very minimalist helmfile but enough to get it done.
 Proceed by running `helmfile`:
 ```shell
@@ -43,18 +47,46 @@ After some output, you should be greeted by a prompt like this:
 >
 >  [y/n]:
 
-Answer yes and hopefully the installation will conclude successfully.
+Answer 'y' and hopefully the installation will conclude successfully.
 
-### a shot exaplantion on selecting the ?ref
+### overriding namespace and releases' `values`
 
-add more quick examples:
-### pass some values
+To customize the configuration and deployment, you can pass values to override the default helmfile configuration like so:
+```yaml
+helmfiles:
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@celo/helmfile.yaml?ref=celo:latest
+    selectorsInherited: true
+    values:
+      targetNamespace: "i-choose-my-own-namespace"
+      labels:
+        awesome.label.key/stuff: "yes"
+        awesome.label.key/thing: "kind-of-thing"
+```
+
+where we add some labels to this *Namespace* releases, and set it to be deployed on cluster namespace different from default.
+
+You can also easilly override values for every release, like so:
+```yaml
+helmfiles:
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@celo/helmfile.yaml?ref=celo:latest
+    selectorsInherited: true
+    values:
+      targetNamespace: "i-choose-my-own-namespace"
+      labels:
+        awesome.label.key/stuff: "yes"
+        awesome.label.key/thing: "kind-of-thing"
+      <release-name>:
+        - akey: value
+          bkey: value
+```
+
+Check out the *Namespaces* [list](/README.md#namespaces) below for release names, and each chart's folder for its specific values interface.
+
+### mention how to install multiple namespaces
 
 ### use features
 
 ### use values
-
-### mention how to install multiple namespaces
 
 ## Values
 

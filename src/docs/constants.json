@@ -34,6 +34,11 @@
       "string": "*Launchpad Starter*",
       "url": "https://github.com/graphops/launchpad-starter",
       "link": "[~~*Launchpad Starter*~~ support for *Namespaces* will be available soon](https://github.com/graphops/launchpad-starter)"
+    },
+    "discord": {
+      "string": "Discord (*The Graph*)",
+      "url": "https://thegraph.com/discord",
+      "link": "![Discord](https://avatars.githubusercontent.com/u/1965106?s=12&v=4) [Discord *(The Graph)*](https://thegraph.com/discord)"
     }
   }
 }

@@ -32,18 +32,20 @@ transformers:
 ` -}}
 
 {{- $_tplReleaseValues := (print `
+{{- if ( .Values | get .release dict | get "mergeValues" true ) -}}
 {{- if ( hasKey .Values "flavor" ) }}
 - ./values/_common/{{` "`{{ .Release.Name }}`" `}}.yaml
 - ./values/{{ .Values.flavor }}/{{` "`{{ .Release.Name }}`" `}}.yaml
 {{- else }}
 - ./values/{{` "`{{ .Release.Name }}`" `}}.yaml
 {{- end -}}
+{{- end -}}
 {{- if typeIs ( typeOf list ) ( .Values | get .release dict | get "values" dict ) -}}
  {{- range $element := ( .Values | get .release dict | get "values" dict ) }}
-- {{- $element | toYaml | nindent 4 }}
+- {{- $element | toYaml | nindent 2 }}
  {{- end -}}
 {{- else }}
-- {{- .Values | get .release dict | get "values" dict | toYaml | nindent 4 }}
+- {{- .Values | get .release dict | get "values" dict | toYaml | nindent 2 }}
 {{- end -}}
 `) -}}
 
@@ -57,12 +59,8 @@ helmDefaults:
 {{ $__helmDefaults | toYaml | indent 2 }}
 
 #set default namespace
-{{ $_defaultNamespace := `( print "eth-" .Values.flavor )` }}
+{{ $_defaultNamespace := ( print "eth-" .Values.flavor ) }}
 
-#set default flavor when missing
-{{ if not ( hasKey .Values "flavor" ) }}
-{{ $_ := set .Values "flavor" 'mainnet' }}
-{{ end }}
 
 
 commonLabels:
@@ -73,7 +71,7 @@ commonLabels:
 }}
 repositories:
   - name: graphops
-    url: https://graphops.github.io/launchpad-charts
+    url: https://graphops.github.io/launchpad-charts/canary
   
 templates:
   transforms:
@@ -90,19 +88,19 @@ templates:
   
   erigon:
     chart: graphops/erigon
-    version: 0.6.0
+    version: 0.6.1-canary.1
     inherit:
       - template: defaults
   
   nimbus:
     chart: graphops/nimbus
-    version: 0.3.0
+    version: 0.3.1-canary.1
     inherit:
       - template: defaults
   
   proxyd:
     chart: graphops/proxyd
-    version: 0.1.8
+    version: 0.2.1-canary.2
     inherit:
       - template: defaults
   
@@ -112,16 +110,16 @@ releases:
     inherit:
     - template: 'erigon'
     values:
-    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | nindent 4 -}}
+    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- $release := "nimbus" }}
   - name: 'nimbus'
     inherit:
     - template: 'nimbus'
     values:
-    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | nindent 4 -}}
+    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- $release := "proxyd" }}
   - name: 'proxyd'
     inherit:
     - template: 'proxyd'
     values:
-    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | nindent 4 -}}
+    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}

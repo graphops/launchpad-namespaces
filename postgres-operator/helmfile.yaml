@@ -32,18 +32,20 @@ transformers:
 ` -}}
 
 {{- $_tplReleaseValues := (print `
+{{- if ( .Values | get .release dict | get "mergeValues" true ) -}}
 {{- if ( hasKey .Values "flavor" ) }}
 - ./values/_common/{{` "`{{ .Release.Name }}`" `}}.yaml
 - ./values/{{ .Values.flavor }}/{{` "`{{ .Release.Name }}`" `}}.yaml
 {{- else }}
 - ./values/{{` "`{{ .Release.Name }}`" `}}.yaml
 {{- end -}}
+{{- end -}}
 {{- if typeIs ( typeOf list ) ( .Values | get .release dict | get "values" dict ) -}}
  {{- range $element := ( .Values | get .release dict | get "values" dict ) }}
-- {{- $element | toYaml | nindent 4 }}
+- {{- $element | toYaml | nindent 2 }}
  {{- end -}}
 {{- else }}
-- {{- .Values | get .release dict | get "values" dict | toYaml | nindent 4 }}
+- {{- .Values | get .release dict | get "values" dict | toYaml | nindent 2 }}
 {{- end -}}
 `) -}}
 
@@ -96,4 +98,4 @@ releases:
     inherit:
     - template: 'postgres-operator'
     values:
-    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | nindent 4 -}}
+    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}

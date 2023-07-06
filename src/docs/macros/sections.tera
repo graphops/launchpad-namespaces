@@ -4,7 +4,8 @@
 {%- endmacro graphopsTitle -%}
 
 {%- macro graphopsBadges() -%}
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)[![latest:stable](https://img.shields.io/badge/latest:stable-v1.0.0-blue)](https://github.com/graphops/launchpad-namespaces/releases)[![latest:canary](https://img.shields.io/badge/latest:canary-v1.0.1--pre.1-orange)](https://github.com/graphops/launchpad-namespaces/releases)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+{#- [![latest:stable](https://img.shields.io/badge/latest:stable-v1.0.0-blue)](https://github.com/graphops/launchpad-namespaces/releases)[![latest:canary](https://img.shields.io/badge/latest:canary-v1.0.1--pre.1-orange)](https://github.com/graphops/launchpad-namespaces/releases) -#}
 {%- endmacro graphopsBadges -%}
 
 {%- macro sectionDescription(namespace, schemas) -%}
@@ -19,7 +20,7 @@ We welcome and appreciate your contributions! Please see the [Contributor Guide]
 {%- endmacro sectionContributing -%}
 
 {%- macro sectionFeatures() -%}
-- Actively maintained by {{ const.refs.graphops.link }} [and contributors](https://github.com/graphops/launchpad-namespaces/graphs/contributors)
+- Actively maintained by {{ const.refs.graphops.link }} [and contributors](/graphs/contributors)
 - Common values interfaces across all namespaces
 - Flexible and adaptable, allowing defaults to be overriden
 - Two release channels: `main` and `canary`

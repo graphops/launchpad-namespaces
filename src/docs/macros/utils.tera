@@ -30,3 +30,6 @@
 {%- endfor -%}
 {{ _matches | join(sep="|") }}
 {%- endmacro getKeysMatching -%}
+
+{%- macro namespaceFeatures(namespace) -%}
+{%- endmacro namespaceFeatures -%}

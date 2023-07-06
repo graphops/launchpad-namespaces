@@ -22,7 +22,7 @@
 
 {%- macro renderReleases(releasesProp) -%}
 {% for key, _ in releasesProp %}
-- {{ self::renderReleaseName(name=key, releaseProp=releasesProp[key].properties) }}
+- {{ self::renderReleaseName(name=key, releaseProp=releasesProp[key].properties) }}<br>
 {{ self::renderReleaseDesc(releaseProp=releasesProp[key].properties) }}
 {%- endfor %}
 {%- endmacro renderReleases -%}

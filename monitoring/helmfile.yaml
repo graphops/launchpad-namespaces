@@ -32,18 +32,20 @@ transformers:
 ` -}}
 
 {{- $_tplReleaseValues := (print `
+{{- if ( .Values | get .release dict | get "mergeValues" true ) -}}
 {{- if ( hasKey .Values "flavor" ) }}
 - ./values/_common/{{` "`{{ .Release.Name }}`" `}}.yaml
 - ./values/{{ .Values.flavor }}/{{` "`{{ .Release.Name }}`" `}}.yaml
 {{- else }}
 - ./values/{{` "`{{ .Release.Name }}`" `}}.yaml
 {{- end -}}
+{{- end -}}
 {{- if typeIs ( typeOf list ) ( .Values | get .release dict | get "values" dict ) -}}
  {{- range $element := ( .Values | get .release dict | get "values" dict ) }}
-- {{- $element | toYaml | nindent 4 }}
+- {{- $element | toYaml | nindent 2 }}
  {{- end -}}
 {{- else }}
-- {{- .Values | get .release dict | get "values" dict | toYaml | nindent 4 }}
+- {{- .Values | get .release dict | get "values" dict | toYaml | nindent 2 }}
 {{- end -}}
 `) -}}
 
@@ -63,7 +65,8 @@ helmDefaults:
 # Define default features when undefined
 {{ if not (hasKey .Values "features") }}
 {{ $_ := set .Values "features" (list
-
+`metrics`
+`logs`
 ) }}
 {{ end }}
 
@@ -99,6 +102,7 @@ templates:
     version: 41.3.2
     inherit:
       - template: defaults
+    disableValidationOnInstall: true
   
   node-problem-detector:
     chart: deliveryhero/node-problem-detector
@@ -125,7 +129,7 @@ releases:
     inherit:
     - template: 'kube-prometheus-stack'
     values:
-    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | nindent 4 -}}
+    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- end -}}
   {{ if has "metrics" ( .Values | get "features" list ) }}
   {{- $release := "node-problem-detector" }}
@@ -133,7 +137,7 @@ releases:
     inherit:
     - template: 'node-problem-detector'
     values:
-    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | nindent 4 -}}
+    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- end -}}
   {{ if has "logs" ( .Values | get "features" list ) }}
   {{- $release := "loki" }}
@@ -141,7 +145,7 @@ releases:
     inherit:
     - template: 'loki'
     values:
-    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | nindent 4 -}}
+    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- end -}}
   {{ if has "logs" ( .Values | get "features" list ) }}
   {{- $release := "promtail" }}
@@ -149,5 +153,5 @@ releases:
     inherit:
     - template: 'promtail'
     values:
-    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | nindent 4 -}}
+    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- end -}}
