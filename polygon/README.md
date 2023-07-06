@@ -1,6 +1,6 @@
 
 
-# Ethereum Namespace
+# Polygon Namespace
 
 eth-erigon namespace values schema
 
@@ -24,10 +24,10 @@ As such:
 - Make sure your *Kubernetes* *Cluster* is in order and your environment has the *kubeconfig* context adequately setup
 - Install *helmfile*, upstream guidance available here: [*Helmfile* Installation](https://github.com/helmfile/helmfile#installation)
 
-Next, setup an `helmfile.yaml` file that makes use of the ethereum *Namespace* by creating it with the following contents:
+Next, setup an `helmfile.yaml` file that makes use of the polygon *Namespace* by creating it with the following contents:
 ```yaml
 helmfiles:
-  - path: git::https://github.com/graphops/launchpad-namespaces.git@ethereum/helmfile.yaml?ref=ethereum:latest
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@polygon/helmfile.yaml?ref=polygon:latest
     selectorsInherited: true
 ```
 
@@ -64,15 +64,15 @@ annotations | object |  | Add annotations |
 erigon | object |  |  |
 erigon.mergeValues | boolean | true |  |
 erigon.values | (object *or* list of objects) |  |  |
-flavor | string |  |  |
+flavor | string |  | suitable defaults for a mainnet archive node |
+heimdall | object |  |  |
+heimdall.mergeValues | boolean | true |  |
+heimdall.values | (object *or* list of objects) |  |  |
 labels | object |  | Adds labels |
-nimbus | object |  |  |
-nimbus.mergeValues | boolean | true |  |
-nimbus.values | (object *or* list of objects) |  |  |
 proxyd | object |  |  |
 proxyd.mergeValues | boolean | true |  |
 proxyd.values | (object *or* list of objects) |  |  |
-targetNamespace | string | eth-mainnet | the default is eth-<flavor> |
+targetNamespace | string | polygon-mainnet | the default is eth-<flavor> |
 helmDefaults | object |  |  |
 helmDefaults.args | list of strings |  |  |
 helmDefaults.cleanupOnFail | boolean |  |  |

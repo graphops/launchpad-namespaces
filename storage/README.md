@@ -8,42 +8,74 @@ Declaratively deploy [OpenEBS](https://openebs.io/) on your cluster
 
 ## Features
 
-- Actively maintained by [GraphOps](https://graphops.xyz) [and contributors](https://github.com/graphops/launchpad-namespaces/graphs/contributors)
+- Actively maintained by [![GraphOps](https://avatars.githubusercontent.com/u/85314764?s=12&v=4) *GraphOps*](https://graphops.xyz) [and contributors](https://github.com/graphops/launchpad-namespaces/graphs/contributors)
+- Common values interfaces across all namespaces
+- Flexible and adaptable, allowing defaults to be overriden
+- Two release channels: `main` and `canary`
+- A large selection of Namespaces (listed below)
 
 ## Quickstart
 
-These namespaces are meant to be used by [helmfile](https://github.com/helmfile/helmfile), so make sure to have helmfile available and kubeconfig context setup to a working cluster.
+> **Note**
+> [~~*Launchpad Starter*~~ support for *Namespaces* will be available soon](https://github.com/graphops/launchpad-starter) is a great way to make use of *Namespaces* and worth checking out
 
-Create a `helmfile.yaml` file with a helmfiles entry pointing to this namespace, i.e.:
+To use *Namespaces* you will require both a [*Kubernetes*](https://kubernetes.io) cluster and [*Helmfile*](https://github.com/helmfile/helmfile).
+As such:
+- Make sure your *Kubernetes* *Cluster* is in order and your environment has the *kubeconfig* context adequately setup
+- Install *helmfile*, upstream guidance available here: [*Helmfile* Installation](https://github.com/helmfile/helmfile#installation)
 
+Next, setup an `helmfile.yaml` file that makes use of the storage *Namespace* by creating it with the following contents:
 ```yaml
 helmfiles:
-  - path: https://graphops.xyz/launchpad-namespaces.git@storage?ref=latest:stable
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@storage/helmfile.yaml?ref=storage:latest
+    selectorsInherited: true
 ```
 
-run:
-> helmfile sync
+This is a very minimalist helmfile but enough to get it done.
+Proceed by running `helmfile`:
+```shell
+helmfile sync -i
+```
+
+After some output, you should be greeted by a prompt like this:
+> Do you really want to sync?
+>   Helmfile will sync all your releases, as shown above.
+>
+>  [y/n]:
+
+Answer yes and hopefully the installation will conclude successfully.
+
+### a shot exaplantion on selecting the ?ref
+
+add more quick examples:
+### pass some values
+
+### use features
+
+### use values
+
+### mention how to install multiple namespaces
 
 ## Values
 
 | Key | Type | Default | Description |
 | :--- | :---: | :--- | :--- |
 annotations | object |  | Add annotations |
-features | list of strings | [openebs, rawfile] | *enum of:&nbsp;&nbsp;(openebs \| zfs \| rawfile)* |
+features | list of strings |  | *enum of:&nbsp;&nbsp;(zfs \| rawfile)* |
 labels | object |  | Adds labels |
-openebs | object |  | release key for overloading values "\(release)" |
+openebs | object |  |  |
 openebs.mergeValues | boolean | true |  |
 openebs.values | (object *or* list of objects) |  |  |
-openebs&#8209;rawfile&#8209;localpv | object |  | release key for overloading values "\(release)" |
+openebs&#8209;rawfile&#8209;localpv | object |  |  |
 openebs&#8209;rawfile&#8209;localpv.mergeValues | boolean | true |  |
 openebs&#8209;rawfile&#8209;localpv.values | (object *or* list of objects) |  |  |
-openebs&#8209;rawfile&#8209;storageclass | object |  | release key for overloading values "\(release)" |
+openebs&#8209;rawfile&#8209;storageclass | object |  |  |
 openebs&#8209;rawfile&#8209;storageclass.mergeValues | boolean | true |  |
 openebs&#8209;rawfile&#8209;storageclass.values | (object *or* list of objects) |  |  |
-openebs&#8209;zfs&#8209;localpv | object |  | release key for overloading values "\(release)" |
+openebs&#8209;zfs&#8209;localpv | object |  |  |
 openebs&#8209;zfs&#8209;localpv.mergeValues | boolean | true |  |
 openebs&#8209;zfs&#8209;localpv.values | (object *or* list of objects) |  |  |
-openebs&#8209;zfs&#8209;storageclass | object |  | release key for overloading values "\(release)" |
+openebs&#8209;zfs&#8209;storageclass | object |  |  |
 openebs&#8209;zfs&#8209;storageclass.mergeValues | boolean | true |  |
 openebs&#8209;zfs&#8209;storageclass.values | (object *or* list of objects) |  |  |
 targetNamespace | string | storage | Sets the cluster namespace in which the releases will be deployed |

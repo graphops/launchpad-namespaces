@@ -1,8 +1,8 @@
 
 
-# Ethereum Namespace
+# Postgres-Operator Namespace
 
-eth-erigon namespace values schema
+Postgres-Operator namespace values interface schema
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)[![latest:stable](https://img.shields.io/badge/latest:stable-v1.0.0-blue)](https://github.com/graphops/launchpad-namespaces/releases)[![latest:canary](https://img.shields.io/badge/latest:canary-v1.0.1--pre.1-orange)](https://github.com/graphops/launchpad-namespaces/releases)
 
@@ -24,10 +24,10 @@ As such:
 - Make sure your *Kubernetes* *Cluster* is in order and your environment has the *kubeconfig* context adequately setup
 - Install *helmfile*, upstream guidance available here: [*Helmfile* Installation](https://github.com/helmfile/helmfile#installation)
 
-Next, setup an `helmfile.yaml` file that makes use of the ethereum *Namespace* by creating it with the following contents:
+Next, setup an `helmfile.yaml` file that makes use of the postgres-operator *Namespace* by creating it with the following contents:
 ```yaml
 helmfiles:
-  - path: git::https://github.com/graphops/launchpad-namespaces.git@ethereum/helmfile.yaml?ref=ethereum:latest
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@postgres-operator/helmfile.yaml?ref=postgres-operator:latest
     selectorsInherited: true
 ```
 
@@ -61,18 +61,11 @@ add more quick examples:
 | Key | Type | Default | Description |
 | :--- | :---: | :--- | :--- |
 annotations | object |  | Add annotations |
-erigon | object |  |  |
-erigon.mergeValues | boolean | true |  |
-erigon.values | (object *or* list of objects) |  |  |
-flavor | string |  |  |
 labels | object |  | Adds labels |
-nimbus | object |  |  |
-nimbus.mergeValues | boolean | true |  |
-nimbus.values | (object *or* list of objects) |  |  |
-proxyd | object |  |  |
-proxyd.mergeValues | boolean | true |  |
-proxyd.values | (object *or* list of objects) |  |  |
-targetNamespace | string | eth-mainnet | the default is eth-<flavor> |
+postgres&#8209;operator | object |  |  |
+postgres&#8209;operator.mergeValues | boolean | true |  |
+postgres&#8209;operator.values | (object *or* list of objects) |  |  |
+targetNamespace | string | postgres-operator | Sets the cluster namespace in which the releases will be deployed |
 helmDefaults | object |  |  |
 helmDefaults.args | list of strings |  |  |
 helmDefaults.cleanupOnFail | boolean |  |  |

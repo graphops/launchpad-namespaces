@@ -1,5 +1,6 @@
 {% import "renderApiTable.tera" as api %}
 {% import "sections.tera" as sections %}
+{% import "section.QuickStart.tera" as quickstart %}
 {% set name = "ethereum" %}
 
 {{ sections::graphopsTitle(namespace=name) }}
@@ -10,21 +11,11 @@
 
 ## Features
 
-- Actively maintained by [GraphOps](https://graphops.xyz) [and contributors](https://github.com/graphops/launchpad-namespaces/graphs/contributors)
+{{ sections::sectionFeatures() }}
 
 ## Quickstart
 
-These namespaces are meant to be used by [helmfile](https://github.com/helmfile/helmfile), so make sure to have helmfile available and kubeconfig context setup to a working cluster.
-
-Create a `helmfile.yaml` file with a helmfiles entry pointing to this namespace, i.e.:
-
-```yaml
-helmfiles:
-  - path: https://graphops.xyz/launchpad-namespaces.git@storage?ref=latest:stable
-```
-
-run:
-> helmfile sync
+{{ quickstart::namespacesQuickStart(namespace=name) }}
 
 ## Values
 

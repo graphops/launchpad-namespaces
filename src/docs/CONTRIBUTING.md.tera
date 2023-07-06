@@ -77,16 +77,20 @@ Those schema files completely define the namespace in its many characteristics, 
 ### values merging
 
 This is often implemented in the helmfiles in code such as
+{% raw -%}
 <code>
 {{ $__helmDefaults := `{"recreatePods":true}` | fromJson }}
 {{ with ( .Values | get "helmDefaults" dict ) }}
 {{ $_ := (deepCopy . | mergeOverwrite $__helmDefaults) }}
 {{ end }}
-</code>which consists of declaring a variable holding a default value, and deep merging with the user passed values, giving precedence to those. Injecting the default value, recreatePods in this example, is done by the CUE tool when building the helmfiles.
+</code>
+{%- endraw -%}
+which consists of declaring a variable holding a default value, and deep merging with the user passed values, giving precedence to those. Injecting the default value, recreatePods in this example, is done by the CUE tool when building the helmfiles.
 
 ### flavors
 
 Flavors are implemented by having different sets of values in different subfolders, and having the helmfile lookup the folder dynamically, as shown in this example
+{% raw -%}
 <code>
 {{- if ( hasKey .Values "flavor" ) }}
 - ./values/_common/{{` "`{{ .Release.Name }}`" `}}.yaml
@@ -94,9 +98,13 @@ Flavors are implemented by having different sets of values in different subfolde
 {{- else }}
 - ./values/{{` "`{{ .Release.Name }}`" `}}.yaml
 {{- end -}}
-</code>### features
+</code>
+{%- endraw -%}
+
+### features
 
 Features are implemented by wrapping the releases in the helmfile with a conditional, as seen in the following example:
+{% raw -%}
 <code>
 {{ if has "metrics" ( .Values | get "features" list ) }}
 {{- $release := "kube-prometheus-stack" }}
@@ -107,3 +115,4 @@ Features are implemented by wrapping the releases in the helmfile with a conditi
   {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
 {{- end -}}
 </code>
+{%- endraw -%}

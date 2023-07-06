@@ -1,0 +1,42 @@
+{%- import "utils.tera" as utils -%}
+{%- macro namespacesQuickStart(namespace) -%}
+> **Note**
+> {{ const.refs.launchpad_starter.link }} is a great way to make use of *Namespaces* and worth checking out
+
+To use *Namespaces* you will require both a {{ const.soft.kubernetes.link }} cluster and {{ const.soft.helmfile.link }}.
+As such:
+- Make sure your {{ const.soft.kubernetes.string }} *Cluster* is in order and your environment has the *kubeconfig* context adequately setup
+- Install *helmfile*, upstream guidance available here: {{ const.soft.helmfile_install.link }}
+
+Next, setup an `helmfile.yaml` file that makes use of the {{ namespace }} *Namespace* by creating it with the following contents:
+```yaml
+helmfiles:
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@{{ namespace }}/helmfile.yaml?ref={{ namespace }}:latest
+    selectorsInherited: true
+```
+
+This is a very minimalist helmfile but enough to get it done.
+Proceed by running `helmfile`:
+```shell
+helmfile sync -i
+```
+
+After some output, you should be greeted by a prompt like this:
+> Do you really want to sync?
+>   Helmfile will sync all your releases, as shown above.
+>
+>  [y/n]:
+
+Answer yes and hopefully the installation will conclude successfully.
+
+### a shot exaplantion on selecting the ?ref
+
+add more quick examples:
+### pass some values
+
+### use features
+
+### use values
+
+### mention how to install multiple namespaces
+{%- endmacro namespacesQuickStart -%}

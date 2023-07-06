@@ -1,8 +1,8 @@
 
 
-# Ethereum Namespace
+# Monitoring Namespace
 
-eth-erigon namespace values schema
+Monitoring namespace values interface schema
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)[![latest:stable](https://img.shields.io/badge/latest:stable-v1.0.0-blue)](https://github.com/graphops/launchpad-namespaces/releases)[![latest:canary](https://img.shields.io/badge/latest:canary-v1.0.1--pre.1-orange)](https://github.com/graphops/launchpad-namespaces/releases)
 
@@ -24,10 +24,10 @@ As such:
 - Make sure your *Kubernetes* *Cluster* is in order and your environment has the *kubeconfig* context adequately setup
 - Install *helmfile*, upstream guidance available here: [*Helmfile* Installation](https://github.com/helmfile/helmfile#installation)
 
-Next, setup an `helmfile.yaml` file that makes use of the ethereum *Namespace* by creating it with the following contents:
+Next, setup an `helmfile.yaml` file that makes use of the monitoring *Namespace* by creating it with the following contents:
 ```yaml
 helmfiles:
-  - path: git::https://github.com/graphops/launchpad-namespaces.git@ethereum/helmfile.yaml?ref=ethereum:latest
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@monitoring/helmfile.yaml?ref=monitoring:latest
     selectorsInherited: true
 ```
 
@@ -61,18 +61,21 @@ add more quick examples:
 | Key | Type | Default | Description |
 | :--- | :---: | :--- | :--- |
 annotations | object |  | Add annotations |
-erigon | object |  |  |
-erigon.mergeValues | boolean | true |  |
-erigon.values | (object *or* list of objects) |  |  |
-flavor | string |  |  |
+features | list of strings | [metrics, logs] | *enum of:&nbsp;&nbsp;(metrics \| logs)* |
+kube&#8209;prometheus&#8209;stack | object |  |  |
+kube&#8209;prometheus&#8209;stack.mergeValues | boolean | true |  |
+kube&#8209;prometheus&#8209;stack.values | (object *or* list of objects) |  |  |
 labels | object |  | Adds labels |
-nimbus | object |  |  |
-nimbus.mergeValues | boolean | true |  |
-nimbus.values | (object *or* list of objects) |  |  |
-proxyd | object |  |  |
-proxyd.mergeValues | boolean | true |  |
-proxyd.values | (object *or* list of objects) |  |  |
-targetNamespace | string | eth-mainnet | the default is eth-<flavor> |
+loki | object |  |  |
+loki.mergeValues | boolean | true |  |
+loki.values | (object *or* list of objects) |  |  |
+node&#8209;problem&#8209;detector | object |  |  |
+node&#8209;problem&#8209;detector.mergeValues | boolean | true |  |
+node&#8209;problem&#8209;detector.values | (object *or* list of objects) |  |  |
+promtail | object |  |  |
+promtail.mergeValues | boolean | true |  |
+promtail.values | (object *or* list of objects) |  |  |
+targetNamespace | string | monitoring | Sets the cluster namespace in which the releases will be deployed |
 helmDefaults | object |  |  |
 helmDefaults.args | list of strings |  |  |
 helmDefaults.cleanupOnFail | boolean |  |  |

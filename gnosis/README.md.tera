@@ -1,7 +1,7 @@
 {% import "renderApiTable.tera" as api %}
 {% import "sections.tera" as sections %}
 {% import "section.QuickStart.tera" as quickstart %}
-{% set name = "storage" %}
+{% set name = "gnosis" %}
 
 {{ sections::graphopsTitle(namespace=name) }}
 
