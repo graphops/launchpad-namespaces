@@ -1,19 +1,8 @@
-package LaunchpadCharts
+package LaunchpadNamespaces
 
 #repositories: {
-	// link all charts to their repo and add name
-	//
-	[repoName=string]: {
-		charts: {
-			[chartName=string]: {
-				repository: repoName
-				name:       chartName
-			}
-		}
-	}
-
 	"graphops": {
-		url: "https://graphops.github.io/launchpad-charts"
+		url: "https://graphops.github.io/launchpad-charts/canary"
 		description: """
 			lorem ipsolum
 			"""
@@ -36,6 +25,42 @@ package LaunchpadCharts
 					Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
 					"""
 			}
+			heimdall: {
+				url: "https://github.com/maticnetwork/heimdall"
+				description: """
+					Validator node for Matic Network.
+					"""
+			}
+			celo: {
+				url: "https://github.com/celo-org/celo-blockchain"
+				description: """
+					Official golang implementation of the Celo blockchain
+					"""
+			}
+			"arbitrum-nitro": {
+				url: "https://github.com/OffchainLabs/nitro/"
+				description: """
+					Nitro is the latest iteration of the Arbitrum technology. It is a fully integrated, complete layer 2 optimistic rollup system, including fraud proofs, the sequencer, the token bridges, advanced calldata compression, and more.
+					"""
+			}
+			"arbitrum-classic": {
+				url: "https://github.com/OffchainLabs/arbitrum-classic"
+				description: """
+					The old "classic" Arbitrum tech stack.
+					"""
+			}
+			avalanche: {
+				url: "https://github.com/ava-labs/avalanchego"
+				description: """
+					Node implementation for the Avalanche network - a blockchains platform with high throughput, and blazing fast transactions.
+					"""
+			}
+			nethermind: {
+				url: "https://github.com/NethermindEth/nethermind"
+				description: """
+					Nethermind is a high-performance, highly configurable full Ethereum protocol execution client built on .NET that runs on Linux, Windows, and macOS, and supports Clique, Aura, and Ethash.
+					"""
+			}
 			"resource-injector": {
 				url: "https://github.com/graphops/launchpad-charts/tree/main/charts/resource-injector"
 				description: """
@@ -45,6 +70,24 @@ package LaunchpadCharts
 			"openebs-rawfile-localpv": {
 				url:         "https://github.com/graphops/launchpad-charts/tree/main/charts/openebs-rawfile-localpv"
 				description: "RawFile Driver Container Storage Interface"
+			}
+			"graph-node": {
+				url: "https://github.com/graphprotocol/graph-node"
+				description: """
+					Graph Node is an open source Rust implementation that event sources the Ethereum blockchain to deterministically update a data store that can be queried via the GraphQL endpoint.
+					"""
+			}
+			"graph-network-indexer": {
+				url: "https://github.com/graphprotocol/indexer"
+				description: """
+					Graph protocol indexer components
+					"""
+			}
+			"graph-toolbox": {
+				url: "https://github.com/graphops/docker-builds/tree/main/dockerfiles/graph-toolbox"
+				description: """
+					Utility kit for interacting and managing the Graph indexer stack.
+					"""
 			}
 		}
 	}
@@ -58,13 +101,6 @@ package LaunchpadCharts
 				description: "ingress-nginx is an Ingress controller for Kubernetes using NGINX as a reverse proxy and load balancer."
 			}
 		}
-	}
-
-	"vouch": {
-		url: "https://vouch.github.io/helm-charts/"
-		description: """
-			Helm charts for vouch: An SSO solution for Nginx using the auth_request module. Vouch Proxy can protect all of your websites at once.
-			"""
 	}
 
 	"jetstack": {
@@ -180,5 +216,16 @@ package LaunchpadCharts
 				description: "A set of Grafana dashboards and Prometheus alerts for OpenEBS that can be installed as a helm chart or imported as jsonnet mixin."
 			}
 		}
+	}
+}
+
+// instantiate a #repositories object for internal usage
+_repositories: {
+	#repositories
+
+	// link all charts to their repo and add name
+	[repoName=string]: charts: [chartName=string]: {
+		repository: "\(repoName)"
+		name:       "\(chartName)"
 	}
 }

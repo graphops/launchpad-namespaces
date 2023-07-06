@@ -5,10 +5,10 @@
 {%- set metaKey = key ~ ".meta" -%}
 {%- set releasesKey = key ~ ".releases" -%}
 {#schemas[key] | get(key="releases") | get(key="properties") -%#}
-{%- set numReleases = utils::getKeysMatching(schemas=schemas[releasesKey].properties, pattern="^.*$") | split(pat="|") | length  -%}
-{{ self::renderName(namespaceMeta=schemas[metaKey].properties) }}
-{{ self::renderDesc(namespaceMeta=schemas[metaKey].properties) }}
-{{ self::renderReleases(releasesProp=schemas[releasesKey].properties) }}
+{%- set numReleases = utils::getKeysMatching(schemas=schemas[key].properties.releases.properties, pattern="^.*$") | split(pat="|") | length  -%}
+{{ self::renderName(namespaceMeta=schemas[key].properties.meta.properties) }}
+{{ self::renderDesc(namespaceMeta=schemas[key].properties.meta.properties) }}
+{{ self::renderReleases(releasesProp=schemas[key].properties.releases.properties) }}
 {% endfor -%}
 {%- endmacro renderIndex -%}
 
@@ -22,13 +22,13 @@
 
 {%- macro renderReleases(releasesProp) -%}
 {% for key, _ in releasesProp %}
-- {{ self::renderReleaseName(releaseProp=releasesProp[key].properties) }}<br>
+- {{ self::renderReleaseName(name=key, releaseProp=releasesProp[key].properties) }}
 {{ self::renderReleaseDesc(releaseProp=releasesProp[key].properties) }}
 {%- endfor %}
 {%- endmacro renderReleases -%}
 
-{%- macro renderReleaseName(releaseProp) -%}
-[{{ releaseProp.name.enum.0 }}]({{ releaseProp.chart.properties.url.enum.0 | default(value="") }})
+{%- macro renderReleaseName(name, releaseProp) -%}
+[{{ name }}]({{ releaseProp.chart.properties.url.enum.0 | default(value="") }})
 {%- endmacro renderReleaseName -%}
 
 {%- macro renderReleaseDesc(releaseProp) -%}

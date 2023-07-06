@@ -1,25 +1,25 @@
 {% import "renderIndex.tera" as index %}
+{% import "sections.tera" as sections %}
+{% import "section.QuickStart.tera" as quickstart %}
 # Launchpad Namespaces
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Introduction
 
-Launchpad Namespaces, part of Launchpad Toolkit, is... and aims too....
-
-- Actively maintained by [GraphOps](https://graphops.xyz) 
+*Launchpad Namespaces*, part of the *Launchpad Toolkit*, leverages {{ const.soft.helmfile.link }} to offer a declarative way for deploying and managing functionally related bundles of [helm charts]({{ const.soft.helm.url }}) (called *releases* in *helmfile*).
+It aims to:
+- be easy to use, while extensible and adaptable
+- provide sensible working defaults that can always be overriden
+- service the requirements of Launchpad and GraphOps
 
 ## Features
 
-- Common values interfaces
-- Two release channels
-- list of namespaces?
+{{ sections::sectionFeatures() }}
 
 ## Getting Started
 
-Please see the [Quick Start](https://docs.graphops.xyz/launchpad/quick-start) guide in the [Documentation](https://docs.graphops.xyz/launchpad/intro).
-
-- example usage with helmfile
+{{ quickstart::namespacesQuickStart(namespace="storage") }}
 
 ## Updates
 

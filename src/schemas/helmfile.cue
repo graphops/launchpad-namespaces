@@ -13,5 +13,10 @@ import (
 		#namespaces.#postgresOperator.#helmfiles |
 		#namespaces.#monitoring.#helmfiles |
 		#namespaces.#ingress.#helmfiles |
-		#namespaces.#ethereum.#helmfiles )]
+		#namespaces.#ethereum.#helmfiles |
+		#namespaces.#avalanche.#helmfiles |
+		#namespaces.#arbitrum.#helmfiles |
+		#namespaces.#gnosis.#helmfiles |
+		#namespaces.#celo.#helmfiles |
+		#namespaces.#graph.#helmfiles )]
 }

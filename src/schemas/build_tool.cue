@@ -8,7 +8,7 @@ import (
 )
 
 command: {
-	"gen:helmfile": {
+	"build:helmfile": {
 		var: {
 			namespace: string @tag(namespace)
 		}
@@ -45,8 +45,8 @@ _helmfile: {
 		_releases: _helmfile._#releases & {_namespace: this}
 		releases:  _releases.out
 
-		_repositories: _helmfile._#repositories & {_namespace: this}
-		repositories:  _repositories.out
+		_repos:       _helmfile._repos & {_namespace: this}
+		repositories: _repos.out
 
 		out: strings.Join([
 			_templateBlocks.transforms,
@@ -62,14 +62,14 @@ _helmfile: {
 		], "\n")
 	}
 
-	_#repositories: {
+	_repos: {
 		this=_namespace: string
 		_releaseRepositories: {}
 		for releaseName, release in _namespaces[this].releases {
 			_releaseRepositories: {
 				"\(releaseName)": {
 					name: release.chart.repository
-					url:  _repositories[name].url
+					url:  _repositories[release.chart.repository].url
 				}
 			}
 		}
@@ -106,7 +106,7 @@ _helmfile: {
 			out: """
 				#set default flavor when missing
 				{{ if not ( hasKey .Values \"flavor\" ) }}
-				{{ $_ := set .Values \"flavor\" '\(_namespaces[this].values.flavor)' }}
+				{{ $_ := set .Values \"flavor\" "\(_namespaces[this].values.flavor)" }}
 				{{ end }}
 
 				"""
@@ -135,7 +135,7 @@ _helmfile: {
 		if _namespaces[this].values._templatedTargetNamespace != _|_ {
 			out: """
 				#set default namespace
-				{{ $_defaultNamespace := `\(_namespaces[this].values._templatedTargetNamespace)` }}
+				{{ $_defaultNamespace := \(_namespaces[this].values._templatedTargetNamespace) }}
 
 				"""
 		}
@@ -195,7 +195,7 @@ _helmfile: {
 		for releaseName, release in _namespaces[this].releases {
 			_blocks: {
 				"\(releaseName)": yaml.Marshal( {
-					"\(release.name)": {
+					"\(releaseName)": {
 						chart: "\(release.chart.repository)/\(release.chart.name)"
 						release._template
 						inherit: [ {template: "defaults"}]
@@ -218,7 +218,7 @@ _helmfile: {
 			  inherit:
 			  - template: '\(this)'
 			  values:
-			  {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | nindent 4 -}}
+			  {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
 			"""
 	}
 
@@ -226,14 +226,14 @@ _helmfile: {
 		this=_namespace: string
 		_blocks: {}
 		for releaseName, release in _namespaces[this].releases if release.feature == _|_ {
-			temp = "_\(releaseName)": _#release & {_release: release.name}
+			temp = "_\(releaseName)": _#release & {_release: releaseName}
 			_blocks: {
 				_
 				"\(releaseName)": temp.out
 			}
 		}
 		for releaseName, release in _namespaces[this].releases if release.feature != _|_ {
-			temp = "_\(releaseName)": _#release & {_release: release.name}
+			temp = "_\(releaseName)": _#release & {_release: releaseName}
 			_blocks: {
 				"_\(releaseName)": strings.Join([
 							"{{ if has \"\(release.feature)\" ( .Values | get \"features\" list ) }}",
@@ -288,18 +288,20 @@ _templateBlocks: {
 		"""
 	releaseValues: """
 		{{- $_tplReleaseValues := (print `
+		{{- if ( .Values | get .release dict | get "mergeValues" true ) -}}
 		{{- if ( hasKey .Values "flavor" ) }}
 		- ./values/_common/{{` "`{{ .Release.Name }}`" `}}.yaml
 		- ./values/{{ .Values.flavor }}/{{` "`{{ .Release.Name }}`" `}}.yaml
 		{{- else }}
 		- ./values/{{` "`{{ .Release.Name }}`" `}}.yaml
 		{{- end -}}
+		{{- end -}}
 		{{- if typeIs ( typeOf list ) ( .Values | get .release dict | get "values" dict ) -}}
 		 {{- range $element := ( .Values | get .release dict | get "values" dict ) }}
-		- {{- $element | toYaml | nindent 4 }}
+		- {{- $element | toYaml | nindent 2 }}
 		 {{- end -}}
 		{{- else }}
-		- {{- .Values | get .release dict | get "values" dict | toYaml | nindent 4 }}
+		- {{- .Values | get .release dict | get "values" dict | toYaml | nindent 2 }}
 		{{- end -}}
 		`) -}}
 
