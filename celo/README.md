@@ -2,9 +2,15 @@
 
 # Celo Namespace
 
-eth-erigon namespace values schema
+This *Namespace* provides a suitable stack to operate Celo mainnet archive nodes.
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+## Releases
+- [celo](https://github.com/celo-org/celo-blockchain)<br>
+Official golang implementation of the Celo blockchain
+- [proxyd](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
+Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
 
 ## Features
 
@@ -92,12 +98,12 @@ Check out the *Namespaces* [list](/README.md#namespaces) below for release names
 
 | Key | Type | Default | Description |
 | :--- | :---: | :--- | :--- |
-annotations | object |  | Add annotations |
+annotations | object |  | Add annotations to releases on this namespace |
 celo | object |  |  |
 celo.mergeValues | boolean | true |  |
 celo.values | (object *or* list of objects) |  |  |
 flavor | string |  | suitable defaults for a mainnet archive node |
-labels | object |  | Adds labels |
+labels | object |  | Adds labels to releases on this namespace |
 proxyd | object |  |  |
 proxyd.mergeValues | boolean | true |  |
 proxyd.values | (object *or* list of objects) |  |  |

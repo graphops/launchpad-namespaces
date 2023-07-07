@@ -9,7 +9,7 @@ package LaunchpadNamespaces
 			name: "gnosis"
 			url:  "https://github.com/graphops/launchpad-namespaces/\(name)"
 			description: """
-				For deploying gnosis mainnet archive nodes
+				This *Namespace* provides a suitable stack to operate Gnosis mainnet archive nodes.
 				"""
 		}
 

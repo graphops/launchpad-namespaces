@@ -2,9 +2,17 @@
 
 # Arbitrum Namespace
 
-eth-erigon namespace values schema
+This *Namespace* provides a suitable stack to operate Arbitrum mainnet archive nodes.
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+## Releases
+- [arbitrum-classic](https://github.com/OffchainLabs/arbitrum-classic)<br>
+The old "classic" Arbitrum tech stack.
+- [arbitrum-nitro](https://github.com/OffchainLabs/nitro/)<br>
+Nitro is the latest iteration of the Arbitrum technology. It is a fully integrated, complete layer 2 optimistic rollup system, including fraud proofs, the sequencer, the token bridges, advanced calldata compression, and more.
+- [proxyd](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
+Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
 
 ## Features
 
@@ -92,19 +100,19 @@ Check out the *Namespaces* [list](/README.md#namespaces) below for release names
 
 | Key | Type | Default | Description |
 | :--- | :---: | :--- | :--- |
-annotations | object |  | Add annotations |
+annotations | object |  | Add annotations to releases on this namespace |
 arbitrum&#8209;classic | object |  |  |
 arbitrum&#8209;classic.mergeValues | boolean | true |  |
 arbitrum&#8209;classic.values | (object *or* list of objects) |  |  |
 arbitrum&#8209;nitro | object |  |  |
 arbitrum&#8209;nitro.mergeValues | boolean | true |  |
 arbitrum&#8209;nitro.values | (object *or* list of objects) |  |  |
-flavor | string |  | suitable defaults for a mainnet archive node |
-labels | object |  | Adds labels |
+flavor | string |  |  |
+labels | object |  | Adds labels to releases on this namespace |
 proxyd | object |  |  |
 proxyd.mergeValues | boolean | true |  |
 proxyd.values | (object *or* list of objects) |  |  |
-targetNamespace | string | arbitrum-mainnet | the default is eth-<flavor> |
+targetNamespace | string | arbitrum-mainnet | the default is arbitrum-(flavor) |
 helmDefaults | object |  |  |
 helmDefaults.args | list of strings |  |  |
 helmDefaults.cleanupOnFail | boolean |  |  |

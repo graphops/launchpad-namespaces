@@ -1,0 +1,13 @@
+#!/bin/env bash
+. "$(dirname "$0")/_/husky.sh"
+
+readonly BASEDIR="$(dirname -- "$0")"
+readonly REPOROOT="$(realpath "$BASEDIR/../")"
+readonly SCRIPTSDIR="$(realpath "$REPOROOT/src/scripts")"
+
+"$SCRIPTSDIR"/generate-openapi.sh > "$REPOROOT/schema.json"
+git add "$REPOROOT/schema.json"
+
+"$SCRIPTSDIR"/update-from-schemas.sh
+
+"$SCRIPTSDIR"/update-docs.sh

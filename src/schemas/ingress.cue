@@ -9,7 +9,7 @@ package LaunchpadNamespaces
 			name: "ingress"
 			url:  "https://github.com/graphops/launchpad-namespaces/ingress"
 			description: """
-				Adds ingress support and certificate management on kubernetes
+				This *Namespace* adds ingress support and certificate management on kubernetes
 				"""
 		}
 

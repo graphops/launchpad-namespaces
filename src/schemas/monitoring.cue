@@ -8,7 +8,7 @@ package LaunchpadNamespaces
 			name: "monitoring"
 			url:  "https://github.com/graphops/launchpad-namespaces/monitoring"
 			description: """
-				Adds software for log and metrics collection and visualization, as well as alarmistic.
+				This *Namespace* adds software for log and metrics collection and visualization, as well as alarmistic.
 				"""
 		}
 

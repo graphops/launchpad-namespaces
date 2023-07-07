@@ -2,9 +2,13 @@
 
 # Postgres-Operator Namespace
 
-Postgres-Operator namespace values interface schema
+This *Namespace* extends your Kubernetes cluster with custom resources for easilly creating and managing Postgres databases
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+## Releases
+- [postgres-operator](https://github.com/zalando/postgres-operator)<br>
+The Postgres Operator delivers an easy to run highly-available PostgreSQL clusters on Kubernetes (K8s) powered by Patroni.
 
 ## Features
 
@@ -92,8 +96,8 @@ Check out the *Namespaces* [list](/README.md#namespaces) below for release names
 
 | Key | Type | Default | Description |
 | :--- | :---: | :--- | :--- |
-annotations | object |  | Add annotations |
-labels | object |  | Adds labels |
+annotations | object |  | Add annotations to releases on this namespace |
+labels | object |  | Adds labels to releases on this namespace |
 postgres&#8209;operator | object |  |  |
 postgres&#8209;operator.mergeValues | boolean | true |  |
 postgres&#8209;operator.values | (object *or* list of objects) |  |  |

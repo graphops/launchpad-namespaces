@@ -1,38 +1,33 @@
 // schema:type=namespace schema:namespace=arbitrum
 package LaunchpadNamespaces
 
-import (
-)
-//	charts "graphops.xyz/launchpad/namespaces:LaunchpadCharts"
-
-//	charts "graphops.xyz/launchpad/namespaces:LaunchpadCharts"
-
-//	// charts "graphops.xyz/launchpad/namespaces:LaunchpadCharts"
 #namespaces: {
-	// eth-erigon namespace
+	// Arbitrum *Namespace* values interface
 	#arbitrum: {
 		meta: {
 			name: "arbitrum"
 			url:  "https://github.com/graphops/launchpad-namespaces/\(name)"
 			description: """
-				For deploying arbitrum mainnet archive nodes
+				This *Namespace* provides a suitable stack to operate Arbitrum mainnet archive nodes.
 				"""
 		}
 
+		// Suitable defaults for a mainnet archive node
 		#flavor: {
-			// suitable defaults for a mainnet archive node
 			#mainnet: "mainnet"
 
 			#enum: ( #mainnet )
 		}
 
-		// eth-erigon namespace values schema
+		// Arbitrum
 		#values: #base.#values & {
-			// the default is eth-<flavor>
+			// the default is arbitrum-(flavor)
 			targetNamespace?: *"arbitrum-mainnet" | string
 
 			_templatedTargetNamespace: '( print "arbitrum-" .Values.flavor )'
 
+			// Choose among default values best suited for different scenarios
+			// currently supports "mainnet" only
 			flavor?: *"mainnet" | #flavor.#enum
 
 			#releaseValues: {
@@ -40,13 +35,14 @@ import (
 				values?:      (#map) | [...#map]
 			}
 
+			// For overriding this release's values
 			for key, _ in releases {
-				// release key for overloading values "\(release)"
+				// For overriding this release's values
 				(key)?: #releaseValues
 			}
 		}
 
-		// eth-erigon helmfile API
+		// Arbitrum helmfile schema
 		#helmfiles: #base.#helmfiles & {
 			path:    =~"*github.com/graphops/launchpad-namespaces.git@arbitrum/helmfile.yaml*"
 			values?: #arbitrum.#values | [...#arbitrum.#values]

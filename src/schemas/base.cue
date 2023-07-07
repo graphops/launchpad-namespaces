@@ -2,12 +2,11 @@ package LaunchpadNamespaces
 
 import (
 	upstreamHelmfile "github.com/SchemaStore:helmfile"
-	//	charts "graphops.xyz/launchpad/namespaces:LaunchpadCharts"
 )
 
 info: {
 	description: """
-		TODO
+		Launchpad Namespaces Schemas, by GraphOps (https://graphops.xyz)
 		"""
 }
 
@@ -18,9 +17,9 @@ info: {
 		helmDefaults?: upstreamHelmfile.#helmDefaults
 		// Sets the cluster namespace in which the releases will be deployed
 		targetNamespace: string
-		// Add annotations
+		// Add annotations to releases on this namespace
 		annotations?: {...} & #map
-		// Adds labels
+		// Adds labels to releases on this namespace
 		labels?: {...} & #map
 		...
 	}

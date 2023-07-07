@@ -12,6 +12,7 @@ function gen-helmfile {
 
    pushd "$SCHEMAS_DIR"
    cue cmd -t namespace="$namespace" build:helmfile > "$REPOROOT/$namespace/helmfile.yaml"
+   git add "$REPOROOT/$namespace/helmfile.yaml"
    popd
 }
 

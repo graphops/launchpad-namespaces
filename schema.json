@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "description": "TODO",
+        "description": "Launchpad Namespaces Schemas, by GraphOps (https://graphops.xyz)",
         "title": "schema:type=namespace schema:namespace=arbitrum",
         "version": "no version"
     },
@@ -540,7 +540,7 @@
                         "type": "string"
                     },
                     "annotations": {
-                        "description": "Add annotations",
+                        "description": "Add annotations to releases on this namespace",
                         "type": "object",
                         "allOf": [
                             {
@@ -549,7 +549,7 @@
                         ]
                     },
                     "labels": {
-                        "description": "Adds labels",
+                        "description": "Adds labels to releases on this namespace",
                         "type": "object",
                         "allOf": [
                             {
@@ -694,11 +694,11 @@
                 "type": "object"
             },
             "namespaces": {
-                "description": "// charts \"graphops.xyz/launchpad/namespaces:LaunchpadCharts\"\n\n\ncharts \"graphops.xyz/launchpad/namespaces:LaunchpadCharts\"",
+                "description": "charts \"graphops.xyz/launchpad/namespaces:LaunchpadCharts\"",
                 "type": "object"
             },
             "namespaces.arbitrum": {
-                "description": "eth-erigon namespace",
+                "description": "Arbitrum *Namespace* values interface",
                 "type": "object",
                 "required": [
                     "meta",
@@ -729,7 +729,7 @@
                             "description": {
                                 "type": "string",
                                 "enum": [
-                                    "For deploying arbitrum mainnet archive nodes"
+                                    "This *Namespace* provides a suitable stack to operate Arbitrum mainnet archive nodes."
                                 ]
                             }
                         }
@@ -897,20 +897,20 @@
                 }
             },
             "namespaces.arbitrum.flavor": {
+                "description": "Suitable defaults for a mainnet archive node",
                 "type": "object"
             },
             "namespaces.arbitrum.flavor.enum": {
                 "$ref": "#/components/schemas/namespaces.arbitrum.flavor.mainnet"
             },
             "namespaces.arbitrum.flavor.mainnet": {
-                "description": "suitable defaults for a mainnet archive node",
                 "type": "string",
                 "enum": [
                     "mainnet"
                 ]
             },
             "namespaces.arbitrum.helmfiles": {
-                "description": "eth-erigon helmfile API",
+                "description": "Arbitrum helmfile schema",
                 "type": "object",
                 "properties": {
                     "path": {
@@ -943,11 +943,11 @@
                 ]
             },
             "namespaces.arbitrum.values": {
-                "description": "eth-erigon namespace values schema",
+                "description": "Arbitrum",
                 "type": "object",
                 "properties": {
                     "targetNamespace": {
-                        "description": "the default is eth-<flavor>",
+                        "description": "the default is arbitrum-(flavor)",
                         "type": "string",
                         "default": "arbitrum-mainnet"
                     },
@@ -1024,7 +1024,7 @@
                             "description": {
                                 "type": "string",
                                 "enum": [
-                                    "For deploying avalanche mainnet archive nodes"
+                                    "This *Namespace* provides a suitable stack to operate Avalanche mainnet archive nodes."
                                 ]
                             }
                         }
@@ -1241,7 +1241,7 @@
                 }
             },
             "namespaces.celo": {
-                "description": "eth-erigon namespace",
+                "description": "Celo *Namespace*",
                 "type": "object",
                 "required": [
                     "meta",
@@ -1272,7 +1272,7 @@
                             "description": {
                                 "type": "string",
                                 "enum": [
-                                    "For deploying celo mainnet archive nodes"
+                                    "This *Namespace* provides a suitable stack to operate Celo mainnet archive nodes."
                                 ]
                             }
                         }
@@ -1520,7 +1520,7 @@
                             "description": {
                                 "type": "string",
                                 "enum": [
-                                    "For deploying ethereum mainnet and göerli archive nodes"
+                                    "This *Namespace* provides a suitable stack to operate ethereum mainnet and göerli nodes."
                                 ]
                             }
                         }
@@ -1826,7 +1826,7 @@
                             "description": {
                                 "type": "string",
                                 "enum": [
-                                    "For deploying gnosis mainnet archive nodes"
+                                    "This *Namespace* provides a suitable stack to operate Gnosis mainnet archive nodes."
                                 ]
                             }
                         }
@@ -2121,7 +2121,7 @@
                             "description": {
                                 "type": "string",
                                 "enum": [
-                                    ""
+                                    "This *Namespace* provides the necessary software to run a Graph Node and participate\nin the Graph Protocol Network"
                                 ]
                             }
                         }
@@ -2415,7 +2415,7 @@
                             "description": {
                                 "type": "string",
                                 "enum": [
-                                    "Adds ingress support and certificate management on kubernetes"
+                                    "This *Namespace* adds ingress support and certificate management on kubernetes"
                                 ]
                             }
                         }
@@ -2737,7 +2737,7 @@
                             "description": {
                                 "type": "string",
                                 "enum": [
-                                    "Adds software for log and metrics collection and visualization, as well as alarmistic."
+                                    "This *Namespace* adds software for log and metrics collection and visualization, as well as alarmistic."
                                 ]
                             }
                         }
@@ -3112,7 +3112,7 @@
                             "description": {
                                 "type": "string",
                                 "enum": [
-                                    "For deploying polygon mainnet archive nodes"
+                                    "This *Namespace* provides a suitable stack to operate Polygon mainnet archive nodes."
                                 ]
                             }
                         }
@@ -3406,7 +3406,7 @@
                             "description": {
                                 "type": "string",
                                 "enum": [
-                                    "Extends your Kubernetes cluster with custom resources for easilly creating and managing Postgres databases"
+                                    "This *Namespace* extends your Kubernetes cluster with custom resources for easilly creating and managing Postgres databases"
                                 ]
                             }
                         }
@@ -3588,7 +3588,7 @@
                             "description": {
                                 "type": "string",
                                 "enum": [
-                                    "...TODO..."
+                                    "This *Namespace* provides a Kubernetes controller and tool for one-way encrypted Secrets"
                                 ]
                             }
                         }
@@ -3777,7 +3777,7 @@
                             "description": {
                                 "type": "string",
                                 "enum": [
-                                    "...TODO..."
+                                    "This *Namespace* uses [OpenEBS](https://openebs.io) to provide a software defined storage layer\nsuitable for stateful workloads that require low-latency access to the storage."
                                 ]
                             }
                         }
@@ -4113,7 +4113,6 @@
                 ]
             },
             "namespaces.storage.values": {
-                "description": "Declaratively deploy [OpenEBS](https://openebs.io/) on your cluster",
                 "type": "object",
                 "properties": {
                     "targetNamespace": {

@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 readonly PROGNAME="$(basename -- "$0")"
-readonly CUEROOT="$(dirname "$0")/../"
+readonly BASEDIR="$(dirname -- "$0")"
+readonly CUEROOT="$(realpath "$BASEDIR/../")"
 readonly SCHEMA_PKG="graphops.xyz/launchpad/namespaces/schemas:LaunchpadNamespaces"
 
 RESOLVEREFS="cat"

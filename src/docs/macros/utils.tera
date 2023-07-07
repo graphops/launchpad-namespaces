@@ -1,6 +1,6 @@
 {%- macro getSchemaName(namespace, schemas) -%}
 {%- set sanitizedName = self::sanitizeName(name=namespace) -%}
-{{ "namespaces." ~ sanitizedName ~ ".values" }}
+{{ "namespaces." ~ sanitizedName }}
 {%- endmacro getSchemaName -%}
 
 {%- macro sanitizeName(name) -%}

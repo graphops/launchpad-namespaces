@@ -1,7 +1,6 @@
 // schema:type=namespace schema:namespace=storage
 package LaunchpadNamespaces
 
-// charts "graphops.xyz/launchpad/namespaces:LaunchpadCharts"
 #namespaces: {
 	#storage: {
 		meta: {
@@ -9,7 +8,8 @@ package LaunchpadNamespaces
 			url:     "https://github.com/graphops/launchpad-namespaces/storage"
 			version: "0.9.0"
 			description: """
-				...TODO...
+				This *Namespace* uses [OpenEBS](https://openebs.io) to provide a software defined storage layer
+				suitable for stateful workloads that require low-latency access to the storage.
 				"""
 		}
 
@@ -24,7 +24,6 @@ package LaunchpadNamespaces
 			#enum: ( #zfs | #rawfile )
 		}
 
-		// Declaratively deploy [OpenEBS](https://openebs.io/) on your cluster
 		#values: #base.#values & {
 			targetNamespace?: *"storage" | string
 

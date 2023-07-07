@@ -27,6 +27,7 @@ for file in "$REPOROOT"/[a-zA-Z]*/README.md.tera; do
     namespace="$(basename -- "$dir")"
 
     echo "$DATA" | tera --include-path "$TEMPLATESDIR" --template "$file" --stdin > "$dir/README.md"
+    git add "$dir/README.md"
 done
 
 
@@ -34,4 +35,5 @@ for file in "$DOCSDIR"/*.tera; do
     filename="$(basename -- "$file")"
 
     echo "$DATA" | tera --include-path "$TEMPLATESDIR" --template "$file" --stdin > "$REPOROOT/${filename%.tera}"
+    git add "$REPOROOT/${filename%.tera}"
 done

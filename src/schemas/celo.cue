@@ -1,15 +1,14 @@
 // schema:type=namespace schema:namespace=celo
 package LaunchpadNamespaces
 
-// charts "graphops.xyz/launchpad/namespaces:LaunchpadCharts"
 #namespaces: {
-	// eth-erigon namespace
+	// Celo *Namespace*
 	#celo: {
 		meta: {
 			name: "celo"
 			url:  "https://github.com/graphops/launchpad-namespaces/\(name)"
 			description: """
-				For deploying celo mainnet archive nodes
+				This *Namespace* provides a suitable stack to operate Celo mainnet archive nodes.
 				"""
 		}
 

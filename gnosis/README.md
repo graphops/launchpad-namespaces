@@ -2,9 +2,17 @@
 
 # Gnosis Namespace
 
-eth-erigon namespace values schema
+This *Namespace* provides a suitable stack to operate Gnosis mainnet archive nodes.
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+## Releases
+- [nethermind](https://github.com/NethermindEth/nethermind)<br>
+Nethermind is a high-performance, highly configurable full Ethereum protocol execution client built on .NET that runs on Linux, Windows, and macOS, and supports Clique, Aura, and Ethash.
+- [nimbus](https://github.com/status-im/nimbus-eth2)<br>
+Nimbus-eth2 is an extremely efficient consensus layer (eth2) client implementation.
+- [proxyd](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
+Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
 
 ## Features
 
@@ -92,9 +100,9 @@ Check out the *Namespaces* [list](/README.md#namespaces) below for release names
 
 | Key | Type | Default | Description |
 | :--- | :---: | :--- | :--- |
-annotations | object |  | Add annotations |
+annotations | object |  | Add annotations to releases on this namespace |
 flavor | string |  | suitable defaults for a mainnet archive node |
-labels | object |  | Adds labels |
+labels | object |  | Adds labels to releases on this namespace |
 nethermind | object |  |  |
 nethermind.mergeValues | boolean | true |  |
 nethermind.values | (object *or* list of objects) |  |  |

@@ -2,9 +2,19 @@
 
 # Monitoring Namespace
 
-Monitoring namespace values interface schema
+This *Namespace* adds software for log and metrics collection and visualization, as well as alarmistic.
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+## Releases
+- [kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack)<br>
+Installs the kube-prometheus stack, a collection of Kubernetes manifests, Grafana dashboards, and Prometheus rules
+- [loki](https://github.com/grafana/helm-charts/tree/main/charts/loki-distributed)<br>
+Helm chart for Grafana Loki in microservices mode
+- [node-problem-detector](https://github.com/deliveryhero/helm-charts/tree/master/stable/node-problem-detector)<br>
+This chart installs a node-problem-detector daemonset. This tool aims to make various node problems visible to the upstream layers in cluster management stack.
+- [promtail](https://github.com/grafana/helm-charts/tree/main/charts/promtail)<br>
+Promtail is an agent which ships the contents of local logs to a Loki instance
 
 ## Features
 
@@ -92,12 +102,12 @@ Check out the *Namespaces* [list](/README.md#namespaces) below for release names
 
 | Key | Type | Default | Description |
 | :--- | :---: | :--- | :--- |
-annotations | object |  | Add annotations |
+annotations | object |  | Add annotations to releases on this namespace |
 features | list of strings | [metrics, logs] | *enum of:&nbsp;&nbsp;(metrics \| logs)* |
 kube&#8209;prometheus&#8209;stack | object |  |  |
 kube&#8209;prometheus&#8209;stack.mergeValues | boolean | true |  |
 kube&#8209;prometheus&#8209;stack.values | (object *or* list of objects) |  |  |
-labels | object |  | Adds labels |
+labels | object |  | Adds labels to releases on this namespace |
 loki | object |  |  |
 loki.mergeValues | boolean | true |  |
 loki.values | (object *or* list of objects) |  |  |

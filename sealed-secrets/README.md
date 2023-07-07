@@ -2,9 +2,13 @@
 
 # Sealed-Secrets Namespace
 
-Sealed-Secrets namespace values schema
+This *Namespace* provides a Kubernetes controller and tool for one-way encrypted Secrets
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+## Releases
+- [sealed-secrets](https://github.com/bitnami/charts/tree/main/bitnami/sealed-secrets)<br>
+Sealed Secrets are 'one-way' encrypted K8s Secrets that can be created by anyone, but can only be decrypted by the controller running in the target cluster recovering the original object.
 
 ## Features
 
@@ -92,8 +96,8 @@ Check out the *Namespaces* [list](/README.md#namespaces) below for release names
 
 | Key | Type | Default | Description |
 | :--- | :---: | :--- | :--- |
-annotations | object |  | Add annotations |
-labels | object |  | Adds labels |
+annotations | object |  | Add annotations to releases on this namespace |
+labels | object |  | Adds labels to releases on this namespace |
 sealed&#8209;secrets | object |  |  |
 sealed&#8209;secrets.mergeValues | boolean | true |  |
 sealed&#8209;secrets.values | (object *or* list of objects) |  |  |

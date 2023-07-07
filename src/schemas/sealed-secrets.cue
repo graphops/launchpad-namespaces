@@ -8,7 +8,7 @@ package LaunchpadNamespaces
 			name: "sealed-secrets"
 			url:  "https://github.com/graphops/launchpad-namespaces/sealed-secrets"
 			description: """
-				...TODO...
+				This *Namespace* provides a Kubernetes controller and tool for one-way encrypted Secrets
 				"""
 		}
 

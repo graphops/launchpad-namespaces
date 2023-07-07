@@ -2,9 +2,17 @@
 
 # Polygon Namespace
 
-eth-erigon namespace values schema
+This *Namespace* provides a suitable stack to operate Polygon mainnet archive nodes.
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+## Releases
+- [erigon](https://github.com/ledgerwatch/erigon)<br>
+Erigon is an implementation of Ethereum (execution client with light client for consensus layer), on the efficiency frontier.
+- [heimdall](https://github.com/maticnetwork/heimdall)<br>
+Validator node for Matic Network.
+- [proxyd](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
+Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
 
 ## Features
 
@@ -92,7 +100,7 @@ Check out the *Namespaces* [list](/README.md#namespaces) below for release names
 
 | Key | Type | Default | Description |
 | :--- | :---: | :--- | :--- |
-annotations | object |  | Add annotations |
+annotations | object |  | Add annotations to releases on this namespace |
 erigon | object |  |  |
 erigon.mergeValues | boolean | true |  |
 erigon.values | (object *or* list of objects) |  |  |
@@ -100,7 +108,7 @@ flavor | string |  | suitable defaults for a mainnet archive node |
 heimdall | object |  |  |
 heimdall.mergeValues | boolean | true |  |
 heimdall.values | (object *or* list of objects) |  |  |
-labels | object |  | Adds labels |
+labels | object |  | Adds labels to releases on this namespace |
 proxyd | object |  |  |
 proxyd.mergeValues | boolean | true |  |
 proxyd.values | (object *or* list of objects) |  |  |

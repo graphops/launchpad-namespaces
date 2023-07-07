@@ -8,6 +8,7 @@
 ## Introduction
 
 *Launchpad Namespaces*, part of the *Launchpad Toolkit*, leverages {{ const.soft.helmfile.link }} to offer a declarative way for deploying and managing functionally related bundles of [helm charts]({{ const.soft.helm.url }}) (called *releases* in *helmfile*).
+
 It aims to:
 - be easy to use, while extensible and adaptable
 - provide sensible working defaults that can always be overriden

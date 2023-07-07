@@ -3,12 +3,13 @@
 | Key | Type | Default | Description |
 | :--- | :---: | :--- | :--- |
 {%- set schema_name = utils::getSchemaName(namespace=name, schemas=schemas) -%}
-{%- for p_name, p in schemas[schema_name].properties -%}
+{%- set values_key = schema_name ~ ".values" -%}
+{%- for p_name, p in schemas[values_key].properties -%}
 {%- if p_name != "helmDefaults" -%}
 {{ self::renderProperty(name=p_name, obj=p) }}
 {%- endif -%}
 {%- endfor -%}
-{%- set helmDefaults = schemas[schema_name].properties | get(key="helmDefaults", default="") -%}
+{%- set helmDefaults = schemas[values_key].properties | get(key="helmDefaults", default="") -%}
 {%- if helmDefaults != "" -%}
 {{ self::renderProperty(name="helmDefaults", obj=helmDefaults) }}
 {%- endif -%}

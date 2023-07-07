@@ -2,9 +2,17 @@
 
 # Ingress Namespace
 
-Base namespace values interface schema
+This *Namespace* adds ingress support and certificate management on kubernetes
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+## Releases
+- [cert-manager](https://github.com/cert-manager/cert-manager)<br>
+cert-manager adds certificates and certificate issuers as resource types in Kubernetes clusters, and simplifies the process of obtaining, renewing and using those certificates.
+- [cert-manager-resources](https://github.com/graphops/launchpad-charts/tree/main/charts/resource-injector)<br>
+Manage Raw Kubernetes Resources using Helm
+- [ingress-nginx](https://github.com/kubernetes/ingress-nginx/tree/main/charts/ingress-nginx)<br>
+ingress-nginx is an Ingress controller for Kubernetes using NGINX as a reverse proxy and load balancer.
 
 ## Features
 
@@ -92,7 +100,7 @@ Check out the *Namespaces* [list](/README.md#namespaces) below for release names
 
 | Key | Type | Default | Description |
 | :--- | :---: | :--- | :--- |
-annotations | object |  | Add annotations |
+annotations | object |  | Add annotations to releases on this namespace |
 cert&#8209;manager | object |  |  |
 cert&#8209;manager.mergeValues | boolean | true |  |
 cert&#8209;manager.values | (object *or* list of objects) |  |  |
@@ -103,7 +111,7 @@ features | list of strings | [ingress, cert-manager] | *enum of:&nbsp;&nbsp;(ing
 ingress&#8209;nginx | object |  |  |
 ingress&#8209;nginx.mergeValues | boolean | true |  |
 ingress&#8209;nginx.values | (object *or* list of objects) |  |  |
-labels | object |  | Adds labels |
+labels | object |  | Adds labels to releases on this namespace |
 targetNamespace | string | ingress | Sets the cluster namespace in which the releases will be deployed |
 helmDefaults | object |  |  |
 helmDefaults.args | list of strings |  |  |

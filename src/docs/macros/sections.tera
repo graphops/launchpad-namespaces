@@ -10,7 +10,7 @@
 
 {%- macro sectionDescription(namespace, schemas) -%}
 {%- set _section_name = utils::getSchemaName(namespace=namespace, schemas=schemas) -%}
-{{ schemas[_section_name] | get(key="description", default="") }}
+{{ schemas[_section_name].properties.meta.properties | get(key="description", default="") | get(key="enum", default=[""]) | first }}
 {%- endmacro sectionDescription -%}
 
 {%- macro sectionContributing() -%}

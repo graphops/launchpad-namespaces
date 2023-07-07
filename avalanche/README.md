@@ -2,9 +2,15 @@
 
 # Avalanche Namespace
 
-eth-erigon namespace values schema
+This *Namespace* provides a suitable stack to operate Avalanche mainnet archive nodes.
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+## Releases
+- [avalanche](https://github.com/ava-labs/avalanchego)<br>
+Node implementation for the Avalanche network - a blockchains platform with high throughput, and blazing fast transactions.
+- [proxyd](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
+Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
 
 ## Features
 
@@ -92,12 +98,12 @@ Check out the *Namespaces* [list](/README.md#namespaces) below for release names
 
 | Key | Type | Default | Description |
 | :--- | :---: | :--- | :--- |
-annotations | object |  | Add annotations |
+annotations | object |  | Add annotations to releases on this namespace |
 avalanche | object |  |  |
 avalanche.mergeValues | boolean | true |  |
 avalanche.values | (object *or* list of objects) |  |  |
 flavor | string |  | suitable defaults for a mainnet archive node |
-labels | object |  | Adds labels |
+labels | object |  | Adds labels to releases on this namespace |
 proxyd | object |  |  |
 proxyd.mergeValues | boolean | true |  |
 proxyd.values | (object *or* list of objects) |  |  |

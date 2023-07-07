@@ -9,7 +9,8 @@ package LaunchpadNamespaces
 			name: "graph"
 			url:  "https://github.com/graphops/launchpad-namespaces/\(name)"
 			description: """
-
+				This *Namespace* provides the necessary software to run a Graph Node and participate
+				in the Graph Protocol Network
 				"""
 		}
 

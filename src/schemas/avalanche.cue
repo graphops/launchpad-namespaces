@@ -9,7 +9,7 @@ package LaunchpadNamespaces
 			name: "avalanche"
 			url:  "https://github.com/graphops/launchpad-namespaces/\(name)"
 			description: """
-				For deploying avalanche mainnet archive nodes
+				This *Namespace* provides a suitable stack to operate Avalanche mainnet archive nodes.
 				"""
 		}
 

@@ -9,7 +9,7 @@ package LaunchpadNamespaces
 			name: "ethereum"
 			url:  "https://github.com/graphops/launchpad-namespaces/\(name)"
 			description: """
-				For deploying ethereum mainnet and göerli archive nodes
+				This *Namespace* provides a suitable stack to operate ethereum mainnet and göerli nodes.
 				"""
 		}
 

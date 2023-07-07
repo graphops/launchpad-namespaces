@@ -9,7 +9,7 @@ package LaunchpadNamespaces
 			name: "polygon"
 			url:  "https://github.com/graphops/launchpad-namespaces/\(name)"
 			description: """
-				For deploying polygon mainnet archive nodes
+				This *Namespace* provides a suitable stack to operate Polygon mainnet archive nodes.
 				"""
 		}
 

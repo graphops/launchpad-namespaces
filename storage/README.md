@@ -2,9 +2,22 @@
 
 # Storage Namespace
 
-Declaratively deploy [OpenEBS](https://openebs.io/) on your cluster
+This *Namespace* uses [OpenEBS](https://openebs.io) to provide a software defined storage layer
+suitable for stateful workloads that require low-latency access to the storage.
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+## Releases
+- [openebs](https://github.com/openebs/openebs)<br>
+OpenEBS is the leading open-source example of a category of cloud native storage solutions sometimes called Container Attached Storage.
+- [openebs-rawfile-localpv](https://github.com/graphops/launchpad-charts/tree/main/charts/openebs-rawfile-localpv)<br>
+RawFile Driver Container Storage Interface
+- [openebs-rawfile-storageclass](https://github.com/graphops/launchpad-charts/tree/main/charts/resource-injector)<br>
+Manage Raw Kubernetes Resources using Helm
+- [openebs-zfs-localpv](https://github.com/openebs/zfs-localpv/tree/b70fb1e847b8c9ba32e3fd8cba877767686f6b26)<br>
+CSI driver for provisioning Local PVs backed by ZFS and more.
+- [openebs-zfs-storageclass](https://github.com/graphops/launchpad-charts/tree/main/charts/resource-injector)<br>
+Manage Raw Kubernetes Resources using Helm
 
 ## Features
 
@@ -92,9 +105,9 @@ Check out the *Namespaces* [list](/README.md#namespaces) below for release names
 
 | Key | Type | Default | Description |
 | :--- | :---: | :--- | :--- |
-annotations | object |  | Add annotations |
+annotations | object |  | Add annotations to releases on this namespace |
 features | list of strings |  | *enum of:&nbsp;&nbsp;(zfs \| rawfile)* |
-labels | object |  | Adds labels |
+labels | object |  | Adds labels to releases on this namespace |
 openebs | object |  |  |
 openebs.mergeValues | boolean | true |  |
 openebs.values | (object *or* list of objects) |  |  |
