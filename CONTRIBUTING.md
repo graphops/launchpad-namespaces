@@ -18,15 +18,15 @@ To contribute code, there's a few requirements you need to go through first:
 
 ### yarn
 
-Our Git hooks system and some of our dependencies for tasks such as code generating or templating are being managed by [yarn](https://github.com/yarnpkg/berry), so that will be required
+Our Git hooks system and some of our dependencies for tasks such as code generating or templating are being managed by [*yarn*](https://github.com/yarnpkg/berry), so that will be required
 
 ### tera-cli
 
-Some of our documentation is templated with this tool, and for those tasks to run sucessfully [tera-cli](https://github.com/chevdor/tera-cli) must be available
+Some of our documentation is templated with this tool, and for those tasks to run sucessfully [*tera-cli*](https://github.com/chevdor/tera-cli) must be available
 
 ### CUE
 
-Namespaces schemas are written in [cue-lang](https://github.com/cue-lang/cue) and you will need this tool.
+Namespaces schemas are written in [CUE](https://cuelang.org) and you will need this tool.
 
 Once you have successfully fulfilled the previous requirements in your operating system, the next logical step is to clone this repository and initialize the yarn packages using the following command:
 
@@ -144,7 +144,7 @@ The schema files completely define the namespace in its many characteristics, su
 - the features it supports
 - the labels its releases get deployed with
 
-### Values Merging
+### values merging
 
 This is often implemented in the helmfiles in code such as
 ```
@@ -154,7 +154,7 @@ This is often implemented in the helmfiles in code such as
 {{ end }}
 ```which consists of declaring a variable holding a default value, and deep merging with the user passed values, giving precedence to those. Injecting the default value, recreatePods in this example, is done by the CUE tool when building the helmfiles.
 
-### Flavors
+### flavors
 
 Flavors are implemented by having different sets of values in different subfolders, and having the helmfile lookup the folder dynamically, as shown in this example
 ```
@@ -164,11 +164,9 @@ Flavors are implemented by having different sets of values in different subfolde
 {{- else }}
 - ./values/{{` "`{{ .Release.Name }}`" `}}.yaml
 {{- end -}}
-```
+```### features
 
-### Features
-
-Features are implemented by wrapping releases in the helmfile with a conditional, as seen in the following example:
+Features are implemented by wrapping the releases in the helmfile with a conditional, as seen in the following example:
 ```
 {{ if has "metrics" ( .Values | get "features" list ) }}
 {{- $release := "kube-prometheus-stack" }}

@@ -7,6 +7,7 @@ if [[ $(uname -s) == Linux ]]; then
 elif [[ $(uname -s) == Darwin ]]; then
     base_rpath="grealpath"
 fi
+
 readonly BASEDIR="$(dirname -- "$0")"
 readonly REPOROOT="$("$base_rpath" "$BASEDIR/../..")"
 readonly GENOPENAPI="$("$base_rpath" "$REPOROOT/src/scripts/generate-openapi.sh")"
