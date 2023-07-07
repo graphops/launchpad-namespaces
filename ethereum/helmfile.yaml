@@ -88,19 +88,19 @@ templates:
   
   erigon:
     chart: graphops/erigon
-    version: 0.6.1-canary.1
+    version: 0.6.0
     inherit:
       - template: defaults
   
   nimbus:
     chart: graphops/nimbus
-    version: 0.3.1-canary.1
+    version: 0.3.0
     inherit:
       - template: defaults
   
   proxyd:
     chart: graphops/proxyd
-    version: 0.2.1-canary.2
+    version: 0.2.1
     inherit:
       - template: defaults
   

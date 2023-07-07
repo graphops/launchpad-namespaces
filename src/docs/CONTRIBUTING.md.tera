@@ -129,7 +129,7 @@ This is often implemented in the helmfiles in code such as
 {{ $_ := (deepCopy . | mergeOverwrite $__helmDefaults) }}
 {{ end }}
 ```
-{%- endraw -%}
+{% endraw -%}
 which consists of declaring a variable holding a default value, and deep merging with the user passed values, giving precedence to those. Injecting the default value, recreatePods in this example, is done by the CUE tool when building the helmfiles.
 
 ### flavors
@@ -144,7 +144,7 @@ Flavors are implemented by having different sets of values in different subfolde
 - ./values/{{` "`{{ .Release.Name }}`" `}}.yaml
 {{- end -}}
 ```
-{%- endraw -%}
+{% endraw -%}
 
 ### features
 
@@ -160,7 +160,7 @@ Features are implemented by wrapping the releases in the helmfile with a conditi
   {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
 {{- end -}}
 ```
-{%- endraw -%}
+{% endraw -%}
 
 ## How To
 

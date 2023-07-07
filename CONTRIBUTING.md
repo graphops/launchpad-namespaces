@@ -127,7 +127,8 @@ This is often implemented in the helmfiles in code such as
 {{ with ( .Values | get "helmDefaults" dict ) }}
 {{ $_ := (deepCopy . | mergeOverwrite $__helmDefaults) }}
 {{ end }}
-```which consists of declaring a variable holding a default value, and deep merging with the user passed values, giving precedence to those. Injecting the default value, recreatePods in this example, is done by the CUE tool when building the helmfiles.
+```
+which consists of declaring a variable holding a default value, and deep merging with the user passed values, giving precedence to those. Injecting the default value, recreatePods in this example, is done by the CUE tool when building the helmfiles.
 
 ### flavors
 
@@ -139,7 +140,8 @@ Flavors are implemented by having different sets of values in different subfolde
 {{- else }}
 - ./values/{{` "`{{ .Release.Name }}`" `}}.yaml
 {{- end -}}
-```### features
+```
+### features
 
 Features are implemented by wrapping the releases in the helmfile with a conditional, as seen in the following example:
 ```
@@ -151,7 +153,8 @@ Features are implemented by wrapping the releases in the helmfile with a conditi
   values:
   {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
 {{- end -}}
-```## How To
+```
+## How To
 
 ### Add helm chart repositories, and charts
 
