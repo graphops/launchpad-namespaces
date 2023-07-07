@@ -8,11 +8,11 @@ in the Graph Protocol Network
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Releases
-- [graph-network-indexer](https://github.com/graphprotocol/indexer)<br>
+- [graph-network-indexer](/graph-network-indexer)<br>
 Graph protocol indexer components
-- [graph-node](https://github.com/graphprotocol/graph-node)<br>
+- [graph-node](/graph-node)<br>
 Graph Node is an open source Rust implementation that event sources the Ethereum blockchain to deterministically update a data store that can be queried via the GraphQL endpoint.
-- [graph-toolbox](https://github.com/graphops/docker-builds/tree/main/dockerfiles/graph-toolbox)<br>
+- [graph-toolbox](/graph-toolbox)<br>
 Utility kit for interacting and managing the Graph indexer stack.
 
 ## Features
@@ -91,11 +91,18 @@ helmfiles:
 
 Check out the *Namespaces* [list](/README.md#namespaces) below for release names, and each chart's folder for its specific values interface.
 
-### mention how to install multiple namespaces
-
-### use features
-
-### use values
+To use multiple namespaces on the same cluster, just add more items to the helmfiles array like so:
+```yaml
+helmfiles:
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@graph/helmfile.yaml?ref=graph:latest
+    selectorsInherited: true
+    values:
+      <graph values>
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@<other namespace>/helmfile.yaml?ref=<other namespace>:latest
+    selectorsInherited: true
+    values:
+      <other values>
+```
 
 ## Values
 

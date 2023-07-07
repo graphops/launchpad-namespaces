@@ -7,7 +7,7 @@ This *Namespace* extends your Kubernetes cluster with custom resources for easil
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Releases
-- [postgres-operator](https://github.com/zalando/postgres-operator)<br>
+- [postgres-operator](/postgres-operator)<br>
 The Postgres Operator delivers an easy to run highly-available PostgreSQL clusters on Kubernetes (K8s) powered by Patroni.
 
 ## Features
@@ -86,11 +86,18 @@ helmfiles:
 
 Check out the *Namespaces* [list](/README.md#namespaces) below for release names, and each chart's folder for its specific values interface.
 
-### mention how to install multiple namespaces
-
-### use features
-
-### use values
+To use multiple namespaces on the same cluster, just add more items to the helmfiles array like so:
+```yaml
+helmfiles:
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@postgres-operator/helmfile.yaml?ref=postgres-operator:latest
+    selectorsInherited: true
+    values:
+      <postgres-operator values>
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@<other namespace>/helmfile.yaml?ref=<other namespace>:latest
+    selectorsInherited: true
+    values:
+      <other values>
+```
 
 ## Values
 

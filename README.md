@@ -87,11 +87,18 @@ helmfiles:
 
 Check out the *Namespaces* [list](/README.md#namespaces) below for release names, and each chart's folder for its specific values interface.
 
-### mention how to install multiple namespaces
-
-### use features
-
-### use values
+To use multiple namespaces on the same cluster, just add more items to the helmfiles array like so:
+```yaml
+helmfiles:
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@storage/helmfile.yaml?ref=storage:latest
+    selectorsInherited: true
+    values:
+      <storage values>
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@<other namespace>/helmfile.yaml?ref=<other namespace>:latest
+    selectorsInherited: true
+    values:
+      <other values>
+```
 
 ## Updates
 
@@ -102,109 +109,109 @@ Check out the *Namespaces* [list](/README.md#namespaces) below for release names
 
 The following namespaces are supported:
 
-### [:arbitrum](https://github.com/graphops/launchpad-namespaces/arbitrum)
+### [:arbitrum](/arbitrum)
 This *Namespace* provides a suitable stack to operate Arbitrum mainnet archive nodes.
 
-- [arbitrum-classic](https://github.com/OffchainLabs/arbitrum-classic)<br>
+- [arbitrum-classic](/arbitrum-classic)<br>
 The old "classic" Arbitrum tech stack.
-- [arbitrum-nitro](https://github.com/OffchainLabs/nitro/)<br>
+- [arbitrum-nitro](/arbitrum-nitro)<br>
 Nitro is the latest iteration of the Arbitrum technology. It is a fully integrated, complete layer 2 optimistic rollup system, including fraud proofs, the sequencer, the token bridges, advanced calldata compression, and more.
-- [proxyd](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
+- [proxyd](/proxyd)<br>
 Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
-### [:avalanche](https://github.com/graphops/launchpad-namespaces/avalanche)
+### [:avalanche](/avalanche)
 This *Namespace* provides a suitable stack to operate Avalanche mainnet archive nodes.
 
-- [avalanche](https://github.com/ava-labs/avalanchego)<br>
+- [avalanche](/avalanche)<br>
 Node implementation for the Avalanche network - a blockchains platform with high throughput, and blazing fast transactions.
-- [proxyd](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
+- [proxyd](/proxyd)<br>
 Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
-### [:celo](https://github.com/graphops/launchpad-namespaces/celo)
+### [:celo](/celo)
 This *Namespace* provides a suitable stack to operate Celo mainnet archive nodes.
 
-- [celo](https://github.com/celo-org/celo-blockchain)<br>
+- [celo](/celo)<br>
 Official golang implementation of the Celo blockchain
-- [proxyd](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
+- [proxyd](/proxyd)<br>
 Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
-### [:ethereum](https://github.com/graphops/launchpad-namespaces/ethereum)
-This *Namespace* provides a suitable stack to operate ethereum mainnet and göerli nodes.
+### [:ethereum](/ethereum)
+This *Namespace* provides a suitable stack to operate Ethereum mainnet and göerli archive nodes.
 
-- [erigon](https://github.com/ledgerwatch/erigon)<br>
+- [erigon](/erigon)<br>
 Erigon is an implementation of Ethereum (execution client with light client for consensus layer), on the efficiency frontier.
-- [nimbus](https://github.com/status-im/nimbus-eth2)<br>
+- [nimbus](/nimbus)<br>
 Nimbus-eth2 is an extremely efficient consensus layer (eth2) client implementation.
-- [proxyd](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
+- [proxyd](/proxyd)<br>
 Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
-### [:gnosis](https://github.com/graphops/launchpad-namespaces/gnosis)
+### [:gnosis](/gnosis)
 This *Namespace* provides a suitable stack to operate Gnosis mainnet archive nodes.
 
-- [nethermind](https://github.com/NethermindEth/nethermind)<br>
+- [nethermind](/nethermind)<br>
 Nethermind is a high-performance, highly configurable full Ethereum protocol execution client built on .NET that runs on Linux, Windows, and macOS, and supports Clique, Aura, and Ethash.
-- [nimbus](https://github.com/status-im/nimbus-eth2)<br>
+- [nimbus](/nimbus)<br>
 Nimbus-eth2 is an extremely efficient consensus layer (eth2) client implementation.
-- [proxyd](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
+- [proxyd](/proxyd)<br>
 Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
-### [:graph](https://github.com/graphops/launchpad-namespaces/graph)
+### [:graph](/graph)
 This *Namespace* provides the necessary software to run a Graph Node and participate
 in the Graph Protocol Network
 
-- [graph-network-indexer](https://github.com/graphprotocol/indexer)<br>
+- [graph-network-indexer](/graph-network-indexer)<br>
 Graph protocol indexer components
-- [graph-node](https://github.com/graphprotocol/graph-node)<br>
+- [graph-node](/graph-node)<br>
 Graph Node is an open source Rust implementation that event sources the Ethereum blockchain to deterministically update a data store that can be queried via the GraphQL endpoint.
-- [graph-toolbox](https://github.com/graphops/docker-builds/tree/main/dockerfiles/graph-toolbox)<br>
+- [graph-toolbox](/graph-toolbox)<br>
 Utility kit for interacting and managing the Graph indexer stack.
-### [:ingress](https://github.com/graphops/launchpad-namespaces/ingress)
+### [:ingress](/ingress)
 This *Namespace* adds ingress support and certificate management on kubernetes
 
-- [cert-manager](https://github.com/cert-manager/cert-manager)<br>
+- [cert-manager](/cert-manager)<br>
 cert-manager adds certificates and certificate issuers as resource types in Kubernetes clusters, and simplifies the process of obtaining, renewing and using those certificates.
-- [cert-manager-resources](https://github.com/graphops/launchpad-charts/tree/main/charts/resource-injector)<br>
+- [cert-manager-resources](/resource-injector)<br>
 Manage Raw Kubernetes Resources using Helm
-- [ingress-nginx](https://github.com/kubernetes/ingress-nginx/tree/main/charts/ingress-nginx)<br>
+- [ingress-nginx](/ingress-nginx)<br>
 ingress-nginx is an Ingress controller for Kubernetes using NGINX as a reverse proxy and load balancer.
-### [:monitoring](https://github.com/graphops/launchpad-namespaces/monitoring)
+### [:monitoring](/monitoring)
 This *Namespace* adds software for log and metrics collection and visualization, as well as alarmistic.
 
-- [kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack)<br>
+- [kube-prometheus-stack](/kube-prometheus-stack)<br>
 Installs the kube-prometheus stack, a collection of Kubernetes manifests, Grafana dashboards, and Prometheus rules
-- [loki](https://github.com/grafana/helm-charts/tree/main/charts/loki-distributed)<br>
+- [loki](/loki-distributed)<br>
 Helm chart for Grafana Loki in microservices mode
-- [node-problem-detector](https://github.com/deliveryhero/helm-charts/tree/master/stable/node-problem-detector)<br>
+- [node-problem-detector](/node-problem-detector)<br>
 This chart installs a node-problem-detector daemonset. This tool aims to make various node problems visible to the upstream layers in cluster management stack.
-- [promtail](https://github.com/grafana/helm-charts/tree/main/charts/promtail)<br>
+- [promtail](/promtail)<br>
 Promtail is an agent which ships the contents of local logs to a Loki instance
-### [:polygon](https://github.com/graphops/launchpad-namespaces/polygon)
+### [:polygon](/polygon)
 This *Namespace* provides a suitable stack to operate Polygon mainnet archive nodes.
 
-- [erigon](https://github.com/ledgerwatch/erigon)<br>
+- [erigon](/erigon)<br>
 Erigon is an implementation of Ethereum (execution client with light client for consensus layer), on the efficiency frontier.
-- [heimdall](https://github.com/maticnetwork/heimdall)<br>
+- [heimdall](/heimdall)<br>
 Validator node for Matic Network.
-- [proxyd](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
+- [proxyd](/proxyd)<br>
 Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
-### [:postgres-operator](https://github.com/graphops/launchpad-namespaces/postgres-operator)
+### [:postgres-operator](/postgres-operator)
 This *Namespace* extends your Kubernetes cluster with custom resources for easilly creating and managing Postgres databases
 
-- [postgres-operator](https://github.com/zalando/postgres-operator)<br>
+- [postgres-operator](/postgres-operator)<br>
 The Postgres Operator delivers an easy to run highly-available PostgreSQL clusters on Kubernetes (K8s) powered by Patroni.
-### [:sealed-secrets](https://github.com/graphops/launchpad-namespaces/sealed-secrets)
+### [:sealed-secrets](/sealed-secrets)
 This *Namespace* provides a Kubernetes controller and tool for one-way encrypted Secrets
 
-- [sealed-secrets](https://github.com/bitnami/charts/tree/main/bitnami/sealed-secrets)<br>
+- [sealed-secrets](/sealed-secrets)<br>
 Sealed Secrets are 'one-way' encrypted K8s Secrets that can be created by anyone, but can only be decrypted by the controller running in the target cluster recovering the original object.
-### [:storage](https://github.com/graphops/launchpad-namespaces/storage)
+### [:storage](/storage)
 This *Namespace* uses [OpenEBS](https://openebs.io) to provide a software defined storage layer
 suitable for stateful workloads that require low-latency access to the storage.
 
-- [openebs](https://github.com/openebs/openebs)<br>
+- [openebs](/openebs)<br>
 OpenEBS is the leading open-source example of a category of cloud native storage solutions sometimes called Container Attached Storage.
-- [openebs-rawfile-localpv](https://github.com/graphops/launchpad-charts/tree/main/charts/openebs-rawfile-localpv)<br>
+- [openebs-rawfile-localpv](/openebs-rawfile-localpv)<br>
 RawFile Driver Container Storage Interface
-- [openebs-rawfile-storageclass](https://github.com/graphops/launchpad-charts/tree/main/charts/resource-injector)<br>
+- [openebs-rawfile-storageclass](/resource-injector)<br>
 Manage Raw Kubernetes Resources using Helm
-- [openebs-zfs-localpv](https://github.com/openebs/zfs-localpv/tree/b70fb1e847b8c9ba32e3fd8cba877767686f6b26)<br>
+- [openebs-zfs-localpv](/zfs-localpv)<br>
 CSI driver for provisioning Local PVs backed by ZFS and more.
-- [openebs-zfs-storageclass](https://github.com/graphops/launchpad-charts/tree/main/charts/resource-injector)<br>
+- [openebs-zfs-storageclass](/resource-injector)<br>
 Manage Raw Kubernetes Resources using Helm
 
 

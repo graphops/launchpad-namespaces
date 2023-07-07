@@ -13,7 +13,7 @@
 {%- endmacro renderIndex -%}
 
 {%- macro renderName(namespaceMeta) -%}
-### [:{{ namespaceMeta.name.enum.0 }}]({{ namespaceMeta.url.enum.0 }})
+### [:{{ namespaceMeta.name.enum.0 }}](/{{ namespaceMeta.name.enum.0 }})
 {%- endmacro renderName -%}
 
 {%- macro renderDesc(namespaceMeta) -%}
@@ -28,7 +28,7 @@
 {%- endmacro renderReleases -%}
 
 {%- macro renderReleaseName(name, releaseProp) -%}
-[{{ name }}]({{ releaseProp.chart.properties.url.enum.0 | default(value="") }})
+[{{ name }}](/{{ releaseProp.chart.properties.name.enum.0 | default(value="") }})
 {%- endmacro renderReleaseName -%}
 
 {%- macro renderReleaseDesc(releaseProp) -%}

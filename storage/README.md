@@ -8,15 +8,15 @@ suitable for stateful workloads that require low-latency access to the storage.
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Releases
-- [openebs](https://github.com/openebs/openebs)<br>
+- [openebs](/openebs)<br>
 OpenEBS is the leading open-source example of a category of cloud native storage solutions sometimes called Container Attached Storage.
-- [openebs-rawfile-localpv](https://github.com/graphops/launchpad-charts/tree/main/charts/openebs-rawfile-localpv)<br>
+- [openebs-rawfile-localpv](/openebs-rawfile-localpv)<br>
 RawFile Driver Container Storage Interface
-- [openebs-rawfile-storageclass](https://github.com/graphops/launchpad-charts/tree/main/charts/resource-injector)<br>
+- [openebs-rawfile-storageclass](/resource-injector)<br>
 Manage Raw Kubernetes Resources using Helm
-- [openebs-zfs-localpv](https://github.com/openebs/zfs-localpv/tree/b70fb1e847b8c9ba32e3fd8cba877767686f6b26)<br>
+- [openebs-zfs-localpv](/zfs-localpv)<br>
 CSI driver for provisioning Local PVs backed by ZFS and more.
-- [openebs-zfs-storageclass](https://github.com/graphops/launchpad-charts/tree/main/charts/resource-injector)<br>
+- [openebs-zfs-storageclass](/resource-injector)<br>
 Manage Raw Kubernetes Resources using Helm
 
 ## Features
@@ -95,11 +95,18 @@ helmfiles:
 
 Check out the *Namespaces* [list](/README.md#namespaces) below for release names, and each chart's folder for its specific values interface.
 
-### mention how to install multiple namespaces
-
-### use features
-
-### use values
+To use multiple namespaces on the same cluster, just add more items to the helmfiles array like so:
+```yaml
+helmfiles:
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@storage/helmfile.yaml?ref=storage:latest
+    selectorsInherited: true
+    values:
+      <storage values>
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@<other namespace>/helmfile.yaml?ref=<other namespace>:latest
+    selectorsInherited: true
+    values:
+      <other values>
+```
 
 ## Values
 

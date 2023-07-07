@@ -5,6 +5,9 @@
       "url": "https://cuelang.org",
       "link": "[CUE](https://cuelang.org)"
     },
+    "cue_install": {
+      "link": "[CUE *Installation*](https://github.com/cue-lang/cue#download-and-install)"
+    },
     "helmfile": {
       "string": "*Helmfile*",
       "url": "https://github.com/helmfile/helmfile",
@@ -28,7 +31,7 @@
       "url": "https://github.com/yarnpkg/berry",
       "link": "[*yarn*](https://github.com/yarnpkg/berry)"
     },
-    "tera-cli": {
+    "tera_cli": {
       "string": "*tera-cli*",
       "url": "https://github.com/chevdor/tera-cli",
       "link": "[*tera-cli*](https://github.com/chevdor/tera-cli)"

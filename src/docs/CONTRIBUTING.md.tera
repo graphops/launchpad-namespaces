@@ -22,17 +22,17 @@ Our Git hooks system and some of our dependencies for tasks such as code generat
 
 ### tera-cli
 
-Some of our documentation is templated with this tool, and for those tasks to run sucessfully {{ const.soft["tera-cli"].link }} must be available
+Some of our documentation is templated with this tool, and for those tasks to run sucessfully {{ const.soft.tera_cli.link }} must be available
 
 ### CUE
 
-Namespaces schemas are written in {{ const.soft.cue.link }} and you will need this tool.
+Namespaces schemas are written in {{ const.soft.cue.link }} and you will need this tool, follow the upstream guide on how to install it: {{ const.soft.cue_install.link }}
 
 Once you have successfully fulfilled the previous requirements in your operating system, the next logical step is to clone this repository and initialize the yarn packages using the following command:
 
 > yarn install
 
-You're all set up and ready to go! Continue reading for a concise overview of the repository layout and implementation details.
+You're all set up and ready to go! Continue reading for conventions and a concise overview of the repository layout and implementation details.
 
 ## Commit messages and pull requests
 
@@ -71,37 +71,12 @@ Make sure to include an exclamation mark after the commit type and scope if ther
 
 Commits in a pull request should be structured in such a way that each commit consists of a small logical step towards the overall goal of the pull request. Your pull request should make it as easy as possible for the reviewer to follow each change you made. For example, it is a good idea to separate simple mechanical changes like renaming a method that touches many files from logic changes. Your pull request should not be structured into commits according to how you implemented your feature, often indicated by commit messages like 'Fix problem' or 'Cleanup'. Flex a bit, and make the world think that you implemented your feature perfectly, in small logical steps, in one sitting without ever having to touch up something you did earlier in the pull request. (In reality, that means you'll use `git rebase -i` a lot).
 
-Please do not merge main into your branch as you develop your pull request; instead, rebase your branch on top of the latest main if your pull request branch is long-lived.
+Please do not merge the remote branch into yours as you develop your pull request; instead, rebase your branch on top of the latest remote if your pull request branch is long-lived.
 
 ## Release process
 
-TL;DR
-
-```
-1. Make sure both `dev` and `main` are up-to their respective head
-2. Checkout a release branch from `dev` branch
-	1. update version in Cargo.toml
-	2. run `scripts/release.sh`
-	3. After script finishes, push the branch. Squash the commit if there were multiple attempts and commits.
-3. Open release PR, set merge target to `dev`. Do not delete the release branch. Rebase and merge. Make sure all tests pass.
-4. Repeat step 3 for `main`, delete release branch afterwards.
-5. Create Github release with target set to `main`. Generate release notes.
-```
-
-We would like to keep `main` branch for official releases while using `dev` branch as the default upstream branch for features. Therefore ongoing development, feature work, and bug fixes will takes place on the dev branch, and only merge release tag commits to the `main` branch.
-
-To start working on a new feature or bug fix, contributors should create a new branch off of the dev branch. Once the feature or bug fix is complete, a pull request should be created to merge the changes into the dev branch. All changes to the dev branch should be reviewed by at least one other person before merging.
-
-When it's time to create a new release, we will merge the changes from the dev branch into the `main` branch using a pull request with new version tag (ex. `v0.1.0`). This pull request should be reviewed by at least one project owner before merging. Once the changes are merged into `main`, we will create a new tag for the release and use this tag to generate release notes and create a release in GitHub. To release a new version in crates.io, we update the version in Cargo.toml, utilize the tool [orhun/git-cliff](https://github.com/orhun/git-cliff) to maintain the changelog markdown by simply running the script under `scripts/release.sh` with the new version tag.
-
-```
-git tag -a vX.X.X -m "vX.X.X"
-git push --follow-tags
-```
-
-It's important to note that all changes to the `main` branch should go through pull requests and be reviewed by at least one project admin. This helps ensure that the `main` branch only contains clean releases and that any issues or bugs are caught before they are released to our users.
-
-By following this release process, we can keep our repository organized, ensure that our releases are clean and stable, and make it easier for contributors to work on new features and bug fixes.
+> **Warning**
+> w.i.p: GitHub Workflows still being worked out
 
 ## Repository Layout
 
@@ -186,3 +161,94 @@ Features are implemented by wrapping the releases in the helmfile with a conditi
 {{- end -}}
 ```
 {%- endraw -%}
+
+## How To
+
+### Add helm chart repositories, and charts
+
+The source of truth for those is kept in `src/charts.cue`, which contains a structure of repositories, and the charts they contain.
+You just need to add more (or change them) following the pattern that is being used and taking care to include the metadata fields (descriptions, url, ...)
+
+The structure looks like this:
+```
+#repositories: {
+	"<repository name>": {
+		url: "<relevant repository URL>"
+		description: """
+			Relevant repository description
+			lorem ipsolum
+			"""
+		charts: {
+			<chart name>: {
+				url: "<relevant chart URL>"
+				description: """
+					Relevant chart description
+					lorem ipsolum
+					"""
+			}
+```
+
+After changing this file, the docs, helmfiles and OpenAPI JSON schema should all be updated. Either by the pre-commit hook or
+by running the appropriate scripts manually (keep reading for more on those).
+
+### Add a new *Namespace*
+
+For doing this, you need two things:
+- Create a new schema file in `src/schemas/<namespace-name>.cue`
+- Add a README.md.tera file to the `<namespace-name>/` folder
+
+To create the schema file, the easiest approach would be to duplicate an existing one and adjust as required.
+
+It is important that the file has this comment line:
+```
+// schema:type=namespace schema:namespace=<namespace name>
+```
+
+and has this block:
+```
+// instantiate namespace ojects for internal usage
+_namespaces: "ethereum": _#namespaceTemplate & {_key: #namespaces.#ethereum}
+```
+
+The rest is namespace specific in terms of what releases it includes, and if it supports features or flavors, and so on.
+Any included releases must link to what's defined in the `charts.cue` file via the `_repositories` struct, like so:
+```
+		releases: {
+			erigon: {
+				chart: {_repositories.graphops.charts.erigon}
+				_template: {version: "0.6.0"}
+			}
+```
+so, if you need to add new repositories and charts, see the previous section about how to do just that.
+
+To add the README.md.tera file, you can also just copy any of the existing ones in other namespaces, and take care to adjust this line appropriately:
+```
+{% set name = "<namespace name>" %}
+```
+
+> **Note**
+> The following tasks are all run by the husky pre-commit git hook, so you don't need to run them yourself unless you're developing
+> and want to do that without commiting, or have any other reason for it.
+
+### Build a *Namespace* helmfile.yaml from the schema
+
+Provided you already have the `cue` command installed and available, you should go into the `src/schemas` folder (needs to be run from that directory) and run:
+```shell
+cue cmd -t namespace="<namespace>" build:helmfile
+```
+so, i.e. for the ethereum namespace you'd run:
+```shell
+cue cmd -t namespace="ethereum" build:helmfile
+```
+
+and should get the helmfile.yaml as output
+
+### Update the docs
+
+We have a script that automates that task under `src/scripts/update-docs.sh`.
+Provided you have all the requisites installed (you ran `yarn install` and you have tera-cli available), you can just run it and it will
+update the OpenAPI JSON schema, template all the documentation, and do git add on those
+
+### Update the OpenAPI JSON schema at `schema.json`
+
+We have a script that generates the OpenAPI schema under `src/scripts/generate-openapi.sh`. You should be able to run it and you will get it as output.

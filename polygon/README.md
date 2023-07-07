@@ -7,11 +7,11 @@ This *Namespace* provides a suitable stack to operate Polygon mainnet archive no
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Releases
-- [erigon](https://github.com/ledgerwatch/erigon)<br>
+- [erigon](/erigon)<br>
 Erigon is an implementation of Ethereum (execution client with light client for consensus layer), on the efficiency frontier.
-- [heimdall](https://github.com/maticnetwork/heimdall)<br>
+- [heimdall](/heimdall)<br>
 Validator node for Matic Network.
-- [proxyd](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
+- [proxyd](/proxyd)<br>
 Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
 
 ## Features
@@ -90,11 +90,18 @@ helmfiles:
 
 Check out the *Namespaces* [list](/README.md#namespaces) below for release names, and each chart's folder for its specific values interface.
 
-### mention how to install multiple namespaces
-
-### use features
-
-### use values
+To use multiple namespaces on the same cluster, just add more items to the helmfiles array like so:
+```yaml
+helmfiles:
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@polygon/helmfile.yaml?ref=polygon:latest
+    selectorsInherited: true
+    values:
+      <polygon values>
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@<other namespace>/helmfile.yaml?ref=<other namespace>:latest
+    selectorsInherited: true
+    values:
+      <other values>
+```
 
 ## Values
 

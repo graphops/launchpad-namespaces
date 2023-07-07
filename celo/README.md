@@ -7,9 +7,9 @@ This *Namespace* provides a suitable stack to operate Celo mainnet archive nodes
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Releases
-- [celo](https://github.com/celo-org/celo-blockchain)<br>
+- [celo](/celo)<br>
 Official golang implementation of the Celo blockchain
-- [proxyd](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
+- [proxyd](/proxyd)<br>
 Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
 
 ## Features
@@ -88,11 +88,18 @@ helmfiles:
 
 Check out the *Namespaces* [list](/README.md#namespaces) below for release names, and each chart's folder for its specific values interface.
 
-### mention how to install multiple namespaces
-
-### use features
-
-### use values
+To use multiple namespaces on the same cluster, just add more items to the helmfiles array like so:
+```yaml
+helmfiles:
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@celo/helmfile.yaml?ref=celo:latest
+    selectorsInherited: true
+    values:
+      <celo values>
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@<other namespace>/helmfile.yaml?ref=<other namespace>:latest
+    selectorsInherited: true
+    values:
+      <other values>
+```
 
 ## Values
 

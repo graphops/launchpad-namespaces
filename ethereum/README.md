@@ -2,16 +2,16 @@
 
 # Ethereum Namespace
 
-This *Namespace* provides a suitable stack to operate ethereum mainnet and göerli nodes.
+This *Namespace* provides a suitable stack to operate Ethereum mainnet and göerli archive nodes.
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Releases
-- [erigon](https://github.com/ledgerwatch/erigon)<br>
+- [erigon](/erigon)<br>
 Erigon is an implementation of Ethereum (execution client with light client for consensus layer), on the efficiency frontier.
-- [nimbus](https://github.com/status-im/nimbus-eth2)<br>
+- [nimbus](/nimbus)<br>
 Nimbus-eth2 is an extremely efficient consensus layer (eth2) client implementation.
-- [proxyd](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
+- [proxyd](/proxyd)<br>
 Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
 
 ## Features
@@ -90,11 +90,18 @@ helmfiles:
 
 Check out the *Namespaces* [list](/README.md#namespaces) below for release names, and each chart's folder for its specific values interface.
 
-### mention how to install multiple namespaces
-
-### use features
-
-### use values
+To use multiple namespaces on the same cluster, just add more items to the helmfiles array like so:
+```yaml
+helmfiles:
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@ethereum/helmfile.yaml?ref=ethereum:latest
+    selectorsInherited: true
+    values:
+      <ethereum values>
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@<other namespace>/helmfile.yaml?ref=<other namespace>:latest
+    selectorsInherited: true
+    values:
+      <other values>
+```
 
 ## Values
 

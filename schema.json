@@ -1520,7 +1520,7 @@
                             "description": {
                                 "type": "string",
                                 "enum": [
-                                    "This *Namespace* provides a suitable stack to operate ethereum mainnet and göerli nodes."
+                                    "This *Namespace* provides a suitable stack to operate Ethereum mainnet and göerli archive nodes."
                                 ]
                             }
                         }
