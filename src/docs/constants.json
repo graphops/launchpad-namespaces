@@ -22,6 +22,16 @@
       "string": "*Kubernetes*",
       "url": "https://kubernetes.io",
       "link": "[*Kubernetes*](https://kubernetes.io)"
+    },
+    "yarn": {
+      "string": "*Yarn*",
+      "url": "https://github.com/yarnpkg/berry",
+      "link": "[*yarn*](https://github.com/yarnpkg/berry)"
+    },
+    "tera-cli": {
+      "string": "*tera-cli*",
+      "url": "https://github.com/chevdor/tera-cli",
+      "link": "[*tera-cli*](https://github.com/chevdor/tera-cli)"
     }
   },
   "refs": {
@@ -37,7 +47,7 @@
     },
     "discord": {
       "string": "Discord (*The Graph*)",
-      "url": "https://thegraph.com/discord",
+      "url": "https://discord.com/channels/438038660412342282/1029379955307585568",
       "link": "![Discord](https://avatars.githubusercontent.com/u/1965106?s=12&v=4) [Discord *(The Graph)*](https://thegraph.com/discord)"
     }
   }

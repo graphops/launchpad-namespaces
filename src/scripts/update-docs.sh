@@ -2,11 +2,16 @@
 
 set -e
 
+if [[ $(uname -s) == Linux ]]; then
+    base_rpath="realpath"
+elif [[ $(uname -s) == Darwin ]]; then
+    base_rpath="grealpath"
+fi
 readonly BASEDIR="$(dirname -- "$0")"
-readonly REPOROOT="$(realpath "$BASEDIR/../..")"
-readonly GENOPENAPI="$(realpath "$REPOROOT/src/scripts/generate-openapi.sh")"
-readonly DOCSDIR="$(realpath "$REPOROOT/src/docs")"
-readonly TEMPLATESDIR="$(realpath "$DOCSDIR/macros")"
+readonly REPOROOT="$("$base_rpath" "$BASEDIR/../..")"
+readonly GENOPENAPI="$("$base_rpath" "$REPOROOT/src/scripts/generate-openapi.sh")"
+readonly DOCSDIR="$("$base_rpath" "$REPOROOT/src/docs")"
+readonly TEMPLATESDIR="$("$base_rpath" "$DOCSDIR/macros")"
 
 DATA_API_FILE="$(mktemp)"
 exec 3>"$DATA_API_FILE"
@@ -15,8 +20,7 @@ rm "$DATA_API_FILE"
 $GENOPENAPI -a >&3
 
 DATA_CONST="$(cat "$DOCSDIR/constants.json")"
-
-DATA="$(jq -s '. | add' <(cat <&4 | jq '.')  <(echo "$DATA_CONST" | jq '{ "const": . }') )"
+DATA="$(jq -s '. | add' <(cat <&4 | jq '.')  <(echo "$DATA_CONST" | jq '{ "const": . }'))"
 
 for file in "$REPOROOT"/[a-zA-Z]*/README.md.tera; do
     dir="$(dirname -- "$file")"
