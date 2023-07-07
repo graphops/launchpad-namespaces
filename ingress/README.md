@@ -7,11 +7,11 @@ This *Namespace* adds ingress support and certificate management on kubernetes
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Releases
-- [cert-manager](/cert-manager)<br>
+- [cert-manager](https://github.com/cert-manager/cert-manager)<br>
 cert-manager adds certificates and certificate issuers as resource types in Kubernetes clusters, and simplifies the process of obtaining, renewing and using those certificates.
-- [cert-manager-resources](/resource-injector)<br>
+- [cert-manager-resources](https://github.com/graphops/launchpad-charts/tree/main/charts/resource-injector)<br>
 Manage Raw Kubernetes Resources using Helm
-- [ingress-nginx](/ingress-nginx)<br>
+- [ingress-nginx](https://github.com/kubernetes/ingress-nginx/tree/main/charts/ingress-nginx)<br>
 ingress-nginx is an Ingress controller for Kubernetes using NGINX as a reverse proxy and load balancer.
 
 ## Features

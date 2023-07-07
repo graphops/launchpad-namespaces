@@ -8,15 +8,15 @@ suitable for stateful workloads that require low-latency access to the storage.
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Releases
-- [openebs](/openebs)<br>
+- [openebs](https://github.com/openebs/openebs)<br>
 OpenEBS is the leading open-source example of a category of cloud native storage solutions sometimes called Container Attached Storage.
-- [openebs-rawfile-localpv](/openebs-rawfile-localpv)<br>
+- [openebs-rawfile-localpv](https://github.com/graphops/launchpad-charts/tree/main/charts/openebs-rawfile-localpv)<br>
 RawFile Driver Container Storage Interface
-- [openebs-rawfile-storageclass](/resource-injector)<br>
+- [openebs-rawfile-storageclass](https://github.com/graphops/launchpad-charts/tree/main/charts/resource-injector)<br>
 Manage Raw Kubernetes Resources using Helm
-- [openebs-zfs-localpv](/zfs-localpv)<br>
+- [openebs-zfs-localpv](https://github.com/openebs/zfs-localpv/tree/b70fb1e847b8c9ba32e3fd8cba877767686f6b26)<br>
 CSI driver for provisioning Local PVs backed by ZFS and more.
-- [openebs-zfs-storageclass](/resource-injector)<br>
+- [openebs-zfs-storageclass](https://github.com/graphops/launchpad-charts/tree/main/charts/resource-injector)<br>
 Manage Raw Kubernetes Resources using Helm
 
 ## Features

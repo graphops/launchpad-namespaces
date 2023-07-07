@@ -7,11 +7,11 @@ This *Namespace* provides a suitable stack to operate Ethereum mainnet and göer
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Releases
-- [erigon](/erigon)<br>
+- [erigon](https://github.com/ledgerwatch/erigon)<br>
 Erigon is an implementation of Ethereum (execution client with light client for consensus layer), on the efficiency frontier.
-- [nimbus](/nimbus)<br>
+- [nimbus](https://github.com/status-im/nimbus-eth2)<br>
 Nimbus-eth2 is an extremely efficient consensus layer (eth2) client implementation.
-- [proxyd](/proxyd)<br>
+- [proxyd](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
 Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
 
 ## Features

@@ -8,11 +8,11 @@ in the Graph Protocol Network
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Releases
-- [graph-network-indexer](/graph-network-indexer)<br>
+- [graph-network-indexer](https://github.com/graphprotocol/indexer)<br>
 Graph protocol indexer components
-- [graph-node](/graph-node)<br>
+- [graph-node](https://github.com/graphprotocol/graph-node)<br>
 Graph Node is an open source Rust implementation that event sources the Ethereum blockchain to deterministically update a data store that can be queried via the GraphQL endpoint.
-- [graph-toolbox](/graph-toolbox)<br>
+- [graph-toolbox](https://github.com/graphops/docker-builds/tree/main/dockerfiles/graph-toolbox)<br>
 Utility kit for interacting and managing the Graph indexer stack.
 
 ## Features

@@ -7,7 +7,7 @@ This *Namespace* extends your Kubernetes cluster with custom resources for easil
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Releases
-- [postgres-operator](/postgres-operator)<br>
+- [postgres-operator](https://github.com/zalando/postgres-operator)<br>
 The Postgres Operator delivers an easy to run highly-available PostgreSQL clusters on Kubernetes (K8s) powered by Patroni.
 
 ## Features

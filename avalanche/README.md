@@ -7,9 +7,9 @@ This *Namespace* provides a suitable stack to operate Avalanche mainnet archive 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Releases
-- [avalanche](/avalanche)<br>
+- [avalanche](https://github.com/ava-labs/avalanchego)<br>
 Node implementation for the Avalanche network - a blockchains platform with high throughput, and blazing fast transactions.
-- [proxyd](/proxyd)<br>
+- [proxyd](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
 Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
 
 ## Features

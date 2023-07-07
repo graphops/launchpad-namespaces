@@ -7,13 +7,13 @@ This *Namespace* adds software for log and metrics collection and visualization,
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Releases
-- [kube-prometheus-stack](/kube-prometheus-stack)<br>
+- [kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack)<br>
 Installs the kube-prometheus stack, a collection of Kubernetes manifests, Grafana dashboards, and Prometheus rules
-- [loki](/loki-distributed)<br>
+- [loki](https://github.com/grafana/helm-charts/tree/main/charts/loki-distributed)<br>
 Helm chart for Grafana Loki in microservices mode
-- [node-problem-detector](/node-problem-detector)<br>
+- [node-problem-detector](https://github.com/deliveryhero/helm-charts/tree/master/stable/node-problem-detector)<br>
 This chart installs a node-problem-detector daemonset. This tool aims to make various node problems visible to the upstream layers in cluster management stack.
-- [promtail](/promtail)<br>
+- [promtail](https://github.com/grafana/helm-charts/tree/main/charts/promtail)<br>
 Promtail is an agent which ships the contents of local logs to a Loki instance
 
 ## Features
