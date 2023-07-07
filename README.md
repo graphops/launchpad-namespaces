@@ -102,8 +102,9 @@ helmfiles:
 
 ## Updates
 
-- use version bumping tools
-- latest and latest-canary moving tags
+> **Warning**
+> w.i.p: GitHub Workflows still being worked out
+> this will be updated soon
 
 ## Namespaces
 
