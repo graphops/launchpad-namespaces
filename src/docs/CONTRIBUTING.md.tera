@@ -1,6 +1,6 @@
 # Contributing to *Launchpad Namespaces*
 
-Hello! :wave: and thank you for considering investing your time in contributing to Launchpad Namespaces! As an open source project, it depends on a strong community to florish, and we welcome any type of contribution (not just code) that aligns with our [Code of Conduct].
+Hello! :wave: and thank you for considering investing your time in contributing to Launchpad Namespaces! As an open source project, it depends on a strong community to florish, and we welcome any type of contribution (not just code) that aligns with our [Code of Conduct](/CODE_OF_CONDUCT.md).
 
 Some of the ways to contribute:
 - **Community:** by hanging with our community at {{ const.refs.discord.link }}, even if just to let us know you're using *Namespaces* we would appreciate to hear from you. We don't bite, promise!
