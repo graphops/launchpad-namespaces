@@ -222,9 +222,11 @@ Any included releases must link to what's defined in the `charts.cue` file via t
 so, if you need to add new repositories and charts, see the previous section about how to do just that.
 
 To add the README.md.tera file, you can also just copy any of the existing ones in other namespaces, and take care to adjust this line appropriately:
+{% raw -%}
 ```
 {% set name = "<namespace name>" %}
 ```
+{% endraw -%}
 
 > **Note**
 > The following tasks are all run by the husky pre-commit git hook, so you don't need to run them yourself unless you're developing

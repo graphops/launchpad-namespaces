@@ -215,9 +215,8 @@ so, if you need to add new repositories and charts, see the previous section abo
 
 To add the README.md.tera file, you can also just copy any of the existing ones in other namespaces, and take care to adjust this line appropriately:
 ```
-
+{% set name = "<namespace name>" %}
 ```
-
 > **Note**
 > The following tasks are all run by the husky pre-commit git hook, so you don't need to run them yourself unless you're developing
 > and want to do that without commiting, or have any other reason for it.
