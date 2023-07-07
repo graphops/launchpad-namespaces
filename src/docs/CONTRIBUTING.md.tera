@@ -22,7 +22,7 @@ Our Git hooks system and some of our dependencies for tasks such as code generat
 
 ### tera-cli
 
-Some of our documentation is templated with this tool, and for those tasks to run sucessfully {{ const.soft.tera-cli.link }} must be available
+Some of our documentation is templated with this tool, and for those tasks to run sucessfully {{ const.soft["tera-cli"].link }} must be available
 
 ### CUE
 
