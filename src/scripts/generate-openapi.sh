@@ -57,7 +57,7 @@ function resolve_refs {
 function merge_allOf {
   input="${1:-$(</dev/stdin)}";
   local jqcmd='. as $root
-  | $root | keys | map($root | paths(.)) | map(if (. | index("allOf")) then . else null end) | reduce .[] as $item ([]; if $item != null then . + [$item + [($item | rindex("allOf"))]] end) | map(.[:(.[-1])]) | unique as $nodes
+  | $root | keys | map($root | paths(.)) | map(if (. | index("allOf")) then . else null end) | reduce .[] as $item ([]; if $item != null then . + [$item + [$item | rindex("allOf")]] else . end) | select(. != null) | map(.[:(.[-1])]) | unique as $nodes
   | $nodes | map( . as $node | [ $node, ( $root | getpath($node) ), ( $root | getpath($node).allOf | add ) ] ) | map( . as $result | [ $result[0], ( $result[2] * $result[1] ) ] ) | . as $results
   | $results | sort_by(.[0] | length) | reverse | reduce .[] as $result ( $root;  ( . | setpath( $result[0]; $result[1] ) ) ) | . as $newroot
   | $newroot | walk(if type == "object" then with_entries(select(.key == "allOf" | not)) else . end)'

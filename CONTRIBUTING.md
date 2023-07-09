@@ -28,6 +28,24 @@ Some of our documentation is templated with this tool, and for those tasks to ru
 
 Namespaces schemas are written in [CUE](https://cuelang.org) and you will need this tool, follow the upstream guide on how to install it: [CUE *Installation*](https://github.com/cue-lang/cue#download-and-install)
 
+Important: Please ensure that you install version 0.6.0-alpha.1 of cue as previous versions may contain a bug that can cause issues with our code.
+
+### For MacOS users only
+
+#### Upgrade `bash` version
+
+Please note that due to licensing restrictions, Apple ships macOS with GNU Bash v3.2, which is an outdated version dating back to 2007. To ensure compatibility and access to the latest features, we recommend installing a more recent version of bash. You can easily accomplish this by using Homebrew:
+
+> brew install bash
+
+#### Upgrade `grep` version
+
+Although macOS includes a BSD-based grep utility, it's worth noting that the shipped version is outdated and lacks support for certain newer options, such as -P for Perl regular expression pattern search. To overcome this limitation, you have the option to install a more recent version of grep using Homebrew:
+
+> brew install grep
+
+After installing the newer version, please be aware that it is accessed using the command `ggrep` instead of the default `grep`. This naming distinction is in place to avoid conflicts with the preinstalled macOS `grep` utility.
+
 Once you have successfully fulfilled the previous requirements in your operating system, the next logical step is to clone this repository and initialize the yarn packages using the following command:
 
 > yarn install
