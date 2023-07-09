@@ -54,15 +54,6 @@ The path for this *Namespace*, under helmfiles, would then look like:
 - path: git::https://github.com/graphops/launchpad-namespaces.git@storage/helmfile.yaml?ref=storage-v1.2
 ```
 
-**following a specific minor version**:
-
-Your `?ref=` would look like this, for the storage namespace: `?ref=storage-v1.2`.
-The path for this *Namespace*, under helmfiles, would then look like:
-
-```shell
-- path: git::https://github.com/graphops/launchpad-namespaces.git@storage/helmfile.yaml?ref=storage-v1.2
-```
-
 **pinning to an exact version**:
 
 Your `?ref=` would look like this, for the storage namespace: `?ref=storage-v1.2.2`.

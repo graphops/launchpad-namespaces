@@ -112,7 +112,7 @@ The usual flow is then:
 - test canary releases
 - (...keep merging and testing)
 - decide the next version number
-- tag <namespace>-v<next version> and push tags
+- tag [namespace]-v[version] and push tags
 
 ## Repository Layout
 
