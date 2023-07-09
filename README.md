@@ -107,7 +107,7 @@ Continue reading for examples on how to achieve that.
 
 **following latest**:
 
-Your `?ref=` would look like this, for the storage namespace: `?ref=storage-latest`, or alternatively: `?ref=storage-latest/main`.
+Your `?ref=` would look like this, for the storage namespace: `?ref=storage-latest`, or alternatively: `?ref=storage-latest/stable`.
 The path for this *Namespace*, under helmfiles, would then look like:
 
 ```shell
@@ -149,7 +149,7 @@ The path for this *Namespace*, under helmfiles, would then look like:
 - path: git::https://github.com/graphops/launchpad-namespaces.git@storage/helmfile.yaml?ref=storage-latest/canary
 ```
 
-We would recommend that you either follow the latest main releases, or pin to a specific version and use some other means to keep your `helmfile.yaml` updated regularly.
+We would recommend that you either follow the latest stable releases, or pin to a specific version and use some other means to keep your `helmfile.yaml` updated regularly.
 One way to go about that would be to keep it in a git repository on some supported platform, and use a dependency updating bot (like Renovate) to update it or open PRs for achieving that.
 
 ## Namespaces

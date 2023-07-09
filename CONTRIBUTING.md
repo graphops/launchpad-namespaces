@@ -108,11 +108,11 @@ git push --tags
 The CI pipeline will generate a *GitHub Release* with release notes, and will then point the relevant semantic tags such as `storage-v1.1`, `storage-v1`, `storage-latest` to the new tag.
 
 The usual flow is then:
-- merge to main
-- test canary releases
-- (...keep merging and testing)
+- merge a PR to main
+- a new canary tag will be created automatically
+- (...do final tests and fix whatever may come up)
 - decide the next version number
-- tag [namespace]-v[version] and push tags
+- tag [namespace]-v[version] and push the tag
 
 ## Repository Layout
 
