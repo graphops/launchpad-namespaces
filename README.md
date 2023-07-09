@@ -32,12 +32,12 @@ As such:
 Next, setup an `helmfile.yaml` file that makes use of the storage *Namespace* by creating it with the following contents:
 ```yaml
 helmfiles:
-  - path: git::https://github.com/graphops/launchpad-namespaces.git@storage/helmfile.yaml?ref=storage:latest
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@storage/helmfile.yaml?ref=storage-latest
     selectorsInherited: true
 ```
 
 > **Note**
-> On the path to the helmfile, you can use the query string's ref `(?ref=storage:latest)` to track one of the release streams: `main` and `canary`, pin to a specific version or just track a particular major or minor semantic version.
+> On the path to the helmfile, you can use the query string's ref `(?ref=storage-latest)` to track one of the release streams: `main` and `canary`, pin to a specific version or just track a particular major or minor semantic version.
 > For more on this, check the [*Updates*](/README.md#Updates) section
 
 This is a very minimalist helmfile but enough to get it done.
@@ -59,7 +59,7 @@ Answer 'y' and hopefully the installation will conclude successfully.
 To customize the configuration and deployment, you can pass values to override the default helmfile configuration like so:
 ```yaml
 helmfiles:
-  - path: git::https://github.com/graphops/launchpad-namespaces.git@storage/helmfile.yaml?ref=storage:latest
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@storage/helmfile.yaml?ref=storage-latest
     selectorsInherited: true
     values:
       targetNamespace: "i-choose-my-own-namespace"
@@ -73,7 +73,7 @@ where we add some labels to this *Namespace* releases, and set it to be deployed
 You can also easilly override values for every release, like so:
 ```yaml
 helmfiles:
-  - path: git::https://github.com/graphops/launchpad-namespaces.git@storage/helmfile.yaml?ref=storage:latest
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@storage/helmfile.yaml?ref=storage-latest
     selectorsInherited: true
     values:
       targetNamespace: "i-choose-my-own-namespace"
@@ -90,11 +90,11 @@ Check out the *Namespaces* [list](/README.md#namespaces) below for release names
 To use multiple namespaces on the same cluster, just add more items to the helmfiles array like so:
 ```yaml
 helmfiles:
-  - path: git::https://github.com/graphops/launchpad-namespaces.git@storage/helmfile.yaml?ref=storage:latest
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@storage/helmfile.yaml?ref=storage-latest
     selectorsInherited: true
     values:
       <storage values>
-  - path: git::https://github.com/graphops/launchpad-namespaces.git@<other namespace>/helmfile.yaml?ref=<other namespace>:latest
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@<other namespace>/helmfile.yaml?ref=<other namespace>-latest
     selectorsInherited: true
     values:
       <other values>
@@ -102,9 +102,64 @@ helmfiles:
 
 ## Updates
 
-> **Warning**
-> w.i.p: GitHub Workflows still being worked out
-> this will be updated soon
+You can use git ref's as a means to track what release stream you may want, or to pin to any particular major, minor or patch version.
+Continue reading for examples on how to achieve that.
+
+**following latest**:
+
+Your `?ref=` would look like this, for the storage namespace: `?ref=storage-latest`, or alternatively: `?ref=storage-latest/main`.
+The path for this *Namespace*, under helmfiles, would then look like:
+
+```shell
+- path: git::https://github.com/graphops/launchpad-namespaces.git@storage/helmfile.yaml?ref=storage-latest
+```
+
+**following a specific major version**:
+
+Your `?ref=` would look like this, for the storage namespace: `?ref=storage-v1`.
+The path for this *Namespace*, under helmfiles, would then look like:
+
+```shell
+- path: git::https://github.com/graphops/launchpad-namespaces.git@storage/helmfile.yaml?ref=storage-v1
+```
+
+**following a specific minor version**:
+
+Your `?ref=` would look like this, for the storage namespace: `?ref=storage-v1.2`.
+The path for this *Namespace*, under helmfiles, would then look like:
+
+```shell
+- path: git::https://github.com/graphops/launchpad-namespaces.git@storage/helmfile.yaml?ref=storage-v1.2
+```
+
+**following a specific minor version**:
+
+Your `?ref=` would look like this, for the storage namespace: `?ref=storage-v1.2`.
+The path for this *Namespace*, under helmfiles, would then look like:
+
+```shell
+- path: git::https://github.com/graphops/launchpad-namespaces.git@storage/helmfile.yaml?ref=storage-v1.2
+```
+
+**pinning to an exact version**:
+
+Your `?ref=` would look like this, for the storage namespace: `?ref=storage-v1.2.2`.
+The path for this *Namespace*, under helmfiles, would then look like:
+
+```shell
+- path: git::https://github.com/graphops/launchpad-namespaces.git@storage/helmfile.yaml?ref=storage-v1.2.2
+```
+**following the latest canary**:
+
+Your `?ref=` would look like this, for the storage namespace: `?ref=storage-latest/canary`.
+The path for this *Namespace*, under helmfiles, would then look like:
+
+```shell
+- path: git::https://github.com/graphops/launchpad-namespaces.git@storage/helmfile.yaml?ref=storage-latest/canary
+```
+
+We would recommend that you either follow the latest main releases, or pin to a specific version and use some other means to keep your `helmfile.yaml` updated regularly.
+One way to go about that would be to keep it in a git repository on some supported platform, and use a dependency updating bot (like Renovate) to update it or open PRs for achieving that.
 
 ## Namespaces
 

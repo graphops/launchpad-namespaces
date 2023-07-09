@@ -31,12 +31,12 @@ As such:
 Next, setup an `helmfile.yaml` file that makes use of the sealed-secrets *Namespace* by creating it with the following contents:
 ```yaml
 helmfiles:
-  - path: git::https://github.com/graphops/launchpad-namespaces.git@sealed-secrets/helmfile.yaml?ref=sealed-secrets:latest
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@sealed-secrets/helmfile.yaml?ref=sealed-secrets-latest
     selectorsInherited: true
 ```
 
 > **Note**
-> On the path to the helmfile, you can use the query string's ref `(?ref=storage:latest)` to track one of the release streams: `main` and `canary`, pin to a specific version or just track a particular major or minor semantic version.
+> On the path to the helmfile, you can use the query string's ref `(?ref=sealed-secrets-latest)` to track one of the release streams: `main` and `canary`, pin to a specific version or just track a particular major or minor semantic version.
 > For more on this, check the [*Updates*](/README.md#Updates) section
 
 This is a very minimalist helmfile but enough to get it done.
@@ -58,7 +58,7 @@ Answer 'y' and hopefully the installation will conclude successfully.
 To customize the configuration and deployment, you can pass values to override the default helmfile configuration like so:
 ```yaml
 helmfiles:
-  - path: git::https://github.com/graphops/launchpad-namespaces.git@sealed-secrets/helmfile.yaml?ref=sealed-secrets:latest
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@sealed-secrets/helmfile.yaml?ref=sealed-secrets-latest
     selectorsInherited: true
     values:
       targetNamespace: "i-choose-my-own-namespace"
@@ -72,7 +72,7 @@ where we add some labels to this *Namespace* releases, and set it to be deployed
 You can also easilly override values for every release, like so:
 ```yaml
 helmfiles:
-  - path: git::https://github.com/graphops/launchpad-namespaces.git@sealed-secrets/helmfile.yaml?ref=sealed-secrets:latest
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@sealed-secrets/helmfile.yaml?ref=sealed-secrets-latest
     selectorsInherited: true
     values:
       targetNamespace: "i-choose-my-own-namespace"
@@ -89,11 +89,11 @@ Check out the *Namespaces* [list](/README.md#namespaces) below for release names
 To use multiple namespaces on the same cluster, just add more items to the helmfiles array like so:
 ```yaml
 helmfiles:
-  - path: git::https://github.com/graphops/launchpad-namespaces.git@sealed-secrets/helmfile.yaml?ref=sealed-secrets:latest
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@sealed-secrets/helmfile.yaml?ref=sealed-secrets-latest
     selectorsInherited: true
     values:
       <sealed-secrets values>
-  - path: git::https://github.com/graphops/launchpad-namespaces.git@<other namespace>/helmfile.yaml?ref=<other namespace>:latest
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@<other namespace>/helmfile.yaml?ref=<other namespace>-latest
     selectorsInherited: true
     values:
       <other values>

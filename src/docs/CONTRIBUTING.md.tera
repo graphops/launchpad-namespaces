@@ -28,7 +28,7 @@ Some of our documentation is templated with this tool, and for those tasks to ru
 
 Namespaces schemas are written in {{ const.soft.cue.link }} and you will need this tool, follow the upstream guide on how to install it: {{ const.soft.cue_install.link }}
 
-Important: Please ensure that you install version 0.6.0-alpha.1 of cue as previous versions may contain a bug that can cause issues with our code.
+Important: Please ensure that you install version greater or equal to `0.6.0-alpha.1` of {{ const.soft.cue.string }} as previous versions contain a bug that can cause issues with our code.
 
 ### For MacOS users only
 
@@ -93,8 +93,26 @@ Please do not merge the remote branch into yours as you develop your pull reques
 
 ## Release process
 
-> **Warning**
-> w.i.p: GitHub Workflows still being worked out
+Releases are tag-based, and the tags must follow semantic versioning as well as the pattern `<namespace>-v<version>`. Given *Namespaces* as a software is distributed via git refs, tags are the actual releases and creating GitHub Releases serves only the purpose of providing Release Notes.
+
+We do continuous integration on the main branch and canary releases (with a prerelease suffix of `-canary.X`) are automatically made on a commit-by-commit basis depending on which namespaces the commit impacts. The versioning of the canary releases is always the next patch version, and a prerelease suffix that gets incremented starting on `-canary.1`.
+
+As such, the release process consists of tagging a namespace release and pushing that tag, i.e.
+```shell
+git checkout main
+git pull --all
+git tag -a "storage-v1.1.2" -m "Release storage-v1.1.2"
+git push --tags
+```
+
+The CI pipeline will generate a *GitHub Release* with release notes, and will then point the relevant semantic tags such as `storage-v1.1`, `storage-v1`, `storage-latest` to the new tag.
+
+The usual flow is then:
+- merge to main
+- test canary releases
+- (...keep merging and testing)
+- decide the next version number
+- tag <namespace>-v<next version> and push tags
 
 ## Repository Layout
 
