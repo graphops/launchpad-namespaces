@@ -33,8 +33,10 @@ package LaunchpadNamespaces
 				mergeValues?: *true | bool
 				values?:      (#map) | [...#map]
 			}
+
+			// For overriding this release's values
 			for key, _ in releases {
-				// release key for overloading values "\(release)"
+				// For overriding this release's values
 				(key)?: #releaseValues
 			}
 		}

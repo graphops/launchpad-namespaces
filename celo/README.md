@@ -114,7 +114,7 @@ labels | object |  | Adds labels to releases on this namespace |
 proxyd | object |  |  |
 proxyd.mergeValues | boolean | true |  |
 proxyd.values | (object *or* list of objects) |  |  |
-targetNamespace | string | celo-mainnet | the default is eth-<flavor> |
+targetNamespace | string | celo-mainnet | the default is celo-<flavor> |
 helmDefaults | object |  |  |
 helmDefaults.args | list of strings |  |  |
 helmDefaults.cleanupOnFail | boolean |  |  |

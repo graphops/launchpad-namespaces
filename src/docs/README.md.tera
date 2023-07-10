@@ -29,7 +29,7 @@ Continue reading for examples on how to achieve that.
 
 **following latest**:
 
-Your `?ref=` would look like this, for the storage namespace: `?ref=storage-latest`, or alternatively: `?ref=storage-latest/stable`.
+Your `?ref=` would look like this, for the storage namespace: `?ref=storage-latest`, or alternatively: `?ref=storage-stable/latest`.
 The path for this *Namespace*, under helmfiles, would then look like:
 
 ```shell
@@ -64,11 +64,11 @@ The path for this *Namespace*, under helmfiles, would then look like:
 ```
 **following the latest canary**:
 
-Your `?ref=` would look like this, for the storage namespace: `?ref=storage-latest/canary`.
+Your `?ref=` would look like this, for the storage namespace: `?ref=storage-canary/latest`.
 The path for this *Namespace*, under helmfiles, would then look like:
 
 ```shell
-- path: git::https://github.com/graphops/launchpad-namespaces.git@storage/helmfile.yaml?ref=storage-latest/canary
+- path: git::https://github.com/graphops/launchpad-namespaces.git@storage/helmfile.yaml?ref=storage-canary/latest
 ```
 
 We would recommend that you either follow the latest stable releases, or pin to a specific version and use some other means to keep your `helmfile.yaml` updated regularly.

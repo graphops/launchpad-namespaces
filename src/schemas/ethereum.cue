@@ -3,7 +3,7 @@ package LaunchpadNamespaces
 
 // charts "graphops.xyz/launchpad/namespaces:LaunchpadCharts"
 #namespaces: {
-	// eth-erigon namespace
+	// Ethereum *Namespace*
 	#ethereum: {
 		meta: {
 			name: "ethereum"
@@ -36,13 +36,14 @@ package LaunchpadNamespaces
 				values?:      (#map) | [...#map]
 			}
 
+			// For overriding this release's values
 			for key, _ in releases {
-				// release key for overloading values "\(release)"
+				// For overriding this release's values
 				(key)?: #releaseValues
 			}
 		}
 
-		// eth-erigon helmfile API
+		// ethereum helmfile API
 		#helmfiles: #base.#helmfiles & {
 			path:    =~"*github.com/graphops/launchpad-namespaces.git@eth-erigon/helmfile.yaml*"
 			values?: #ethereum.#values | [...#ethereum.#values]

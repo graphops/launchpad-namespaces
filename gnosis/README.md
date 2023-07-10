@@ -119,7 +119,7 @@ nimbus.values | (object *or* list of objects) |  |  |
 proxyd | object |  |  |
 proxyd.mergeValues | boolean | true |  |
 proxyd.values | (object *or* list of objects) |  |  |
-targetNamespace | string | gnosis-mainnet | the default is eth-<flavor> |
+targetNamespace | string | gnosis-mainnet | the default is gnosis-<flavor> |
 helmDefaults | object |  |  |
 helmDefaults.args | list of strings |  |  |
 helmDefaults.cleanupOnFail | boolean |  |  |

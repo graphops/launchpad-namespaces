@@ -993,7 +993,7 @@
                 }
             },
             "namespaces.avalanche": {
-                "description": "eth-erigon namespace",
+                "description": "Avalanche *Namespace*",
                 "type": "object",
                 "required": [
                     "meta",
@@ -1161,7 +1161,7 @@
                 ]
             },
             "namespaces.avalanche.helmfiles": {
-                "description": "eth-erigon helmfile API",
+                "description": "avalanche helmfile API",
                 "type": "object",
                 "properties": {
                     "path": {
@@ -1194,11 +1194,11 @@
                 ]
             },
             "namespaces.avalanche.values": {
-                "description": "eth-erigon namespace values schema",
+                "description": "avalanche namespace values schema",
                 "type": "object",
                 "properties": {
                     "targetNamespace": {
-                        "description": "the default is eth-<flavor>",
+                        "description": "the default is avalanche-<flavor>",
                         "type": "string",
                         "default": "avalanche-mainnet"
                     },
@@ -1409,7 +1409,7 @@
                 ]
             },
             "namespaces.celo.helmfiles": {
-                "description": "eth-erigon helmfile API",
+                "description": "celo helmfile API",
                 "type": "object",
                 "properties": {
                     "path": {
@@ -1442,11 +1442,11 @@
                 ]
             },
             "namespaces.celo.values": {
-                "description": "eth-erigon namespace values schema",
+                "description": "celo namespace values schema",
                 "type": "object",
                 "properties": {
                     "targetNamespace": {
-                        "description": "the default is eth-<flavor>",
+                        "description": "the default is celo-<flavor>",
                         "type": "string",
                         "default": "celo-mainnet"
                     },
@@ -1489,7 +1489,7 @@
                 }
             },
             "namespaces.ethereum": {
-                "description": "eth-erigon namespace",
+                "description": "Ethereum *Namespace*",
                 "type": "object",
                 "required": [
                     "meta",
@@ -1712,7 +1712,7 @@
                 ]
             },
             "namespaces.ethereum.helmfiles": {
-                "description": "eth-erigon helmfile API",
+                "description": "ethereum helmfile API",
                 "type": "object",
                 "properties": {
                     "path": {
@@ -1795,7 +1795,7 @@
                 }
             },
             "namespaces.gnosis": {
-                "description": "eth-erigon namespace",
+                "description": "Gnosis *Namespace*",
                 "type": "object",
                 "required": [
                     "meta",
@@ -2007,7 +2007,7 @@
                 ]
             },
             "namespaces.gnosis.helmfiles": {
-                "description": "eth-erigon helmfile API",
+                "description": "gnosis helmfile API",
                 "type": "object",
                 "properties": {
                     "path": {
@@ -2040,11 +2040,11 @@
                 ]
             },
             "namespaces.gnosis.values": {
-                "description": "eth-erigon namespace values schema",
+                "description": "gnosis namespace values schema",
                 "type": "object",
                 "properties": {
                     "targetNamespace": {
-                        "description": "the default is eth-<flavor>",
+                        "description": "the default is gnosis-<flavor>",
                         "type": "string",
                         "default": "gnosis-mainnet"
                     },
@@ -2090,7 +2090,7 @@
                 }
             },
             "namespaces.graph": {
-                "description": "eth-erigon namespace",
+                "description": "Graph *Namespace*",
                 "type": "object",
                 "required": [
                     "meta",
@@ -2302,7 +2302,7 @@
                 ]
             },
             "namespaces.graph.helmfiles": {
-                "description": "eth-erigon helmfile API",
+                "description": "Graph helmfile API",
                 "type": "object",
                 "properties": {
                     "path": {
@@ -2335,11 +2335,11 @@
                 ]
             },
             "namespaces.graph.values": {
-                "description": "eth-erigon namespace values schema",
+                "description": "Graph namespace values schema",
                 "type": "object",
                 "properties": {
                     "targetNamespace": {
-                        "description": "the default is eth-<flavor>",
+                        "description": "the default is graph-<flavor>",
                         "type": "string",
                         "default": "graph-goerli"
                     },
@@ -3081,7 +3081,7 @@
                 }
             },
             "namespaces.polygon": {
-                "description": "eth-erigon namespace",
+                "description": "Polygon *Namespace*",
                 "type": "object",
                 "required": [
                     "meta",
@@ -3293,7 +3293,7 @@
                 ]
             },
             "namespaces.polygon.helmfiles": {
-                "description": "eth-erigon helmfile API",
+                "description": "polygon helmfile API",
                 "type": "object",
                 "properties": {
                     "path": {
@@ -3326,11 +3326,11 @@
                 ]
             },
             "namespaces.polygon.values": {
-                "description": "eth-erigon namespace values schema",
+                "description": "polygon namespace values schema",
                 "type": "object",
                 "properties": {
                     "targetNamespace": {
-                        "description": "the default is eth-<flavor>",
+                        "description": "the default is polygon-<flavor>",
                         "type": "string",
                         "default": "polygon-mainnet"
                     },

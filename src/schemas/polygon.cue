@@ -1,9 +1,8 @@
 // schema:type=namespace schema:namespace=polygon
 package LaunchpadNamespaces
 
-// charts "graphops.xyz/launchpad/namespaces:LaunchpadCharts"
 #namespaces: {
-	// eth-erigon namespace
+	// Polygon *Namespace*
 	#polygon: {
 		meta: {
 			name: "polygon"
@@ -20,9 +19,9 @@ package LaunchpadNamespaces
 			#enum: ( #mainnet )
 		}
 
-		// eth-erigon namespace values schema
+		// polygon namespace values schema
 		#values: #base.#values & {
-			// the default is eth-<flavor>
+			// the default is polygon-<flavor>
 			targetNamespace?: *"polygon-mainnet" | string
 
 			_templatedTargetNamespace: '( print "polygon-" .Values.flavor )'
@@ -34,13 +33,14 @@ package LaunchpadNamespaces
 				values?:      (#map) | [...#map]
 			}
 
+			// For overriding this release's values
 			for key, _ in releases {
-				// release key for overloading values "\(release)"
+				// For overriding this release's values
 				(key)?: #releaseValues
 			}
 		}
 
-		// eth-erigon helmfile API
+		// polygon helmfile API
 		#helmfiles: #base.#helmfiles & {
 			path:    =~"*github.com/graphops/launchpad-namespaces.git@polygon/helmfile.yaml*"
 			values?: #polygon.#values | [...#polygon.#values]

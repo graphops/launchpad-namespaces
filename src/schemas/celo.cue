@@ -19,9 +19,9 @@ package LaunchpadNamespaces
 			#enum: ( #mainnet )
 		}
 
-		// eth-erigon namespace values schema
+		// celo namespace values schema
 		#values: #base.#values & {
-			// the default is eth-<flavor>
+			// the default is celo-<flavor>
 			targetNamespace?: *"celo-mainnet" | string
 
 			_templatedTargetNamespace: '( print "celo-" .Values.flavor )'
@@ -33,13 +33,14 @@ package LaunchpadNamespaces
 				values?:      (#map) | [...#map]
 			}
 
+			// For overriding this release's values
 			for key, _ in releases {
-				// release key for overloading values "\(release)"
+				// For overriding this release's values
 				(key)?: #releaseValues
 			}
 		}
 
-		// eth-erigon helmfile API
+		// celo helmfile API
 		#helmfiles: #base.#helmfiles & {
 			path:    =~"*github.com/graphops/launchpad-namespaces.git@celo/helmfile.yaml*"
 			values?: #celo.#values | [...#celo.#values]

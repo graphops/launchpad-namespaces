@@ -1,7 +1,6 @@
 // schema:type=namespace schema:namespace=monitoring
 package LaunchpadNamespaces
 
-// charts "graphops.xyz/launchpad/namespaces:LaunchpadCharts"
 #namespaces: {
 	#monitoring: {
 		meta: {
@@ -33,8 +32,9 @@ package LaunchpadNamespaces
 				values?:      (#map) | [...#map]
 			}
 
+			// For overriding this release's values
 			for key, _ in releases {
-				// release key for overloading values "\(release)"
+				// For overriding this release's values
 				(key)?: #releaseValues
 			}
 		}

@@ -3,7 +3,7 @@ package LaunchpadNamespaces
 
 // charts "graphops.xyz/launchpad/namespaces:LaunchpadCharts"
 #namespaces: {
-	// eth-erigon namespace
+	// Avalanche *Namespace*
 	#avalanche: {
 		meta: {
 			name: "avalanche"
@@ -20,9 +20,9 @@ package LaunchpadNamespaces
 			#enum: ( #mainnet )
 		}
 
-		// eth-erigon namespace values schema
+		// avalanche namespace values schema
 		#values: #base.#values & {
-			// the default is eth-<flavor>
+			// the default is avalanche-<flavor>
 			targetNamespace?: *"avalanche-mainnet" | string
 
 			_templatedTargetNamespace: '( print "avalanche-" .Values.flavor )'
@@ -34,13 +34,14 @@ package LaunchpadNamespaces
 				values?:      (#map) | [...#map]
 			}
 
+			// For overriding this release's values
 			for key, _ in releases {
-				// release key for overloading values "\(release)"
+				// For overriding this release's values
 				(key)?: #releaseValues
 			}
 		}
 
-		// eth-erigon helmfile API
+		// avalanche helmfile API
 		#helmfiles: #base.#helmfiles & {
 			path:    =~"*github.com/graphops/launchpad-namespaces.git@avalanche/helmfile.yaml*"
 			values?: #avalanche.#values | [...#avalanche.#values]

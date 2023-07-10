@@ -119,7 +119,7 @@ labels | object |  | Adds labels to releases on this namespace |
 proxyd | object |  |  |
 proxyd.mergeValues | boolean | true |  |
 proxyd.values | (object *or* list of objects) |  |  |
-targetNamespace | string | polygon-mainnet | the default is eth-<flavor> |
+targetNamespace | string | polygon-mainnet | the default is polygon-<flavor> |
 helmDefaults | object |  |  |
 helmDefaults.args | list of strings |  |  |
 helmDefaults.cleanupOnFail | boolean |  |  |
