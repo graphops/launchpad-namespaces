@@ -9,9 +9,7 @@ Some of the ways to contribute:
 
 # Opening Issues
 
-To ensure consistency and expedite our response to your issues, we have developed two issue templates to assist you. These templates are designed to streamline the process and make it easier for you to provide the necessary information. You can find the templates at the following links:
-- [Bug Issue Template](../../.github/bug_issue_template.md)
-- [New Feature Issue Template](../../.github/new_feature_issue_template.md)
+To ensure a consistent and efficient response to your issues, we have created two issue templates that will provide guidance and streamline the process. When creating a new issue in the repository, you will be presented with the option to choose from these templates. This approach aims to enhance clarity and facilitate the information gathering process for a faster resolution.
 
 # Contributing Code
 
