@@ -1,18 +1,23 @@
 name: "✨ Feature Request"
-about: Request a new feature or enhancement.
-
+description: Request a new feature or enhancement
 title: "✨ [FEATURE] - <title>"
 labels: ["enhancement"]
 
-description: |
-  A clear and concise description of the new feature you are requesting.
-
 body:
+  - type: textarea
+    id: description
+    attributes:
+      label: "Description"
+      description: "A clear and concise description of the new feature you are requesting."
+    validations:
+      required: true
+
   - type: textarea
     id: problem-motivation
     attributes:
       label: "Problem or Motivation"
       description: "Explain the problem or motivation behind the feature request. What issue or need does it address?"
+    validations:
       required: true
 
   - type: textarea
@@ -27,6 +32,7 @@ body:
     attributes:
       label: "Additional Information"
       description: "Any additional information or context that may be helpful in understanding your feature request."
+    validations:
       required: false
 
   - type: textarea
@@ -34,6 +40,7 @@ body:
     attributes:
       label: "Related Issues"
       description: "If there are any related issues or pull requests, please mention them here."
+    validations:
       required: false
 
   - type: textarea
@@ -41,6 +48,7 @@ body:
     attributes:
       label: "Contribution"
       description: "If you are interested in contributing to the development of this feature, please let us know."
+    validations:
       required: false
 
   - type: textarea
@@ -48,6 +56,7 @@ body:
     attributes:
       label: "Implementation Suggestions"
       description: "If you have any suggestions on how to implement this feature or specific technical considerations, please provide them."
+    validations:
       required: false
 
   - type: textarea
@@ -55,4 +64,5 @@ body:
     attributes:
       label: "Other Comments"
       description: "Any other comments, ideas, or thoughts you'd like to add."
+    validations:
       required: false
