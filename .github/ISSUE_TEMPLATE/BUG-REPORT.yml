@@ -9,6 +9,7 @@ body:
     attributes:
       label: "What happened?"
       description: "Please provide a clear description of what happened."
+    validations:
       required: true
 
   - type: textarea
@@ -16,6 +17,7 @@ body:
     attributes:
       label: "Expected behavior"
       description: "Please provide a clear description of what you expected to happen."
+    validations:
       required: true
 
   - type: textarea
@@ -28,6 +30,7 @@ body:
         - Helm Version:
         - Namespace Affected:
         - Any other relevant environment details:
+    validations:
       required: true
 
   - type: textarea
@@ -35,6 +38,7 @@ body:
     attributes:
       label: "Reproduction steps"
       description: "Please provide steps to reproduce the bug as minimally and precisely as possible."
+    validations:
       required: true
 
   - type: textarea
@@ -42,6 +46,7 @@ body:
     attributes:
       label: "Possible Solution"
       description: "If you have any suggestions on how to fix the bug, please provide them."
+    validations:
       required: false
 
   - type: textarea
@@ -49,4 +54,5 @@ body:
     attributes:
       label: "Additional Information"
       description: "Any additional information or context that may be helpful in understanding or resolving the issue."
+    validations:
       required: false
