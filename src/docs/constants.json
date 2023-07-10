@@ -1,0 +1,57 @@
+{
+  "soft": {
+    "cue": {
+      "string": "*CUE*",
+      "url": "https://cuelang.org",
+      "link": "[CUE](https://cuelang.org)"
+    },
+    "cue_install": {
+      "link": "[CUE *Installation*](https://github.com/cue-lang/cue#download-and-install)"
+    },
+    "helmfile": {
+      "string": "*Helmfile*",
+      "url": "https://github.com/helmfile/helmfile",
+      "link": "[*Helmfile*](https://github.com/helmfile/helmfile)"
+    },
+    "helmfile_install": {
+      "link": "[*Helmfile* Installation](https://github.com/helmfile/helmfile#installation)"
+    },
+    "helm": {
+      "string": "*Helm*",
+      "url": "https://github.com/helm/helm",
+      "link": "[*Helm*](https://github.com/helm/helm)"
+    },
+    "kubernetes": {
+      "string": "*Kubernetes*",
+      "url": "https://kubernetes.io",
+      "link": "[*Kubernetes*](https://kubernetes.io)"
+    },
+    "yarn": {
+      "string": "*Yarn*",
+      "url": "https://github.com/yarnpkg/berry",
+      "link": "[*yarn*](https://github.com/yarnpkg/berry)"
+    },
+    "tera_cli": {
+      "string": "*tera-cli*",
+      "url": "https://github.com/chevdor/tera-cli",
+      "link": "[*tera-cli*](https://github.com/chevdor/tera-cli)"
+    }
+  },
+  "refs": {
+    "graphops": {
+      "string": "*GraphOps*",
+      "url": "https://graphops.xyz",
+      "link": "[![GraphOps](https://avatars.githubusercontent.com/u/85314764?s=12&v=4) *GraphOps*](https://graphops.xyz)"
+    },
+    "launchpad_starter": {
+      "string": "*Launchpad Starter*",
+      "url": "https://github.com/graphops/launchpad-starter",
+      "link": "[~~*Launchpad Starter*~~ support for *Namespaces* will be available soon](https://github.com/graphops/launchpad-starter)"
+    },
+    "discord": {
+      "string": "Discord (*The Graph*)",
+      "url": "https://discord.com/channels/438038660412342282/1029379955307585568",
+      "link": "![Discord](https://avatars.githubusercontent.com/u/1965106?s=12&v=4) [Discord *(The Graph)*](https://discord.com/channels/438038660412342282/1029379955307585568)"
+    }
+  }
+}

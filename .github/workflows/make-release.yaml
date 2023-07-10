@@ -1,0 +1,98 @@
+name: Make Release
+
+on:
+  workflow_call:
+    inputs:
+      tag:
+        type: string
+        required: true
+        description: "What tag to release?"
+  workflow_dispatch:
+    inputs:
+      tag:
+        type: string
+        required: true
+        description: "What tag to release>"
+
+
+jobs:
+  init:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # for creating releases
+    outputs:
+      name: ${{ steps.parse_tag.outputs.name }}
+      version: ${{ steps.parse_tag.outputs.version }}
+      fullversion: ${{ steps.parse_tag.outputs.fullversion }}
+      prerelease: ${{ steps.parse_tag.outputs.prerelease }}
+      tag: ${{ steps.parse_tag.outputs.tag }}
+    steps:
+      # TODO: build an action leveraging semver (npm), which parses this robustly and offer more outputs
+      - name: Parse tag
+        id: parse_tag
+        run: |
+          if [ -n "${{ inputs.tag }}" ]; then
+            tag="${{ inputs.tag }}"
+          else
+            tag="${{ github.ref_name }}"
+          fi
+          echo "tag=$tag" >> $GITHUB_OUTPUT
+          name=$(echo "$tag" | sed -r 's/^(.*)-v([[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+)(-canary.)?([[:digit:]]+)?$/\1/g')
+          echo "name=$name" >> $GITHUB_OUTPUT
+          version=$(echo "${{ inputs.tag }}" | sed -r 's/^(.*)-v([[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+)(-canary.)?([[:digit:]]+)?$/\2/g')
+          echo "version=$version" >> $GITHUB_OUTPUT
+          prerelease=$(echo "${{ inputs.tag }}" | sed -r 's/^(.*)-v([[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+)(-canary.)?([[:digit:]]+)?$/\4/g')
+          echo "prerelease=$prerelease" >> $GITHUB_OUTPUT
+          fullversion=$(echo "${{ inputs.tag }}" | sed -r 's/^(.*)-v([[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+(-canary\.[[:digit:]]+)?)/\2/g')
+          echo "fullversion=$fullversion" >> $GITHUB_OUTPUT
+
+  call-release-notes:
+    uses: ./.github/workflows/make-release-notes.yaml
+    with:
+      tag: ${{ github.ref_name }}
+
+  release:
+    needs:
+      - init
+      - call-release-notes
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # for creating releases
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor}}@users.noreply.github.com"
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: "${{ needs.init.outputs.tag }}.release-notes"
+          path: "."
+
+      - name: Generate namespace release
+        id: release
+        run: |
+          tar -czf ${{ needs.init.outputs.tag }}.tar.gz "RELEASE-NOTES.md" "${{ needs.init.outputs.name}}/"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: "${{ needs.init.outputs.tag }}.release"
+          path: "${{ needs.init.outputs.tag }}.tar.gz"
+
+      - name: Create release
+        run: |
+          if [ -z "${{ needs.init.outputs.prerelease }}" ]; then
+            gh release create -d -t ${{ needs.init.outputs.tag }} --verify-tag -F RELEASE-NOTES.md ${{ needs.init.outputs.tag }} ${{ needs.init.outputs.tag }}.tar.gz
+
+          else
+            gh release create -t ${{ needs.init.outputs.tag }} --verify-tag --prerelease -F RELEASE-NOTES.md ${{ needs.init.outputs.tag }} ${{ needs.init.outputs.tag }}.tar.gz
+          fi
+
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

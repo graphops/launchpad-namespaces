@@ -1,0 +1,142 @@
+{{- $_tplTransforms := `
+{{- $_TemplatedResources := list "Deployment" "StatefulSet" "DaemonSet" -}}
+transformers:
+- apiVersion: builtin
+  kind: AnnotationsTransformer
+  metadata:
+    name: AddAnnotations
+  annotations:
+  {{- . | get "annotations" dict | toYaml | nindent 6 }}
+  fieldSpecs:
+  - path: metadata/annotations
+    create: true
+  {{- range $kind := $_TemplatedResources }}
+  - kind: {{ $kind }}
+    path: spec/template/metadata/annotations
+    create: true
+  {{- end }}
+- apiVersion: builtin
+  kind: LabelTransformer
+  metadata:
+    name: AddLabels
+  labels:
+  {{- . | get "labels" dict | toYaml | nindent 6 }}
+  fieldSpecs:
+  - path: metadata/labels
+    create: true
+  {{- range $kind := $_TemplatedResources }}
+  - kind: {{ $kind }}
+    path: spec/template/metadata/labels
+    create: true
+  {{- end }}
+` -}}
+
+{{- $_tplReleaseValues := (print `
+{{- if ( .Values | get .release dict | get "mergeValues" true ) -}}
+{{- if ( hasKey .Values "flavor" ) }}
+- ./values/_common/{{` "`{{ .Release.Name }}`" `}}.yaml
+- ./values/{{ .Values.flavor }}/{{` "`{{ .Release.Name }}`" `}}.yaml
+{{- else }}
+- ./values/{{` "`{{ .Release.Name }}`" `}}.yaml
+{{- end -}}
+{{- end -}}
+{{- if typeIs ( typeOf list ) ( .Values | get .release dict | get "values" dict ) -}}
+ {{- range $element := ( .Values | get .release dict | get "values" dict ) }}
+- {{- $element | toYaml | nindent 2 }}
+ {{- end -}}
+{{- else }}
+- {{- .Values | get .release dict | get "values" dict | toYaml | nindent 2 }}
+{{- end -}}
+`) -}}
+
+{{ $__helmDefaults := `{"recreatePods":true}` | fromJson }}
+
+{{ with ( .Values | get "helmDefaults" dict ) }}
+{{ $_ := (deepCopy . | mergeOverwrite $__helmDefaults) }}
+{{ end }}
+
+helmDefaults:
+{{ $__helmDefaults | toYaml | indent 2 }}
+
+#set default namespace
+{{ $_defaultNamespace := `ingress` }}
+
+
+# Define default features when undefined
+{{ if not (hasKey .Values "features") }}
+{{ $_ := set .Values "features" (list
+`ingress`
+`cert-manager`
+) }}
+{{ end }}
+
+commonLabels:
+  launchpad.graphops.xyz/namespace: ingress
+
+{{ $_labels := dict 
+  `launchpad.graphops.xyz/namespace` `ingress`
+}}
+repositories:
+  - name: ingress-nginx
+    url: https://kubernetes.github.io/ingress-nginx
+  - name: jetstack
+    url: https://charts.jetstack.io
+  - name: graphops
+    url: https://graphops.github.io/launchpad-charts/canary
+  
+templates:
+  transforms:
+    {{ tpl $_tplTransforms (dict
+    "annotations" ( .Values | get "annotations" dict)
+    "labels" ( merge $_labels ( .Values | get "labels" dict) )
+    ) | nindent 4 }}
+  
+  defaults:
+    namespace: '{{ .Values | get "targetNamespace" $_defaultNamespace }}'
+    missingFileHandler: Warn
+    inherit:
+      - template: transforms
+  
+  ingress-nginx:
+    chart: ingress-nginx/ingress-nginx
+    version: 4.3.0
+    inherit:
+      - template: defaults
+  
+  cert-manager:
+    chart: jetstack/cert-manager
+    version: v1.10.0
+    inherit:
+      - template: defaults
+  
+  cert-manager-resources:
+    chart: graphops/resource-injector
+    version: 0.2.0
+    inherit:
+      - template: defaults
+  
+releases:
+  {{ if has "ingress" ( .Values | get "features" list ) }}
+  {{- $release := "ingress-nginx" }}
+  - name: 'ingress-nginx'
+    inherit:
+    - template: 'ingress-nginx'
+    values:
+    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
+  {{- end -}}
+  {{ if has "cert-manager" ( .Values | get "features" list ) }}
+  {{- $release := "cert-manager" }}
+  - name: 'cert-manager'
+    inherit:
+    - template: 'cert-manager'
+    values:
+    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
+  {{- end -}}
+  {{ if has "cert-manager" ( .Values | get "features" list ) }}
+  {{- $release := "cert-manager-resources" }}
+  - name: 'cert-manager-resources'
+    inherit:
+    - template: 'cert-manager-resources'
+    values:
+    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
+  {{- end -}}

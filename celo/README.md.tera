@@ -1,0 +1,28 @@
+{% import "renderApiTable.tera" as api %}
+{% import "sections.tera" as sections %}
+{% import "section.QuickStart.tera" as quickstart %}
+{% import "renderIndex.tera" as render %}
+{% set name = "celo" %}
+
+{{ sections::graphopsTitle(namespace=name) }}
+
+{{ sections::sectionDescription(namespace=name, schemas=components.schemas) }}
+
+{{ sections::graphopsBadges() }}
+
+## Releases
+{%- set _schema_name = utils::getSchemaName(namespace=name, schemas=components.schemas) -%}
+{%- set _releasesProp = components.schemas[_schema_name].properties.releases.properties -%}
+{{ render::renderReleases(releasesProp=_releasesProp) }}
+
+## Features
+
+{{ sections::sectionFeatures() }}
+
+## Quickstart
+
+{{ quickstart::namespacesQuickStart(namespace=name) }}
+
+## Values
+
+{{ api::renderTable(name=name, schemas=components.schemas) }}

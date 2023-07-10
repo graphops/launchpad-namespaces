@@ -1,0 +1,5 @@
+statefulNode:
+  volumeClaimSpec:
+    resources:
+      requests:
+        storage: 2Ti

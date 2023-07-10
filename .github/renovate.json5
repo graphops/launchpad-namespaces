@@ -1,0 +1,88 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [
+        "github>graphops/renovate-config"
+    ],
+
+    "separateMajorMinor": false,
+
+    "ignorePaths": [
+    ],
+
+    "ignoreDeps": [
+    ],
+
+    "enabledManagers": ["regex"],
+
+    "regexManagers": [
+      {
+        "fileMatch": ["(^|/)helmfile.yaml$"],
+        "matchStrings": [
+          ".*:\\n[\\s]*?chart:[\\s]?(?<depType>.*)\\/(?<packageName>.*)\\n[\\s]*version:[\\s]?(?<currentValue>[v]?\\d+\\.\\d+\\.\\d+)\\n"
+        ],
+        "depNameTemplate": "{{{depType}}}/{{{packageName}}}",
+        "packageNameTemplate": "{{{packageName}}}",
+        "datasourceTemplate": "helm"
+      }
+    ],
+
+    "packageRules": [
+      // Group dependency update PRs per namespace
+      {
+        "description": "Group dependencies",
+        "matchPaths": ["*/**"],
+        "groupName": "{{{ parentDir }}} dependencies",
+        "groupSlug": "{{{ parentDir }}}"
+      }
+
+      // Helm Chart repositories
+      {
+        "matchDepPatterns": "graphops\/.*",
+        "registryUrls": ["https://graphops.github.io/launchpad-charts"]
+      },
+      {
+        "matchDepPatterns": "ingress-nginx\/.*",
+        "registryUrls": ["https://kubernetes.github.io/ingress-nginx"]
+      },
+      {
+        "matchDepPatterns": "vouch\/.*",
+        "registryUrls": ["https://vouch.github.io/helm-charts/"]
+      },
+      {
+        "matchDepPatterns": "jetstack\/.*",
+        "registryUrls": ["https://charts.jetstack.io"]
+      },
+      {
+        "matchDepPatterns": "prometheus-community\/.*",
+        "registryUrls": ["https://prometheus-community.github.io/helm-charts"]
+      },
+      {
+        "matchDepPatterns": "deliveryhero\/.*",
+        "registryUrls": ["https://charts.deliveryhero.io"]
+      },
+      {
+        "matchDepPatterns": "grafana\/.*",
+        "registryUrls": ["https://grafana.github.io/helm-charts"]
+      },
+      {
+        "matchDepPatterns": "postgres-operator-charts\/.*",
+        "registryUrls": ["https://opensource.zalando.com/postgres-operator/charts/postgres-operator"]
+      },
+      {
+        "matchDepPatterns": "sealed-secrets\/.*",
+        "registryUrls": ["https://bitnami-labs.github.io/sealed-secrets"]
+      },
+      {
+        "matchDepPatterns": "openebs\/.*",
+        "registryUrls": ["https://openebs.github.io/charts"]
+      },
+      {
+        "matchDepPatterns": "openebs-zfs-localpv\/.*",
+        "registryUrls": ["https://openebs.github.io/zfs-localpv"]
+      },
+      {
+        "matchDepPatterns": "openebs-monitoring\/.*",
+        "registryUrls": ["https://openebs.github.io/monitoring/"]
+      }
+    ]
+}

@@ -1,0 +1,68 @@
+{% import "utils.tera" as utils %}
+{%- macro renderTable(name, schemas) -%}
+| Key | Type | Default | Description |
+| :--- | :---: | :--- | :--- |
+{%- set schema_name = utils::getSchemaName(namespace=name, schemas=schemas) -%}
+{%- set values_key = schema_name ~ ".values" -%}
+{%- for p_name, p in schemas[values_key].properties -%}
+{%- if p_name != "helmDefaults" -%}
+{{ self::renderProperty(name=p_name, obj=p) }}
+{%- endif -%}
+{%- endfor -%}
+{%- set helmDefaults = schemas[values_key].properties | get(key="helmDefaults", default="") -%}
+{%- if helmDefaults != "" -%}
+{{ self::renderProperty(name="helmDefaults", obj=helmDefaults) }}
+{%- endif -%}
+{%- endmacro renderTable -%}
+
+{%- macro renderProperty(name, obj, prefix="") -%}
+{{ self::renderName(name=name, obj=obj, prefix=prefix) }} | {{ self::renderType(obj=obj) }} | {{ self::renderDef(obj=obj) }} | {{ self::renderDesc(name=name, obj=obj) }} |
+{%- if obj.type is defined and obj.type == "object" and obj.properties is defined and prefix == "" -%}
+{%- for subname, property in obj.properties -%}
+{{ self::renderProperty(name=subname, obj=property, prefix=name) }}
+{%- endfor -%}
+{%- endif -%}
+{%- endmacro renderProperty -%}
+
+{%- macro renderDesc(name, obj) -%}
+{%- if obj.type is defined and obj.type == "array" and obj.items.enum is defined -%}
+{%- set enumStr = obj.items.enum | join(sep=" \| ") -%}
+{{ "*enum of:&nbsp;&nbsp;" ~ "(" ~ enumStr ~ ")*" }}
+{%- endif -%}
+{%- if obj.description is defined -%}
+{{ obj.description | linebreaksbr }}
+{%- endif -%}
+{%- endmacro renderDesc -%}
+
+{%- macro renderType(obj) -%}
+{%- if obj.type is defined -%}
+{%- if obj.type == "array" -%}
+list of {{ obj.items.type }}s
+{%- else -%}
+{{ obj.type }}
+{%- endif -%}
+{%- elif obj.oneOf is defined -%}
+{%- set_global listTypes = "" -%}
+{%- for elem in obj.oneOf -%}
+{%- set elemStr = self::renderType(obj=elem) -%}
+{%- set_global listTypes = listTypes ~ elemStr ~ " *or* " -%}
+{%- endfor -%}
+({{ listTypes | trim_end_matches(pat=" *or* ") }})
+{%- endif -%}
+{%- endmacro renderType -%}
+
+{%- macro renderName(obj, name, prefix="") -%}
+{%- if prefix != "" -%}
+{# replace hyphen by html code for non-breaking hyphen #}
+{{ prefix ~ "." ~ name | replace(from='-', to='&#8209;') }}
+{%- else -%}
+{# replace hyphen by html code for non-breaking hyphen #}
+{{ name | replace(from='-', to='&#8209;') }}
+{%- endif -%}
+{%- endmacro renderName -%}
+
+{%- macro renderDef(obj) -%}
+{%- if obj.default is defined -%}
+{{ obj.default }}
+{%- endif -%}
+{%- endmacro renderDef -%}

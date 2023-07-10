@@ -1,0 +1,13 @@
+node_modules
+
+# yarn setup for no zero-installs case
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# we're not using npm
+package-lock.json
