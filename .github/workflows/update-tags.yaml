@@ -1,0 +1,112 @@
+name: Update Tags
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  update_tags:
+    permissions:
+      contents: write # for creating tags
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: "main"
+
+      - name: Configure Git
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor}}@users.noreply.github.com"
+
+      - name: Get namespaces
+        id: namespaces
+        run: |
+          declare -a namespaces
+          for file in src/schemas/*.cue; do
+            namespace=$(grep -Po "schema:namespace=.*?([[:space:]]|$)" "$file" | cut -d '=' -f 2)
+            if [[ -n $namespace ]]; then
+              namespaces+=("$namespace")
+            fi
+            unset namespace
+          done
+
+          echo "namespaces<<EOF" >> $GITHUB_OUTPUT
+          echo "$(jq -Rc '. / " "' <<< ${namespaces[*]})" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Get tags to update
+        id: tag_map
+        run: |
+          declare -A tagmap
+          for namespace in $(echo '${{ steps.namespaces.outputs.namespaces }}' | jq -r '. | @sh' | tr -d "'"); do
+            declare -a major_vers minor_vers
+            for major_ver in $(git -c 'versionsrot.suffix=-' tag --sort 'version:refname' --list "${namespace}-*" | grep -Ev '.*-v?[[:digit:]]+.[[:digit:]]+.[[:digit:]]+-.*' | sed -E 's/.*-v?([0-9]+)(.*)/\1/g' | sort -V | uniq); do
+              major_vers+=($major_ver)
+            done
+            for minor_ver in $(git -c 'versionsrot.suffix=-' tag --sort 'version:refname' --list "${namespace}-*" | grep -Ev '.*-v?[[:digit:]]+.[[:digit:]]+.[[:digit:]]+-.*' | sed -E 's/.*-v?([0-9]+\.[0-9]+)(.*)/\1/g' | sort -V | uniq); do
+              minor_vers+=($minor_ver)
+            done
+
+            for minor_ver in ${minor_vers[@]}; do
+              latest_patch_tag=$(git -c 'versionsrot.suffix=-' tag --sort 'version:refname' --list "${namespace}-*" | grep -Ev '.*-v?[[:digit:]]+.[[:digit:]]+.[[:digit:]]+-.*' | grep -E ".*-v?${minor_ver}.*" | sort -V | uniq | tail -n 1)
+              tagmap["${namespace}-v${minor_ver}"]="${latest_patch_tag}"
+            done
+
+            for major_ver in ${major_vers[@]}; do
+              latest_minor=$( (IFS=$'\n' && echo "${minor_vers[*]}") | grep -E "^${major_ver}\..*" | sort -V | uniq | tail -n 1)
+              tagmap["${namespace}-v${major_ver}"]=${tagmap["${namespace}-v${latest_minor}"]}
+            done
+
+            latest_stable=$(git -c 'versionsrot.suffix=-' tag --sort 'version:refname' --list "${namespace}-*" | grep -Ev '.*-v?[[:digit:]]+.[[:digit:]]+.[[:digit:]]+-.*' | sort -V | tail -n 1)
+
+            if [ -n "${latest_stable}" ]; then
+              tagmap["${namespace}-latest"]="${latest_stable}"
+              tagmap["${namespace}-stable/latest"]="${latest_stable}"
+            fi
+
+            latest_canary=$(git -c 'versionsrot.suffix=-' tag --sort 'version:refname' --list "${namespace}-*" | sort -V | tail -n 1)
+            if [ -n "${latest_canary}" ]; then
+              tagmap["${namespace}-canary/latest"]="${latest_canary}"
+            fi
+          done
+
+          tagmap_str=""
+          for key in ${!tagmap[@]}; do
+            tagmap_str+="$key:${tagmap[$key]};"
+          done
+          echo "tagmap=${tagmap_str}" >> $GITHUB_OUTPUT
+
+      - name: Update tags
+        id: update_tags
+        env:
+          tagmap: '${{ steps.tag_map.outputs.tagmap }}'
+        run: |
+          declare -A update_tags
+
+          declare -a maps
+          IFS=$';' read -ra maps <<< "${tagmap}"
+          for map in ${maps[@]}; do
+            tag="$(echo "$map" | cut -d ':' -f 1)"
+            tag_pointer="$(echo "$map" | cut -d ':' -f 2)"
+
+            if ! (git rev-parse "$tag" >/dev/null 2>&1 && [[ $(git rev-list -n 1 "${tag_pointer}") == $(git rev-list -n 1 "${tag}") ]]); then
+              update_tags["$tag_pointer"]+="$tag;"
+            fi
+          done
+
+          for tag in ${!update_tags[@]}; do
+            git checkout $tag
+
+            declare -a new_tags
+            IFS=$';' read -ra new_tags <<< "${update_tags[$tag]}"
+            for new_tag in ${new_tags[@]}; do
+              git tag -fa "${new_tag}" -m "Update tag ${new_tag} to point to ${tag}"
+            done
+            unset new_tags
+          done
+
+          git checkout main
+          git push --tags --force
