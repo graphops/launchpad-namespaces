@@ -1,0 +1,58 @@
+name: "✨ Feature Request"
+about: Request a new feature or enhancement.
+
+title: "✨ [FEATURE] - <title>"
+labels: ["enhancement"]
+
+description: |
+  A clear and concise description of the new feature you are requesting.
+
+body:
+  - type: textarea
+    id: problem-motivation
+    attributes:
+      label: "Problem or Motivation"
+      description: "Explain the problem or motivation behind the feature request. What issue or need does it address?"
+      required: true
+
+  - type: textarea
+    id: expected-benefits
+    attributes:
+      label: "Expected Benefits"
+      description: "Explain the potential benefits or positive impact that implementing this feature would have."
+      required: true
+
+  - type: textarea
+    id: additional-information
+    attributes:
+      label: "Additional Information"
+      description: "Any additional information or context that may be helpful in understanding your feature request."
+      required: false
+
+  - type: textarea
+    id: related-issues
+    attributes:
+      label: "Related Issues"
+      description: "If there are any related issues or pull requests, please mention them here."
+      required: false
+
+  - type: textarea
+    id: contribution
+    attributes:
+      label: "Contribution"
+      description: "If you are interested in contributing to the development of this feature, please let us know."
+      required: false
+
+  - type: textarea
+    id: implementation-suggestions
+    attributes:
+      label: "Implementation Suggestions"
+      description: "If you have any suggestions on how to implement this feature or specific technical considerations, please provide them."
+      required: false
+
+  - type: textarea
+    id: other-comments
+    attributes:
+      label: "Other Comments"
+      description: "Any other comments, ideas, or thoughts you'd like to add."
+      required: false
