@@ -42,7 +42,7 @@ helmfiles:
 ```
 
 > **Note**
-> On the path to the helmfile, you can use the query string's ref `(?ref=monitoring-latest)` to track one of the release streams: `main` and `canary`, pin to a specific version or just track a particular major or minor semantic version.
+> On the path to the helmfile, you can use the query string's ref `(?ref=monitoring-latest)` to track one of the release streams: `stable` and `canary`, pin to a specific version or just track a particular major or minor semantic version.
 > For more on this, check the [*Updates*](/README.md#Updates) section
 
 This is a very minimalist helmfile but enough to get it done.
