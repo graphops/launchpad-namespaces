@@ -1,11 +1,7 @@
 name: "🐛 Bug Report"
-about: Report a bug encountered while operating `launchpad-namespaces`.
-
+description: Report a bug encountered while operating `launchpad-namespaces`.
 title: "🐛 [BUG] - <title>"
 labels: ["bug"]
-
-description: |
-  Please provide as much information as possible. Not doing so may result in your bug not being addressed in a timely manner.
 
 body:
   - type: textarea

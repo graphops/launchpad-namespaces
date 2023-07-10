@@ -1,13 +1,16 @@
 name: "✨ Feature Request"
-about: Request a new feature or enhancement.
-
+description: Request a new feature or enhancement
 title: "✨ [FEATURE] - <title>"
 labels: ["enhancement"]
 
-description: |
-  A clear and concise description of the new feature you are requesting.
-
 body:
+  - type: textarea
+    id: description
+    attributes:
+      label: "Description"
+      description: "A clear and concise description of the new feature you are requesting."
+      required: true
+
   - type: textarea
     id: problem-motivation
     attributes:
