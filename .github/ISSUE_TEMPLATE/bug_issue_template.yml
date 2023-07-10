@@ -1,0 +1,56 @@
+name: "🐛 Bug Report"
+about: Report a bug encountered while operating `launchpad-namespaces`.
+
+title: "🐛 [BUG] - <title>"
+labels: ["bug"]
+
+description: |
+  Please provide as much information as possible. Not doing so may result in your bug not being addressed in a timely manner.
+
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: "What happened?"
+      description: "Please provide a clear description of what happened."
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: "Expected behavior"
+      description: "Please provide a clear description of what you expected to happen."
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: "Environment"
+      description: |
+        - Operating System:
+        - Kubernetes Version:
+        - Helm Version:
+        - Namespace Affected:
+        - Any other relevant environment details:
+      required: true
+
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: "Reproduction steps"
+      description: "Please provide steps to reproduce the bug as minimally and precisely as possible."
+      required: true
+
+  - type: textarea
+    id: possible-solution
+    attributes:
+      label: "Possible Solution"
+      description: "If you have any suggestions on how to fix the bug, please provide them."
+      required: false
+
+  - type: textarea
+    id: additional-information
+    attributes:
+      label: "Additional Information"
+      description: "Any additional information or context that may be helpful in understanding or resolving the issue."
+      required: false
