@@ -15,6 +15,28 @@ command: {
 		_out:  _helmfile.#render & {_namespace: var.namespace}
 		print: cli.Print & {text:               _out.out}
 	}
+	"build:renovate": {
+		_out:  _renovate.render
+		print: cli.Print & {text: _out.out}
+	}
+}
+
+_renovate: {
+	_#repo: {
+		_repo:  string
+		_url:   _repositories[_repo].url
+		render: """
+			{
+			  "matchDepPatterns": "\(_repo)\\/.*",
+			  "registryUrls": ["\(_url)"]
+			}
+			"""
+		out:    strings.Join([ for line in strings.Split(render, "\n") {"      " + line}], "\n")
+	}
+	render: {
+		_blocks: [ for repoName, _ in _repositories {_#repo & {_repo: repoName}}]
+		out: strings.Join([ for block in _blocks {block.out}], ",\n")
+	}
 }
 
 _helmfile: {
