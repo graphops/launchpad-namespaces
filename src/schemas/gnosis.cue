@@ -50,7 +50,7 @@ package LaunchpadNamespaces
 		releases: {
 			nethermind: {
 				chart: {_repositories.graphops.charts.nethermind}
-				_template: {version: "0.2.0"}
+				_template: {version: "0.3.0"}
 			}
 
 			nimbus: {
@@ -60,7 +60,7 @@ package LaunchpadNamespaces
 
 			proxyd: {
 				chart: {_repositories.graphops.charts.proxyd}
-				_template: {version: "0.1.8"}
+				_template: {version: "0.2.1"}
 			}
 		}
 
