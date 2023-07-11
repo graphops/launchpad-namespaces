@@ -54,7 +54,7 @@ package LaunchpadNamespaces
 		releases: {
 			"openebs": {
 				chart: {_repositories.openebs.charts.openebs}
-				_template: {version: "3.6.0"}
+				_template: {version: "3.7.0"}
 			}
 			"openebs-rawfile-localpv": {
 				chart: {_repositories.graphops.charts["openebs-rawfile-localpv"]}
