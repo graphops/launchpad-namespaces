@@ -282,6 +282,8 @@ cue cmd -t namespace="ethereum" build:helmfile
 
 and should get the helmfile.yaml as output
 
+Alternatively, to build all helmfiles you can also run the `src/scripts/update-form-schemas.sh` script.
+
 ### Update the docs
 
 We have a script that automates that task under `src/scripts/update-docs.sh`.
@@ -291,3 +293,13 @@ update the OpenAPI JSON schema, template all the documentation, and do git add o
 ### Update the OpenAPI JSON schema at `schema.json`
 
 We have a script that generates the OpenAPI schema under `src/scripts/generate-openapi.sh`. You should be able to run it and you will get it as output.
+
+### Update Renovate repositories config after changing `charts.cue`
+
+Part of a pre-commit hook, but you can manually run the `src/scripts/update-renovate-repos.sh` script as well.
+
+That script generates the repositories section for the renovate's config, by running a CUE cmd from the `src/schemas` directory:
+```shell
+cue cmd build:renovate
+```
+and replaces the corresponding section in `.github/renovate.json5`.

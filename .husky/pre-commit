@@ -11,3 +11,5 @@ git add "$REPOROOT/schema.json"
 "$SCRIPTSDIR"/update-from-schemas.sh
 
 "$SCRIPTSDIR"/update-docs.sh
+
+"$SCRIPTSDIR"/update-renovate-repos.sh

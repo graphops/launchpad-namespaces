@@ -16,9 +16,9 @@
 
     "regexManagers": [
       {
-        "fileMatch": ["(^|/)helmfile.yaml$"],
+        "fileMatch": ["(^|/)src/schemas/.*\\.cue$"],
         "matchStrings": [
-          ".*:\\n[\\s]*?chart:[\\s]?(?<depType>.*)\\/(?<packageName>.*)\\n[\\s]*version:[\\s]?(?<currentValue>[v]?\\d+\\.\\d+\\.\\d+)\\n"
+            ".*chart:[^}]*_repositories(\\.|\\[\")(?<depType>[^\"\\]}\\.\\s]*)(\\.|\"\\])?charts(\\.|\\[\")(?<packageName>[^\"\\]}\\.\\s]*)(\")?[\\s]?(\\])?[\\s]?}[\\s\\S]*?_template:[^{]?{[\\s\\S]*?version:[\\s]*?\"(?<currentValue>[v]?\\d+\\.\\d+\\.\\d+.*)\""
         ],
         "depNameTemplate": "{{{depType}}}/{{{packageName}}}",
         "packageNameTemplate": "{{{packageName}}}",
@@ -30,23 +30,24 @@
       // Group dependency update PRs per namespace
       {
         "description": "Group dependencies",
-        "matchPaths": ["*/**"],
-        "groupName": "{{{ parentDir }}} dependencies",
-        "groupSlug": "{{{ parentDir }}}"
-      }
+        "matchPaths": ["src/schemas/*"],
+        "groupName": '{{{replace "src/schemas/(.*)\.cue" "$1" packageFile}}}',
+        "groupSlug": '{{{replace "src/schemas/(.*)\.cue" "$1" packageFile}}}',
+        "commitMessageTopic": '{{{groupSlug}}} dependencies',
+        "commitMessageExtra": "",
+        "branchName": 'renovate/{{{replace "src/schemas/(.*)\.cue" "$1" packageFile}}}',
+        "prTitle": 'feat(deps): update {{{replace "src/schemas/(.*)\.cue" "$1" packageFile}}} dependencies'
+      },
 
-      // Helm Chart repositories
+      // **auto-genereated** section, don't edit manually
+      // #### BEGIN Helm Chart repositories ####
       {
         "matchDepPatterns": "graphops\/.*",
-        "registryUrls": ["https://graphops.github.io/launchpad-charts"]
+        "registryUrls": ["https://graphops.github.io/launchpad-charts/canary"]
       },
       {
         "matchDepPatterns": "ingress-nginx\/.*",
         "registryUrls": ["https://kubernetes.github.io/ingress-nginx"]
-      },
-      {
-        "matchDepPatterns": "vouch\/.*",
-        "registryUrls": ["https://vouch.github.io/helm-charts/"]
       },
       {
         "matchDepPatterns": "jetstack\/.*",
@@ -84,5 +85,6 @@
         "matchDepPatterns": "openebs-monitoring\/.*",
         "registryUrls": ["https://openebs.github.io/monitoring/"]
       }
+      // #### END Helm Chart repositories ####
     ]
 }
