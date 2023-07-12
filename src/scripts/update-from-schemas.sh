@@ -16,7 +16,6 @@ function gen-helmfile {
    popd
 }
 
-
 for file in $REPOROOT/src/schemas/*.cue; do
    if [[ $(uname -s) == Darwin ]]; then
       namespace=$(ggrep -Po "schema:namespace=.*?([[:space:]]|$)" "$file" | cut -d '=' -f 2)

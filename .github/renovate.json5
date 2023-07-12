@@ -6,6 +6,10 @@
 
     "separateMajorMinor": false,
 
+    "commitBodyTable": true,
+
+    "semanticCommitType": "ci",
+
     "ignorePaths": [
     ],
 
@@ -33,10 +37,13 @@
         "matchPaths": ["src/schemas/*"],
         "groupName": '{{{replace "src/schemas/(.*)\.cue" "$1" packageFile}}}',
         "groupSlug": '{{{replace "src/schemas/(.*)\.cue" "$1" packageFile}}}',
-        "commitMessageTopic": '{{{groupSlug}}} dependencies',
-        "commitMessageExtra": "",
+        "semanticCommitType": "ci",
+        "commitMessageTopic": '{{{replace "src/schemas/(.*)\.cue" "$1" packageFile}}}',
+        "commitMessagePrefix": "ci(deps):",
+        "commitMessageAction": "update",
+        "commitMessageExtra": "dependencies",
         "branchName": 'renovate/{{{replace "src/schemas/(.*)\.cue" "$1" packageFile}}}',
-        "prTitle": 'feat(deps): update {{{replace "src/schemas/(.*)\.cue" "$1" packageFile}}} dependencies'
+        "prTitle": 'ci(deps): update {{{replace "src/schemas/(.*)\.cue" "$1" packageFile}}} dependencies'
       },
 
       // **auto-genereated** section, don't edit manually
