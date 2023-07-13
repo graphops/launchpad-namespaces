@@ -27,6 +27,7 @@ To use *Namespaces* you will require both a [*Kubernetes*](https://kubernetes.io
 As such:
 - Make sure your *Kubernetes* *Cluster* is in order and your environment has the *kubeconfig* context adequately setup
 - Install *helmfile*, upstream guidance available here: [*Helmfile* Installation](https://github.com/helmfile/helmfile#installation)
+– Install *kustomize*, upstream guidance availabe here: [*Kustomize* Installation](https://kubectl.docs.kubernetes.io/installation/kustomize/). Although `launchpad–namespaces` doesn't explicitly use *kustomize*, it is a dependencie for utilising *helmfile* features.
 
 Next, setup an `helmfile.yaml` file that makes use of the postgres-operator *Namespace* by creating it with the following contents:
 ```yaml

@@ -16,6 +16,9 @@
     "helmfile_install": {
       "link": "[*Helmfile* Installation](https://github.com/helmfile/helmfile#installation)"
     },
+    "kustomize_install": {
+      "link": "[*Kustomize* Installation](https://kubectl.docs.kubernetes.io/installation/kustomize/)"
+    },
     "helm": {
       "string": "*Helm*",
       "url": "https://github.com/helm/helm",

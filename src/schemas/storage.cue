@@ -76,6 +76,11 @@ package LaunchpadNamespaces
 				feature: #features.#zfs
 				_template: {version: "0.2.0"}
 			}
+			"openebs-zfs-snapclass": {
+				chart: {_repositories.graphops.charts["resource-injector"]}
+				feature: #features.#zfs
+				_template: {version: "0.2.0"}
+			}
 		}
 	}
 }

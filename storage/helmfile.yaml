@@ -128,6 +128,12 @@ templates:
     inherit:
       - template: defaults
   
+  openebs-zfs-snapclass:
+    chart: graphops/resource-injector
+    version: 0.2.0
+    inherit:
+      - template: defaults
+  
 releases:
   {{- $release := "openebs" }}
   - name: 'openebs'
@@ -164,6 +170,14 @@ releases:
   - name: 'openebs-zfs-storageclass'
     inherit:
     - template: 'openebs-zfs-storageclass'
+    values:
+    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
+  {{- end -}}
+  {{ if has "zfs" ( .Values | get "features" list ) }}
+  {{- $release := "openebs-zfs-snapclass" }}
+  - name: 'openebs-zfs-snapclass'
+    inherit:
+    - template: 'openebs-zfs-snapclass'
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- end -}}

@@ -3817,7 +3817,8 @@
                             "openebs-rawfile-localpv",
                             "openebs-rawfile-storageclass",
                             "openebs-zfs-localpv",
-                            "openebs-zfs-storageclass"
+                            "openebs-zfs-storageclass",
+                            "openebs-zfs-snapclass"
                         ],
                         "properties": {
                             "openebs": {
@@ -4050,6 +4051,53 @@
                                         "$ref": "#/components/schemas/namespaces.storage.features.zfs"
                                     }
                                 }
+                            },
+                            "openebs-zfs-snapclass": {
+                                "type": "object",
+                                "required": [
+                                    "chart",
+                                    "feature"
+                                ],
+                                "properties": {
+                                    "chart": {
+                                        "type": "object",
+                                        "required": [
+                                            "url",
+                                            "repository",
+                                            "description",
+                                            "name"
+                                        ],
+                                        "properties": {
+                                            "url": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "https://github.com/graphops/launchpad-charts/tree/main/charts/resource-injector"
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "Manage Raw Kubernetes Resources using Helm"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "resource-injector"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "feature": {
+                                        "$ref": "#/components/schemas/namespaces.storage.features.zfs"
+                                    }
+                                }
                             }
                         }
                     }
@@ -4138,6 +4186,9 @@
                         "$ref": "#/components/schemas/namespaces.storage.values.releaseValues"
                     },
                     "openebs-zfs-storageclass": {
+                        "$ref": "#/components/schemas/namespaces.storage.values.releaseValues"
+                    },
+                    "openebs-zfs-snapclass": {
                         "$ref": "#/components/schemas/namespaces.storage.values.releaseValues"
                     }
                 },

@@ -28,6 +28,7 @@ To use *Namespaces* you will require both a [*Kubernetes*](https://kubernetes.io
 As such:
 - Make sure your *Kubernetes* *Cluster* is in order and your environment has the *kubeconfig* context adequately setup
 - Install *helmfile*, upstream guidance available here: [*Helmfile* Installation](https://github.com/helmfile/helmfile#installation)
+– Install *kustomize*, upstream guidance availabe here: [*Kustomize* Installation](https://kubectl.docs.kubernetes.io/installation/kustomize/). Although `launchpad–namespaces` doesn't explicitly use *kustomize*, it is a dependencie for utilising *helmfile* features.
 
 Next, setup an `helmfile.yaml` file that makes use of the storage *Namespace* by creating it with the following contents:
 ```yaml
@@ -258,6 +259,8 @@ RawFile Driver Container Storage Interface
 Manage Raw Kubernetes Resources using Helm
 - [openebs-zfs-localpv](https://github.com/openebs/zfs-localpv/tree/b70fb1e847b8c9ba32e3fd8cba877767686f6b26)<br>
 CSI driver for provisioning Local PVs backed by ZFS and more.
+- [openebs-zfs-snapclass](https://github.com/graphops/launchpad-charts/tree/main/charts/resource-injector)<br>
+Manage Raw Kubernetes Resources using Helm
 - [openebs-zfs-storageclass](https://github.com/graphops/launchpad-charts/tree/main/charts/resource-injector)<br>
 Manage Raw Kubernetes Resources using Helm
 
