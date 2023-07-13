@@ -54,12 +54,12 @@ package LaunchpadNamespaces
 		releases: {
 			"openebs": {
 				chart: {_repositories.openebs.charts.openebs}
-				_template: {version: "3.6.0"}
+				_template: {version: "3.7.0"}
 			}
 			"openebs-rawfile-localpv": {
 				chart: {_repositories.graphops.charts["openebs-rawfile-localpv"]}
 				feature: #features.#rawfile
-				_template: {version: "0.8.0"}
+				_template: {version: "0.8.1-canary.1"}
 			}
 			"openebs-rawfile-storageclass": {
 				chart: {_repositories.graphops.charts["resource-injector"]}
