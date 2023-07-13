@@ -52,12 +52,12 @@ package LaunchpadNamespaces
 		releases: {
 			erigon: {
 				chart: {_repositories.graphops.charts.erigon}
-				_template: {version: "0.6.0"}
+				_template: {version: "0.6.1-canary.2"}
 			}
 
 			nimbus: {
 				chart: {_repositories.graphops.charts.nimbus}
-				_template: {version: "0.3.0"}
+				_template: {version: "0.3.1-canary.1"}
 			}
 
 			proxyd: {
