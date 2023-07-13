@@ -1717,7 +1717,7 @@
                 "properties": {
                     "path": {
                         "type": "string",
-                        "pattern": "*github.com/graphops/launchpad-namespaces.git@eth-erigon/helmfile.yaml*"
+                        "pattern": "*github.com/graphops/launchpad-namespaces.git@ethereum/helmfile.yaml*"
                     },
                     "values": {
                         "oneOf": [

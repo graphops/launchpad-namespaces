@@ -6,6 +6,9 @@ package LaunchpadNamespaces
 		description: """
 			lorem ipsolum
 			"""
+		_renovate: {
+			ignoreUnstable: false
+		}
 		charts: {
 			erigon: {
 				url: "https://github.com/ledgerwatch/erigon"

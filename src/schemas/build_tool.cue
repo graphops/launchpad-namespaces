@@ -23,14 +23,13 @@ command: {
 
 _renovate: {
 	_#repo: {
-		_repo:  string
-		_url:   _repositories[_repo].url
-		render: """
-			{
-			  "matchDepPatterns": "\(_repo)\\/.*",
-			  "registryUrls": ["\(_url)"]
-			}
-			"""
+		_repo:   string
+		_url:    _repositories[_repo].url
+		_struct: {
+			matchDepPatterns: "\(_repo)\\/.*"
+			registryUrls: ["\(_url)"]
+		} & {if _repositories[_repo]._renovate != _|_ {_repositories[_repo]._renovate}}
+		render: json.Marshal(_struct)
 		out:    strings.Join([ for line in strings.Split(render, "\n") {"      " + line}], "\n")
 	}
 	render: {
