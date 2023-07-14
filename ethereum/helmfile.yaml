@@ -88,7 +88,7 @@ templates:
   
   erigon:
     chart: graphops/erigon
-    version: 0.6.1-canary.2
+    version: 0.6.1-canary.3
     inherit:
       - template: defaults
   
@@ -100,7 +100,7 @@ templates:
   
   proxyd:
     chart: graphops/proxyd
-    version: 0.2.1
+    version: 0.2.2-canary.1
     inherit:
       - template: defaults
   
