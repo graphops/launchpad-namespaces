@@ -100,13 +100,13 @@ templates:
   
   openebs:
     chart: openebs/openebs
-    version: 3.6.0
+    version: 3.7.0
     inherit:
       - template: defaults
   
   openebs-rawfile-localpv:
     chart: graphops/openebs-rawfile-localpv
-    version: 0.8.0
+    version: 0.8.1-canary.1
     inherit:
       - template: defaults
   
