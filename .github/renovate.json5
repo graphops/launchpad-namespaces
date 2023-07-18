@@ -22,7 +22,7 @@
       {
         "fileMatch": ["(^|/)src/schemas/.*\\.cue$"],
         "matchStrings": [
-          ".*chart:[^}]*_repositories(\\.|\\[\")(?<depType>[^\"\\]}\\.\\s]*)(\"\\])?\.?charts(\\.|\\[\")(?<packageName>[^\"\\]}\\.\\s]*)(\")?[\\s]?(\\])?[\\s]?}[\\s\\S]*?_template:[^{]?{[\\s\\S]*?version:[\\s]*?\"(?<currentValue>[v]?\\d+\\.\\d+\\.\\d+.*)\""
+          ".*chart:[^}]*_repositories(\\.|\\[\")(?<depType>[^\"\\]}\\.\\s]*)(\"\\])?\\.?charts(\\.|\\[\")(?<packageName>[^\"\\]}\\.\\s]*)(\")?[\\s]?(\\])?[\\s]?}[\\s\\S]*?_template:[^{]?{[\\s\\S]*?version:[\\s]*?\"(?<currentValue>[v]?\\d+\\.\\d+\\.\\d+.*)\""
         ],
         "depNameTemplate": "{{{depType}}}/{{{packageName}}}",
         "packageNameTemplate": "{{{packageName}}}",
@@ -60,5 +60,16 @@
       {"matchDepPatterns":"openebs-zfs-localpv\\/.*","registryUrls":["https://openebs.github.io/zfs-localpv"]},
       {"matchDepPatterns":"openebs-monitoring\\/.*","registryUrls":["https://openebs.github.io/monitoring/"]}
       // #### END Helm Chart repositories ####
-    ]
+    ],
+
+  "postUpgradeTasks": {
+    "commands": [
+        "yarn install",
+        "mkdir /tmp/bin || true",
+        "cd /tmp/bin; curl -LJO https://github.com/cue-lang/cue/releases/download/v0.6.0-alpha.2/cue_v0.6.0-alpha.2_linux_amd64.tar.gz || true; tar vxzf- cue*.tar.gz || true",
+        "PATH=/tmp/bin:$PATH bash src/scripts/update-from-schemas.sh"
+    ],
+    "fileFilters": ["**/*.cue", "**/helmfile.yaml", "schema.json"],
+    "executionMode": "update"
+  }
 }
