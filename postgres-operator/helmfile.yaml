@@ -88,7 +88,7 @@ templates:
   
   postgres-operator:
     chart: postgres-operator-charts/postgres-operator
-    version: 1.8.2
+    version: 1.10.0
     inherit:
       - template: defaults
     disableValidationOnInstall: true
