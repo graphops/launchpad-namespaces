@@ -91,6 +91,7 @@ templates:
     version: 1.8.2
     inherit:
       - template: defaults
+    disableValidationOnInstall: true
   
 releases:
   {{- $release := "postgres-operator" }}
