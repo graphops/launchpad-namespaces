@@ -58,10 +58,14 @@ transformers:
 helmDefaults:
 {{ $__helmDefaults | toYaml | indent 2 }}
 
+#set default flavor when missing
+{{ if not ( hasKey .Values "flavor" ) }}
+{{ $_ := set .Values "flavor" "mainnet" }}
+{{ end }}
+
+
 #set default namespace
 {{ $_defaultNamespace := ( print "eth-" .Values.flavor ) }}
-
-
 
 commonLabels:
   launchpad.graphops.xyz/namespace: ethereum

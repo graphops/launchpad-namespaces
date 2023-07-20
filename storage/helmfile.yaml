@@ -58,16 +58,16 @@ transformers:
 helmDefaults:
 {{ $__helmDefaults | toYaml | indent 2 }}
 
-#set default namespace
-{{ $_defaultNamespace := `storage` }}
-
 
 # Define default features when undefined
 {{ if not (hasKey .Values "features") }}
 {{ $_ := set .Values "features" (list
-
+`rawfile`
 ) }}
 {{ end }}
+
+#set default namespace
+{{ $_defaultNamespace := `storage` }}
 
 commonLabels:
   launchpad.graphops.xyz/namespace: storage

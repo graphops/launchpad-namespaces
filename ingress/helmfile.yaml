@@ -58,9 +58,6 @@ transformers:
 helmDefaults:
 {{ $__helmDefaults | toYaml | indent 2 }}
 
-#set default namespace
-{{ $_defaultNamespace := `ingress` }}
-
 
 # Define default features when undefined
 {{ if not (hasKey .Values "features") }}
@@ -69,6 +66,9 @@ helmDefaults:
 `cert-manager`
 ) }}
 {{ end }}
+
+#set default namespace
+{{ $_defaultNamespace := `ingress` }}
 
 commonLabels:
   launchpad.graphops.xyz/namespace: ingress

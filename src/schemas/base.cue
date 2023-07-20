@@ -45,7 +45,7 @@ _#namespaceTemplate: {
 	values: _key.#values & {
 		targetNamespace: _key.#values.targetNamespace
 		if _key.#features != _|_ {features: [..._key.#features.#enum]}
-		if _key.#flavor != _|_ {flavor: _key.#values.flavor}
+		if _key.#flavor != _|_ {flavor: _key.#flavor.#enum}
 		for rkey, _ in _key.releases {
 			(rkey): {
 				mergeValues: _key.#values.#releaseValues.mergeValues
@@ -55,6 +55,4 @@ _#namespaceTemplate: {
 	}
 	labels:   _key.labels
 	releases: _key.releases
-	if _key.#features != _|_ {features: _key.#features}
-	if _key.#flavor != _|_ {flavor: _key.#values.flavor}
 }

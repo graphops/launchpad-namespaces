@@ -4171,7 +4171,10 @@
                         "type": "array",
                         "items": {
                             "$ref": "#/components/schemas/namespaces.storage.features.enum"
-                        }
+                        },
+                        "default": [
+                            "rawfile"
+                        ]
                     },
                     "openebs": {
                         "$ref": "#/components/schemas/namespaces.storage.values.releaseValues"
