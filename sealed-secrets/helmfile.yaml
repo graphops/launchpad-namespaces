@@ -58,10 +58,10 @@ transformers:
 helmDefaults:
 {{ $__helmDefaults | toYaml | indent 2 }}
 
+
+
 #set default namespace
 {{ $_defaultNamespace := `sealed-secrets` }}
-
-
 
 commonLabels:
   launchpad.graphops.xyz/namespace: sealed-secrets

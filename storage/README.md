@@ -116,7 +116,7 @@ helmfiles:
 | Key | Type | Default | Description |
 | :--- | :---: | :--- | :--- |
 annotations | object |  | Add annotations to releases on this namespace |
-features | list of strings |  | *enum of:&nbsp;&nbsp;(zfs \| rawfile)* |
+features | list of strings | [rawfile] | *enum of:&nbsp;&nbsp;(zfs \| rawfile)* |
 labels | object |  | Adds labels to releases on this namespace |
 openebs | object |  |  |
 openebs.mergeValues | boolean | true |  |

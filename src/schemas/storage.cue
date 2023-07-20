@@ -27,7 +27,7 @@ package LaunchpadNamespaces
 		#values: #base.#values & {
 			targetNamespace?: *"storage" | string
 
-			features?: *[#features.rawfile] | [...#features.#enum]
+			features?: *[#features.#rawfile] | [...#features.#enum]
 
 			#releaseValues: {
 				mergeValues?: *true | bool
