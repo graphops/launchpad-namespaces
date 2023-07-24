@@ -113,6 +113,7 @@ erigon | object |  |  |
 erigon.mergeValues | boolean | true |  |
 erigon.values | (object *or* list of objects) |  |  |
 flavor | string |  |  |
+kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
 labels | object |  | Adds labels to releases on this namespace |
 nimbus | object |  |  |
 nimbus.mergeValues | boolean | true |  |

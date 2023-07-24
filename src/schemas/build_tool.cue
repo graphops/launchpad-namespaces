@@ -48,6 +48,8 @@ _helmfile: {
 
 		helmDefaults: _helmfile._helmDefaults.out
 
+		kubeVersion: _helmfile._kubeVersion.out
+
 		_defaultFlavor: _helmfile._#defaultFlavor & {_namespace: this}
 		defaultFlavor:  _defaultFlavor.out
 
@@ -73,6 +75,7 @@ _helmfile: {
 			_templateBlocks.transforms,
 			_templateBlocks.releaseValues,
 			helmDefaults,
+			kubeVersion,
 			defaultFlavor,
 			defaultFeatures,
 			defaultNamespace,
@@ -116,6 +119,14 @@ _helmfile: {
 
 		helmDefaults:
 		{{ $__helmDefaults | toYaml | indent 2 }}
+
+		"""
+	}
+
+	_kubeVersion: {out: """
+		{{ if ( hasKey .Values \"kubeVersion\" ) }}
+		kubeVersion: {{ .Values.kubeVersion }}
+		{{ end }}
 
 		"""
 	}

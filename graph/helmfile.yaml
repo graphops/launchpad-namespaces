@@ -58,6 +58,10 @@ transformers:
 helmDefaults:
 {{ $__helmDefaults | toYaml | indent 2 }}
 
+{{ if ( hasKey .Values "kubeVersion" ) }}
+kubeVersion: {{ .Values.kubeVersion }}
+{{ end }}
+
 #set default flavor when missing
 {{ if not ( hasKey .Values "flavor" ) }}
 {{ $_ := set .Values "flavor" "goerli" }}

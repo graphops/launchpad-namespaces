@@ -116,6 +116,7 @@ arbitrum&#8209;nitro | object |  |  |
 arbitrum&#8209;nitro.mergeValues | boolean | true |  |
 arbitrum&#8209;nitro.values | (object *or* list of objects) |  |  |
 flavor | string |  |  |
+kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
 labels | object |  | Adds labels to releases on this namespace |
 proxyd | object |  |  |
 proxyd.mergeValues | boolean | true |  |

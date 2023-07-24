@@ -15,6 +15,8 @@ info: {
 	// Base namespace values interface schema
 	#values: {
 		helmDefaults?: upstreamHelmfile.#helmDefaults
+		// Specifies the kubernetes API version, useful in helm templating environment
+		kubeVersion?: string
 		// Sets the cluster namespace in which the releases will be deployed
 		targetNamespace: string
 		// Add annotations to releases on this namespace

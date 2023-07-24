@@ -111,6 +111,7 @@ avalanche | object |  |  |
 avalanche.mergeValues | boolean | true |  |
 avalanche.values | (object *or* list of objects) |  |  |
 flavor | string |  | suitable defaults for a mainnet archive node |
+kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
 labels | object |  | Adds labels to releases on this namespace |
 proxyd | object |  |  |
 proxyd.mergeValues | boolean | true |  |

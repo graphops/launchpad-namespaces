@@ -120,6 +120,7 @@ graph&#8209;node.values | (object *or* list of objects) |  |  |
 graph&#8209;toolbox | object |  |  |
 graph&#8209;toolbox.mergeValues | boolean | true |  |
 graph&#8209;toolbox.values | (object *or* list of objects) |  |  |
+kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
 labels | object |  | Adds labels to releases on this namespace |
 targetNamespace | string | graph-goerli | the default is graph-<flavor> |
 helmDefaults | object |  |  |
