@@ -105,6 +105,7 @@ helmfiles:
 | Key | Type | Default | Description |
 | :--- | :---: | :--- | :--- |
 annotations | object |  | Add annotations to releases on this namespace |
+kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
 labels | object |  | Adds labels to releases on this namespace |
 sealed&#8209;secrets | object |  |  |
 sealed&#8209;secrets.mergeValues | boolean | true |  |

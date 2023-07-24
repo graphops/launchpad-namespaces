@@ -115,6 +115,7 @@ features | list of strings | [metrics, logs] | *enum of:&nbsp;&nbsp;(metrics \| 
 kube&#8209;prometheus&#8209;stack | object |  |  |
 kube&#8209;prometheus&#8209;stack.mergeValues | boolean | true |  |
 kube&#8209;prometheus&#8209;stack.values | (object *or* list of objects) |  |  |
+kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
 labels | object |  | Adds labels to releases on this namespace |
 loki | object |  |  |
 loki.mergeValues | boolean | true |  |

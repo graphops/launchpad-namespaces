@@ -58,6 +58,10 @@ transformers:
 helmDefaults:
 {{ $__helmDefaults | toYaml | indent 2 }}
 
+{{ if ( hasKey .Values "kubeVersion" ) }}
+kubeVersion: {{ .Values.kubeVersion }}
+{{ end }}
+
 
 
 #set default namespace

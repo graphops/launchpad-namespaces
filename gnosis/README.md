@@ -110,6 +110,7 @@ helmfiles:
 | :--- | :---: | :--- | :--- |
 annotations | object |  | Add annotations to releases on this namespace |
 flavor | string |  | suitable defaults for a mainnet archive node |
+kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
 labels | object |  | Adds labels to releases on this namespace |
 nethermind | object |  |  |
 nethermind.mergeValues | boolean | true |  |

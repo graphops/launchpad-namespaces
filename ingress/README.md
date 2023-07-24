@@ -119,6 +119,7 @@ features | list of strings | [ingress, cert-manager] | *enum of:&nbsp;&nbsp;(ing
 ingress&#8209;nginx | object |  |  |
 ingress&#8209;nginx.mergeValues | boolean | true |  |
 ingress&#8209;nginx.values | (object *or* list of objects) |  |  |
+kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
 labels | object |  | Adds labels to releases on this namespace |
 targetNamespace | string | ingress | Sets the cluster namespace in which the releases will be deployed |
 helmDefaults | object |  |  |

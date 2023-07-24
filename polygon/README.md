@@ -116,6 +116,7 @@ flavor | string |  | suitable defaults for a mainnet archive node |
 heimdall | object |  |  |
 heimdall.mergeValues | boolean | true |  |
 heimdall.values | (object *or* list of objects) |  |  |
+kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
 labels | object |  | Adds labels to releases on this namespace |
 proxyd | object |  |  |
 proxyd.mergeValues | boolean | true |  |

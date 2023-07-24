@@ -535,6 +535,10 @@
                     "helmDefaults": {
                         "$ref": "#/components/schemas/helmDefaults"
                     },
+                    "kubeVersion": {
+                        "description": "Specifies the kubernetes API version, useful in helm templating environment",
+                        "type": "string"
+                    },
                     "targetNamespace": {
                         "description": "Sets the cluster namespace in which the releases will be deployed",
                         "type": "string"
