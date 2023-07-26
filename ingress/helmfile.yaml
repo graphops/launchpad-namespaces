@@ -109,7 +109,7 @@ templates:
   
   cert-manager:
     chart: jetstack/cert-manager
-    version: v1.12.2
+    version: v1.12.3
     inherit:
       - template: defaults
   
