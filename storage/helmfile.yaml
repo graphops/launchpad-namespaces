@@ -104,7 +104,7 @@ templates:
   
   openebs:
     chart: openebs/openebs
-    version: 3.7.0
+    version: 3.8.0
     inherit:
       - template: defaults
   
@@ -122,7 +122,7 @@ templates:
   
   openebs-zfs-localpv:
     chart: openebs-zfs-localpv/zfs-localpv
-    version: 2.2.0
+    version: 2.3.0
     inherit:
       - template: defaults
   
