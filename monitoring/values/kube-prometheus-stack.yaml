@@ -11,6 +11,7 @@ prometheus:
     serviceMonitorSelectorNilUsesHelmValues: false
     podMonitorSelectorNilUsesHelmValues: false
     probeSelectorNilUsesHelmValues: false
+    scrapeInterval: 60s
     storageSpec:
       volumeClaimTemplate:
         spec:
