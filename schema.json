@@ -2583,6 +2583,12 @@
                                 "enum": [
                                     "ingress"
                                 ]
+                            },
+                            "launchpad.graphops.xyz/layer": {
+                                "type": "string",
+                                "enum": [
+                                    "base"
+                                ]
                             }
                         },
                         "allOf": [
@@ -2591,7 +2597,8 @@
                             },
                             {
                                 "required": [
-                                    "launchpad.graphops.xyz/namespace"
+                                    "launchpad.graphops.xyz/namespace",
+                                    "launchpad.graphops.xyz/layer"
                                 ]
                             }
                         ]
@@ -2953,6 +2960,12 @@
                                 "enum": [
                                     "monitoring"
                                 ]
+                            },
+                            "launchpad.graphops.xyz/layer": {
+                                "type": "string",
+                                "enum": [
+                                    "base"
+                                ]
                             }
                         },
                         "allOf": [
@@ -2961,7 +2974,8 @@
                             },
                             {
                                 "required": [
-                                    "launchpad.graphops.xyz/namespace"
+                                    "launchpad.graphops.xyz/namespace",
+                                    "launchpad.graphops.xyz/layer"
                                 ]
                             }
                         ]
@@ -3474,6 +3488,12 @@
                                 "enum": [
                                     "postgres-operator"
                                 ]
+                            },
+                            "launchpad.graphops.xyz/layer": {
+                                "type": "string",
+                                "enum": [
+                                    "base"
+                                ]
                             }
                         },
                         "allOf": [
@@ -3482,7 +3502,8 @@
                             },
                             {
                                 "required": [
-                                    "launchpad.graphops.xyz/namespace"
+                                    "launchpad.graphops.xyz/namespace",
+                                    "launchpad.graphops.xyz/layer"
                                 ]
                             }
                         ]
