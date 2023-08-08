@@ -49,7 +49,7 @@ package LaunchpadNamespaces
 				chart: {_repositories["prometheus-community"].charts["kube-prometheus-stack"]}
 				feature: #features.#metrics
 				_template: {
-					version:                    "48.1.1"
+					version:                    "48.3.1"
 					disableValidationOnInstall: true
 				}
 			}
@@ -61,12 +61,12 @@ package LaunchpadNamespaces
 			loki: {
 				chart: {_repositories.grafana.charts["loki-distributed"]}
 				feature: #features.#logs
-				_template: {version: "0.69.16"}
+				_template: {version: "0.71.1"}
 			}
 			promtail: {
 				chart: {_repositories.grafana.charts.promtail}
 				feature: #features.#logs
-				_template: {version: "6.11.5"}
+				_template: {version: "6.14.1"}
 			}
 		}
 
