@@ -69,9 +69,11 @@ kubeVersion: {{ .Values.kubeVersion }}
 
 commonLabels:
   launchpad.graphops.xyz/namespace: postgres-operator
+  launchpad.graphops.xyz/layer: base
 
 {{ $_labels := dict 
   `launchpad.graphops.xyz/namespace` `postgres-operator`
+  `launchpad.graphops.xyz/layer` `base`
 }}
 repositories:
   - name: postgres-operator-charts

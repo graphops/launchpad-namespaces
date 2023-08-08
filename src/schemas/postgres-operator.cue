@@ -46,6 +46,7 @@ package LaunchpadNamespaces
 		labels: {
 			#base.#labels
 			"launchpad.graphops.xyz/namespace": "postgres-operator"
+			"launchpad.graphops.xyz/layer":     "base"
 		}
 	}
 }

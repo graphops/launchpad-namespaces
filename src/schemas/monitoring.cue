@@ -73,6 +73,7 @@ package LaunchpadNamespaces
 		labels: {
 			#base.#labels
 			"launchpad.graphops.xyz/namespace": "monitoring"
+			"launchpad.graphops.xyz/layer":     "base"
 		}
 	}
 }
