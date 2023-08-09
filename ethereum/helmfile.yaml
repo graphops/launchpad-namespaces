@@ -102,7 +102,7 @@ templates:
   
   nimbus:
     chart: graphops/nimbus
-    version: 0.3.1-canary.1
+    version: 0.3.1-canary.2
     inherit:
       - template: defaults
   
