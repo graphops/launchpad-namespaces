@@ -109,13 +109,13 @@ templates:
   
   nimbus:
     chart: graphops/nimbus
-    version: 0.3.1-canary.2
+    version: 0.4.0
     inherit:
       - template: defaults
   
   proxyd:
     chart: graphops/proxyd
-    version: 0.2.2-canary.1
+    version: 0.2.2-canary.2
     inherit:
       - template: defaults
   
