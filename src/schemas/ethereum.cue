@@ -71,13 +71,13 @@ package LaunchpadNamespaces
 			nimbus: {
 				chart: {_repositories.graphops.charts.nimbus}
 				feature: #features.#nimbus
-				_template: {version: "0.3.1-canary.2"}
+				_template: {version: "0.4.0"}
 			}
 
 			proxyd: {
 				chart: {_repositories.graphops.charts.proxyd}
 				feature: #features.#proxyd
-				_template: {version: "0.2.2-canary.1"}
+				_template: {version: "0.2.2-canary.2"}
 			}
 		}
 
