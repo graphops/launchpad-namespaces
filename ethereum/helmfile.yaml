@@ -67,6 +67,13 @@ kubeVersion: {{ .Values.kubeVersion }}
 {{ $_ := set .Values "flavor" "mainnet" }}
 {{ end }}
 
+# Define default features when undefined
+{{ if not (hasKey .Values "features") }}
+{{ $_ := set .Values "features" (list
+`nimbus`
+`proxyd`
+) }}
+{{ end }}
 
 #set default namespace
 {{ $_defaultNamespace := ( print "eth-" .Values.flavor ) }}
@@ -119,15 +126,19 @@ releases:
     - template: 'erigon'
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
+  {{ if has "nimbus" ( .Values | get "features" list ) }}
   {{- $release := "nimbus" }}
   - name: 'nimbus'
     inherit:
     - template: 'nimbus'
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
+  {{- end -}}
+  {{ if has "proxyd" ( .Values | get "features" list ) }}
   {{- $release := "proxyd" }}
   - name: 'proxyd'
     inherit:
     - template: 'proxyd'
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
+  {{- end -}}
