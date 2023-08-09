@@ -112,6 +112,7 @@ annotations | object |  | Add annotations to releases on this namespace |
 erigon | object |  |  |
 erigon.mergeValues | boolean | true |  |
 erigon.values | (object *or* list of objects) |  |  |
+features | list of strings | [nimbus, proxyd] | *enum of:&nbsp;&nbsp;(nimbus \| proxyd)* |
 flavor | string |  |  |
 kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
 labels | object |  | Adds labels to releases on this namespace |

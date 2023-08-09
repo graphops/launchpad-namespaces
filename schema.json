@@ -1583,7 +1583,8 @@
                             "nimbus": {
                                 "type": "object",
                                 "required": [
-                                    "chart"
+                                    "chart",
+                                    "feature"
                                 ],
                                 "properties": {
                                     "chart": {
@@ -1620,13 +1621,17 @@
                                                 ]
                                             }
                                         }
+                                    },
+                                    "feature": {
+                                        "$ref": "#/components/schemas/namespaces.ethereum.features.nimbus"
                                     }
                                 }
                             },
                             "proxyd": {
                                 "type": "object",
                                 "required": [
-                                    "chart"
+                                    "chart",
+                                    "feature"
                                 ],
                                 "properties": {
                                     "chart": {
@@ -1663,6 +1668,9 @@
                                                 ]
                                             }
                                         }
+                                    },
+                                    "feature": {
+                                        "$ref": "#/components/schemas/namespaces.ethereum.features.proxyd"
                                     }
                                 }
                             }
@@ -1690,6 +1698,31 @@
                         ]
                     }
                 }
+            },
+            "namespaces.ethereum.features": {
+                "description": "ethereum namespace features schema",
+                "type": "object"
+            },
+            "namespaces.ethereum.features.enum": {
+                "type": "string",
+                "enum": [
+                    "nimbus",
+                    "proxyd"
+                ]
+            },
+            "namespaces.ethereum.features.nimbus": {
+                "description": "Use nimbus as consensus layer",
+                "type": "string",
+                "enum": [
+                    "nimbus"
+                ]
+            },
+            "namespaces.ethereum.features.proxyd": {
+                "description": "Deploy proxyd",
+                "type": "string",
+                "enum": [
+                    "proxyd"
+                ]
             },
             "namespaces.ethereum.flavor": {
                 "type": "object"
@@ -1749,13 +1782,23 @@
                 ]
             },
             "namespaces.ethereum.values": {
-                "description": "eth-erigon namespace values schema",
+                "description": "ethereum namespace values schema",
                 "type": "object",
                 "properties": {
                     "targetNamespace": {
                         "description": "the default is eth-<flavor>",
                         "type": "string",
                         "default": "eth-mainnet"
+                    },
+                    "features": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/namespaces.ethereum.features.enum"
+                        },
+                        "default": [
+                            "nimbus",
+                            "proxyd"
+                        ]
                     },
                     "flavor": {
                         "$ref": "#/components/schemas/namespaces.ethereum.flavor.enum"

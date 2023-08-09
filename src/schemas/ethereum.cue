@@ -22,10 +22,23 @@ package LaunchpadNamespaces
 			#enum:   ( #mainnet | #goerli )
 		}
 
-		// eth-erigon namespace values schema
+		// ethereum namespace features schema
+		#features: {
+			// Use nimbus as consensus layer
+			#nimbus: "nimbus"
+
+			// Deploy proxyd
+			#proxyd: "proxyd"
+
+			#enum: ( #nimbus | #proxyd )
+		}
+
+		// ethereum namespace values schema
 		#values: #base.#values & {
 			// the default is eth-<flavor>
 			targetNamespace?: *"eth-mainnet" | string
+
+			features?: *[#features.#nimbus, #features.#proxyd] | [...#features.#enum]
 
 			_templatedTargetNamespace: '( print "eth-" .Values.flavor )'
 
@@ -57,11 +70,13 @@ package LaunchpadNamespaces
 
 			nimbus: {
 				chart: {_repositories.graphops.charts.nimbus}
+				feature: #features.#nimbus
 				_template: {version: "0.3.1-canary.2"}
 			}
 
 			proxyd: {
 				chart: {_repositories.graphops.charts.proxyd}
+				feature: #features.#proxyd
 				_template: {version: "0.2.2-canary.1"}
 			}
 		}
