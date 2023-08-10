@@ -16,7 +16,7 @@ It aims to:
 - Actively maintained by [![GraphOps](https://avatars.githubusercontent.com/u/85314764?s=12&v=4) *GraphOps*](https://graphops.xyz) [and contributors](/graphs/contributors)
 - Common values interfaces across all namespaces
 - Flexible and adaptable, allowing defaults to be overriden
-- Two release channels: `main` and `canary`
+- Two release channels: `stable` and `canary`
 - A large selection of Namespaces (listed below)
 
 ## Getting Started
