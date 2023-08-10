@@ -110,7 +110,7 @@ helmfiles:
 | Key | Type | Default | Description |
 | :--- | :---: | :--- | :--- |
 annotations | object |  | Add annotations to releases on this namespace |
-flavor | string |  | suitable defaults for a mainnet archive node |
+flavor | string |  |  |
 graph&#8209;network&#8209;indexer | object |  |  |
 graph&#8209;network&#8209;indexer.mergeValues | boolean | true |  |
 graph&#8209;network&#8209;indexer.values | (object *or* list of objects) |  |  |
@@ -122,7 +122,7 @@ graph&#8209;toolbox.mergeValues | boolean | true |  |
 graph&#8209;toolbox.values | (object *or* list of objects) |  |  |
 kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
 labels | object |  | Adds labels to releases on this namespace |
-targetNamespace | string | graph-goerli | the default is graph-<flavor> |
+targetNamespace | string | graph-mainnet | the default is graph-<flavor> |
 helmDefaults | object |  |  |
 helmDefaults.args | list of strings |  |  |
 helmDefaults.cleanupOnFail | boolean |  |  |

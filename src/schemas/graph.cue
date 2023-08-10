@@ -14,20 +14,23 @@ package LaunchpadNamespaces
 		}
 
 		#flavor: {
-			// suitable defaults for a mainnet archive node
+			// suitable defaults for a goerli indexer
 			#goerli: "goerli"
 
-			#enum: ( #goerli )
+			// suitable defaults for a mainnet indexer
+			#mainnet: "mainnet"
+
+			#enum: ( #goerli | #mainnet )
 		}
 
 		// Graph namespace values schema
 		#values: #base.#values & {
 			// the default is graph-<flavor>
-			targetNamespace?: *"graph-goerli" | string
+			targetNamespace?: *"graph-mainnet" | string
 
 			_templatedTargetNamespace: '( print "graph-" .Values.flavor )'
 
-			flavor?: *"goerli" | #flavor.#enum
+			flavor?: *"mainnet" | #flavor.#enum
 
 			#releaseValues: {
 				mergeValues?: *true | bool

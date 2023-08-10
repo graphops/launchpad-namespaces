@@ -1,0 +1,18 @@
+# This is a values.yaml override file for https://github.com/graphops/launchpad-charts/tree/main/charts/graph-network-indexer
+
+indexerDefaults:
+  config:
+    ethereum: "http://proxyd-eth-goerli-proxyd.eth-goerli:8545"
+    ethereum-network: "goerli"
+    network-subgraph-endpoint: "https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-goerli"
+
+indexerAgent:
+  config:
+    collect-receipts-endpoint: "https://gateway.testnet.thegraph.com/collect-receipts"
+    network-subgraph-deployment: "QmeoyAr2soK1xE32Pxh1ZNXoQq75ZJwHJ7nzms3MogJUvK" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
+    dai-contract: "0x9e7e607afd22906f7da6f1ec8f432d6f244278be" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
+    epoch-subgraph-endpoint: "https://api.thegraph.com/subgraphs/name/graphprotocol/goerli-epoch-block-oracle" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
+
+indexerService:
+  config:
+    client-signer-address: "0xe1EC4339019eC9628438F8755f847e3023e4ff9c" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md

@@ -24,21 +24,3 @@ graphNodeGroups:
     replicaCount: 1 # scale me
   query:
     replicaCount: 1 # scale me
-
-chains:
-  mainnet:
-    enabled: false
-    shard: primary
-    provider:
-      - label: eth-mainnet
-        url: http://proxyd-eth-mainnet-proxyd.eth-mainnet:8545
-        features: [archive, traces]
-
-  # Uncomment if you have deployed gnosis-mainnet and want to index Gnosis subgraphs
-  # gnosis:
-  #   enabled: false
-  #   shard: primary
-  #   provider:
-  #     - label: gnosis-mainnet
-  #       url: http://proxyd-gnosis-mainnet-proxyd.gnosis-mainnet:8545
-  #       features: [archive, traces]
