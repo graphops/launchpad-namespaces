@@ -49,7 +49,7 @@
     "launchpad_starter": {
       "string": "*Launchpad Starter*",
       "url": "https://github.com/graphops/launchpad-starter",
-      "link": "[~~*Launchpad Starter*~~ support for *Namespaces* will be available soon](https://github.com/graphops/launchpad-starter)"
+      "link": "[*Launchpad Starter*](https://github.com/graphops/launchpad-starter)"
     },
     "discord": {
       "string": "Discord (*The Graph*)",
