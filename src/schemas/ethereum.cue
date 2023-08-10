@@ -65,7 +65,7 @@ package LaunchpadNamespaces
 		releases: {
 			erigon: {
 				chart: {_repositories.graphops.charts.erigon}
-				_template: {version: "0.6.1-canary.3"}
+				_template: {version: "0.7.0"}
 			}
 
 			nimbus: {

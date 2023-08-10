@@ -103,7 +103,7 @@ templates:
   
   erigon:
     chart: graphops/erigon
-    version: 0.6.1-canary.3
+    version: 0.7.0
     inherit:
       - template: defaults
   
