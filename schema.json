@@ -2339,13 +2339,24 @@
                 "type": "object"
             },
             "namespaces.graph.flavor.enum": {
-                "$ref": "#/components/schemas/namespaces.graph.flavor.goerli"
+                "type": "string",
+                "enum": [
+                    "goerli",
+                    "mainnet"
+                ]
             },
             "namespaces.graph.flavor.goerli": {
-                "description": "suitable defaults for a mainnet archive node",
+                "description": "suitable defaults for a goerli indexer",
                 "type": "string",
                 "enum": [
                     "goerli"
+                ]
+            },
+            "namespaces.graph.flavor.mainnet": {
+                "description": "suitable defaults for a mainnet indexer",
+                "type": "string",
+                "enum": [
+                    "mainnet"
                 ]
             },
             "namespaces.graph.helmfiles": {
@@ -2388,7 +2399,7 @@
                     "targetNamespace": {
                         "description": "the default is graph-<flavor>",
                         "type": "string",
-                        "default": "graph-goerli"
+                        "default": "graph-mainnet"
                     },
                     "flavor": {
                         "$ref": "#/components/schemas/namespaces.graph.flavor.enum"

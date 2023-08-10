@@ -64,7 +64,7 @@ kubeVersion: {{ .Values.kubeVersion }}
 
 #set default flavor when missing
 {{ if not ( hasKey .Values "flavor" ) }}
-{{ $_ := set .Values "flavor" "goerli" }}
+{{ $_ := set .Values "flavor" "mainnet" }}
 {{ end }}
 
 

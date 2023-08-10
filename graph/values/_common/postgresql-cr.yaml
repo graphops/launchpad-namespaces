@@ -19,7 +19,7 @@ resources:
       databases:
         graph: graph
       postgresql:
-        version: "14"
+        version: "15"
         parameters: {}
       volume:
         size: 500Gi
@@ -53,7 +53,7 @@ resources:
       databases:
         indexer: indexer
       postgresql:
-        version: "14"
+        version: "15"
         parameters: {}
       volume:
         size: 20Gi

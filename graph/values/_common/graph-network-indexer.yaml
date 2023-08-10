@@ -2,14 +2,10 @@
 
 indexerDefaults:
   config:
-    ethereum: "http://proxyd-eth-goerli-proxyd.eth-goerli:8545"
-    ethereum-network: "goerli"
-    indexer-address: "XXX_CHANGEME_XXX"
     graph-node-query-endpoint: "http://graph-node-query:8000"
     graph-node-status-endpoint: "http://graph-node-index:8030/graphql"
     postgres-host: "pg-indexer-metadata"
     postgres-database: "indexer"
-    network-subgraph-endpoint: "https://gateway.testnet.thegraph.com/network"
 
   env: {}
   secretEnv: {}
@@ -19,10 +15,6 @@ indexerAgent:
     graph-node-admin-endpoint: "http://graph-node-index:8020"
     public-indexer-url: "XXX_CHANGEME_XXX"
     index-node-ids: "graph-node-index-0" # TODO this should be removed as a requirement, in the mean time it should be a comma delimited list of index node ids
-    collect-receipts-endpoint: "https://gateway.testnet.thegraph.com/collect-receipts"
-    network-subgraph-deployment: "XXX_CHANGEME_XXX" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
-    dai-contract: "XXX_CHANGEME_XXX" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
-    epoch-subgraph-endpoint: "XXX_CHANGEME_XXX" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
 
   env: {}
 
@@ -40,8 +32,6 @@ indexerAgent:
 
 indexerService:
   replicaCount: 1 # scale me
-  config:
-    client-signer-address: "XXX_CHANGEME_XXX" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
 
   env: {}
 
