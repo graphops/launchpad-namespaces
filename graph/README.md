@@ -8,10 +8,14 @@ in the Graph Protocol Network
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Releases
+- [graph-database](https://github.com/graphops/launchpad-charts/tree/main/charts/resource-injector)<br>
+Manage Raw Kubernetes Resources using Helm
 - [graph-network-indexer](https://github.com/graphprotocol/indexer)<br>
 Graph protocol indexer components
 - [graph-node](https://github.com/graphprotocol/graph-node)<br>
 Graph Node is an open source Rust implementation that event sources the Ethereum blockchain to deterministically update a data store that can be queried via the GraphQL endpoint.
+- [graph-operator-mnemonic](https://github.com/graphops/launchpad-charts/tree/main/charts/resource-injector)<br>
+Manage Raw Kubernetes Resources using Helm
 - [graph-toolbox](https://github.com/graphops/docker-builds/tree/main/dockerfiles/graph-toolbox)<br>
 Utility kit for interacting and managing the Graph indexer stack.
 
@@ -111,12 +115,18 @@ helmfiles:
 | :--- | :---: | :--- | :--- |
 annotations | object |  | Add annotations to releases on this namespace |
 flavor | string |  |  |
+graph&#8209;database | object |  |  |
+graph&#8209;database.mergeValues | boolean | true |  |
+graph&#8209;database.values | (object *or* list of objects) |  |  |
 graph&#8209;network&#8209;indexer | object |  |  |
 graph&#8209;network&#8209;indexer.mergeValues | boolean | true |  |
 graph&#8209;network&#8209;indexer.values | (object *or* list of objects) |  |  |
 graph&#8209;node | object |  |  |
 graph&#8209;node.mergeValues | boolean | true |  |
 graph&#8209;node.values | (object *or* list of objects) |  |  |
+graph&#8209;operator&#8209;mnemonic | object |  |  |
+graph&#8209;operator&#8209;mnemonic.mergeValues | boolean | true |  |
+graph&#8209;operator&#8209;mnemonic.values | (object *or* list of objects) |  |  |
 graph&#8209;toolbox | object |  |  |
 graph&#8209;toolbox.mergeValues | boolean | true |  |
 graph&#8209;toolbox.values | (object *or* list of objects) |  |  |

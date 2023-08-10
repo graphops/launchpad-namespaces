@@ -112,6 +112,18 @@ templates:
     inherit:
       - template: defaults
   
+  graph-operator-mnemonic:
+    chart: graphops/resource-injector
+    version: 0.2.0
+    inherit:
+      - template: defaults
+  
+  graph-database:
+    chart: graphops/resource-injector
+    version: 0.2.0
+    inherit:
+      - template: defaults
+  
 releases:
   {{- $release := "graph-node" }}
   - name: 'graph-node'
@@ -129,5 +141,17 @@ releases:
   - name: 'graph-toolbox'
     inherit:
     - template: 'graph-toolbox'
+    values:
+    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
+  {{- $release := "graph-operator-mnemonic" }}
+  - name: 'graph-operator-mnemonic'
+    inherit:
+    - template: 'graph-operator-mnemonic'
+    values:
+    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
+  {{- $release := "graph-database" }}
+  - name: 'graph-database'
+    inherit:
+    - template: 'graph-database'
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}

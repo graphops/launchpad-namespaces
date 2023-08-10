@@ -2178,7 +2178,9 @@
                         "required": [
                             "graph-node",
                             "graph-network-indexer",
-                            "graph-toolbox"
+                            "graph-toolbox",
+                            "graph-operator-mnemonic",
+                            "graph-database"
                         ],
                         "properties": {
                             "graph-node": {
@@ -2309,6 +2311,92 @@
                                         }
                                     }
                                 }
+                            },
+                            "graph-operator-mnemonic": {
+                                "type": "object",
+                                "required": [
+                                    "chart"
+                                ],
+                                "properties": {
+                                    "chart": {
+                                        "type": "object",
+                                        "required": [
+                                            "url",
+                                            "repository",
+                                            "description",
+                                            "name"
+                                        ],
+                                        "properties": {
+                                            "url": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "https://github.com/graphops/launchpad-charts/tree/main/charts/resource-injector"
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "Manage Raw Kubernetes Resources using Helm"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "resource-injector"
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "graph-database": {
+                                "type": "object",
+                                "required": [
+                                    "chart"
+                                ],
+                                "properties": {
+                                    "chart": {
+                                        "type": "object",
+                                        "required": [
+                                            "url",
+                                            "repository",
+                                            "description",
+                                            "name"
+                                        ],
+                                        "properties": {
+                                            "url": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "https://github.com/graphops/launchpad-charts/tree/main/charts/resource-injector"
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "Manage Raw Kubernetes Resources using Helm"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "resource-injector"
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     },
@@ -2411,6 +2499,12 @@
                         "$ref": "#/components/schemas/namespaces.graph.values.releaseValues"
                     },
                     "graph-toolbox": {
+                        "$ref": "#/components/schemas/namespaces.graph.values.releaseValues"
+                    },
+                    "graph-operator-mnemonic": {
+                        "$ref": "#/components/schemas/namespaces.graph.values.releaseValues"
+                    },
+                    "graph-database": {
                         "$ref": "#/components/schemas/namespaces.graph.values.releaseValues"
                     }
                 },

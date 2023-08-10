@@ -202,10 +202,14 @@ Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by
 This *Namespace* provides the necessary software to run a Graph Node and participate
 in the Graph Protocol Network
 
+- [graph-database](https://github.com/graphops/launchpad-charts/tree/main/charts/resource-injector)<br>
+Manage Raw Kubernetes Resources using Helm
 - [graph-network-indexer](https://github.com/graphprotocol/indexer)<br>
 Graph protocol indexer components
 - [graph-node](https://github.com/graphprotocol/graph-node)<br>
 Graph Node is an open source Rust implementation that event sources the Ethereum blockchain to deterministically update a data store that can be queried via the GraphQL endpoint.
+- [graph-operator-mnemonic](https://github.com/graphops/launchpad-charts/tree/main/charts/resource-injector)<br>
+Manage Raw Kubernetes Resources using Helm
 - [graph-toolbox](https://github.com/graphops/docker-builds/tree/main/dockerfiles/graph-toolbox)<br>
 Utility kit for interacting and managing the Graph indexer stack.
 ### [:ingress](/ingress)
