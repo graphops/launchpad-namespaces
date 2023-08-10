@@ -1,7 +1,7 @@
 {%- import "utils.tera" as utils -%}
 {%- macro namespacesQuickStart(namespace) -%}
 > **Note**
-> {{ const.refs.launchpad_starter.link }} is a great way to make use of *Namespaces* and worth checking out
+> {{ const.refs.launchpad_starter.link }} is a great way to make use of *Namespaces* and worth checking out as a starting point for every new *Launchpad* deployment.
 
 To use *Namespaces* you will require both a {{ const.soft.kubernetes.link }} cluster and {{ const.soft.helmfile.link }}.
 As such:
