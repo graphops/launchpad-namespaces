@@ -53,12 +53,12 @@ package LaunchpadNamespaces
 		releases: {
 			"graph-node": {
 				chart: {_repositories.graphops.charts["graph-node"]}
-				_template: {version: "0.1.6-canary.1"}
+				_template: {version: "0.2.0"}
 			}
 
 			"graph-network-indexer": {
 				chart: {_repositories.graphops.charts["graph-network-indexer"]}
-				_template: {version: "0.1.2"}
+				_template: {version: "0.2.0"}
 			}
 
 			"graph-toolbox": {
