@@ -110,7 +110,7 @@ templates:
   
   openebs-rawfile-localpv:
     chart: graphops/openebs-rawfile-localpv
-    version: 0.8.1-canary.1
+    version: 0.8.1
     inherit:
       - template: defaults
   
