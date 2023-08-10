@@ -65,6 +65,16 @@ package LaunchpadNamespaces
 				chart: {_repositories.graphops.charts["graph-toolbox"]}
 				_template: {version: "0.1.0"}
 			}
+
+			"graph-operator-mnemonic": {
+				chart: {_repositories.graphops.charts["resource-injector"]}
+				_template: {version: "0.2.0"}
+			}
+
+			"graph-database": {
+				chart: {_repositories.graphops.charts["resource-injector"]}
+				_template: {version: "0.2.0"}
+			}
 		}
 
 		labels: {
