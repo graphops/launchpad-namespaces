@@ -105,7 +105,7 @@ templates:
   
   kube-prometheus-stack:
     chart: prometheus-community/kube-prometheus-stack
-    version: 48.3.1
+    version: 48.4.0
     inherit:
       - template: defaults
     disableValidationOnInstall: true
@@ -118,13 +118,13 @@ templates:
   
   loki:
     chart: grafana/loki-distributed
-    version: 0.71.1
+    version: 0.71.2
     inherit:
       - template: defaults
   
   promtail:
     chart: grafana/promtail
-    version: 6.14.1
+    version: 6.15.0
     inherit:
       - template: defaults
   
