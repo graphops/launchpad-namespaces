@@ -69,9 +69,11 @@ kubeVersion: {{ .Values.kubeVersion }}
 
 commonLabels:
   launchpad.graphops.xyz/namespace: sealed-secrets
+  launchpad.graphops.xyz/layer: base
 
 {{ $_labels := dict 
   `launchpad.graphops.xyz/namespace` `sealed-secrets`
+  `launchpad.graphops.xyz/layer` `base`
 }}
 repositories:
   - name: sealed-secrets
