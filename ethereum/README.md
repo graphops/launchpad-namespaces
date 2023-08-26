@@ -109,6 +109,7 @@ helmfiles:
 | Key | Type | Default | Description |
 | :--- | :---: | :--- | :--- |
 annotations | object |  | Add annotations to releases on this namespace |
+deployments | integer | 1 |  |
 erigon | object |  |  |
 erigon.annotations | object |  | Add annotations to resources on this release |
 erigon.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |

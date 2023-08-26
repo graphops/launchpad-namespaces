@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"encoding/yaml"
 	"strings"
+	"list"
 )
 
 command: {
@@ -275,8 +276,23 @@ _helmfile: {
 	}
 
 	_#release: {
-		this=_release: string
-		out:           """
+		this=_release:            string
+		dIndex=_deploymentIndex:  *0 | int
+		deployments=_deployments: int
+		if dIndex > 0 {
+			out: """
+			{{- $release := "\(this)" }}
+			- name: '\(this)-\(dIndex)'
+			  inherit:
+			  - template: '\(this)'
+			  values:
+			  {{- (dict "deploymentIndex" "\(dIndex)" "deployments" "\(deployments)") | indent 4 -}}
+			  {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
+			  {{- tpl $_tplReleaseValues (dict "Values" .Values "release" "\(this)-\(dIndex)")  | indent 4 -}}
+			"""
+		}
+		if dIndex <= 0 {
+			out: """
 			{{- $release := "\(this)" }}
 			- name: '\(this)'
 			  inherit:
@@ -284,16 +300,36 @@ _helmfile: {
 			  values:
 			  {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
 			"""
+		}
 	}
 
 	_#releases: {
 		this=_namespace: string
 		_blocks: {}
 		for releaseName, release in _namespaces[this].releases if release.feature == _|_ {
-			temp = "_\(releaseName)": _#release & {_release: releaseName}
-			_blocks: {
-				_
-				"\(releaseName)": temp.out
+			if _namespaces[this].values.deployments != _|_ {if release._scale {
+				_deployments: list.Range(1, (_namespaces[this].values.deployments + 1), 1)
+				for d in _deployments {
+					temp = "_\(releaseName)-\(d)": _#release & {_release: releaseName, _deploymentIndex: d, _deployments: _namespaces[this].values.deployments}
+					_blocks: {
+						_
+						"\(releaseName)-\(d)": temp.out
+					}
+				}
+			}}
+			if _namespaces[this].values.deployments != _|_ {if release._scale == false {
+				temp = "_\(releaseName)": _#release & {_release: releaseName}
+				_blocks: {
+					_
+					"\(releaseName)": temp.out
+				}
+			}}
+			if _namespaces[this].values.deployments == _|_ {
+				temp = "_\(releaseName)": _#release & {_release: releaseName}
+				_blocks: {
+					_
+					"\(releaseName)": temp.out
+				}
 			}
 		}
 		for releaseName, release in _namespaces[this].releases if release.feature != _|_ {

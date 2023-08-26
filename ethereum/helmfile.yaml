@@ -144,12 +144,6 @@ templates:
     version: "0.3.4-canary.4"
     {{- end }}
 releases:
-  {{- $release := "erigon" }}
-  - name: 'erigon'
-    inherit:
-    - template: 'erigon'
-    values:
-    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{ if has "nimbus" ( .Values | get "features" list ) }}
   {{- $release := "nimbus" }}
   - name: 'nimbus'
@@ -166,3 +160,11 @@ releases:
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- end -}}
+  {{- $release := "erigon" }}
+  - name: 'erigon-1'
+    inherit:
+    - template: 'erigon'
+    values:
+    {{- (dict "deploymentIndex" "1" "deployments" "1") | indent 4 -}}
+    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
+    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" "erigon-1")  | indent 4 -}}

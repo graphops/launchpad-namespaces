@@ -44,10 +44,19 @@ package LaunchpadNamespaces
 
 			flavor?: *"mainnet" | #flavor.#enum
 
+			deployments: *1 | int
+
 			// For overriding this release's values
 			for key, _ in releases {
 				// For overriding this release's values
 				(key)?: #base.#releaseValues
+			}
+
+			[string & =~"^d[0-9]+$"]: {
+				for key, _ in releases {
+					// For overriding this release's values
+					(key)?: #base.#releaseValues
+				}
 			}
 		}
 
