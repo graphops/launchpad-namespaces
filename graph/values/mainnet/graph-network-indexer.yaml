@@ -2,7 +2,7 @@
 
 indexerDefaults:
   config:
-    ethereum: "http://proxyd-eth-mainnet-proxyd.eth-mainnet:8545"
+    ethereum: "http://proxyd-proxyd.eth-mainnet:8545"
     ethereum-network: "mainnet"
     network-subgraph-endpoint: "https://gateway.thegraph.com/network"
 
