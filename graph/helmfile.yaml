@@ -96,13 +96,13 @@ templates:
   
   graph-node:
     chart: graphops/graph-node
-    version: 0.2.0
+    version: 0.2.1
     inherit:
       - template: defaults
   
   graph-network-indexer:
     chart: graphops/graph-network-indexer
-    version: 0.2.0
+    version: 0.2.1
     inherit:
       - template: defaults
   
