@@ -6,7 +6,7 @@ chains:
     shard: primary
     provider:
       - label: eth-mainnet
-        url: http://proxyd-eth-mainnet-proxyd.eth-mainnet:8545
+        url: http://proxyd-proxyd.eth-mainnet:8545
         features: [archive, traces]
 
   goerli:
@@ -14,7 +14,7 @@ chains:
     shard: primary
     provider:
       - label: eth-goerli
-        url: http://proxyd-eth-goerli-proxyd.eth-goerli:8545
+        url: http://proxyd-proxyd.eth-goerli:8545
         features: [archive, traces]
 
   # Uncomment if you have deployed gnosis-mainnet and want to index Gnosis subgraphs
