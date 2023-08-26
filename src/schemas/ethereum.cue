@@ -71,7 +71,7 @@ package LaunchpadNamespaces
 			nimbus: {
 				chart: {_repositories.graphops.charts.nimbus}
 				feature: #features.#nimbus
-				_template: {version: "0.4.0"}
+				_template: {version: "0.4.1"}
 			}
 
 			proxyd: {
