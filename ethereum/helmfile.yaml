@@ -115,7 +115,7 @@ templates:
   
   proxyd:
     chart: graphops/proxyd
-    version: 0.3.1
+    version: 0.3.2
     inherit:
       - template: defaults
   
