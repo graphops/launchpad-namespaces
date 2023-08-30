@@ -1,4 +1,6 @@
 statefulNode:
+  extraArgs:
+    - --http.api=eth,debug,net,trace
   volumeClaimSpec:
     resources:
       requests:
