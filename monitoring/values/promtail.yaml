@@ -2,3 +2,6 @@ config:
   lokiAddress: http://loki-loki-distributed-gateway/loki/api/v1/push
   clients:
     - url: http://loki-loki-distributed-gateway/loki/api/v1/push
+containerSecurityContext:
+  privileged: true
+  allowPrivilegeEscalation: true
