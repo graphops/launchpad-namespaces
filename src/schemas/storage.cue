@@ -54,7 +54,7 @@ package LaunchpadNamespaces
 		releases: {
 			"openebs": {
 				chart: {_repositories.openebs.charts.openebs}
-				_template: {version: "3.8.0"}
+				_template: {version: "3.9.0"}
 			}
 			"openebs-rawfile-localpv": {
 				chart: {_repositories.graphops.charts["openebs-rawfile-localpv"]}
@@ -69,7 +69,7 @@ package LaunchpadNamespaces
 			"openebs-zfs-localpv": {
 				chart: {_repositories["openebs-zfs-localpv"].charts["zfs-localpv"]}
 				feature: #features.#zfs
-				_template: {version: "2.3.0"}
+				_template: {version: "2.3.1"}
 			}
 			"openebs-zfs-storageclass": {
 				chart: {_repositories.graphops.charts["resource-injector"]}
