@@ -65,13 +65,13 @@ package LaunchpadNamespaces
 		releases: {
 			erigon: {
 				chart: {_repositories.graphops.charts.erigon}
-				_template: {version: "0.8.0"}
+				_template: {version: "0.8.1"}
 			}
 
 			nimbus: {
 				chart: {_repositories.graphops.charts.nimbus}
 				feature: #features.#nimbus
-				_template: {version: "0.5.0"}
+				_template: {version: "0.5.1"}
 			}
 
 			proxyd: {

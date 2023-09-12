@@ -103,13 +103,13 @@ templates:
   
   erigon:
     chart: graphops/erigon
-    version: 0.8.0
+    version: 0.8.1
     inherit:
       - template: defaults
   
   nimbus:
     chart: graphops/nimbus
-    version: 0.5.0
+    version: 0.5.1
     inherit:
       - template: defaults
   
