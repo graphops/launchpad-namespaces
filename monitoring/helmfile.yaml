@@ -105,26 +105,26 @@ templates:
   
   kube-prometheus-stack:
     chart: prometheus-community/kube-prometheus-stack
-    version: 48.4.0
+    version: 51.0.2
     inherit:
       - template: defaults
     disableValidationOnInstall: true
   
   node-problem-detector:
     chart: deliveryhero/node-problem-detector
-    version: 2.3.5
+    version: 2.3.10
     inherit:
       - template: defaults
   
   loki:
     chart: grafana/loki-distributed
-    version: 0.71.2
+    version: 0.74.1
     inherit:
       - template: defaults
   
   promtail:
     chart: grafana/promtail
-    version: 6.15.0
+    version: 6.15.1
     inherit:
       - template: defaults
   
