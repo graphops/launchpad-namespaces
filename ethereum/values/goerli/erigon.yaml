@@ -6,4 +6,4 @@ statefulNode:
   volumeClaimSpec:
     resources:
       requests:
-        storage: 500Gi
+        storage: 1Ti
