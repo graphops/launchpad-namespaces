@@ -9,7 +9,7 @@ indexerDefaults:
 indexerAgent:
   config:
     collect-receipts-endpoint: "https://gateway.network.thegraph.com/collect-receipts"
-    network-subgraph-deployment: "QmU7zqJyHSyUP3yFii8sBtHT8FaJn2WmUnRvwjAUTjwMBP" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
+    network-subgraph-deployment: "QmfVipKy3sKva3vYQW8vesh5xPirEPyoKybPY5pfLGcjSS" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
     dai-contract: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
     epoch-subgraph-endpoint: "https://api.thegraph.com/subgraphs/name/graphprotocol/mainnet-epoch-block-oracle" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
 
