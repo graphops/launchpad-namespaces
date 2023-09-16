@@ -103,19 +103,19 @@ templates:
   
   erigon:
     chart: graphops/erigon
-    version: 0.8.1
+    version: 0.8.2
     inherit:
       - template: defaults
   
   nimbus:
     chart: graphops/nimbus
-    version: 0.5.1
+    version: 0.5.2
     inherit:
       - template: defaults
   
   proxyd:
     chart: graphops/proxyd
-    version: 0.3.2
+    version: 0.3.3
     inherit:
       - template: defaults
   
