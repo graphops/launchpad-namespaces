@@ -35,7 +35,7 @@ package LaunchpadNamespaces
 		releases: {
 			"sealed-secrets": {
 				chart: {_repositories["sealed-secrets"].charts["sealed-secrets"]}
-				_template: {version: "2.12.0"}
+				_template: {version: "2.13.0"}
 			}
 		}
 
