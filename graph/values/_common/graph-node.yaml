@@ -24,3 +24,11 @@ graphNodeGroups:
     replicaCount: 1 # scale me
   query:
     replicaCount: 1 # scale me
+
+prometheus:
+  serviceMonitors:
+    enabled: true
+
+grafana:
+  dashboards: true
+  datasources: true
