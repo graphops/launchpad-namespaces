@@ -70,18 +70,21 @@ package LaunchpadNamespaces
 			erigon: {
 				chart: {_repositories.graphops.charts.erigon}
 				_template: {version: "0.8.2"}
+				_scale: true
 			}
 
 			nimbus: {
 				chart: {_repositories.graphops.charts.nimbus}
 				feature: #features.#nimbus
 				_template: {version: "0.5.2"}
+				_scale: true
 			}
 
 			proxyd: {
 				chart: {_repositories.graphops.charts.proxyd}
 				feature: #features.#proxyd
 				_template: {version: "0.3.4-canary.4"}
+				_scale: false
 			}
 		}
 

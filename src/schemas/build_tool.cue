@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"encoding/yaml"
 	"strings"
-	"list"
 )
 
 command: {
@@ -276,70 +275,80 @@ _helmfile: {
 	}
 
 	_#release: {
-		this=_release:            string
-		dIndex=_deploymentIndex:  *0 | int
-		deployments=_deployments: int
-		if dIndex > 0 {
-			out: """
+		this=_release: string
+		scale=_scale:  *false | bool
+
+		_blocks: {
+			release: """
+				- name: "{{ $release }}"
+				  inherit:
+				  - template: "{{ $canonicalRelease }}"
+				  values:
+				  {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
+				"""
+
+			if scale {
+				header: """
+				{{- $canonicalRelease := "\(this)" }}
+				{{- range $index := until .Values.deployments }}
+				{{- $deploymentIndex := (add . 1) }}
+				{{- $release := (printf "%s%v" "\(this)-" $deploymentIndex) }}
+				"""
+				end: """
+					{{- end -}}
+					"""
+			}
+
+			if !scale {
+				header: """
+			{{- $canonicalRelease := "\(this)" }}
 			{{- $release := "\(this)" }}
-			- name: '\(this)-\(dIndex)'
-			  inherit:
-			  - template: '\(this)'
-			  values:
-			  {{- (dict "deploymentIndex" "\(dIndex)" "deployments" "\(deployments)") | indent 4 -}}
-			  {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
-			  {{- tpl $_tplReleaseValues (dict "Values" .Values "release" "\(this)-\(dIndex)")  | indent 4 -}}
 			"""
+				end:    ""
+			}
 		}
-		if dIndex <= 0 {
-			out: """
-			{{- $release := "\(this)" }}
-			- name: '\(this)'
-			  inherit:
-			  - template: '\(this)'
-			  values:
-			  {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
-			"""
-		}
+
+		out: strings.Join([_blocks.header, _blocks.release, _blocks.end], "\n")
 	}
 
 	_#releases: {
 		this=_namespace: string
+
 		_blocks: {}
-		for releaseName, release in _namespaces[this].releases if release.feature == _|_ {
+
+		for releaseName, release in _namespaces[this].releases {
+			_props: {"\(releaseName)": {#properties: {
+				...
+				_release: releaseName
+			}}}
 			if _namespaces[this].values.deployments != _|_ {if release._scale {
-				_deployments: list.Range(1, (_namespaces[this].values.deployments + 1), 1)
-				for d in _deployments {
-					temp = "_\(releaseName)-\(d)": _#release & {_release: releaseName, _deploymentIndex: d, _deployments: _namespaces[this].values.deployments}
-					_blocks: {
-						_
-						"\(releaseName)-\(d)": temp.out
-					}
-				}
+				_props: {"\(releaseName)": {#properties: {
+					...
+					_scale: true
+				}}}
 			}}
-			if _namespaces[this].values.deployments != _|_ {if release._scale == false {
-				temp = "_\(releaseName)": _#release & {_release: releaseName}
-				_blocks: {
-					_
-					"\(releaseName)": temp.out
-				}
-			}}
-			if _namespaces[this].values.deployments == _|_ {
-				temp = "_\(releaseName)": _#release & {_release: releaseName}
+
+			temp = "_\(releaseName)": _#release & {
+				...
+				_props["\(releaseName)"].#properties
+			}
+
+			if release.feature == _|_ {
 				_blocks: {
 					_
 					"\(releaseName)": temp.out
 				}
 			}
-		}
-		for releaseName, release in _namespaces[this].releases if release.feature != _|_ {
-			temp = "_\(releaseName)": _#release & {_release: releaseName}
-			_blocks: {
-				"_\(releaseName)": strings.Join([
-							"{{ if has \"\(release.feature)\" ( .Values | get \"features\" list ) }}",
-							temp.out,
-							"{{- end -}}",
-				], "\n")
+
+			if release.feature != _|_ {
+				_blocks: {
+					"\(releaseName)": strings.Join([
+								"{{ if has \"\(release.feature)\" ( .Values | get \"features\" list ) }}",
+								temp.out,
+								"{{- end -}}",
+					], "\n")
+				}
+
 			}
 		}
 
@@ -390,10 +399,20 @@ _templateBlocks: {
 		{{- $_tplReleaseValues := (print `
 		{{- if ( .Values | get .release dict | get "mergeValues" true ) -}}
 		{{- if ( hasKey .Values "flavor" ) }}
-		- ./values/_common/{{` "`{{ .Release.Name }}`" `}}.yaml
-		- ./values/{{ .Values.flavor }}/{{` "`{{ .Release.Name }}`" `}}.yaml
+		- ./values/_common/{{ .canonicalRelease }}.yaml
+		- ./values/_common/{{ .canonicalRelease }}.yaml.gotmpl
+		- ./values/{{ .Values.flavor }}/{{ .canonicalRelease }}.yaml
+		- ./values/{{ .Values.flavor }}/{{ .canonicalRelease }}.yaml.gotmpl
 		{{- else }}
-		- ./values/{{` "`{{ .Release.Name }}`" `}}.yaml
+		- ./values/{{ .canonicalRelease }}.yaml
+		- ./values/{{ .canonicalRelease }}.yaml.gotmpl
+		{{- end -}}
+		{{- if typeIs ( typeOf list ) ( .Values | get .canonicalRelease dict | get "values" dict ) -}}
+		 {{- range $element := ( .Values | get .canonicalRelease dict | get "values" dict ) }}
+		- {{- $element | toYaml | nindent 2 }}
+		 {{- end -}}
+		{{- else }}
+		- {{- .Values | get .canonicalRelease dict | get "values" dict | toYaml | nindent 2 }}
 		{{- end -}}
 		{{- end -}}
 		{{- if typeIs ( typeOf list ) ( .Values | get .release dict | get "values" dict ) -}}
@@ -404,6 +423,5 @@ _templateBlocks: {
 		- {{- .Values | get .release dict | get "values" dict | toYaml | nindent 2 }}
 		{{- end -}}
 		`) -}}
-
 		"""
 }

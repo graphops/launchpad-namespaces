@@ -34,10 +34,20 @@ transformers:
 {{- $_tplReleaseValues := (print `
 {{- if ( .Values | get .release dict | get "mergeValues" true ) -}}
 {{- if ( hasKey .Values "flavor" ) }}
-- ./values/_common/{{` "`{{ .Release.Name }}`" `}}.yaml
-- ./values/{{ .Values.flavor }}/{{` "`{{ .Release.Name }}`" `}}.yaml
+- ./values/_common/{{ .canonicalRelease }}.yaml
+- ./values/_common/{{ .canonicalRelease }}.yaml.gotmpl
+- ./values/{{ .Values.flavor }}/{{ .canonicalRelease }}.yaml
+- ./values/{{ .Values.flavor }}/{{ .canonicalRelease }}.yaml.gotmpl
 {{- else }}
-- ./values/{{` "`{{ .Release.Name }}`" `}}.yaml
+- ./values/{{ .canonicalRelease }}.yaml
+- ./values/{{ .canonicalRelease }}.yaml.gotmpl
+{{- end -}}
+{{- if typeIs ( typeOf list ) ( .Values | get .canonicalRelease dict | get "values" dict ) -}}
+ {{- range $element := ( .Values | get .canonicalRelease dict | get "values" dict ) }}
+- {{- $element | toYaml | nindent 2 }}
+ {{- end -}}
+{{- else }}
+- {{- .Values | get .canonicalRelease dict | get "values" dict | toYaml | nindent 2 }}
 {{- end -}}
 {{- end -}}
 {{- if typeIs ( typeOf list ) ( .Values | get .release dict | get "values" dict ) -}}
@@ -48,7 +58,6 @@ transformers:
 - {{- .Values | get .release dict | get "values" dict | toYaml | nindent 2 }}
 {{- end -}}
 `) -}}
-
 {{ $__helmDefaults := `{"recreatePods":true}` | fromJson }}
 
 {{ with ( .Values | get "helmDefaults" dict ) }}
@@ -147,26 +156,32 @@ templates:
     {{- end }}
 releases:
   {{ if has "ingress" ( .Values | get "features" list ) }}
+  {{- $canonicalRelease := "ingress-nginx" }}
   {{- $release := "ingress-nginx" }}
-  - name: 'ingress-nginx'
+  - name: "{{ $release }}"
     inherit:
-    - template: 'ingress-nginx'
+    - template: "{{ $canonicalRelease }}"
     values:
-    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
+    {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
+  
   {{- end -}}
   {{ if has "cert-manager" ( .Values | get "features" list ) }}
+  {{- $canonicalRelease := "cert-manager" }}
   {{- $release := "cert-manager" }}
-  - name: 'cert-manager'
+  - name: "{{ $release }}"
     inherit:
-    - template: 'cert-manager'
+    - template: "{{ $canonicalRelease }}"
     values:
-    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
+    {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
+  
   {{- end -}}
   {{ if has "cert-manager" ( .Values | get "features" list ) }}
+  {{- $canonicalRelease := "cert-manager-resources" }}
   {{- $release := "cert-manager-resources" }}
-  - name: 'cert-manager-resources'
+  - name: "{{ $release }}"
     inherit:
-    - template: 'cert-manager-resources'
+    - template: "{{ $canonicalRelease }}"
     values:
-    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
+    {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
+  
   {{- end -}}

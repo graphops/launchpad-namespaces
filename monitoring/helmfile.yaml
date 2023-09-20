@@ -34,10 +34,20 @@ transformers:
 {{- $_tplReleaseValues := (print `
 {{- if ( .Values | get .release dict | get "mergeValues" true ) -}}
 {{- if ( hasKey .Values "flavor" ) }}
-- ./values/_common/{{` "`{{ .Release.Name }}`" `}}.yaml
-- ./values/{{ .Values.flavor }}/{{` "`{{ .Release.Name }}`" `}}.yaml
+- ./values/_common/{{ .canonicalRelease }}.yaml
+- ./values/_common/{{ .canonicalRelease }}.yaml.gotmpl
+- ./values/{{ .Values.flavor }}/{{ .canonicalRelease }}.yaml
+- ./values/{{ .Values.flavor }}/{{ .canonicalRelease }}.yaml.gotmpl
 {{- else }}
-- ./values/{{` "`{{ .Release.Name }}`" `}}.yaml
+- ./values/{{ .canonicalRelease }}.yaml
+- ./values/{{ .canonicalRelease }}.yaml.gotmpl
+{{- end -}}
+{{- if typeIs ( typeOf list ) ( .Values | get .canonicalRelease dict | get "values" dict ) -}}
+ {{- range $element := ( .Values | get .canonicalRelease dict | get "values" dict ) }}
+- {{- $element | toYaml | nindent 2 }}
+ {{- end -}}
+{{- else }}
+- {{- .Values | get .canonicalRelease dict | get "values" dict | toYaml | nindent 2 }}
 {{- end -}}
 {{- end -}}
 {{- if typeIs ( typeOf list ) ( .Values | get .release dict | get "values" dict ) -}}
@@ -48,7 +58,6 @@ transformers:
 - {{- .Values | get .release dict | get "values" dict | toYaml | nindent 2 }}
 {{- end -}}
 `) -}}
-
 {{ $__helmDefaults := `{"recreatePods":true}` | fromJson }}
 
 {{ with ( .Values | get "helmDefaults" dict ) }}
@@ -161,34 +170,42 @@ templates:
     {{- end }}
 releases:
   {{ if has "metrics" ( .Values | get "features" list ) }}
+  {{- $canonicalRelease := "kube-prometheus-stack" }}
   {{- $release := "kube-prometheus-stack" }}
-  - name: 'kube-prometheus-stack'
+  - name: "{{ $release }}"
     inherit:
-    - template: 'kube-prometheus-stack'
+    - template: "{{ $canonicalRelease }}"
     values:
-    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
+    {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
+  
   {{- end -}}
   {{ if has "metrics" ( .Values | get "features" list ) }}
+  {{- $canonicalRelease := "node-problem-detector" }}
   {{- $release := "node-problem-detector" }}
-  - name: 'node-problem-detector'
+  - name: "{{ $release }}"
     inherit:
-    - template: 'node-problem-detector'
+    - template: "{{ $canonicalRelease }}"
     values:
-    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
+    {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
+  
   {{- end -}}
   {{ if has "logs" ( .Values | get "features" list ) }}
+  {{- $canonicalRelease := "loki" }}
   {{- $release := "loki" }}
-  - name: 'loki'
+  - name: "{{ $release }}"
     inherit:
-    - template: 'loki'
+    - template: "{{ $canonicalRelease }}"
     values:
-    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
+    {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
+  
   {{- end -}}
   {{ if has "logs" ( .Values | get "features" list ) }}
+  {{- $canonicalRelease := "promtail" }}
   {{- $release := "promtail" }}
-  - name: 'promtail'
+  - name: "{{ $release }}"
     inherit:
-    - template: 'promtail'
+    - template: "{{ $canonicalRelease }}"
     values:
-    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
+    {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
+  
   {{- end -}}
