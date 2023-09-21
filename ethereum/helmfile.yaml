@@ -115,7 +115,7 @@ templates:
   
   proxyd:
     chart: graphops/proxyd
-    version: 0.3.3
+    version: 0.3.4-canary.4
     inherit:
       - template: defaults
   
