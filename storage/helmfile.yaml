@@ -143,11 +143,11 @@ releases:
   - name: 'openebs'
     inherit:
     - template: 'openebs'
-    {{- if ( .Values | get $release dict | get "chart" false ) }}
-    chart: {{ .Values | get $release | get "chart" }}
+    {{- if ( .Values | get $release dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get $release | get "chartUrl" }}
     {{- end }}
-    {{- if ( .Values | get $release dict | get "version" false ) }}
-    version: {{ .Values | get $release | get "version" }}
+    {{- if ( .Values | get $release dict | get "chartVersion" false ) }}
+    version: {{ .Values | get $release | get "chartVersion" }}
     {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
@@ -156,11 +156,11 @@ releases:
   - name: 'openebs-rawfile-localpv'
     inherit:
     - template: 'openebs-rawfile-localpv'
-    {{- if ( .Values | get $release dict | get "chart" false ) }}
-    chart: {{ .Values | get $release | get "chart" }}
+    {{- if ( .Values | get $release dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get $release | get "chartUrl" }}
     {{- end }}
-    {{- if ( .Values | get $release dict | get "version" false ) }}
-    version: {{ .Values | get $release | get "version" }}
+    {{- if ( .Values | get $release dict | get "chartVersion" false ) }}
+    version: {{ .Values | get $release | get "chartVersion" }}
     {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
@@ -170,11 +170,11 @@ releases:
   - name: 'openebs-rawfile-storageclass'
     inherit:
     - template: 'openebs-rawfile-storageclass'
-    {{- if ( .Values | get $release dict | get "chart" false ) }}
-    chart: {{ .Values | get $release | get "chart" }}
+    {{- if ( .Values | get $release dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get $release | get "chartUrl" }}
     {{- end }}
-    {{- if ( .Values | get $release dict | get "version" false ) }}
-    version: {{ .Values | get $release | get "version" }}
+    {{- if ( .Values | get $release dict | get "chartVersion" false ) }}
+    version: {{ .Values | get $release | get "chartVersion" }}
     {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
@@ -184,11 +184,11 @@ releases:
   - name: 'openebs-zfs-localpv'
     inherit:
     - template: 'openebs-zfs-localpv'
-    {{- if ( .Values | get $release dict | get "chart" false ) }}
-    chart: {{ .Values | get $release | get "chart" }}
+    {{- if ( .Values | get $release dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get $release | get "chartUrl" }}
     {{- end }}
-    {{- if ( .Values | get $release dict | get "version" false ) }}
-    version: {{ .Values | get $release | get "version" }}
+    {{- if ( .Values | get $release dict | get "chartVersion" false ) }}
+    version: {{ .Values | get $release | get "chartVersion" }}
     {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
@@ -198,11 +198,11 @@ releases:
   - name: 'openebs-zfs-storageclass'
     inherit:
     - template: 'openebs-zfs-storageclass'
-    {{- if ( .Values | get $release dict | get "chart" false ) }}
-    chart: {{ .Values | get $release | get "chart" }}
+    {{- if ( .Values | get $release dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get $release | get "chartUrl" }}
     {{- end }}
-    {{- if ( .Values | get $release dict | get "version" false ) }}
-    version: {{ .Values | get $release | get "version" }}
+    {{- if ( .Values | get $release dict | get "chartVersion" false ) }}
+    version: {{ .Values | get $release | get "chartVersion" }}
     {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
@@ -212,11 +212,11 @@ releases:
   - name: 'openebs-zfs-snapclass'
     inherit:
     - template: 'openebs-zfs-snapclass'
-    {{- if ( .Values | get $release dict | get "chart" false ) }}
-    chart: {{ .Values | get $release | get "chart" }}
+    {{- if ( .Values | get $release dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get $release | get "chartUrl" }}
     {{- end }}
-    {{- if ( .Values | get $release dict | get "version" false ) }}
-    version: {{ .Values | get $release | get "version" }}
+    {{- if ( .Values | get $release dict | get "chartVersion" false ) }}
+    version: {{ .Values | get $release | get "chartVersion" }}
     {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}

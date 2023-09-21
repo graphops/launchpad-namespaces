@@ -129,11 +129,11 @@ releases:
   - name: 'graph-node'
     inherit:
     - template: 'graph-node'
-    {{- if ( .Values | get $release dict | get "chart" false ) }}
-    chart: {{ .Values | get $release | get "chart" }}
+    {{- if ( .Values | get $release dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get $release | get "chartUrl" }}
     {{- end }}
-    {{- if ( .Values | get $release dict | get "version" false ) }}
-    version: {{ .Values | get $release | get "version" }}
+    {{- if ( .Values | get $release dict | get "chartVersion" false ) }}
+    version: {{ .Values | get $release | get "chartVersion" }}
     {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
@@ -141,11 +141,11 @@ releases:
   - name: 'graph-network-indexer'
     inherit:
     - template: 'graph-network-indexer'
-    {{- if ( .Values | get $release dict | get "chart" false ) }}
-    chart: {{ .Values | get $release | get "chart" }}
+    {{- if ( .Values | get $release dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get $release | get "chartUrl" }}
     {{- end }}
-    {{- if ( .Values | get $release dict | get "version" false ) }}
-    version: {{ .Values | get $release | get "version" }}
+    {{- if ( .Values | get $release dict | get "chartVersion" false ) }}
+    version: {{ .Values | get $release | get "chartVersion" }}
     {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
@@ -153,11 +153,11 @@ releases:
   - name: 'graph-toolbox'
     inherit:
     - template: 'graph-toolbox'
-    {{- if ( .Values | get $release dict | get "chart" false ) }}
-    chart: {{ .Values | get $release | get "chart" }}
+    {{- if ( .Values | get $release dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get $release | get "chartUrl" }}
     {{- end }}
-    {{- if ( .Values | get $release dict | get "version" false ) }}
-    version: {{ .Values | get $release | get "version" }}
+    {{- if ( .Values | get $release dict | get "chartVersion" false ) }}
+    version: {{ .Values | get $release | get "chartVersion" }}
     {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
@@ -165,11 +165,11 @@ releases:
   - name: 'graph-operator-mnemonic'
     inherit:
     - template: 'graph-operator-mnemonic'
-    {{- if ( .Values | get $release dict | get "chart" false ) }}
-    chart: {{ .Values | get $release | get "chart" }}
+    {{- if ( .Values | get $release dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get $release | get "chartUrl" }}
     {{- end }}
-    {{- if ( .Values | get $release dict | get "version" false ) }}
-    version: {{ .Values | get $release | get "version" }}
+    {{- if ( .Values | get $release dict | get "chartVersion" false ) }}
+    version: {{ .Values | get $release | get "chartVersion" }}
     {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
@@ -177,11 +177,11 @@ releases:
   - name: 'graph-database'
     inherit:
     - template: 'graph-database'
-    {{- if ( .Values | get $release dict | get "chart" false ) }}
-    chart: {{ .Values | get $release | get "chart" }}
+    {{- if ( .Values | get $release dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get $release | get "chartUrl" }}
     {{- end }}
-    {{- if ( .Values | get $release dict | get "version" false ) }}
-    version: {{ .Values | get $release | get "version" }}
+    {{- if ( .Values | get $release dict | get "chartVersion" false ) }}
+    version: {{ .Values | get $release | get "chartVersion" }}
     {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
