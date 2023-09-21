@@ -52,12 +52,8 @@ package LaunchpadNamespaces
 				(key)?: #base.#releaseValues
 			}
 
-			[string & =~"^d[0-9]+$"]: {
-				for key, _ in releases {
-					// For overriding this release's values
-					(key)?: #base.#releaseValues
-				}
-			}
+			// For overriding this release's values
+			[string & "^(erigon|nimbus|proxyd)-[0-9]+$"]?: #base.#releaseValues
 		}
 
 		// ethereum helmfile API
