@@ -129,29 +129,59 @@ releases:
   - name: 'graph-node'
     inherit:
     - template: 'graph-node'
+    {{- if ( .Values | get $release dict | get "chart" false ) }}
+    chart: {{ .Values | get $release | get "chart" }}
+    {{- end }}
+    {{- if ( .Values | get $release dict | get "version" false ) }}
+    version: {{ .Values | get $release | get "version" }}
+    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- $release := "graph-network-indexer" }}
   - name: 'graph-network-indexer'
     inherit:
     - template: 'graph-network-indexer'
+    {{- if ( .Values | get $release dict | get "chart" false ) }}
+    chart: {{ .Values | get $release | get "chart" }}
+    {{- end }}
+    {{- if ( .Values | get $release dict | get "version" false ) }}
+    version: {{ .Values | get $release | get "version" }}
+    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- $release := "graph-toolbox" }}
   - name: 'graph-toolbox'
     inherit:
     - template: 'graph-toolbox'
+    {{- if ( .Values | get $release dict | get "chart" false ) }}
+    chart: {{ .Values | get $release | get "chart" }}
+    {{- end }}
+    {{- if ( .Values | get $release dict | get "version" false ) }}
+    version: {{ .Values | get $release | get "version" }}
+    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- $release := "graph-operator-mnemonic" }}
   - name: 'graph-operator-mnemonic'
     inherit:
     - template: 'graph-operator-mnemonic'
+    {{- if ( .Values | get $release dict | get "chart" false ) }}
+    chart: {{ .Values | get $release | get "chart" }}
+    {{- end }}
+    {{- if ( .Values | get $release dict | get "version" false ) }}
+    version: {{ .Values | get $release | get "version" }}
+    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- $release := "graph-database" }}
   - name: 'graph-database'
     inherit:
     - template: 'graph-database'
+    {{- if ( .Values | get $release dict | get "chart" false ) }}
+    chart: {{ .Values | get $release | get "chart" }}
+    {{- end }}
+    {{- if ( .Values | get $release dict | get "version" false ) }}
+    version: {{ .Values | get $release | get "version" }}
+    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}

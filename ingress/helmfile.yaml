@@ -127,6 +127,12 @@ releases:
   - name: 'ingress-nginx'
     inherit:
     - template: 'ingress-nginx'
+    {{- if ( .Values | get $release dict | get "chart" false ) }}
+    chart: {{ .Values | get $release | get "chart" }}
+    {{- end }}
+    {{- if ( .Values | get $release dict | get "version" false ) }}
+    version: {{ .Values | get $release | get "version" }}
+    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- end -}}
@@ -135,6 +141,12 @@ releases:
   - name: 'cert-manager'
     inherit:
     - template: 'cert-manager'
+    {{- if ( .Values | get $release dict | get "chart" false ) }}
+    chart: {{ .Values | get $release | get "chart" }}
+    {{- end }}
+    {{- if ( .Values | get $release dict | get "version" false ) }}
+    version: {{ .Values | get $release | get "version" }}
+    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- end -}}
@@ -143,6 +155,12 @@ releases:
   - name: 'cert-manager-resources'
     inherit:
     - template: 'cert-manager-resources'
+    {{- if ( .Values | get $release dict | get "chart" false ) }}
+    chart: {{ .Values | get $release | get "chart" }}
+    {{- end }}
+    {{- if ( .Values | get $release dict | get "version" false ) }}
+    version: {{ .Values | get $release | get "version" }}
+    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- end -}}

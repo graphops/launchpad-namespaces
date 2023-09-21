@@ -117,17 +117,35 @@ releases:
   - name: 'erigon'
     inherit:
     - template: 'erigon'
+    {{- if ( .Values | get $release dict | get "chart" false ) }}
+    chart: {{ .Values | get $release | get "chart" }}
+    {{- end }}
+    {{- if ( .Values | get $release dict | get "version" false ) }}
+    version: {{ .Values | get $release | get "version" }}
+    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- $release := "heimdall" }}
   - name: 'heimdall'
     inherit:
     - template: 'heimdall'
+    {{- if ( .Values | get $release dict | get "chart" false ) }}
+    chart: {{ .Values | get $release | get "chart" }}
+    {{- end }}
+    {{- if ( .Values | get $release dict | get "version" false ) }}
+    version: {{ .Values | get $release | get "version" }}
+    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- $release := "proxyd" }}
   - name: 'proxyd'
     inherit:
     - template: 'proxyd'
+    {{- if ( .Values | get $release dict | get "chart" false ) }}
+    chart: {{ .Values | get $release | get "chart" }}
+    {{- end }}
+    {{- if ( .Values | get $release dict | get "version" false ) }}
+    version: {{ .Values | get $release | get "version" }}
+    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}

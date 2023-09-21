@@ -117,17 +117,35 @@ releases:
   - name: 'nethermind'
     inherit:
     - template: 'nethermind'
+    {{- if ( .Values | get $release dict | get "chart" false ) }}
+    chart: {{ .Values | get $release | get "chart" }}
+    {{- end }}
+    {{- if ( .Values | get $release dict | get "version" false ) }}
+    version: {{ .Values | get $release | get "version" }}
+    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- $release := "nimbus" }}
   - name: 'nimbus'
     inherit:
     - template: 'nimbus'
+    {{- if ( .Values | get $release dict | get "chart" false ) }}
+    chart: {{ .Values | get $release | get "chart" }}
+    {{- end }}
+    {{- if ( .Values | get $release dict | get "version" false ) }}
+    version: {{ .Values | get $release | get "version" }}
+    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- $release := "proxyd" }}
   - name: 'proxyd'
     inherit:
     - template: 'proxyd'
+    {{- if ( .Values | get $release dict | get "chart" false ) }}
+    chart: {{ .Values | get $release | get "chart" }}
+    {{- end }}
+    {{- if ( .Values | get $release dict | get "version" false ) }}
+    version: {{ .Values | get $release | get "version" }}
+    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}

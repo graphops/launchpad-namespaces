@@ -249,6 +249,12 @@ _helmfile: {
 			- name: '\(this)'
 			  inherit:
 			  - template: '\(this)'
+			  {{- if ( .Values | get $release dict | get "chart" false ) }}
+			  chart: {{ .Values | get $release | get "chart" }}
+			  {{- end }}
+			  {{- if ( .Values | get $release dict | get "version" false ) }}
+			  version: {{ .Values | get $release | get "version" }}
+			  {{- end }}
 			  values:
 			  {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
 			"""

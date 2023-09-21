@@ -134,6 +134,12 @@ releases:
   - name: 'kube-prometheus-stack'
     inherit:
     - template: 'kube-prometheus-stack'
+    {{- if ( .Values | get $release dict | get "chart" false ) }}
+    chart: {{ .Values | get $release | get "chart" }}
+    {{- end }}
+    {{- if ( .Values | get $release dict | get "version" false ) }}
+    version: {{ .Values | get $release | get "version" }}
+    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- end -}}
@@ -142,6 +148,12 @@ releases:
   - name: 'node-problem-detector'
     inherit:
     - template: 'node-problem-detector'
+    {{- if ( .Values | get $release dict | get "chart" false ) }}
+    chart: {{ .Values | get $release | get "chart" }}
+    {{- end }}
+    {{- if ( .Values | get $release dict | get "version" false ) }}
+    version: {{ .Values | get $release | get "version" }}
+    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- end -}}
@@ -150,6 +162,12 @@ releases:
   - name: 'loki'
     inherit:
     - template: 'loki'
+    {{- if ( .Values | get $release dict | get "chart" false ) }}
+    chart: {{ .Values | get $release | get "chart" }}
+    {{- end }}
+    {{- if ( .Values | get $release dict | get "version" false ) }}
+    version: {{ .Values | get $release | get "version" }}
+    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- end -}}
@@ -158,6 +176,12 @@ releases:
   - name: 'promtail'
     inherit:
     - template: 'promtail'
+    {{- if ( .Values | get $release dict | get "chart" false ) }}
+    chart: {{ .Values | get $release | get "chart" }}
+    {{- end }}
+    {{- if ( .Values | get $release dict | get "version" false ) }}
+    version: {{ .Values | get $release | get "version" }}
+    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- end -}}
