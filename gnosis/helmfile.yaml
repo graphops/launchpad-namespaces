@@ -95,57 +95,63 @@ templates:
       - template: transforms
   
   nethermind:
-    chart: graphops/nethermind
-    version: 0.4.0
+    {{- if ( .Values | get "nethermind" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "nethermind" | get "chartUrl" }}
+    {{- else }}
+    chart: "graphops/nethermind"
+    {{- end }}
     inherit:
-      - template: defaults
-  
+    - template: "defaults"
+    {{- if ( .Values | get "nethermind" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "nethermind" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "nethermind" dict | get "chartVersion" false ) ( .Values | get "nethermind" dict | get "chartUrl" false ) )) }}
+    version: "0.4.0"
+    {{- end }}
   nimbus:
-    chart: graphops/nimbus
-    version: 0.5.1
+    {{- if ( .Values | get "nimbus" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "nimbus" | get "chartUrl" }}
+    {{- else }}
+    chart: "graphops/nimbus"
+    {{- end }}
     inherit:
-      - template: defaults
-  
+    - template: "defaults"
+    {{- if ( .Values | get "nimbus" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "nimbus" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "nimbus" dict | get "chartVersion" false ) ( .Values | get "nimbus" dict | get "chartUrl" false ) )) }}
+    version: "0.5.1"
+    {{- end }}
   proxyd:
-    chart: graphops/proxyd
-    version: 0.3.2
+    {{- if ( .Values | get "proxyd" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "proxyd" | get "chartUrl" }}
+    {{- else }}
+    chart: "graphops/proxyd"
+    {{- end }}
     inherit:
-      - template: defaults
-  
+    - template: "defaults"
+    {{- if ( .Values | get "proxyd" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "proxyd" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "proxyd" dict | get "chartVersion" false ) ( .Values | get "proxyd" dict | get "chartUrl" false ) )) }}
+    version: "0.3.2"
+    {{- end }}
 releases:
   {{- $release := "nethermind" }}
   - name: 'nethermind'
     inherit:
     - template: 'nethermind'
-    {{- if ( .Values | get $release dict | get "chartUrl" false ) }}
-    chart: {{ .Values | get $release | get "chartUrl" }}
-    {{- end }}
-    {{- if ( .Values | get $release dict | get "chartVersion" false ) }}
-    version: {{ .Values | get $release | get "chartVersion" }}
-    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- $release := "nimbus" }}
   - name: 'nimbus'
     inherit:
     - template: 'nimbus'
-    {{- if ( .Values | get $release dict | get "chartUrl" false ) }}
-    chart: {{ .Values | get $release | get "chartUrl" }}
-    {{- end }}
-    {{- if ( .Values | get $release dict | get "chartVersion" false ) }}
-    version: {{ .Values | get $release | get "chartVersion" }}
-    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- $release := "proxyd" }}
   - name: 'proxyd'
     inherit:
     - template: 'proxyd'
-    {{- if ( .Values | get $release dict | get "chartUrl" false ) }}
-    chart: {{ .Values | get $release | get "chartUrl" }}
-    {{- end }}
-    {{- if ( .Values | get $release dict | get "chartVersion" false ) }}
-    version: {{ .Values | get $release | get "chartVersion" }}
-    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}

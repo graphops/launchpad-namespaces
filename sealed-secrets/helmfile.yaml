@@ -93,21 +93,23 @@ templates:
       - template: transforms
   
   sealed-secrets:
-    chart: sealed-secrets/sealed-secrets
-    version: 2.13.0
+    {{- if ( .Values | get "sealed-secrets" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "sealed-secrets" | get "chartUrl" }}
+    {{- else }}
+    chart: "sealed-secrets/sealed-secrets"
+    {{- end }}
     inherit:
-      - template: defaults
-  
+    - template: "defaults"
+    {{- if ( .Values | get "sealed-secrets" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "sealed-secrets" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "sealed-secrets" dict | get "chartVersion" false ) ( .Values | get "sealed-secrets" dict | get "chartUrl" false ) )) }}
+    version: "2.13.0"
+    {{- end }}
 releases:
   {{- $release := "sealed-secrets" }}
   - name: 'sealed-secrets'
     inherit:
     - template: 'sealed-secrets'
-    {{- if ( .Values | get $release dict | get "chartUrl" false ) }}
-    chart: {{ .Values | get $release | get "chartUrl" }}
-    {{- end }}
-    {{- if ( .Values | get $release dict | get "chartVersion" false ) }}
-    version: {{ .Values | get $release | get "chartVersion" }}
-    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}

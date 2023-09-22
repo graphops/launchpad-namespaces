@@ -103,52 +103,94 @@ templates:
       - template: transforms
   
   openebs:
-    chart: openebs/openebs
-    version: 3.9.0
+    {{- if ( .Values | get "openebs" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "openebs" | get "chartUrl" }}
+    {{- else }}
+    chart: "openebs/openebs"
+    {{- end }}
     inherit:
-      - template: defaults
-  
+    - template: "defaults"
+    {{- if ( .Values | get "openebs" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "openebs" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "openebs" dict | get "chartVersion" false ) ( .Values | get "openebs" dict | get "chartUrl" false ) )) }}
+    version: "3.9.0"
+    {{- end }}
   openebs-rawfile-localpv:
-    chart: graphops/openebs-rawfile-localpv
-    version: 0.8.2
+    {{- if ( .Values | get "openebs-rawfile-localpv" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "openebs-rawfile-localpv" | get "chartUrl" }}
+    {{- else }}
+    chart: "graphops/openebs-rawfile-localpv"
+    {{- end }}
     inherit:
-      - template: defaults
-  
+    - template: "defaults"
+    {{- if ( .Values | get "openebs-rawfile-localpv" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "openebs-rawfile-localpv" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "openebs-rawfile-localpv" dict | get "chartVersion" false ) ( .Values | get "openebs-rawfile-localpv" dict | get "chartUrl" false ) )) }}
+    version: "0.8.2"
+    {{- end }}
   openebs-rawfile-storageclass:
-    chart: graphops/resource-injector
-    version: 0.2.0
+    {{- if ( .Values | get "openebs-rawfile-storageclass" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "openebs-rawfile-storageclass" | get "chartUrl" }}
+    {{- else }}
+    chart: "graphops/resource-injector"
+    {{- end }}
     inherit:
-      - template: defaults
-  
+    - template: "defaults"
+    {{- if ( .Values | get "openebs-rawfile-storageclass" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "openebs-rawfile-storageclass" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "openebs-rawfile-storageclass" dict | get "chartVersion" false ) ( .Values | get "openebs-rawfile-storageclass" dict | get "chartUrl" false ) )) }}
+    version: "0.2.0"
+    {{- end }}
   openebs-zfs-localpv:
-    chart: openebs-zfs-localpv/zfs-localpv
-    version: 2.3.1
+    {{- if ( .Values | get "openebs-zfs-localpv" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "openebs-zfs-localpv" | get "chartUrl" }}
+    {{- else }}
+    chart: "openebs-zfs-localpv/zfs-localpv"
+    {{- end }}
     inherit:
-      - template: defaults
-  
+    - template: "defaults"
+    {{- if ( .Values | get "openebs-zfs-localpv" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "openebs-zfs-localpv" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "openebs-zfs-localpv" dict | get "chartVersion" false ) ( .Values | get "openebs-zfs-localpv" dict | get "chartUrl" false ) )) }}
+    version: "2.3.1"
+    {{- end }}
   openebs-zfs-storageclass:
-    chart: graphops/resource-injector
-    version: 0.2.0
+    {{- if ( .Values | get "openebs-zfs-storageclass" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "openebs-zfs-storageclass" | get "chartUrl" }}
+    {{- else }}
+    chart: "graphops/resource-injector"
+    {{- end }}
     inherit:
-      - template: defaults
-  
+    - template: "defaults"
+    {{- if ( .Values | get "openebs-zfs-storageclass" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "openebs-zfs-storageclass" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "openebs-zfs-storageclass" dict | get "chartVersion" false ) ( .Values | get "openebs-zfs-storageclass" dict | get "chartUrl" false ) )) }}
+    version: "0.2.0"
+    {{- end }}
   openebs-zfs-snapclass:
-    chart: graphops/resource-injector
-    version: 0.2.0
+    {{- if ( .Values | get "openebs-zfs-snapclass" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "openebs-zfs-snapclass" | get "chartUrl" }}
+    {{- else }}
+    chart: "graphops/resource-injector"
+    {{- end }}
     inherit:
-      - template: defaults
-  
+    - template: "defaults"
+    {{- if ( .Values | get "openebs-zfs-snapclass" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "openebs-zfs-snapclass" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "openebs-zfs-snapclass" dict | get "chartVersion" false ) ( .Values | get "openebs-zfs-snapclass" dict | get "chartUrl" false ) )) }}
+    version: "0.2.0"
+    {{- end }}
 releases:
   {{- $release := "openebs" }}
   - name: 'openebs'
     inherit:
     - template: 'openebs'
-    {{- if ( .Values | get $release dict | get "chartUrl" false ) }}
-    chart: {{ .Values | get $release | get "chartUrl" }}
-    {{- end }}
-    {{- if ( .Values | get $release dict | get "chartVersion" false ) }}
-    version: {{ .Values | get $release | get "chartVersion" }}
-    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{ if has "rawfile" ( .Values | get "features" list ) }}
@@ -156,12 +198,6 @@ releases:
   - name: 'openebs-rawfile-localpv'
     inherit:
     - template: 'openebs-rawfile-localpv'
-    {{- if ( .Values | get $release dict | get "chartUrl" false ) }}
-    chart: {{ .Values | get $release | get "chartUrl" }}
-    {{- end }}
-    {{- if ( .Values | get $release dict | get "chartVersion" false ) }}
-    version: {{ .Values | get $release | get "chartVersion" }}
-    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- end -}}
@@ -170,12 +206,6 @@ releases:
   - name: 'openebs-rawfile-storageclass'
     inherit:
     - template: 'openebs-rawfile-storageclass'
-    {{- if ( .Values | get $release dict | get "chartUrl" false ) }}
-    chart: {{ .Values | get $release | get "chartUrl" }}
-    {{- end }}
-    {{- if ( .Values | get $release dict | get "chartVersion" false ) }}
-    version: {{ .Values | get $release | get "chartVersion" }}
-    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- end -}}
@@ -184,12 +214,6 @@ releases:
   - name: 'openebs-zfs-localpv'
     inherit:
     - template: 'openebs-zfs-localpv'
-    {{- if ( .Values | get $release dict | get "chartUrl" false ) }}
-    chart: {{ .Values | get $release | get "chartUrl" }}
-    {{- end }}
-    {{- if ( .Values | get $release dict | get "chartVersion" false ) }}
-    version: {{ .Values | get $release | get "chartVersion" }}
-    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- end -}}
@@ -198,12 +222,6 @@ releases:
   - name: 'openebs-zfs-storageclass'
     inherit:
     - template: 'openebs-zfs-storageclass'
-    {{- if ( .Values | get $release dict | get "chartUrl" false ) }}
-    chart: {{ .Values | get $release | get "chartUrl" }}
-    {{- end }}
-    {{- if ( .Values | get $release dict | get "chartVersion" false ) }}
-    version: {{ .Values | get $release | get "chartVersion" }}
-    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- end -}}
@@ -212,12 +230,6 @@ releases:
   - name: 'openebs-zfs-snapclass'
     inherit:
     - template: 'openebs-zfs-snapclass'
-    {{- if ( .Values | get $release dict | get "chartUrl" false ) }}
-    chart: {{ .Values | get $release | get "chartUrl" }}
-    {{- end }}
-    {{- if ( .Values | get $release dict | get "chartVersion" false ) }}
-    version: {{ .Values | get $release | get "chartVersion" }}
-    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- end -}}

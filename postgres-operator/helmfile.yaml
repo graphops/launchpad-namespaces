@@ -93,22 +93,23 @@ templates:
       - template: transforms
   
   postgres-operator:
-    chart: postgres-operator-charts/postgres-operator
-    version: 1.10.1
+    {{- if ( .Values | get "postgres-operator" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "postgres-operator" | get "chartUrl" }}
+    {{- else }}
+    chart: "postgres-operator-charts/postgres-operator"
+    {{- end }}
     inherit:
-      - template: defaults
-    disableValidationOnInstall: true
-  
+    - template: "defaults"
+    {{- if ( .Values | get "postgres-operator" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "postgres-operator" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "postgres-operator" dict | get "chartVersion" false ) ( .Values | get "postgres-operator" dict | get "chartUrl" false ) )) }}
+    version: "1.10.1"
+    {{- end }}
 releases:
   {{- $release := "postgres-operator" }}
   - name: 'postgres-operator'
     inherit:
     - template: 'postgres-operator'
-    {{- if ( .Values | get $release dict | get "chartUrl" false ) }}
-    chart: {{ .Values | get $release | get "chartUrl" }}
-    {{- end }}
-    {{- if ( .Values | get $release dict | get "chartVersion" false ) }}
-    version: {{ .Values | get $release | get "chartVersion" }}
-    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}

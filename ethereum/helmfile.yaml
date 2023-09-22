@@ -102,34 +102,52 @@ templates:
       - template: transforms
   
   erigon:
-    chart: graphops/erigon
-    version: 0.8.2
+    {{- if ( .Values | get "erigon" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "erigon" | get "chartUrl" }}
+    {{- else }}
+    chart: "graphops/erigon"
+    {{- end }}
     inherit:
-      - template: defaults
-  
+    - template: "defaults"
+    {{- if ( .Values | get "erigon" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "erigon" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "erigon" dict | get "chartVersion" false ) ( .Values | get "erigon" dict | get "chartUrl" false ) )) }}
+    version: "0.8.2"
+    {{- end }}
   nimbus:
-    chart: graphops/nimbus
-    version: 0.5.2
+    {{- if ( .Values | get "nimbus" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "nimbus" | get "chartUrl" }}
+    {{- else }}
+    chart: "graphops/nimbus"
+    {{- end }}
     inherit:
-      - template: defaults
-  
+    - template: "defaults"
+    {{- if ( .Values | get "nimbus" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "nimbus" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "nimbus" dict | get "chartVersion" false ) ( .Values | get "nimbus" dict | get "chartUrl" false ) )) }}
+    version: "0.5.2"
+    {{- end }}
   proxyd:
-    chart: graphops/proxyd
-    version: 0.3.4-canary.4
+    {{- if ( .Values | get "proxyd" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "proxyd" | get "chartUrl" }}
+    {{- else }}
+    chart: "graphops/proxyd"
+    {{- end }}
     inherit:
-      - template: defaults
-  
+    - template: "defaults"
+    {{- if ( .Values | get "proxyd" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "proxyd" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "proxyd" dict | get "chartVersion" false ) ( .Values | get "proxyd" dict | get "chartUrl" false ) )) }}
+    version: "0.3.4-canary.4"
+    {{- end }}
 releases:
   {{- $release := "erigon" }}
   - name: 'erigon'
     inherit:
     - template: 'erigon'
-    {{- if ( .Values | get $release dict | get "chartUrl" false ) }}
-    chart: {{ .Values | get $release | get "chartUrl" }}
-    {{- end }}
-    {{- if ( .Values | get $release dict | get "chartVersion" false ) }}
-    version: {{ .Values | get $release | get "chartVersion" }}
-    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{ if has "nimbus" ( .Values | get "features" list ) }}
@@ -137,12 +155,6 @@ releases:
   - name: 'nimbus'
     inherit:
     - template: 'nimbus'
-    {{- if ( .Values | get $release dict | get "chartUrl" false ) }}
-    chart: {{ .Values | get $release | get "chartUrl" }}
-    {{- end }}
-    {{- if ( .Values | get $release dict | get "chartVersion" false ) }}
-    version: {{ .Values | get $release | get "chartVersion" }}
-    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- end -}}
@@ -151,12 +163,6 @@ releases:
   - name: 'proxyd'
     inherit:
     - template: 'proxyd'
-    {{- if ( .Values | get $release dict | get "chartUrl" false ) }}
-    chart: {{ .Values | get $release | get "chartUrl" }}
-    {{- end }}
-    {{- if ( .Values | get $release dict | get "chartVersion" false ) }}
-    version: {{ .Values | get $release | get "chartVersion" }}
-    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
   {{- end -}}
