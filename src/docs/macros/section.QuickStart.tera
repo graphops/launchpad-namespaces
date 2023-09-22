@@ -7,7 +7,7 @@ To use *Namespaces* you will require both a {{ const.soft.kubernetes.link }} clu
 As such:
 - Make sure your {{ const.soft.kubernetes.string }} *Cluster* is in order and your environment has the *kubeconfig* context adequately setup
 - Install *helmfile*, upstream guidance available here: {{ const.soft.helmfile_install.link }}
-– Install *kustomize*, upstream guidance availabe here: {{ const.soft.kustomize_install.link }}. Although `launchpad–namespaces` doesn't explicitly use *kustomize*, it is a dependency for utilising *helmfile* features.
+– Install *kustomize*, upstream guidance available here: {{ const.soft.kustomize_install.link }}. Although `launchpad–namespaces` doesn't explicitly use *kustomize*, it is a dependency for utilising *helmfile* features.
 
 Next, setup an `helmfile.yaml` file that makes use of the {{ namespace }} *Namespace* by creating it with the following contents:
 ```yaml
