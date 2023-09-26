@@ -56,6 +56,12 @@ _helmfile: {
 		_defaultFeatures: _helmfile._#defaultFeatures & {_namespace: this}
 		defaultFeatures:  _defaultFeatures.out
 
+		_defaultDeployments: _helmfile._#defaultDeployments & {_namespace: this}
+		defaultDeployments:  _defaultDeployments.out
+
+		_environment: _helmfile._#environment & {_namespace: this}
+		environment:  _environment.out
+
 		_defaultNamespace: _helmfile._#defaultNamespace & {_namespace: this}
 		defaultNamespace:  _defaultNamespace.out
 
@@ -72,12 +78,15 @@ _helmfile: {
 		repositories: _repos.out
 
 		out: strings.Join([
+			defaultFlavor,
+			defaultFeatures,
+			defaultDeployments,
+			environment,
+			"---",
 			_templateBlocks.transforms,
 			_templateBlocks.releaseValues,
 			helmDefaults,
 			kubeVersion,
-			defaultFlavor,
-			defaultFeatures,
 			defaultNamespace,
 			labels,
 			repositories,
@@ -160,6 +169,44 @@ _helmfile: {
 
 				"""
 		}
+	}
+
+	_#defaultDeployments: {
+		this=_namespace: string
+		out:             *"" | string
+		if _namespaces[this].values.deployments != _|_ {
+			out: """
+				#set default number of deployments when missing
+				{{ if not ( hasKey .Values \"deployments\" ) }}
+				{{ $_ := set .Values \"deployments\" \(_namespaces[this].values.deployments) }}
+				{{ end }}
+
+				"""
+		}
+	}
+
+	_#environment: {
+		this=_namespace: string
+
+		_variables: {
+			if _namespaces[this].values.flavor != _|_ {
+				flavor: '{{ .Values.flavor }}'
+			}
+			if _namespaces[this].values.features != _|_ {
+				features: '{{ .Values.features | toYaml | nindent 10 }}'
+			}
+			if _namespaces[this].values.deployments != _|_ {
+				deployments: "{{ .Values.deployments }}"
+			}
+		}
+
+		_variableStrings: strings.Join([ for key, value in _variables {"    - \(key): \(value)"}], "\n")
+		out:              """
+			environments:
+			  default:
+			    values:
+			\(_variableStrings)
+			"""
 	}
 
 	_#defaultNamespace: {

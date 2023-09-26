@@ -1,3 +1,17 @@
+
+# Define default features when undefined
+{{ if not (hasKey .Values "features") }}
+{{ $_ := set .Values "features" (list
+`rawfile`
+) }}
+{{ end }}
+
+
+environments:
+  default:
+    values:
+    - features: {{ .Values.features | toYaml | nindent 10 }}
+---
 {{- $_tplTransforms := `
 {{- $_TemplatedResources := list "Deployment" "StatefulSet" "DaemonSet" -}}
 transformers:
@@ -69,14 +83,6 @@ helmDefaults:
 
 {{ if ( hasKey .Values "kubeVersion" ) }}
 kubeVersion: {{ .Values.kubeVersion }}
-{{ end }}
-
-
-# Define default features when undefined
-{{ if not (hasKey .Values "features") }}
-{{ $_ := set .Values "features" (list
-`rawfile`
-) }}
 {{ end }}
 
 #set default namespace

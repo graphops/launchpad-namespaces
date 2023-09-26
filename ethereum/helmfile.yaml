@@ -1,3 +1,28 @@
+#set default flavor when missing
+{{ if not ( hasKey .Values "flavor" ) }}
+{{ $_ := set .Values "flavor" "mainnet" }}
+{{ end }}
+
+# Define default features when undefined
+{{ if not (hasKey .Values "features") }}
+{{ $_ := set .Values "features" (list
+`nimbus`
+`proxyd`
+) }}
+{{ end }}
+
+#set default number of deployments when missing
+{{ if not ( hasKey .Values "deployments" ) }}
+{{ $_ := set .Values "deployments" 1 }}
+{{ end }}
+
+environments:
+  default:
+    values:
+    - flavor: {{ .Values.flavor }}
+    - features: {{ .Values.features | toYaml | nindent 10 }}
+    - deployments: {{ .Values.deployments }}
+---
 {{- $_tplTransforms := `
 {{- $_TemplatedResources := list "Deployment" "StatefulSet" "DaemonSet" -}}
 transformers:
@@ -69,19 +94,6 @@ helmDefaults:
 
 {{ if ( hasKey .Values "kubeVersion" ) }}
 kubeVersion: {{ .Values.kubeVersion }}
-{{ end }}
-
-#set default flavor when missing
-{{ if not ( hasKey .Values "flavor" ) }}
-{{ $_ := set .Values "flavor" "mainnet" }}
-{{ end }}
-
-# Define default features when undefined
-{{ if not (hasKey .Values "features") }}
-{{ $_ := set .Values "features" (list
-`nimbus`
-`proxyd`
-) }}
 {{ end }}
 
 #set default namespace

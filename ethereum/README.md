@@ -18,7 +18,7 @@ Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by
 
 - Actively maintained by [![GraphOps](https://avatars.githubusercontent.com/u/85314764?s=12&v=4) *GraphOps*](https://graphops.xyz) [and contributors](/graphs/contributors)
 - Common values interfaces across all namespaces
-- Flexible and adaptable, allowing defaults to be overriden
+- Flexible and adaptable, allowing defaults to be overridden
 - Two release channels: `stable` and `canary`
 - A large selection of Namespaces (listed below)
 
@@ -31,7 +31,7 @@ To use *Namespaces* you will require both a [*Kubernetes*](https://kubernetes.io
 As such:
 - Make sure your *Kubernetes* *Cluster* is in order and your environment has the *kubeconfig* context adequately setup
 - Install *helmfile*, upstream guidance available here: [*Helmfile* Installation](https://github.com/helmfile/helmfile#installation)
-– Install *kustomize*, upstream guidance availabe here: [*Kustomize* Installation](https://kubectl.docs.kubernetes.io/installation/kustomize/). Although `launchpad–namespaces` doesn't explicitly use *kustomize*, it is a dependencie for utilising *helmfile* features.
+– Install *kustomize*, upstream guidance available here: [*Kustomize* Installation](https://kubectl.docs.kubernetes.io/installation/kustomize/). Although `launchpad–namespaces` doesn't explicitly use *kustomize*, it is a dependency for utilising *helmfile* features.
 
 Next, setup an `helmfile.yaml` file that makes use of the ethereum *Namespace* by creating it with the following contents:
 ```yaml
@@ -74,7 +74,7 @@ helmfiles:
 
 where we add some labels to this *Namespace* releases, and set it to be deployed on cluster namespace different from default.
 
-You can also easilly override values for every release, like so:
+You can also easily override values for every release, like so:
 ```yaml
 helmfiles:
   - path: git::https://github.com/graphops/launchpad-namespaces.git@ethereum/helmfile.yaml?ref=ethereum-latest
@@ -109,7 +109,7 @@ helmfiles:
 | Key | Type | Default | Description |
 | :--- | :---: | :--- | :--- |
 annotations | object |  | Add annotations to releases on this namespace |
-deployments | integer | 1 |  |
+deployments | integer | 1 | ethereum scaling |
 erigon | object |  |  |
 erigon.annotations | object |  | Add annotations to resources on this release |
 erigon.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |

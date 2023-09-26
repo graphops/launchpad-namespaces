@@ -33,6 +33,9 @@ package LaunchpadNamespaces
 			#enum: ( #nimbus | #proxyd )
 		}
 
+		// ethereum scaling
+		#deployments: *1 | int
+
 		// ethereum namespace values schema
 		#values: #base.#values & {
 			// the default is eth-<flavor>
@@ -44,7 +47,7 @@ package LaunchpadNamespaces
 
 			flavor?: *"mainnet" | #flavor.#enum
 
-			deployments: *1 | int
+			deployments?: #deployments
 
 			// For overriding this release's values
 			for key, _ in releases {

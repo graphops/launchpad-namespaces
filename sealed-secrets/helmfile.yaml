@@ -1,3 +1,11 @@
+
+
+
+environments:
+  default:
+    values:
+
+---
 {{- $_tplTransforms := `
 {{- $_TemplatedResources := list "Deployment" "StatefulSet" "DaemonSet" -}}
 transformers:
@@ -70,8 +78,6 @@ helmDefaults:
 {{ if ( hasKey .Values "kubeVersion" ) }}
 kubeVersion: {{ .Values.kubeVersion }}
 {{ end }}
-
-
 
 #set default namespace
 {{ $_defaultNamespace := `sealed-secrets` }}
