@@ -3424,7 +3424,7 @@
                             "description": {
                                 "type": "string",
                                 "enum": [
-                                    "This *Namespace* extends your Kubernetes cluster with custom resources for easilly creating and managing Postgres databases"
+                                    "This *Namespace* extends your Kubernetes cluster with custom resources for easily creating and managing Postgres databases"
                                 ]
                             }
                         }
