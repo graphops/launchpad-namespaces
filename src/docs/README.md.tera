@@ -11,7 +11,7 @@
 
 It aims to:
 - be easy to use, while extensible and adaptable
-- provide sensible working defaults that can always be overriden
+- provide sensible working defaults that can always be overridden
 - service the requirements of Launchpad and GraphOps
 
 ## Features

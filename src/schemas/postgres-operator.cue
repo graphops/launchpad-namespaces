@@ -7,7 +7,7 @@ package LaunchpadNamespaces
 			name: "postgres-operator"
 			url:  "https://github.com/graphops/launchpad-namespaces/postgres-operator"
 			description: """
-				This *Namespace* extends your Kubernetes cluster with custom resources for easilly creating and managing Postgres databases
+				This *Namespace* extends your Kubernetes cluster with custom resources for easily creating and managing Postgres databases
 				"""
 		}
 

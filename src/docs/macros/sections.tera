@@ -22,7 +22,7 @@ We welcome and appreciate your contributions! Please see the [Contributor Guide]
 {%- macro sectionFeatures() -%}
 - Actively maintained by {{ const.refs.graphops.link }} [and contributors](/graphs/contributors)
 - Common values interfaces across all namespaces
-- Flexible and adaptable, allowing defaults to be overriden
+- Flexible and adaptable, allowing defaults to be overridden
 - Two release channels: `stable` and `canary`
 - A large selection of Namespaces (listed below)
 {%- endmacro sectionFeatures -%}
