@@ -95,23 +95,47 @@ templates:
       - template: transforms
   
   arbitrum-nitro:
-    chart: graphops/arbitrum-nitro
-    version: 0.1.1
+    {{- if ( .Values | get "arbitrum-nitro" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "arbitrum-nitro" | get "chartUrl" }}
+    {{- else }}
+    chart: "graphops/arbitrum-nitro"
+    {{- end }}
     inherit:
-      - template: defaults
-  
+    - template: "defaults"
+    {{- if ( .Values | get "arbitrum-nitro" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "arbitrum-nitro" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "arbitrum-nitro" dict | get "chartVersion" false ) ( .Values | get "arbitrum-nitro" dict | get "chartUrl" false ) )) }}
+    version: "0.1.1"
+    {{- end }}
   arbitrum-classic:
-    chart: graphops/arbitrum-classic
-    version: 0.1.1
+    {{- if ( .Values | get "arbitrum-classic" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "arbitrum-classic" | get "chartUrl" }}
+    {{- else }}
+    chart: "graphops/arbitrum-classic"
+    {{- end }}
     inherit:
-      - template: defaults
-  
+    - template: "defaults"
+    {{- if ( .Values | get "arbitrum-classic" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "arbitrum-classic" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "arbitrum-classic" dict | get "chartVersion" false ) ( .Values | get "arbitrum-classic" dict | get "chartUrl" false ) )) }}
+    version: "0.1.1"
+    {{- end }}
   proxyd:
-    chart: graphops/proxyd
-    version: 0.2.1
+    {{- if ( .Values | get "proxyd" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "proxyd" | get "chartUrl" }}
+    {{- else }}
+    chart: "graphops/proxyd"
+    {{- end }}
     inherit:
-      - template: defaults
-  
+    - template: "defaults"
+    {{- if ( .Values | get "proxyd" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "proxyd" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "proxyd" dict | get "chartVersion" false ) ( .Values | get "proxyd" dict | get "chartUrl" false ) )) }}
+    version: "0.2.1"
+    {{- end }}
 releases:
   {{- $release := "arbitrum-nitro" }}
   - name: 'arbitrum-nitro'

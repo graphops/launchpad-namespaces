@@ -95,17 +95,33 @@ templates:
       - template: transforms
   
   celo:
-    chart: graphops/celo
-    version: 0.1.0
+    {{- if ( .Values | get "celo" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "celo" | get "chartUrl" }}
+    {{- else }}
+    chart: "graphops/celo"
+    {{- end }}
     inherit:
-      - template: defaults
-  
+    - template: "defaults"
+    {{- if ( .Values | get "celo" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "celo" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "celo" dict | get "chartVersion" false ) ( .Values | get "celo" dict | get "chartUrl" false ) )) }}
+    version: "0.1.0"
+    {{- end }}
   proxyd:
-    chart: graphops/proxyd
-    version: 0.1.8
+    {{- if ( .Values | get "proxyd" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "proxyd" | get "chartUrl" }}
+    {{- else }}
+    chart: "graphops/proxyd"
+    {{- end }}
     inherit:
-      - template: defaults
-  
+    - template: "defaults"
+    {{- if ( .Values | get "proxyd" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "proxyd" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "proxyd" dict | get "chartVersion" false ) ( .Values | get "proxyd" dict | get "chartUrl" false ) )) }}
+    version: "0.1.8"
+    {{- end }}
 releases:
   {{- $release := "celo" }}
   - name: 'celo'

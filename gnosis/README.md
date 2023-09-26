@@ -113,14 +113,26 @@ flavor | string |  | suitable defaults for a mainnet archive node |
 kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
 labels | object |  | Adds labels to releases on this namespace |
 nethermind | object |  |  |
-nethermind.mergeValues | boolean | true |  |
-nethermind.values | (object *or* list of objects) |  |  |
+nethermind.annotations | object |  | Add annotations to resources on this release |
+nethermind.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
+nethermind.chartVersion | string |  | Specify a specific chart version to use for this release |
+nethermind.labels | object |  | Adds helmfile labels to this release |
+nethermind.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+nethermind.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 nimbus | object |  |  |
-nimbus.mergeValues | boolean | true |  |
-nimbus.values | (object *or* list of objects) |  |  |
+nimbus.annotations | object |  | Add annotations to resources on this release |
+nimbus.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
+nimbus.chartVersion | string |  | Specify a specific chart version to use for this release |
+nimbus.labels | object |  | Adds helmfile labels to this release |
+nimbus.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+nimbus.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 proxyd | object |  |  |
-proxyd.mergeValues | boolean | true |  |
-proxyd.values | (object *or* list of objects) |  |  |
+proxyd.annotations | object |  | Add annotations to resources on this release |
+proxyd.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
+proxyd.chartVersion | string |  | Specify a specific chart version to use for this release |
+proxyd.labels | object |  | Adds helmfile labels to this release |
+proxyd.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+proxyd.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 targetNamespace | string | gnosis-mainnet | the default is gnosis-<flavor> |
 helmDefaults | object |  |  |
 helmDefaults.args | list of strings |  |  |

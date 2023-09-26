@@ -104,30 +104,61 @@ templates:
       - template: transforms
   
   kube-prometheus-stack:
-    chart: prometheus-community/kube-prometheus-stack
-    version: 51.0.2
+    {{- if ( .Values | get "kube-prometheus-stack" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "kube-prometheus-stack" | get "chartUrl" }}
+    {{- else }}
+    chart: "prometheus-community/kube-prometheus-stack"
+    {{- end }}
     inherit:
-      - template: defaults
-    disableValidationOnInstall: true
-  
+    - template: "defaults"
+    {{- if ( .Values | get "kube-prometheus-stack" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "kube-prometheus-stack" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "kube-prometheus-stack" dict | get "chartVersion" false ) ( .Values | get "kube-prometheus-stack" dict | get "chartUrl" false ) )) }}
+    version: "51.0.2"
+    {{- end }}
   node-problem-detector:
-    chart: deliveryhero/node-problem-detector
-    version: 2.3.10
+    {{- if ( .Values | get "node-problem-detector" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "node-problem-detector" | get "chartUrl" }}
+    {{- else }}
+    chart: "deliveryhero/node-problem-detector"
+    {{- end }}
     inherit:
-      - template: defaults
-  
+    - template: "defaults"
+    {{- if ( .Values | get "node-problem-detector" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "node-problem-detector" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "node-problem-detector" dict | get "chartVersion" false ) ( .Values | get "node-problem-detector" dict | get "chartUrl" false ) )) }}
+    version: "2.3.10"
+    {{- end }}
   loki:
-    chart: grafana/loki-distributed
-    version: 0.74.1
+    {{- if ( .Values | get "loki" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "loki" | get "chartUrl" }}
+    {{- else }}
+    chart: "grafana/loki-distributed"
+    {{- end }}
     inherit:
-      - template: defaults
-  
+    - template: "defaults"
+    {{- if ( .Values | get "loki" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "loki" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "loki" dict | get "chartVersion" false ) ( .Values | get "loki" dict | get "chartUrl" false ) )) }}
+    version: "0.74.1"
+    {{- end }}
   promtail:
-    chart: grafana/promtail
-    version: 6.15.1
+    {{- if ( .Values | get "promtail" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "promtail" | get "chartUrl" }}
+    {{- else }}
+    chart: "grafana/promtail"
+    {{- end }}
     inherit:
-      - template: defaults
-  
+    - template: "defaults"
+    {{- if ( .Values | get "promtail" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "promtail" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "promtail" dict | get "chartVersion" false ) ( .Values | get "promtail" dict | get "chartUrl" false ) )) }}
+    version: "6.15.1"
+    {{- end }}
 releases:
   {{ if has "metrics" ( .Values | get "features" list ) }}
   {{- $release := "kube-prometheus-stack" }}

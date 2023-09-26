@@ -110,18 +110,30 @@ helmfiles:
 | :--- | :---: | :--- | :--- |
 annotations | object |  | Add annotations to releases on this namespace |
 erigon | object |  |  |
-erigon.mergeValues | boolean | true |  |
-erigon.values | (object *or* list of objects) |  |  |
+erigon.annotations | object |  | Add annotations to resources on this release |
+erigon.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
+erigon.chartVersion | string |  | Specify a specific chart version to use for this release |
+erigon.labels | object |  | Adds helmfile labels to this release |
+erigon.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+erigon.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 features | list of strings | [nimbus, proxyd] | *enum of:&nbsp;&nbsp;(nimbus \| proxyd)* |
 flavor | string |  |  |
 kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
 labels | object |  | Adds labels to releases on this namespace |
 nimbus | object |  |  |
-nimbus.mergeValues | boolean | true |  |
-nimbus.values | (object *or* list of objects) |  |  |
+nimbus.annotations | object |  | Add annotations to resources on this release |
+nimbus.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
+nimbus.chartVersion | string |  | Specify a specific chart version to use for this release |
+nimbus.labels | object |  | Adds helmfile labels to this release |
+nimbus.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+nimbus.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 proxyd | object |  |  |
-proxyd.mergeValues | boolean | true |  |
-proxyd.values | (object *or* list of objects) |  |  |
+proxyd.annotations | object |  | Add annotations to resources on this release |
+proxyd.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
+proxyd.chartVersion | string |  | Specify a specific chart version to use for this release |
+proxyd.labels | object |  | Adds helmfile labels to this release |
+proxyd.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+proxyd.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 targetNamespace | string | eth-mainnet | the default is eth-<flavor> |
 helmDefaults | object |  |  |
 helmDefaults.args | list of strings |  |  |

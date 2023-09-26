@@ -110,17 +110,29 @@ helmfiles:
 | :--- | :---: | :--- | :--- |
 annotations | object |  | Add annotations to releases on this namespace |
 arbitrum&#8209;classic | object |  |  |
-arbitrum&#8209;classic.mergeValues | boolean | true |  |
-arbitrum&#8209;classic.values | (object *or* list of objects) |  |  |
+arbitrum&#8209;classic.annotations | object |  | Add annotations to resources on this release |
+arbitrum&#8209;classic.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
+arbitrum&#8209;classic.chartVersion | string |  | Specify a specific chart version to use for this release |
+arbitrum&#8209;classic.labels | object |  | Adds helmfile labels to this release |
+arbitrum&#8209;classic.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+arbitrum&#8209;classic.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 arbitrum&#8209;nitro | object |  |  |
-arbitrum&#8209;nitro.mergeValues | boolean | true |  |
-arbitrum&#8209;nitro.values | (object *or* list of objects) |  |  |
+arbitrum&#8209;nitro.annotations | object |  | Add annotations to resources on this release |
+arbitrum&#8209;nitro.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
+arbitrum&#8209;nitro.chartVersion | string |  | Specify a specific chart version to use for this release |
+arbitrum&#8209;nitro.labels | object |  | Adds helmfile labels to this release |
+arbitrum&#8209;nitro.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+arbitrum&#8209;nitro.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 flavor | string |  |  |
 kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
 labels | object |  | Adds labels to releases on this namespace |
 proxyd | object |  |  |
-proxyd.mergeValues | boolean | true |  |
-proxyd.values | (object *or* list of objects) |  |  |
+proxyd.annotations | object |  | Add annotations to resources on this release |
+proxyd.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
+proxyd.chartVersion | string |  | Specify a specific chart version to use for this release |
+proxyd.labels | object |  | Adds helmfile labels to this release |
+proxyd.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+proxyd.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 targetNamespace | string | arbitrum-mainnet | the default is arbitrum-(flavor) |
 helmDefaults | object |  |  |
 helmDefaults.args | list of strings |  |  |

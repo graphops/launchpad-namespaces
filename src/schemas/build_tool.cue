@@ -225,14 +225,46 @@ _helmfile: {
 		}
 
 		for releaseName, release in _namespaces[this].releases {
-			_blocks: {
-				"\(releaseName)": yaml.Marshal( {
-					"\(releaseName)": {
-						chart: "\(release.chart.repository)/\(release.chart.name)"
-						release._template
-						inherit: [ {template: "defaults"}]
+			_releaseBlock: {
+				"\(releaseName)": {
+					_template: {for key, val in release._template if key != "version" {"\(key)": val}}
+
+					releaseBlock: """
+						\(releaseName):
+						  {{- if ( .Values | get "\(releaseName)" dict | get "chartUrl" false ) }}
+						  chart: {{ .Values | get "\(releaseName)" | get "chartUrl" }}
+						  {{- else }}
+						  chart: "\(release.chart.repository)/\(release.chart.name)"
+						  {{- end }}
+						  inherit:
+						  - template: "defaults"
+						"""
+
+					version: """
+						  {{- if ( .Values | get "\(releaseName)" dict | get "chartVersion" false ) }}
+						  version: {{ .Values | get "\(releaseName)" | get "chartVersion" }}
+						  {{- end }}
+						  {{- if (not (or ( .Values | get "\(releaseName)" dict | get "chartVersion" false ) ( .Values | get "\(releaseName)" dict | get "chartUrl" false ) )) }}
+						  version: "\(release._template.version)"
+						  {{- end }}
+						"""
+
+					if yaml.Marshal(_template) != "{}" {
+						template: """
+							  \(yaml.Marshal(_template))
+							"""
 					}
-				})
+
+					if yaml.Marshal(_template) == "{}" {
+						template: ""
+					}
+
+					out: strings.Join([releaseBlock, version, releaseBlock["\(releaseName)"].template], "\n")
+				}
+			}
+
+			_blocks: {
+				"\(releaseName)": _releaseBlock["\(releaseName)"].out
 			}
 		}
 

@@ -104,23 +104,47 @@ templates:
       - template: transforms
   
   ingress-nginx:
-    chart: ingress-nginx/ingress-nginx
-    version: 4.7.2
+    {{- if ( .Values | get "ingress-nginx" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "ingress-nginx" | get "chartUrl" }}
+    {{- else }}
+    chart: "ingress-nginx/ingress-nginx"
+    {{- end }}
     inherit:
-      - template: defaults
-  
+    - template: "defaults"
+    {{- if ( .Values | get "ingress-nginx" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "ingress-nginx" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "ingress-nginx" dict | get "chartVersion" false ) ( .Values | get "ingress-nginx" dict | get "chartUrl" false ) )) }}
+    version: "4.7.2"
+    {{- end }}
   cert-manager:
-    chart: jetstack/cert-manager
-    version: v1.13.0
+    {{- if ( .Values | get "cert-manager" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "cert-manager" | get "chartUrl" }}
+    {{- else }}
+    chart: "jetstack/cert-manager"
+    {{- end }}
     inherit:
-      - template: defaults
-  
+    - template: "defaults"
+    {{- if ( .Values | get "cert-manager" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "cert-manager" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "cert-manager" dict | get "chartVersion" false ) ( .Values | get "cert-manager" dict | get "chartUrl" false ) )) }}
+    version: "v1.13.0"
+    {{- end }}
   cert-manager-resources:
-    chart: graphops/resource-injector
-    version: 0.2.0
+    {{- if ( .Values | get "cert-manager-resources" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "cert-manager-resources" | get "chartUrl" }}
+    {{- else }}
+    chart: "graphops/resource-injector"
+    {{- end }}
     inherit:
-      - template: defaults
-  
+    - template: "defaults"
+    {{- if ( .Values | get "cert-manager-resources" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "cert-manager-resources" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "cert-manager-resources" dict | get "chartVersion" false ) ( .Values | get "cert-manager-resources" dict | get "chartUrl" false ) )) }}
+    version: "0.2.0"
+    {{- end }}
 releases:
   {{ if has "ingress" ( .Values | get "features" list ) }}
   {{- $release := "ingress-nginx" }}

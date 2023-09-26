@@ -25,6 +25,22 @@ info: {
 		labels?: {...} & #map
 		...
 	}
+
+	#releaseValues: {
+		// Merges passed values with namespace's defaults if true, overrides if false
+		mergeValues?: *true | bool
+		// Add annotations to resources on this release
+		annotations?: {...} & #map
+		// Adds helmfile labels to this release
+		labels?: {...} & #map
+		// Specify a specific chart version to use for this release
+		chartVersion?: string
+		// Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main)
+		chartUrl?: string
+		// Pass values to the release helm chart
+		values?: (#map) | [...#map]
+	}
+
 	#helmfiles: upstreamHelmfile
 
 	#labels: {}

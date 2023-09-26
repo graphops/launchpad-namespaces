@@ -95,23 +95,47 @@ templates:
       - template: transforms
   
   erigon:
-    chart: graphops/erigon
-    version: 0.6.1-canary.1
+    {{- if ( .Values | get "erigon" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "erigon" | get "chartUrl" }}
+    {{- else }}
+    chart: "graphops/erigon"
+    {{- end }}
     inherit:
-      - template: defaults
-  
+    - template: "defaults"
+    {{- if ( .Values | get "erigon" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "erigon" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "erigon" dict | get "chartVersion" false ) ( .Values | get "erigon" dict | get "chartUrl" false ) )) }}
+    version: "0.6.1-canary.1"
+    {{- end }}
   heimdall:
-    chart: graphops/heimdall
-    version: 1.1.1
+    {{- if ( .Values | get "heimdall" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "heimdall" | get "chartUrl" }}
+    {{- else }}
+    chart: "graphops/heimdall"
+    {{- end }}
     inherit:
-      - template: defaults
-  
+    - template: "defaults"
+    {{- if ( .Values | get "heimdall" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "heimdall" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "heimdall" dict | get "chartVersion" false ) ( .Values | get "heimdall" dict | get "chartUrl" false ) )) }}
+    version: "1.1.1"
+    {{- end }}
   proxyd:
-    chart: graphops/proxyd
-    version: 0.2.1
+    {{- if ( .Values | get "proxyd" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "proxyd" | get "chartUrl" }}
+    {{- else }}
+    chart: "graphops/proxyd"
+    {{- end }}
     inherit:
-      - template: defaults
-  
+    - template: "defaults"
+    {{- if ( .Values | get "proxyd" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "proxyd" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "proxyd" dict | get "chartVersion" false ) ( .Values | get "proxyd" dict | get "chartUrl" false ) )) }}
+    version: "0.2.1"
+    {{- end }}
 releases:
   {{- $release := "erigon" }}
   - name: 'erigon'

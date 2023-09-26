@@ -95,35 +95,75 @@ templates:
       - template: transforms
   
   graph-node:
-    chart: graphops/graph-node
-    version: 0.2.1
+    {{- if ( .Values | get "graph-node" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "graph-node" | get "chartUrl" }}
+    {{- else }}
+    chart: "graphops/graph-node"
+    {{- end }}
     inherit:
-      - template: defaults
-  
+    - template: "defaults"
+    {{- if ( .Values | get "graph-node" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "graph-node" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "graph-node" dict | get "chartVersion" false ) ( .Values | get "graph-node" dict | get "chartUrl" false ) )) }}
+    version: "0.2.1"
+    {{- end }}
   graph-network-indexer:
-    chart: graphops/graph-network-indexer
-    version: 0.2.1
+    {{- if ( .Values | get "graph-network-indexer" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "graph-network-indexer" | get "chartUrl" }}
+    {{- else }}
+    chart: "graphops/graph-network-indexer"
+    {{- end }}
     inherit:
-      - template: defaults
-  
+    - template: "defaults"
+    {{- if ( .Values | get "graph-network-indexer" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "graph-network-indexer" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "graph-network-indexer" dict | get "chartVersion" false ) ( .Values | get "graph-network-indexer" dict | get "chartUrl" false ) )) }}
+    version: "0.2.1"
+    {{- end }}
   graph-toolbox:
-    chart: graphops/graph-toolbox
-    version: 0.1.0
+    {{- if ( .Values | get "graph-toolbox" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "graph-toolbox" | get "chartUrl" }}
+    {{- else }}
+    chart: "graphops/graph-toolbox"
+    {{- end }}
     inherit:
-      - template: defaults
-  
+    - template: "defaults"
+    {{- if ( .Values | get "graph-toolbox" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "graph-toolbox" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "graph-toolbox" dict | get "chartVersion" false ) ( .Values | get "graph-toolbox" dict | get "chartUrl" false ) )) }}
+    version: "0.1.0"
+    {{- end }}
   graph-operator-mnemonic:
-    chart: graphops/resource-injector
-    version: 0.2.0
+    {{- if ( .Values | get "graph-operator-mnemonic" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "graph-operator-mnemonic" | get "chartUrl" }}
+    {{- else }}
+    chart: "graphops/resource-injector"
+    {{- end }}
     inherit:
-      - template: defaults
-  
+    - template: "defaults"
+    {{- if ( .Values | get "graph-operator-mnemonic" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "graph-operator-mnemonic" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "graph-operator-mnemonic" dict | get "chartVersion" false ) ( .Values | get "graph-operator-mnemonic" dict | get "chartUrl" false ) )) }}
+    version: "0.2.0"
+    {{- end }}
   graph-database:
-    chart: graphops/resource-injector
-    version: 0.2.0
+    {{- if ( .Values | get "graph-database" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "graph-database" | get "chartUrl" }}
+    {{- else }}
+    chart: "graphops/resource-injector"
+    {{- end }}
     inherit:
-      - template: defaults
-  
+    - template: "defaults"
+    {{- if ( .Values | get "graph-database" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "graph-database" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "graph-database" dict | get "chartVersion" false ) ( .Values | get "graph-database" dict | get "chartUrl" false ) )) }}
+    version: "0.2.0"
+    {{- end }}
 releases:
   {{- $release := "graph-node" }}
   - name: 'graph-node'
