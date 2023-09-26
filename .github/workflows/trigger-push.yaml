@@ -1,0 +1,67 @@
+
+name: Tag on Renovate Commits (Canary)
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  find-tags-to-release:
+    if: ${{ github.actor == 'graphops-renovate[bot]' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # for creating tags
+    outputs:
+      release-tags: ${{ steps.list-release-tags.outputs.release-tags }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor}}@users.noreply.github.com"
+
+      - name: Get list of changed namespaces
+        id: list-changed-namespaces
+        uses: tj-actions/changed-files@v35.9.2
+        with:
+          files: ./**/helmfile.yaml
+          dir_names: "true"
+          dir_names_max_depth: "1"
+
+      - name: List and create tags
+        id: list-release-tags
+        shell: bash
+        run: |
+          tags=()
+          for namespace_name in ${{ steps.list-changed-namespaces.outputs.all_modified_files }}; do
+            latest_version="$(git -c 'versionsort.suffix=-' tag --sort 'version:refname' --list "$namespace_name-*" | grep -Ev '.*-[[:digit:]]+.[[:digit:]]+.[[:digit:]]+-.*' | tail -n1)"
+
+            next_patch="$(echo "$latest_version" | sed -E 's/(.*-)?v?([[:digit:]]+).([[:digit:]]+).([[:digit:]]+)/echo \2.\3.$((\4 + 1))/e')"
+            last_pre_tag="$(git -c 'versionsort.suffix=-' tag --sort 'version:refname' --list "$namespace_name-$next_patch-*" | tail -n1)"
+            if [ -z "$last_pre_tag" ]; then
+              index=1
+            else
+              index=$(echo "$last_pre_tag" | sed -E 's/(.*-)?v?[[:digit:]]+.[[:digit:]]+.[[:digit:]]+-canary.([[:digit:]]+)(#.*)?/echo $((\2 + 1))/e')
+            fi
+            next_tag="$namespace_name-$next_patch-canary.$index"
+
+            tags+=("$next_tag")
+            git tag -a "$next_tag" -m "Release $next_tag"
+          done
+
+          git push --tags
+
+          echo "release-tags<<EOF" >> $GITHUB_OUTPUT
+          echo "$(jq -Rc '. / " "' <<< ${tags[*]})" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+  call-update-tags:
+    if: ${{ github.actor == 'graphops-renovate[bot]' }}
+    uses: ./.github/workflows/update-tags.yaml
+    permissions:
+      contents: write
