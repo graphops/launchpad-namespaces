@@ -48,12 +48,12 @@ package LaunchpadNamespaces
 		releases: {
 			"graph-node": {
 				chart: {_repositories.graphops.charts["graph-node"]}
-				_template: {version: "0.2.1"}
+				_template: {version: "0.3.0"}
 			}
 
 			"graph-network-indexer": {
 				chart: {_repositories.graphops.charts["graph-network-indexer"]}
-				_template: {version: "0.2.1"}
+				_template: {version: "0.2.2-canary.4"}
 			}
 
 			"graph-toolbox": {
