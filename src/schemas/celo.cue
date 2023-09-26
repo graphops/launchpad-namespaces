@@ -28,15 +28,10 @@ package LaunchpadNamespaces
 
 			flavor?: *"mainnet" | #flavor.#enum
 
-			#releaseValues: {
-				mergeValues?: *true | bool
-				values?:      (#map) | [...#map]
-			}
-
 			// For overriding this release's values
 			for key, _ in releases {
 				// For overriding this release's values
-				(key)?: #releaseValues
+				(key)?: #base.#releaseValues
 			}
 		}
 

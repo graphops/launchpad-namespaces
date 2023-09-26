@@ -108,14 +108,22 @@ helmfiles:
 | :--- | :---: | :--- | :--- |
 annotations | object |  | Add annotations to releases on this namespace |
 celo | object |  |  |
-celo.mergeValues | boolean | true |  |
-celo.values | (object *or* list of objects) |  |  |
+celo.annotations | object |  | Add annotations to resources on this release |
+celo.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
+celo.chartVersion | string |  | Specify a specific chart version to use for this release |
+celo.labels | object |  | Adds helmfile labels to this release |
+celo.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+celo.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 flavor | string |  | suitable defaults for a mainnet archive node |
 kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
 labels | object |  | Adds labels to releases on this namespace |
 proxyd | object |  |  |
-proxyd.mergeValues | boolean | true |  |
-proxyd.values | (object *or* list of objects) |  |  |
+proxyd.annotations | object |  | Add annotations to resources on this release |
+proxyd.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
+proxyd.chartVersion | string |  | Specify a specific chart version to use for this release |
+proxyd.labels | object |  | Adds helmfile labels to this release |
+proxyd.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+proxyd.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 targetNamespace | string | celo-mainnet | the default is celo-<flavor> |
 helmDefaults | object |  |  |
 helmDefaults.args | list of strings |  |  |

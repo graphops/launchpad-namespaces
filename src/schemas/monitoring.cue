@@ -27,15 +27,10 @@ package LaunchpadNamespaces
 
 			features?: *[#features.#metrics, #features.#logs] | [...#features.#enum]
 
-			#releaseValues: {
-				mergeValues?: *true | bool
-				values?:      (#map) | [...#map]
-			}
-
 			// For overriding this release's values
 			for key, _ in releases {
 				// For overriding this release's values
-				(key)?: #releaseValues
+				(key)?: #base.#releaseValues
 			}
 		}
 

@@ -525,6 +525,56 @@
             "base.labels": {
                 "type": "object"
             },
+            "base.releaseValues": {
+                "type": "object",
+                "properties": {
+                    "mergeValues": {
+                        "description": "Merges passed values with namespace's defaults if true, overrides if false",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "annotations": {
+                        "description": "Add annotations to resources on this release",
+                        "type": "object",
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/map"
+                            }
+                        ]
+                    },
+                    "labels": {
+                        "description": "Adds helmfile labels to this release",
+                        "type": "object",
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/map"
+                            }
+                        ]
+                    },
+                    "chartVersion": {
+                        "description": "Specify a specific chart version to use for this release",
+                        "type": "string"
+                    },
+                    "chartUrl": {
+                        "description": "Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main)",
+                        "type": "string"
+                    },
+                    "values": {
+                        "description": "Pass values to the release helm chart",
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/map"
+                            },
+                            {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/map"
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
             "base.values": {
                 "description": "Base namespace values interface schema",
                 "type": "object",
@@ -955,17 +1005,17 @@
                         "type": "string",
                         "default": "arbitrum-mainnet"
                     },
+                    "arbitrum-nitro": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
+                    "arbitrum-classic": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
                     "flavor": {
                         "$ref": "#/components/schemas/namespaces.arbitrum.flavor.enum"
                     },
-                    "arbitrum-nitro": {
-                        "$ref": "#/components/schemas/namespaces.arbitrum.values.releaseValues"
-                    },
-                    "arbitrum-classic": {
-                        "$ref": "#/components/schemas/namespaces.arbitrum.values.releaseValues"
-                    },
                     "proxyd": {
-                        "$ref": "#/components/schemas/namespaces.arbitrum.values.releaseValues"
+                        "$ref": "#/components/schemas/base.releaseValues"
                     }
                 },
                 "allOf": [
@@ -973,28 +1023,6 @@
                         "$ref": "#/components/schemas/base.values"
                     }
                 ]
-            },
-            "namespaces.arbitrum.values.releaseValues": {
-                "type": "object",
-                "properties": {
-                    "mergeValues": {
-                        "type": "boolean",
-                        "default": true
-                    },
-                    "values": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/map"
-                            },
-                            {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/components/schemas/map"
-                                }
-                            }
-                        ]
-                    }
-                }
             },
             "namespaces.avalanche": {
                 "description": "Avalanche *Namespace*",
@@ -1206,14 +1234,14 @@
                         "type": "string",
                         "default": "avalanche-mainnet"
                     },
+                    "avalanche": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
                     "flavor": {
                         "$ref": "#/components/schemas/namespaces.avalanche.flavor.enum"
                     },
-                    "avalanche": {
-                        "$ref": "#/components/schemas/namespaces.avalanche.values.releaseValues"
-                    },
                     "proxyd": {
-                        "$ref": "#/components/schemas/namespaces.avalanche.values.releaseValues"
+                        "$ref": "#/components/schemas/base.releaseValues"
                     }
                 },
                 "allOf": [
@@ -1221,28 +1249,6 @@
                         "$ref": "#/components/schemas/base.values"
                     }
                 ]
-            },
-            "namespaces.avalanche.values.releaseValues": {
-                "type": "object",
-                "properties": {
-                    "mergeValues": {
-                        "type": "boolean",
-                        "default": true
-                    },
-                    "values": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/map"
-                            },
-                            {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/components/schemas/map"
-                                }
-                            }
-                        ]
-                    }
-                }
             },
             "namespaces.celo": {
                 "description": "Celo *Namespace*",
@@ -1454,14 +1460,14 @@
                         "type": "string",
                         "default": "celo-mainnet"
                     },
+                    "celo": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
                     "flavor": {
                         "$ref": "#/components/schemas/namespaces.celo.flavor.enum"
                     },
-                    "celo": {
-                        "$ref": "#/components/schemas/namespaces.celo.values.releaseValues"
-                    },
                     "proxyd": {
-                        "$ref": "#/components/schemas/namespaces.celo.values.releaseValues"
+                        "$ref": "#/components/schemas/base.releaseValues"
                     }
                 },
                 "allOf": [
@@ -1469,28 +1475,6 @@
                         "$ref": "#/components/schemas/base.values"
                     }
                 ]
-            },
-            "namespaces.celo.values.releaseValues": {
-                "type": "object",
-                "properties": {
-                    "mergeValues": {
-                        "type": "boolean",
-                        "default": true
-                    },
-                    "values": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/map"
-                            },
-                            {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/components/schemas/map"
-                                }
-                            }
-                        ]
-                    }
-                }
             },
             "namespaces.ethereum": {
                 "description": "Ethereum *Namespace*",
@@ -1800,17 +1784,17 @@
                             "proxyd"
                         ]
                     },
+                    "erigon": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
+                    "nimbus": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
                     "flavor": {
                         "$ref": "#/components/schemas/namespaces.ethereum.flavor.enum"
                     },
-                    "erigon": {
-                        "$ref": "#/components/schemas/namespaces.ethereum.values.releaseValues"
-                    },
-                    "nimbus": {
-                        "$ref": "#/components/schemas/namespaces.ethereum.values.releaseValues"
-                    },
                     "proxyd": {
-                        "$ref": "#/components/schemas/namespaces.ethereum.values.releaseValues"
+                        "$ref": "#/components/schemas/base.releaseValues"
                     }
                 },
                 "allOf": [
@@ -1818,28 +1802,6 @@
                         "$ref": "#/components/schemas/base.values"
                     }
                 ]
-            },
-            "namespaces.ethereum.values.releaseValues": {
-                "type": "object",
-                "properties": {
-                    "mergeValues": {
-                        "type": "boolean",
-                        "default": true
-                    },
-                    "values": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/map"
-                            },
-                            {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/components/schemas/map"
-                                }
-                            }
-                        ]
-                    }
-                }
             },
             "namespaces.gnosis": {
                 "description": "Gnosis *Namespace*",
@@ -2095,17 +2057,17 @@
                         "type": "string",
                         "default": "gnosis-mainnet"
                     },
+                    "nethermind": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
+                    "nimbus": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
                     "flavor": {
                         "$ref": "#/components/schemas/namespaces.gnosis.flavor.enum"
                     },
-                    "nethermind": {
-                        "$ref": "#/components/schemas/namespaces.gnosis.values.releaseValues"
-                    },
-                    "nimbus": {
-                        "$ref": "#/components/schemas/namespaces.gnosis.values.releaseValues"
-                    },
                     "proxyd": {
-                        "$ref": "#/components/schemas/namespaces.gnosis.values.releaseValues"
+                        "$ref": "#/components/schemas/base.releaseValues"
                     }
                 },
                 "allOf": [
@@ -2113,28 +2075,6 @@
                         "$ref": "#/components/schemas/base.values"
                     }
                 ]
-            },
-            "namespaces.gnosis.values.releaseValues": {
-                "type": "object",
-                "properties": {
-                    "mergeValues": {
-                        "type": "boolean",
-                        "default": true
-                    },
-                    "values": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/map"
-                            },
-                            {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/components/schemas/map"
-                                }
-                            }
-                        ]
-                    }
-                }
             },
             "namespaces.graph": {
                 "description": "Graph *Namespace*",
@@ -2489,23 +2429,23 @@
                         "type": "string",
                         "default": "graph-mainnet"
                     },
+                    "graph-node": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
+                    "graph-network-indexer": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
+                    "graph-toolbox": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
+                    "graph-operator-mnemonic": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
                     "flavor": {
                         "$ref": "#/components/schemas/namespaces.graph.flavor.enum"
                     },
-                    "graph-node": {
-                        "$ref": "#/components/schemas/namespaces.graph.values.releaseValues"
-                    },
-                    "graph-network-indexer": {
-                        "$ref": "#/components/schemas/namespaces.graph.values.releaseValues"
-                    },
-                    "graph-toolbox": {
-                        "$ref": "#/components/schemas/namespaces.graph.values.releaseValues"
-                    },
-                    "graph-operator-mnemonic": {
-                        "$ref": "#/components/schemas/namespaces.graph.values.releaseValues"
-                    },
                     "graph-database": {
-                        "$ref": "#/components/schemas/namespaces.graph.values.releaseValues"
+                        "$ref": "#/components/schemas/base.releaseValues"
                     }
                 },
                 "allOf": [
@@ -2513,28 +2453,6 @@
                         "$ref": "#/components/schemas/base.values"
                     }
                 ]
-            },
-            "namespaces.graph.values.releaseValues": {
-                "type": "object",
-                "properties": {
-                    "mergeValues": {
-                        "type": "boolean",
-                        "default": true
-                    },
-                    "values": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/map"
-                            },
-                            {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/components/schemas/map"
-                                }
-                            }
-                        ]
-                    }
-                }
             },
             "namespaces.ingress": {
                 "type": "object",
@@ -2817,6 +2735,12 @@
                         "type": "string",
                         "default": "ingress"
                     },
+                    "ingress-nginx": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
+                    "cert-manager": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
                     "features": {
                         "type": "array",
                         "items": {
@@ -2827,14 +2751,8 @@
                             "cert-manager"
                         ]
                     },
-                    "ingress-nginx": {
-                        "$ref": "#/components/schemas/namespaces.ingress.values.releaseValues"
-                    },
-                    "cert-manager": {
-                        "$ref": "#/components/schemas/namespaces.ingress.values.releaseValues"
-                    },
                     "cert-manager-resources": {
-                        "$ref": "#/components/schemas/namespaces.ingress.values.releaseValues"
+                        "$ref": "#/components/schemas/base.releaseValues"
                     }
                 },
                 "allOf": [
@@ -2842,28 +2760,6 @@
                         "$ref": "#/components/schemas/base.values"
                     }
                 ]
-            },
-            "namespaces.ingress.values.releaseValues": {
-                "type": "object",
-                "properties": {
-                    "mergeValues": {
-                        "type": "boolean",
-                        "default": true
-                    },
-                    "values": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/map"
-                            },
-                            {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/components/schemas/map"
-                                }
-                            }
-                        ]
-                    }
-                }
             },
             "namespaces.monitoring": {
                 "type": "object",
@@ -3195,6 +3091,15 @@
                         "type": "string",
                         "default": "monitoring"
                     },
+                    "kube-prometheus-stack": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
+                    "node-problem-detector": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
+                    "loki": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
                     "features": {
                         "type": "array",
                         "items": {
@@ -3205,17 +3110,8 @@
                             "logs"
                         ]
                     },
-                    "kube-prometheus-stack": {
-                        "$ref": "#/components/schemas/namespaces.monitoring.values.releaseValues"
-                    },
-                    "node-problem-detector": {
-                        "$ref": "#/components/schemas/namespaces.monitoring.values.releaseValues"
-                    },
-                    "loki": {
-                        "$ref": "#/components/schemas/namespaces.monitoring.values.releaseValues"
-                    },
                     "promtail": {
-                        "$ref": "#/components/schemas/namespaces.monitoring.values.releaseValues"
+                        "$ref": "#/components/schemas/base.releaseValues"
                     }
                 },
                 "allOf": [
@@ -3223,28 +3119,6 @@
                         "$ref": "#/components/schemas/base.values"
                     }
                 ]
-            },
-            "namespaces.monitoring.values.releaseValues": {
-                "type": "object",
-                "properties": {
-                    "mergeValues": {
-                        "type": "boolean",
-                        "default": true
-                    },
-                    "values": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/map"
-                            },
-                            {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/components/schemas/map"
-                                }
-                            }
-                        ]
-                    }
-                }
             },
             "namespaces.polygon": {
                 "description": "Polygon *Namespace*",
@@ -3500,17 +3374,17 @@
                         "type": "string",
                         "default": "polygon-mainnet"
                     },
+                    "erigon": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
+                    "heimdall": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
                     "flavor": {
                         "$ref": "#/components/schemas/namespaces.polygon.flavor.enum"
                     },
-                    "erigon": {
-                        "$ref": "#/components/schemas/namespaces.polygon.values.releaseValues"
-                    },
-                    "heimdall": {
-                        "$ref": "#/components/schemas/namespaces.polygon.values.releaseValues"
-                    },
                     "proxyd": {
-                        "$ref": "#/components/schemas/namespaces.polygon.values.releaseValues"
+                        "$ref": "#/components/schemas/base.releaseValues"
                     }
                 },
                 "allOf": [
@@ -3518,28 +3392,6 @@
                         "$ref": "#/components/schemas/base.values"
                     }
                 ]
-            },
-            "namespaces.polygon.values.releaseValues": {
-                "type": "object",
-                "properties": {
-                    "mergeValues": {
-                        "type": "boolean",
-                        "default": true
-                    },
-                    "values": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/map"
-                            },
-                            {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/components/schemas/map"
-                                }
-                            }
-                        ]
-                    }
-                }
             },
             "namespaces.postgresOperator": {
                 "type": "object",
@@ -3699,7 +3551,7 @@
                         "default": "postgres-operator"
                     },
                     "postgres-operator": {
-                        "$ref": "#/components/schemas/namespaces.postgresOperator.values.releaseValues"
+                        "$ref": "#/components/schemas/base.releaseValues"
                     }
                 },
                 "allOf": [
@@ -3707,28 +3559,6 @@
                         "$ref": "#/components/schemas/base.values"
                     }
                 ]
-            },
-            "namespaces.postgresOperator.values.releaseValues": {
-                "type": "object",
-                "properties": {
-                    "mergeValues": {
-                        "type": "boolean",
-                        "default": true
-                    },
-                    "values": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/map"
-                            },
-                            {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/components/schemas/map"
-                                }
-                            }
-                        ]
-                    }
-                }
             },
             "namespaces.sealedSecrets": {
                 "type": "object",
@@ -3888,7 +3718,7 @@
                         "default": "sealed-secrets"
                     },
                     "sealed-secrets": {
-                        "$ref": "#/components/schemas/namespaces.sealedSecrets.values.releaseValues"
+                        "$ref": "#/components/schemas/base.releaseValues"
                     }
                 },
                 "allOf": [
@@ -3896,28 +3726,6 @@
                         "$ref": "#/components/schemas/base.values"
                     }
                 ]
-            },
-            "namespaces.sealedSecrets.values.releaseValues": {
-                "type": "object",
-                "properties": {
-                    "mergeValues": {
-                        "type": "boolean",
-                        "default": true
-                    },
-                    "values": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/map"
-                            },
-                            {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/components/schemas/map"
-                                }
-                            }
-                        ]
-                    }
-                }
             },
             "namespaces.storage": {
                 "type": "object",
@@ -4347,6 +4155,21 @@
                         "type": "string",
                         "default": "storage"
                     },
+                    "openebs": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
+                    "openebs-rawfile-localpv": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
+                    "openebs-rawfile-storageclass": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
+                    "openebs-zfs-localpv": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
+                    "openebs-zfs-storageclass": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
                     "features": {
                         "type": "array",
                         "items": {
@@ -4356,23 +4179,8 @@
                             "rawfile"
                         ]
                     },
-                    "openebs": {
-                        "$ref": "#/components/schemas/namespaces.storage.values.releaseValues"
-                    },
-                    "openebs-rawfile-localpv": {
-                        "$ref": "#/components/schemas/namespaces.storage.values.releaseValues"
-                    },
-                    "openebs-rawfile-storageclass": {
-                        "$ref": "#/components/schemas/namespaces.storage.values.releaseValues"
-                    },
-                    "openebs-zfs-localpv": {
-                        "$ref": "#/components/schemas/namespaces.storage.values.releaseValues"
-                    },
-                    "openebs-zfs-storageclass": {
-                        "$ref": "#/components/schemas/namespaces.storage.values.releaseValues"
-                    },
                     "openebs-zfs-snapclass": {
-                        "$ref": "#/components/schemas/namespaces.storage.values.releaseValues"
+                        "$ref": "#/components/schemas/base.releaseValues"
                     }
                 },
                 "allOf": [
@@ -4380,28 +4188,6 @@
                         "$ref": "#/components/schemas/base.values"
                     }
                 ]
-            },
-            "namespaces.storage.values.releaseValues": {
-                "type": "object",
-                "properties": {
-                    "mergeValues": {
-                        "type": "boolean",
-                        "default": true
-                    },
-                    "values": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/map"
-                            },
-                            {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/components/schemas/map"
-                                }
-                            }
-                        ]
-                    }
-                }
             },
             "repositories": {
                 "type": "object",

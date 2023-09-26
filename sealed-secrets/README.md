@@ -108,8 +108,12 @@ annotations | object |  | Add annotations to releases on this namespace |
 kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
 labels | object |  | Adds labels to releases on this namespace |
 sealed&#8209;secrets | object |  |  |
-sealed&#8209;secrets.mergeValues | boolean | true |  |
-sealed&#8209;secrets.values | (object *or* list of objects) |  |  |
+sealed&#8209;secrets.annotations | object |  | Add annotations to resources on this release |
+sealed&#8209;secrets.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
+sealed&#8209;secrets.chartVersion | string |  | Specify a specific chart version to use for this release |
+sealed&#8209;secrets.labels | object |  | Adds helmfile labels to this release |
+sealed&#8209;secrets.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+sealed&#8209;secrets.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 targetNamespace | string | sealed-secrets | Sets the cluster namespace in which the releases will be deployed |
 helmDefaults | object |  |  |
 helmDefaults.args | list of strings |  |  |
