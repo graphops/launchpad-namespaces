@@ -12,16 +12,21 @@
 {{ end }}
 
 #set default number of deployments when missing
-{{ if not ( hasKey .Values "deployments" ) }}
-{{ $_ := set .Values "deployments" 1 }}
+{{ if not ( hasKey .Values  "scaling" ) }}
+{{ $_ := set .Values "scaling" dict }}
+{{ end }}
+{{ if not ( hasKey ( .Values | get "scaling" dict ) "deployments" ) }}
+{{ $_ := set .Values.scaling "deployments" 1 }}
 {{ end }}
 
 environments:
-  default:
+  {{ .Environment.Name }}:
     values:
-    - flavor: {{ .Values.flavor }}
-    - features: {{ .Values.features | toYaml | nindent 10 }}
-    - deployments: {{ .Values.deployments }}
+      - flavor: {{ .Values.flavor }}
+      - features: {{ .Values.features | toYaml | nindent 10 }}
+      - scaling:
+          deployments: {{ .Values.scaling.deployments }}
+
 ---
 {{- $_tplTransforms := `
 {{- $_TemplatedResources := list "Deployment" "StatefulSet" "DaemonSet" -}}
@@ -166,7 +171,7 @@ templates:
     {{- end }}
 releases:
   {{- $canonicalRelease := "erigon" }}
-  {{- range $index := until .Values.deployments }}
+  {{- range $index := until .Values.scaling.deployments }}
   {{- $deploymentIndex := (add . 1) }}
   {{- $release := (printf "%s%v" "erigon-" $deploymentIndex) }}
   - name: "{{ $release }}"
@@ -177,7 +182,7 @@ releases:
   {{- end -}}
   {{ if has "nimbus" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "nimbus" }}
-  {{- range $index := until .Values.deployments }}
+  {{- range $index := until .Values.scaling.deployments }}
   {{- $deploymentIndex := (add . 1) }}
   {{- $release := (printf "%s%v" "nimbus-" $deploymentIndex) }}
   - name: "{{ $release }}"

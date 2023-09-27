@@ -33,8 +33,13 @@ package LaunchpadNamespaces
 			#enum: ( #nimbus | #proxyd )
 		}
 
-		// ethereum scaling
-		#deployments: *1 | int
+		// ethereum scaling interface
+		#scaling: {
+			// number of independent stateful sets to deploy
+			deployments: *1 | int
+			// A beggining port for the range to use in P2P NodePorts
+			startP2PPort?: int
+		}
 
 		// ethereum namespace values schema
 		#values: #base.#values & {
@@ -47,7 +52,7 @@ package LaunchpadNamespaces
 
 			flavor?: *"mainnet" | #flavor.#enum
 
-			deployments?: #deployments
+			scaling?: #scaling
 
 			// For overriding this release's values
 			for key, _ in releases {

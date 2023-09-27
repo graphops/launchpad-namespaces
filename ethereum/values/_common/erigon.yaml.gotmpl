@@ -1,3 +1,5 @@
+{{ $scalingIndex := splitList "-" .Release.Name | last }}
+
 statefulNode:
   jwt:
     # Generate me with: openssl rand -hex 32
@@ -12,6 +14,10 @@ statefulNode:
   volumeClaimSpec:
     # -- The storage class to use when provisioning a persistent volume for Erigon
     storageClassName: openebs-rawfile-localpv # change me if desired
+{{- if (hasKey .Values.scaling "p2pStartPort") }}
+  p2pNodePort:
+    port: {{ add (mul (sub $scalingIndex 1) 2) .Values.scaling.p2pStartPort }}
+{{- end }}
 
 rpcdaemon:
   enabled: true

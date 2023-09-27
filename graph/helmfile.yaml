@@ -6,9 +6,10 @@
 
 
 environments:
-  default:
+  {{ .Environment.Name }}:
     values:
-    - flavor: {{ .Values.flavor }}
+      - flavor: {{ .Values.flavor }}
+
 ---
 {{- $_tplTransforms := `
 {{- $_TemplatedResources := list "Deployment" "StatefulSet" "DaemonSet" -}}

@@ -2,8 +2,8 @@
 
 
 environments:
-  default:
-    values:
+  {{ .Environment.Name }}:
+    values: []
 
 ---
 {{- $_tplTransforms := `

@@ -8,9 +8,10 @@
 
 
 environments:
-  default:
+  {{ .Environment.Name }}:
     values:
-    - features: {{ .Values.features | toYaml | nindent 10 }}
+      - features: {{ .Values.features | toYaml | nindent 10 }}
+
 ---
 {{- $_tplTransforms := `
 {{- $_TemplatedResources := list "Deployment" "StatefulSet" "DaemonSet" -}}
