@@ -542,6 +542,15 @@
                             }
                         ]
                     },
+                    "resourceLabels": {
+                        "description": "Adds labels to resources on this release",
+                        "type": "object",
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/map"
+                            }
+                        ]
+                    },
                     "labels": {
                         "description": "Adds helmfile labels to this release",
                         "type": "object",
@@ -594,7 +603,16 @@
                         "type": "string"
                     },
                     "annotations": {
-                        "description": "Add annotations to releases on this namespace",
+                        "description": "Add annotations to release resources on this namespace",
+                        "type": "object",
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/map"
+                            }
+                        ]
+                    },
+                    "resourceLabels": {
+                        "description": "Adds labels to release resources on this namespace",
                         "type": "object",
                         "allOf": [
                             {
@@ -603,7 +621,7 @@
                         ]
                     },
                     "labels": {
-                        "description": "Adds labels to releases on this namespace",
+                        "description": "Adds helmfile labels to releases on this namespace",
                         "type": "object",
                         "allOf": [
                             {
@@ -1524,7 +1542,8 @@
                             "erigon": {
                                 "type": "object",
                                 "required": [
-                                    "chart"
+                                    "chart",
+                                    "labels"
                                 ],
                                 "properties": {
                                     "chart": {
@@ -1558,6 +1577,20 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "erigon"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "labels": {
+                                        "type": "object",
+                                        "required": [
+                                            "my.test.key"
+                                        ],
+                                        "properties": {
+                                            "my.test.key": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "blockchain"
                                                 ]
                                             }
                                         }

@@ -241,7 +241,7 @@ _helmfile: {
 
 		out: strings.Join([
 			commonLabels,
-			"{{ $_labels := dict ",
+			"{{ $_commonLabels := dict ",
 			dictLabels,
 			"}}",
 		], "\n")
@@ -249,23 +249,12 @@ _helmfile: {
 
 	_#templates: {
 		this=_namespace: string
-		_blocks: {
-			transforms: """
-				transforms:
-				  {{ tpl $_tplTransforms (dict
-				  "annotations" ( .Values | get "annotations" dict)
-				  "labels" ( merge $_labels ( .Values | get "labels" dict) )
-				  ) | nindent 4 }}
-
-				"""
-		}
 		_default: {
 			defaults: {
 				_defaults.releases
 				namespace: """
 					{{ .Values | get "targetNamespace" $_defaultNamespace }}
 					"""
-				inherit: [ {template: "transforms"}]
 			}
 		}
 		_blocks: {
@@ -323,14 +312,22 @@ _helmfile: {
 	}
 
 	_#release: {
-		this=_release: string
-		scale=_scale:  *false | bool
+		this=_releaseName: string
+		_releaseLabels:    *"labels:" | string
+		scale=_scale:      *false | bool
 
 		_blocks: {
 			release: """
 				- name: "{{ $release }}"
 				  inherit:
 				  - template: "{{ $canonicalRelease }}"
+				  {{- tpl $_tplTransforms (dict "Values" .Values "release" $release "commonLabels" $_commonLabels )  | indent 4 -}}
+				  {{- if ( .Values | get $release dict | get "labels" false ) }}
+				  \(_releaseLabels)
+				  {{- range $key,$value := ( .Values | get $release dict | get "labels" dict ) }}
+				    {{ $key }}: {{ $value }}
+				  {{- end }}
+				  {{- end }}
 				  values:
 				  {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
 				"""
@@ -367,7 +364,7 @@ _helmfile: {
 		for releaseName, release in _namespaces[this].releases {
 			_props: {"\(releaseName)": {#properties: {
 				...
-				_release: releaseName
+				_releaseName: releaseName
 			}}}
 			if _namespaces[this].values.scaling.deployments != _|_ {if release._scale {
 				_props: {"\(releaseName)": {#properties: {
@@ -375,6 +372,14 @@ _helmfile: {
 					_scale: true
 				}}}
 			}}
+			if release.labels != _|_ {
+				_props: {"\(releaseName)": {#properties: {
+					...
+					_labels:         yaml.Marshal({for key, value in release.labels {"\(key)": value}})
+					_indentedLabels: strings.Join([ for line in strings.Split(_labels, "\n") {"    " + line}], "\n")
+					_releaseLabels:  strings.Join(["labels:", _indentedLabels], "\n")
+				}}}
+			}
 
 			temp = "_\(releaseName)": _#release & {
 				...
@@ -409,40 +414,42 @@ _helmfile: {
 
 _templateBlocks: {
 	transforms: """
-		{{- $_tplTransforms := `
+		{{- $_tplTransforms := (print `
 		{{- $_TemplatedResources := list "Deployment" "StatefulSet" "DaemonSet" -}}
+		{{- $_labels := merge ( .Values | get .release dict | get "resourceLabels" dict ) ( .Values | get "labels" dict ) ( .commonLabels ) }}
+		{{- $_annotations := merge ( .Values | get .release dict | get "annotations" dict ) ( .Values | get "annotations" dict ) }}
 		transformers:
 		- apiVersion: builtin
 		  kind: AnnotationsTransformer
 		  metadata:
 		    name: AddAnnotations
 		  annotations:
-		  {{- . | get "annotations" dict | toYaml | nindent 6 }}
+		{{- $_annotations | toYaml | nindent 4 }}
 		  fieldSpecs:
 		  - path: metadata/annotations
 		    create: true
-		  {{- range $kind := $_TemplatedResources }}
+		{{- range $kind := $_TemplatedResources }}
 		  - kind: {{ $kind }}
 		    path: spec/template/metadata/annotations
 		    create: true
-		  {{- end }}
+		{{- end }}
 		- apiVersion: builtin
 		  kind: LabelTransformer
 		  metadata:
 		    name: AddLabels
 		  labels:
-		  {{- . | get "labels" dict | toYaml | nindent 6 }}
+		{{- $_labels | toYaml | nindent 4 }}
 		  fieldSpecs:
 		  - path: metadata/labels
 		    create: true
-		  {{- range $kind := $_TemplatedResources }}
+		{{- range $kind := $_TemplatedResources }}
 		  - kind: {{ $kind }}
 		    path: spec/template/metadata/labels
 		    create: true
-		  {{- end }}
-		` -}}
-
+		{{- end }}
+		`) -}}
 		"""
+
 	releaseValues: """
 		{{- $_tplReleaseValues := (print `
 		{{- if ( .Values | get .release dict | get "mergeValues" true ) -}}

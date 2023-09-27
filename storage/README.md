@@ -115,16 +115,17 @@ helmfiles:
 
 | Key | Type | Default | Description |
 | :--- | :---: | :--- | :--- |
-annotations | object |  | Add annotations to releases on this namespace |
+annotations | object |  | Add annotations to release resources on this namespace |
 features | list of strings | [rawfile] | *enum of:&nbsp;&nbsp;(zfs \| rawfile)* |
 kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
-labels | object |  | Adds labels to releases on this namespace |
+labels | object |  | Adds helmfile labels to releases on this namespace |
 openebs | object |  |  |
 openebs.annotations | object |  | Add annotations to resources on this release |
 openebs.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
 openebs.chartVersion | string |  | Specify a specific chart version to use for this release |
 openebs.labels | object |  | Adds helmfile labels to this release |
 openebs.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+openebs.resourceLabels | object |  | Adds labels to resources on this release |
 openebs.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 openebs&#8209;rawfile&#8209;localpv | object |  |  |
 openebs&#8209;rawfile&#8209;localpv.annotations | object |  | Add annotations to resources on this release |
@@ -132,6 +133,7 @@ openebs&#8209;rawfile&#8209;localpv.chartUrl | string |  | Override this release
 openebs&#8209;rawfile&#8209;localpv.chartVersion | string |  | Specify a specific chart version to use for this release |
 openebs&#8209;rawfile&#8209;localpv.labels | object |  | Adds helmfile labels to this release |
 openebs&#8209;rawfile&#8209;localpv.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+openebs&#8209;rawfile&#8209;localpv.resourceLabels | object |  | Adds labels to resources on this release |
 openebs&#8209;rawfile&#8209;localpv.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 openebs&#8209;rawfile&#8209;storageclass | object |  |  |
 openebs&#8209;rawfile&#8209;storageclass.annotations | object |  | Add annotations to resources on this release |
@@ -139,6 +141,7 @@ openebs&#8209;rawfile&#8209;storageclass.chartUrl | string |  | Override this re
 openebs&#8209;rawfile&#8209;storageclass.chartVersion | string |  | Specify a specific chart version to use for this release |
 openebs&#8209;rawfile&#8209;storageclass.labels | object |  | Adds helmfile labels to this release |
 openebs&#8209;rawfile&#8209;storageclass.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+openebs&#8209;rawfile&#8209;storageclass.resourceLabels | object |  | Adds labels to resources on this release |
 openebs&#8209;rawfile&#8209;storageclass.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 openebs&#8209;zfs&#8209;localpv | object |  |  |
 openebs&#8209;zfs&#8209;localpv.annotations | object |  | Add annotations to resources on this release |
@@ -146,6 +149,7 @@ openebs&#8209;zfs&#8209;localpv.chartUrl | string |  | Override this release's c
 openebs&#8209;zfs&#8209;localpv.chartVersion | string |  | Specify a specific chart version to use for this release |
 openebs&#8209;zfs&#8209;localpv.labels | object |  | Adds helmfile labels to this release |
 openebs&#8209;zfs&#8209;localpv.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+openebs&#8209;zfs&#8209;localpv.resourceLabels | object |  | Adds labels to resources on this release |
 openebs&#8209;zfs&#8209;localpv.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 openebs&#8209;zfs&#8209;snapclass | object |  |  |
 openebs&#8209;zfs&#8209;snapclass.annotations | object |  | Add annotations to resources on this release |
@@ -153,6 +157,7 @@ openebs&#8209;zfs&#8209;snapclass.chartUrl | string |  | Override this release's
 openebs&#8209;zfs&#8209;snapclass.chartVersion | string |  | Specify a specific chart version to use for this release |
 openebs&#8209;zfs&#8209;snapclass.labels | object |  | Adds helmfile labels to this release |
 openebs&#8209;zfs&#8209;snapclass.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+openebs&#8209;zfs&#8209;snapclass.resourceLabels | object |  | Adds labels to resources on this release |
 openebs&#8209;zfs&#8209;snapclass.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 openebs&#8209;zfs&#8209;storageclass | object |  |  |
 openebs&#8209;zfs&#8209;storageclass.annotations | object |  | Add annotations to resources on this release |
@@ -160,7 +165,9 @@ openebs&#8209;zfs&#8209;storageclass.chartUrl | string |  | Override this releas
 openebs&#8209;zfs&#8209;storageclass.chartVersion | string |  | Specify a specific chart version to use for this release |
 openebs&#8209;zfs&#8209;storageclass.labels | object |  | Adds helmfile labels to this release |
 openebs&#8209;zfs&#8209;storageclass.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+openebs&#8209;zfs&#8209;storageclass.resourceLabels | object |  | Adds labels to resources on this release |
 openebs&#8209;zfs&#8209;storageclass.values | (object *or* list of objects) |  | Pass values to the release helm chart |
+resourceLabels | object |  | Adds labels to release resources on this namespace |
 targetNamespace | string | storage | Sets the cluster namespace in which the releases will be deployed |
 helmDefaults | object |  |  |
 helmDefaults.args | list of strings |  |  |

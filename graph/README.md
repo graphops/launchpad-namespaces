@@ -113,7 +113,7 @@ helmfiles:
 
 | Key | Type | Default | Description |
 | :--- | :---: | :--- | :--- |
-annotations | object |  | Add annotations to releases on this namespace |
+annotations | object |  | Add annotations to release resources on this namespace |
 flavor | string |  |  |
 graph&#8209;database | object |  |  |
 graph&#8209;database.annotations | object |  | Add annotations to resources on this release |
@@ -121,6 +121,7 @@ graph&#8209;database.chartUrl | string |  | Override this release's chart URL (i
 graph&#8209;database.chartVersion | string |  | Specify a specific chart version to use for this release |
 graph&#8209;database.labels | object |  | Adds helmfile labels to this release |
 graph&#8209;database.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+graph&#8209;database.resourceLabels | object |  | Adds labels to resources on this release |
 graph&#8209;database.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 graph&#8209;network&#8209;indexer | object |  |  |
 graph&#8209;network&#8209;indexer.annotations | object |  | Add annotations to resources on this release |
@@ -128,6 +129,7 @@ graph&#8209;network&#8209;indexer.chartUrl | string |  | Override this release's
 graph&#8209;network&#8209;indexer.chartVersion | string |  | Specify a specific chart version to use for this release |
 graph&#8209;network&#8209;indexer.labels | object |  | Adds helmfile labels to this release |
 graph&#8209;network&#8209;indexer.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+graph&#8209;network&#8209;indexer.resourceLabels | object |  | Adds labels to resources on this release |
 graph&#8209;network&#8209;indexer.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 graph&#8209;node | object |  |  |
 graph&#8209;node.annotations | object |  | Add annotations to resources on this release |
@@ -135,6 +137,7 @@ graph&#8209;node.chartUrl | string |  | Override this release's chart URL (i.e: 
 graph&#8209;node.chartVersion | string |  | Specify a specific chart version to use for this release |
 graph&#8209;node.labels | object |  | Adds helmfile labels to this release |
 graph&#8209;node.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+graph&#8209;node.resourceLabels | object |  | Adds labels to resources on this release |
 graph&#8209;node.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 graph&#8209;operator&#8209;mnemonic | object |  |  |
 graph&#8209;operator&#8209;mnemonic.annotations | object |  | Add annotations to resources on this release |
@@ -142,6 +145,7 @@ graph&#8209;operator&#8209;mnemonic.chartUrl | string |  | Override this release
 graph&#8209;operator&#8209;mnemonic.chartVersion | string |  | Specify a specific chart version to use for this release |
 graph&#8209;operator&#8209;mnemonic.labels | object |  | Adds helmfile labels to this release |
 graph&#8209;operator&#8209;mnemonic.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+graph&#8209;operator&#8209;mnemonic.resourceLabels | object |  | Adds labels to resources on this release |
 graph&#8209;operator&#8209;mnemonic.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 graph&#8209;toolbox | object |  |  |
 graph&#8209;toolbox.annotations | object |  | Add annotations to resources on this release |
@@ -149,9 +153,11 @@ graph&#8209;toolbox.chartUrl | string |  | Override this release's chart URL (i.
 graph&#8209;toolbox.chartVersion | string |  | Specify a specific chart version to use for this release |
 graph&#8209;toolbox.labels | object |  | Adds helmfile labels to this release |
 graph&#8209;toolbox.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+graph&#8209;toolbox.resourceLabels | object |  | Adds labels to resources on this release |
 graph&#8209;toolbox.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
-labels | object |  | Adds labels to releases on this namespace |
+labels | object |  | Adds helmfile labels to releases on this namespace |
+resourceLabels | object |  | Adds labels to release resources on this namespace |
 targetNamespace | string | graph-mainnet | the default is graph-<flavor> |
 helmDefaults | object |  |  |
 helmDefaults.args | list of strings |  |  |

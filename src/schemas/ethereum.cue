@@ -73,6 +73,8 @@ package LaunchpadNamespaces
 		releases: {
 			erigon: {
 				chart: {_repositories.graphops.charts.erigon}
+				labels:
+					"my.test.key": "blockchain"
 				_template: {version: "0.8.2"}
 				_scale: true
 			}

@@ -11,39 +11,40 @@ environments:
       - flavor: {{ .Values.flavor }}
 
 ---
-{{- $_tplTransforms := `
+{{- $_tplTransforms := (print `
 {{- $_TemplatedResources := list "Deployment" "StatefulSet" "DaemonSet" -}}
+{{- $_labels := merge ( .Values | get .release dict | get "resourceLabels" dict ) ( .Values | get "labels" dict ) ( .commonLabels ) }}
+{{- $_annotations := merge ( .Values | get .release dict | get "annotations" dict ) ( .Values | get "annotations" dict ) }}
 transformers:
 - apiVersion: builtin
   kind: AnnotationsTransformer
   metadata:
     name: AddAnnotations
   annotations:
-  {{- . | get "annotations" dict | toYaml | nindent 6 }}
+{{- $_annotations | toYaml | nindent 4 }}
   fieldSpecs:
   - path: metadata/annotations
     create: true
-  {{- range $kind := $_TemplatedResources }}
+{{- range $kind := $_TemplatedResources }}
   - kind: {{ $kind }}
     path: spec/template/metadata/annotations
     create: true
-  {{- end }}
+{{- end }}
 - apiVersion: builtin
   kind: LabelTransformer
   metadata:
     name: AddLabels
   labels:
-  {{- . | get "labels" dict | toYaml | nindent 6 }}
+{{- $_labels | toYaml | nindent 4 }}
   fieldSpecs:
   - path: metadata/labels
     create: true
-  {{- range $kind := $_TemplatedResources }}
+{{- range $kind := $_TemplatedResources }}
   - kind: {{ $kind }}
     path: spec/template/metadata/labels
     create: true
-  {{- end }}
-` -}}
-
+{{- end }}
+`) -}}
 {{- $_tplReleaseValues := (print `
 {{- if ( .Values | get .release dict | get "mergeValues" true ) -}}
 {{- if ( hasKey .Values "flavor" ) }}
@@ -90,7 +91,7 @@ kubeVersion: {{ .Values.kubeVersion }}
 commonLabels:
   launchpad.graphops.xyz/namespace: arbitrum
 
-{{ $_labels := dict 
+{{ $_commonLabels := dict 
   `launchpad.graphops.xyz/namespace` `arbitrum`
 }}
 repositories:
@@ -98,17 +99,9 @@ repositories:
     url: https://graphops.github.io/launchpad-charts/canary
   
 templates:
-  transforms:
-    {{ tpl $_tplTransforms (dict
-    "annotations" ( .Values | get "annotations" dict)
-    "labels" ( merge $_labels ( .Values | get "labels" dict) )
-    ) | nindent 4 }}
-  
   defaults:
     namespace: '{{ .Values | get "targetNamespace" $_defaultNamespace }}'
     missingFileHandler: Warn
-    inherit:
-      - template: transforms
   
   arbitrum-nitro:
     {{- if ( .Values | get "arbitrum-nitro" dict | get "chartUrl" false ) }}
@@ -158,6 +151,13 @@ releases:
   - name: "{{ $release }}"
     inherit:
     - template: "{{ $canonicalRelease }}"
+    {{- tpl $_tplTransforms (dict "Values" .Values "release" $release "commonLabels" $_commonLabels )  | indent 4 -}}
+    {{- if ( .Values | get $release dict | get "labels" false ) }}
+    labels:
+    {{- range $key,$value := ( .Values | get $release dict | get "labels" dict ) }}
+      {{ $key }}: {{ $value }}
+    {{- end }}
+    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
   
@@ -166,6 +166,13 @@ releases:
   - name: "{{ $release }}"
     inherit:
     - template: "{{ $canonicalRelease }}"
+    {{- tpl $_tplTransforms (dict "Values" .Values "release" $release "commonLabels" $_commonLabels )  | indent 4 -}}
+    {{- if ( .Values | get $release dict | get "labels" false ) }}
+    labels:
+    {{- range $key,$value := ( .Values | get $release dict | get "labels" dict ) }}
+      {{ $key }}: {{ $value }}
+    {{- end }}
+    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
   
@@ -174,6 +181,13 @@ releases:
   - name: "{{ $release }}"
     inherit:
     - template: "{{ $canonicalRelease }}"
+    {{- tpl $_tplTransforms (dict "Values" .Values "release" $release "commonLabels" $_commonLabels )  | indent 4 -}}
+    {{- if ( .Values | get $release dict | get "labels" false ) }}
+    labels:
+    {{- range $key,$value := ( .Values | get $release dict | get "labels" dict ) }}
+      {{ $key }}: {{ $value }}
+    {{- end }}
+    {{- end }}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
   

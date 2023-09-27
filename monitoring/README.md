@@ -110,7 +110,7 @@ helmfiles:
 
 | Key | Type | Default | Description |
 | :--- | :---: | :--- | :--- |
-annotations | object |  | Add annotations to releases on this namespace |
+annotations | object |  | Add annotations to release resources on this namespace |
 features | list of strings | [metrics, logs] | *enum of:&nbsp;&nbsp;(metrics \| logs)* |
 kube&#8209;prometheus&#8209;stack | object |  |  |
 kube&#8209;prometheus&#8209;stack.annotations | object |  | Add annotations to resources on this release |
@@ -118,15 +118,17 @@ kube&#8209;prometheus&#8209;stack.chartUrl | string |  | Override this release's
 kube&#8209;prometheus&#8209;stack.chartVersion | string |  | Specify a specific chart version to use for this release |
 kube&#8209;prometheus&#8209;stack.labels | object |  | Adds helmfile labels to this release |
 kube&#8209;prometheus&#8209;stack.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+kube&#8209;prometheus&#8209;stack.resourceLabels | object |  | Adds labels to resources on this release |
 kube&#8209;prometheus&#8209;stack.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
-labels | object |  | Adds labels to releases on this namespace |
+labels | object |  | Adds helmfile labels to releases on this namespace |
 loki | object |  |  |
 loki.annotations | object |  | Add annotations to resources on this release |
 loki.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
 loki.chartVersion | string |  | Specify a specific chart version to use for this release |
 loki.labels | object |  | Adds helmfile labels to this release |
 loki.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+loki.resourceLabels | object |  | Adds labels to resources on this release |
 loki.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 node&#8209;problem&#8209;detector | object |  |  |
 node&#8209;problem&#8209;detector.annotations | object |  | Add annotations to resources on this release |
@@ -134,6 +136,7 @@ node&#8209;problem&#8209;detector.chartUrl | string |  | Override this release's
 node&#8209;problem&#8209;detector.chartVersion | string |  | Specify a specific chart version to use for this release |
 node&#8209;problem&#8209;detector.labels | object |  | Adds helmfile labels to this release |
 node&#8209;problem&#8209;detector.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+node&#8209;problem&#8209;detector.resourceLabels | object |  | Adds labels to resources on this release |
 node&#8209;problem&#8209;detector.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 promtail | object |  |  |
 promtail.annotations | object |  | Add annotations to resources on this release |
@@ -141,7 +144,9 @@ promtail.chartUrl | string |  | Override this release's chart URL (i.e: an absol
 promtail.chartVersion | string |  | Specify a specific chart version to use for this release |
 promtail.labels | object |  | Adds helmfile labels to this release |
 promtail.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+promtail.resourceLabels | object |  | Adds labels to resources on this release |
 promtail.values | (object *or* list of objects) |  | Pass values to the release helm chart |
+resourceLabels | object |  | Adds labels to release resources on this namespace |
 targetNamespace | string | monitoring | Sets the cluster namespace in which the releases will be deployed |
 helmDefaults | object |  |  |
 helmDefaults.args | list of strings |  |  |
