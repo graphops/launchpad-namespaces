@@ -1765,6 +1765,24 @@
                     }
                 ]
             },
+            "namespaces.ethereum.scaling": {
+                "description": "ethereum scaling interface",
+                "type": "object",
+                "required": [
+                    "deployments"
+                ],
+                "properties": {
+                    "deployments": {
+                        "description": "number of independent stateful sets to deploy",
+                        "type": "integer",
+                        "default": 1
+                    },
+                    "startP2PPort": {
+                        "description": "A beggining port for the range to use in P2P NodePorts",
+                        "type": "integer"
+                    }
+                }
+            },
             "namespaces.ethereum.values": {
                 "description": "ethereum namespace values schema",
                 "type": "object",
@@ -1784,14 +1802,17 @@
                             "proxyd"
                         ]
                     },
+                    "flavor": {
+                        "$ref": "#/components/schemas/namespaces.ethereum.flavor.enum"
+                    },
                     "erigon": {
                         "$ref": "#/components/schemas/base.releaseValues"
                     },
                     "nimbus": {
                         "$ref": "#/components/schemas/base.releaseValues"
                     },
-                    "flavor": {
-                        "$ref": "#/components/schemas/namespaces.ethereum.flavor.enum"
+                    "scaling": {
+                        "$ref": "#/components/schemas/namespaces.ethereum.scaling"
                     },
                     "proxyd": {
                         "$ref": "#/components/schemas/base.releaseValues"

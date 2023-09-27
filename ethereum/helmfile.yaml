@@ -1,3 +1,33 @@
+#set default flavor when missing
+{{ if not ( hasKey .Values "flavor" ) }}
+{{ $_ := set .Values "flavor" "mainnet" }}
+{{ end }}
+
+# Define default features when undefined
+{{ if not (hasKey .Values "features") }}
+{{ $_ := set .Values "features" (list
+`nimbus`
+`proxyd`
+) }}
+{{ end }}
+
+#set default number of deployments when missing
+{{ if not ( hasKey .Values  "scaling" ) }}
+{{ $_ := set .Values "scaling" dict }}
+{{ end }}
+{{ if not ( hasKey ( .Values | get "scaling" dict ) "deployments" ) }}
+{{ $_ := set .Values.scaling "deployments" 1 }}
+{{ end }}
+
+environments:
+  {{ .Environment.Name }}:
+    values:
+      - flavor: {{ .Values.flavor }}
+      - features: {{ .Values.features | toYaml | nindent 10 }}
+      - scaling:
+          deployments: {{ .Values.scaling.deployments }}
+
+---
 {{- $_tplTransforms := `
 {{- $_TemplatedResources := list "Deployment" "StatefulSet" "DaemonSet" -}}
 transformers:
@@ -34,10 +64,20 @@ transformers:
 {{- $_tplReleaseValues := (print `
 {{- if ( .Values | get .release dict | get "mergeValues" true ) -}}
 {{- if ( hasKey .Values "flavor" ) }}
-- ./values/_common/{{` "`{{ .Release.Name }}`" `}}.yaml
-- ./values/{{ .Values.flavor }}/{{` "`{{ .Release.Name }}`" `}}.yaml
+- ./values/_common/{{ .canonicalRelease }}.yaml
+- ./values/_common/{{ .canonicalRelease }}.yaml.gotmpl
+- ./values/{{ .Values.flavor }}/{{ .canonicalRelease }}.yaml
+- ./values/{{ .Values.flavor }}/{{ .canonicalRelease }}.yaml.gotmpl
 {{- else }}
-- ./values/{{` "`{{ .Release.Name }}`" `}}.yaml
+- ./values/{{ .canonicalRelease }}.yaml
+- ./values/{{ .canonicalRelease }}.yaml.gotmpl
+{{- end -}}
+{{- if typeIs ( typeOf list ) ( .Values | get .canonicalRelease dict | get "values" dict ) -}}
+ {{- range $element := ( .Values | get .canonicalRelease dict | get "values" dict ) }}
+- {{- $element | toYaml | nindent 2 }}
+ {{- end -}}
+{{- else }}
+- {{- .Values | get .canonicalRelease dict | get "values" dict | toYaml | nindent 2 }}
 {{- end -}}
 {{- end -}}
 {{- if typeIs ( typeOf list ) ( .Values | get .release dict | get "values" dict ) -}}
@@ -48,7 +88,6 @@ transformers:
 - {{- .Values | get .release dict | get "values" dict | toYaml | nindent 2 }}
 {{- end -}}
 `) -}}
-
 {{ $__helmDefaults := `{"recreatePods":true}` | fromJson }}
 
 {{ with ( .Values | get "helmDefaults" dict ) }}
@@ -60,19 +99,6 @@ helmDefaults:
 
 {{ if ( hasKey .Values "kubeVersion" ) }}
 kubeVersion: {{ .Values.kubeVersion }}
-{{ end }}
-
-#set default flavor when missing
-{{ if not ( hasKey .Values "flavor" ) }}
-{{ $_ := set .Values "flavor" "mainnet" }}
-{{ end }}
-
-# Define default features when undefined
-{{ if not (hasKey .Values "features") }}
-{{ $_ := set .Values "features" (list
-`nimbus`
-`proxyd`
-) }}
 {{ end }}
 
 #set default namespace
@@ -144,25 +170,35 @@ templates:
     version: "0.3.4-canary.4"
     {{- end }}
 releases:
-  {{- $release := "erigon" }}
-  - name: 'erigon'
+  {{- $canonicalRelease := "erigon" }}
+  {{- range $index := until .Values.scaling.deployments }}
+  {{- $deploymentIndex := (add . 1) }}
+  {{- $release := (printf "%s%v" "erigon-" $deploymentIndex) }}
+  - name: "{{ $release }}"
     inherit:
-    - template: 'erigon'
+    - template: "{{ $canonicalRelease }}"
     values:
-    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
+    {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
+  {{- end -}}
   {{ if has "nimbus" ( .Values | get "features" list ) }}
-  {{- $release := "nimbus" }}
-  - name: 'nimbus'
+  {{- $canonicalRelease := "nimbus" }}
+  {{- range $index := until .Values.scaling.deployments }}
+  {{- $deploymentIndex := (add . 1) }}
+  {{- $release := (printf "%s%v" "nimbus-" $deploymentIndex) }}
+  - name: "{{ $release }}"
     inherit:
-    - template: 'nimbus'
+    - template: "{{ $canonicalRelease }}"
     values:
-    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
+    {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
+  {{- end -}}
   {{- end -}}
   {{ if has "proxyd" ( .Values | get "features" list ) }}
+  {{- $canonicalRelease := "proxyd" }}
   {{- $release := "proxyd" }}
-  - name: 'proxyd'
+  - name: "{{ $release }}"
     inherit:
-    - template: 'proxyd'
+    - template: "{{ $canonicalRelease }}"
     values:
-    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
+    {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
+  
   {{- end -}}

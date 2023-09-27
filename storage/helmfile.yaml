@@ -1,3 +1,18 @@
+
+# Define default features when undefined
+{{ if not (hasKey .Values "features") }}
+{{ $_ := set .Values "features" (list
+`rawfile`
+) }}
+{{ end }}
+
+
+environments:
+  {{ .Environment.Name }}:
+    values:
+      - features: {{ .Values.features | toYaml | nindent 10 }}
+
+---
 {{- $_tplTransforms := `
 {{- $_TemplatedResources := list "Deployment" "StatefulSet" "DaemonSet" -}}
 transformers:
@@ -34,10 +49,20 @@ transformers:
 {{- $_tplReleaseValues := (print `
 {{- if ( .Values | get .release dict | get "mergeValues" true ) -}}
 {{- if ( hasKey .Values "flavor" ) }}
-- ./values/_common/{{` "`{{ .Release.Name }}`" `}}.yaml
-- ./values/{{ .Values.flavor }}/{{` "`{{ .Release.Name }}`" `}}.yaml
+- ./values/_common/{{ .canonicalRelease }}.yaml
+- ./values/_common/{{ .canonicalRelease }}.yaml.gotmpl
+- ./values/{{ .Values.flavor }}/{{ .canonicalRelease }}.yaml
+- ./values/{{ .Values.flavor }}/{{ .canonicalRelease }}.yaml.gotmpl
 {{- else }}
-- ./values/{{` "`{{ .Release.Name }}`" `}}.yaml
+- ./values/{{ .canonicalRelease }}.yaml
+- ./values/{{ .canonicalRelease }}.yaml.gotmpl
+{{- end -}}
+{{- if typeIs ( typeOf list ) ( .Values | get .canonicalRelease dict | get "values" dict ) -}}
+ {{- range $element := ( .Values | get .canonicalRelease dict | get "values" dict ) }}
+- {{- $element | toYaml | nindent 2 }}
+ {{- end -}}
+{{- else }}
+- {{- .Values | get .canonicalRelease dict | get "values" dict | toYaml | nindent 2 }}
 {{- end -}}
 {{- end -}}
 {{- if typeIs ( typeOf list ) ( .Values | get .release dict | get "values" dict ) -}}
@@ -48,7 +73,6 @@ transformers:
 - {{- .Values | get .release dict | get "values" dict | toYaml | nindent 2 }}
 {{- end -}}
 `) -}}
-
 {{ $__helmDefaults := `{"recreatePods":true}` | fromJson }}
 
 {{ with ( .Values | get "helmDefaults" dict ) }}
@@ -60,14 +84,6 @@ helmDefaults:
 
 {{ if ( hasKey .Values "kubeVersion" ) }}
 kubeVersion: {{ .Values.kubeVersion }}
-{{ end }}
-
-
-# Define default features when undefined
-{{ if not (hasKey .Values "features") }}
-{{ $_ := set .Values "features" (list
-`rawfile`
-) }}
 {{ end }}
 
 #set default namespace
@@ -187,49 +203,61 @@ templates:
     version: "0.2.0"
     {{- end }}
 releases:
+  {{- $canonicalRelease := "openebs" }}
   {{- $release := "openebs" }}
-  - name: 'openebs'
+  - name: "{{ $release }}"
     inherit:
-    - template: 'openebs'
+    - template: "{{ $canonicalRelease }}"
     values:
-    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
+    {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
+  
   {{ if has "rawfile" ( .Values | get "features" list ) }}
+  {{- $canonicalRelease := "openebs-rawfile-localpv" }}
   {{- $release := "openebs-rawfile-localpv" }}
-  - name: 'openebs-rawfile-localpv'
+  - name: "{{ $release }}"
     inherit:
-    - template: 'openebs-rawfile-localpv'
+    - template: "{{ $canonicalRelease }}"
     values:
-    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
+    {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
+  
   {{- end -}}
   {{ if has "rawfile" ( .Values | get "features" list ) }}
+  {{- $canonicalRelease := "openebs-rawfile-storageclass" }}
   {{- $release := "openebs-rawfile-storageclass" }}
-  - name: 'openebs-rawfile-storageclass'
+  - name: "{{ $release }}"
     inherit:
-    - template: 'openebs-rawfile-storageclass'
+    - template: "{{ $canonicalRelease }}"
     values:
-    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
+    {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
+  
   {{- end -}}
   {{ if has "zfs" ( .Values | get "features" list ) }}
+  {{- $canonicalRelease := "openebs-zfs-localpv" }}
   {{- $release := "openebs-zfs-localpv" }}
-  - name: 'openebs-zfs-localpv'
+  - name: "{{ $release }}"
     inherit:
-    - template: 'openebs-zfs-localpv'
+    - template: "{{ $canonicalRelease }}"
     values:
-    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
+    {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
+  
   {{- end -}}
   {{ if has "zfs" ( .Values | get "features" list ) }}
+  {{- $canonicalRelease := "openebs-zfs-storageclass" }}
   {{- $release := "openebs-zfs-storageclass" }}
-  - name: 'openebs-zfs-storageclass'
+  - name: "{{ $release }}"
     inherit:
-    - template: 'openebs-zfs-storageclass'
+    - template: "{{ $canonicalRelease }}"
     values:
-    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
+    {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
+  
   {{- end -}}
   {{ if has "zfs" ( .Values | get "features" list ) }}
+  {{- $canonicalRelease := "openebs-zfs-snapclass" }}
   {{- $release := "openebs-zfs-snapclass" }}
-  - name: 'openebs-zfs-snapclass'
+  - name: "{{ $release }}"
     inherit:
-    - template: 'openebs-zfs-snapclass'
+    - template: "{{ $canonicalRelease }}"
     values:
-    {{- tpl $_tplReleaseValues (dict "Values" .Values "release" $release)  | indent 4 -}}
+    {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
+  
   {{- end -}}

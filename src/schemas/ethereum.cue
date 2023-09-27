@@ -33,6 +33,14 @@ package LaunchpadNamespaces
 			#enum: ( #nimbus | #proxyd )
 		}
 
+		// ethereum scaling interface
+		#scaling: {
+			// number of independent stateful sets to deploy
+			deployments: *1 | int
+			// A beggining port for the range to use in P2P NodePorts
+			startP2PPort?: int
+		}
+
 		// ethereum namespace values schema
 		#values: #base.#values & {
 			// the default is eth-<flavor>
@@ -44,11 +52,16 @@ package LaunchpadNamespaces
 
 			flavor?: *"mainnet" | #flavor.#enum
 
+			scaling?: #scaling
+
 			// For overriding this release's values
 			for key, _ in releases {
 				// For overriding this release's values
 				(key)?: #base.#releaseValues
 			}
+
+			// For overriding this release's values
+			[string & "^(erigon|nimbus|proxyd)-[0-9]+$"]?: #base.#releaseValues
 		}
 
 		// ethereum helmfile API
@@ -61,18 +74,21 @@ package LaunchpadNamespaces
 			erigon: {
 				chart: {_repositories.graphops.charts.erigon}
 				_template: {version: "0.8.2"}
+				_scale: true
 			}
 
 			nimbus: {
 				chart: {_repositories.graphops.charts.nimbus}
 				feature: #features.#nimbus
 				_template: {version: "0.5.2"}
+				_scale: true
 			}
 
 			proxyd: {
 				chart: {_repositories.graphops.charts.proxyd}
 				feature: #features.#proxyd
 				_template: {version: "0.3.4-canary.4"}
+				_scale: false
 			}
 		}
 
