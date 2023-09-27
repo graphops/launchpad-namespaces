@@ -173,7 +173,9 @@ releases:
     {{- tpl $_tplTransforms (dict "Values" .Values "release" $release "commonLabels" $_commonLabels )  | indent 4 -}}
     {{- if ( .Values | get $release dict | get "labels" false ) }}
     labels:
-      my.test.key: blockchain
+      database.launchpad.graphops.xyz/chain: ethereum
+      database.launchpad.graphops.xyz/network: '{{ .Values.flavor }}'
+      database.launchpad.graphops.xyz/layer: execution
       
     {{- range $key,$value := ( .Values | get $release dict | get "labels" dict ) }}
       {{ $key }}: {{ $value }}
@@ -193,6 +195,9 @@ releases:
     {{- tpl $_tplTransforms (dict "Values" .Values "release" $release "commonLabels" $_commonLabels )  | indent 4 -}}
     {{- if ( .Values | get $release dict | get "labels" false ) }}
     labels:
+      database.launchpad.graphops.xyz/chain: ethereum
+      database.launchpad.graphops.xyz/layer: consensus
+      
     {{- range $key,$value := ( .Values | get $release dict | get "labels" dict ) }}
       {{ $key }}: {{ $value }}
     {{- end }}
@@ -210,6 +215,9 @@ releases:
     {{- tpl $_tplTransforms (dict "Values" .Values "release" $release "commonLabels" $_commonLabels )  | indent 4 -}}
     {{- if ( .Values | get $release dict | get "labels" false ) }}
     labels:
+      database.launchpad.graphops.xyz/chain: ethereum
+      database.launchpad.graphops.xyz/layer: proxy
+      
     {{- range $key,$value := ( .Values | get $release dict | get "labels" dict ) }}
       {{ $key }}: {{ $value }}
     {{- end }}

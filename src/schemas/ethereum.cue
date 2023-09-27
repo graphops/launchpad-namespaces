@@ -73,14 +73,21 @@ package LaunchpadNamespaces
 		releases: {
 			erigon: {
 				chart: {_repositories.graphops.charts.erigon}
-				labels:
-					"my.test.key": "blockchain"
+				labels: {
+					"database.launchpad.graphops.xyz/chain":   "ethereum"
+					"database.launchpad.graphops.xyz/network": "{{ .Values.flavor }}"
+					"database.launchpad.graphops.xyz/layer":   "execution"
+				}
 				_template: {version: "0.8.2"}
 				_scale: true
 			}
 
 			nimbus: {
 				chart: {_repositories.graphops.charts.nimbus}
+				labels: {
+					"database.launchpad.graphops.xyz/chain": "ethereum"
+					"database.launchpad.graphops.xyz/layer": "consensus"
+				}
 				feature: #features.#nimbus
 				_template: {version: "0.5.2"}
 				_scale: true
@@ -88,6 +95,10 @@ package LaunchpadNamespaces
 
 			proxyd: {
 				chart: {_repositories.graphops.charts.proxyd}
+				labels: {
+					"database.launchpad.graphops.xyz/chain": "ethereum"
+					"database.launchpad.graphops.xyz/layer": "proxy"
+				}
 				feature: #features.#proxyd
 				_template: {version: "0.3.4-canary.4"}
 				_scale: false

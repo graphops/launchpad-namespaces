@@ -20,7 +20,7 @@ Promtail is an agent which ships the contents of local logs to a Loki instance
 
 - Actively maintained by [![GraphOps](https://avatars.githubusercontent.com/u/85314764?s=12&v=4) *GraphOps*](https://graphops.xyz) [and contributors](/graphs/contributors)
 - Common values interfaces across all namespaces
-- Flexible and adaptable, allowing defaults to be overridden
+- Flexible and adaptable, allowing defaults to be overriden
 - Two release channels: `stable` and `canary`
 - A large selection of Namespaces (listed below)
 
@@ -33,7 +33,7 @@ To use *Namespaces* you will require both a [*Kubernetes*](https://kubernetes.io
 As such:
 - Make sure your *Kubernetes* *Cluster* is in order and your environment has the *kubeconfig* context adequately setup
 - Install *helmfile*, upstream guidance available here: [*Helmfile* Installation](https://github.com/helmfile/helmfile#installation)
-– Install *kustomize*, upstream guidance available here: [*Kustomize* Installation](https://kubectl.docs.kubernetes.io/installation/kustomize/). Although `launchpad–namespaces` doesn't explicitly use *kustomize*, it is a dependency for utilising *helmfile* features.
+– Install *kustomize*, upstream guidance availabe here: [*Kustomize* Installation](https://kubectl.docs.kubernetes.io/installation/kustomize/). Although `launchpad–namespaces` doesn't explicitly use *kustomize*, it is a dependencie for utilising *helmfile* features.
 
 Next, setup an `helmfile.yaml` file that makes use of the monitoring *Namespace* by creating it with the following contents:
 ```yaml
@@ -76,7 +76,7 @@ helmfiles:
 
 where we add some labels to this *Namespace* releases, and set it to be deployed on cluster namespace different from default.
 
-You can also easily override values for every release, like so:
+You can also easilly override values for every release, like so:
 ```yaml
 helmfiles:
   - path: git::https://github.com/graphops/launchpad-namespaces.git@monitoring/helmfile.yaml?ref=monitoring-latest
@@ -113,39 +113,19 @@ helmfiles:
 annotations | object |  | Add annotations to release resources on this namespace |
 features | list of strings | [metrics, logs] | *enum of:&nbsp;&nbsp;(metrics \| logs)* |
 kube&#8209;prometheus&#8209;stack | object |  |  |
-kube&#8209;prometheus&#8209;stack.annotations | object |  | Add annotations to resources on this release |
-kube&#8209;prometheus&#8209;stack.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
-kube&#8209;prometheus&#8209;stack.chartVersion | string |  | Specify a specific chart version to use for this release |
-kube&#8209;prometheus&#8209;stack.labels | object |  | Adds helmfile labels to this release |
-kube&#8209;prometheus&#8209;stack.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
-kube&#8209;prometheus&#8209;stack.resourceLabels | object |  | Adds labels to resources on this release |
-kube&#8209;prometheus&#8209;stack.values | (object *or* list of objects) |  | Pass values to the release helm chart |
+kube&#8209;prometheus&#8209;stack.mergeValues | boolean | true |  |
+kube&#8209;prometheus&#8209;stack.values | (object *or* list of objects) |  |  |
 kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
 labels | object |  | Adds helmfile labels to releases on this namespace |
 loki | object |  |  |
-loki.annotations | object |  | Add annotations to resources on this release |
-loki.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
-loki.chartVersion | string |  | Specify a specific chart version to use for this release |
-loki.labels | object |  | Adds helmfile labels to this release |
-loki.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
-loki.resourceLabels | object |  | Adds labels to resources on this release |
-loki.values | (object *or* list of objects) |  | Pass values to the release helm chart |
+loki.mergeValues | boolean | true |  |
+loki.values | (object *or* list of objects) |  |  |
 node&#8209;problem&#8209;detector | object |  |  |
-node&#8209;problem&#8209;detector.annotations | object |  | Add annotations to resources on this release |
-node&#8209;problem&#8209;detector.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
-node&#8209;problem&#8209;detector.chartVersion | string |  | Specify a specific chart version to use for this release |
-node&#8209;problem&#8209;detector.labels | object |  | Adds helmfile labels to this release |
-node&#8209;problem&#8209;detector.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
-node&#8209;problem&#8209;detector.resourceLabels | object |  | Adds labels to resources on this release |
-node&#8209;problem&#8209;detector.values | (object *or* list of objects) |  | Pass values to the release helm chart |
+node&#8209;problem&#8209;detector.mergeValues | boolean | true |  |
+node&#8209;problem&#8209;detector.values | (object *or* list of objects) |  |  |
 promtail | object |  |  |
-promtail.annotations | object |  | Add annotations to resources on this release |
-promtail.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
-promtail.chartVersion | string |  | Specify a specific chart version to use for this release |
-promtail.labels | object |  | Adds helmfile labels to this release |
-promtail.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
-promtail.resourceLabels | object |  | Adds labels to resources on this release |
-promtail.values | (object *or* list of objects) |  | Pass values to the release helm chart |
+promtail.mergeValues | boolean | true |  |
+promtail.values | (object *or* list of objects) |  |  |
 resourceLabels | object |  | Adds labels to release resources on this namespace |
 targetNamespace | string | monitoring | Sets the cluster namespace in which the releases will be deployed |
 helmDefaults | object |  |  |

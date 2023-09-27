@@ -14,7 +14,7 @@ Sealed Secrets are 'one-way' encrypted K8s Secrets that can be created by anyone
 
 - Actively maintained by [![GraphOps](https://avatars.githubusercontent.com/u/85314764?s=12&v=4) *GraphOps*](https://graphops.xyz) [and contributors](/graphs/contributors)
 - Common values interfaces across all namespaces
-- Flexible and adaptable, allowing defaults to be overridden
+- Flexible and adaptable, allowing defaults to be overriden
 - Two release channels: `stable` and `canary`
 - A large selection of Namespaces (listed below)
 
@@ -27,7 +27,7 @@ To use *Namespaces* you will require both a [*Kubernetes*](https://kubernetes.io
 As such:
 - Make sure your *Kubernetes* *Cluster* is in order and your environment has the *kubeconfig* context adequately setup
 - Install *helmfile*, upstream guidance available here: [*Helmfile* Installation](https://github.com/helmfile/helmfile#installation)
-– Install *kustomize*, upstream guidance available here: [*Kustomize* Installation](https://kubectl.docs.kubernetes.io/installation/kustomize/). Although `launchpad–namespaces` doesn't explicitly use *kustomize*, it is a dependency for utilising *helmfile* features.
+– Install *kustomize*, upstream guidance availabe here: [*Kustomize* Installation](https://kubectl.docs.kubernetes.io/installation/kustomize/). Although `launchpad–namespaces` doesn't explicitly use *kustomize*, it is a dependencie for utilising *helmfile* features.
 
 Next, setup an `helmfile.yaml` file that makes use of the sealed-secrets *Namespace* by creating it with the following contents:
 ```yaml
@@ -70,7 +70,7 @@ helmfiles:
 
 where we add some labels to this *Namespace* releases, and set it to be deployed on cluster namespace different from default.
 
-You can also easily override values for every release, like so:
+You can also easilly override values for every release, like so:
 ```yaml
 helmfiles:
   - path: git::https://github.com/graphops/launchpad-namespaces.git@sealed-secrets/helmfile.yaml?ref=sealed-secrets-latest
@@ -109,13 +109,8 @@ kubeVersion | string |  | Specifies the kubernetes API version, useful in helm t
 labels | object |  | Adds helmfile labels to releases on this namespace |
 resourceLabels | object |  | Adds labels to release resources on this namespace |
 sealed&#8209;secrets | object |  |  |
-sealed&#8209;secrets.annotations | object |  | Add annotations to resources on this release |
-sealed&#8209;secrets.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
-sealed&#8209;secrets.chartVersion | string |  | Specify a specific chart version to use for this release |
-sealed&#8209;secrets.labels | object |  | Adds helmfile labels to this release |
-sealed&#8209;secrets.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
-sealed&#8209;secrets.resourceLabels | object |  | Adds labels to resources on this release |
-sealed&#8209;secrets.values | (object *or* list of objects) |  | Pass values to the release helm chart |
+sealed&#8209;secrets.mergeValues | boolean | true |  |
+sealed&#8209;secrets.values | (object *or* list of objects) |  |  |
 targetNamespace | string | sealed-secrets | Sets the cluster namespace in which the releases will be deployed |
 helmDefaults | object |  |  |
 helmDefaults.args | list of strings |  |  |

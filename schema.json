@@ -1584,13 +1584,27 @@
                                     "labels": {
                                         "type": "object",
                                         "required": [
-                                            "my.test.key"
+                                            "database.launchpad.graphops.xyz/chain",
+                                            "database.launchpad.graphops.xyz/network",
+                                            "database.launchpad.graphops.xyz/layer"
                                         ],
                                         "properties": {
-                                            "my.test.key": {
+                                            "database.launchpad.graphops.xyz/chain": {
                                                 "type": "string",
                                                 "enum": [
-                                                    "blockchain"
+                                                    "ethereum"
+                                                ]
+                                            },
+                                            "database.launchpad.graphops.xyz/network": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ .Values.flavor }}"
+                                                ]
+                                            },
+                                            "database.launchpad.graphops.xyz/layer": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "execution"
                                                 ]
                                             }
                                         }
@@ -1601,6 +1615,7 @@
                                 "type": "object",
                                 "required": [
                                     "chart",
+                                    "labels",
                                     "feature"
                                 ],
                                 "properties": {
@@ -1639,6 +1654,27 @@
                                             }
                                         }
                                     },
+                                    "labels": {
+                                        "type": "object",
+                                        "required": [
+                                            "database.launchpad.graphops.xyz/chain",
+                                            "database.launchpad.graphops.xyz/layer"
+                                        ],
+                                        "properties": {
+                                            "database.launchpad.graphops.xyz/chain": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "ethereum"
+                                                ]
+                                            },
+                                            "database.launchpad.graphops.xyz/layer": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "consensus"
+                                                ]
+                                            }
+                                        }
+                                    },
                                     "feature": {
                                         "$ref": "#/components/schemas/namespaces.ethereum.features.nimbus"
                                     }
@@ -1648,6 +1684,7 @@
                                 "type": "object",
                                 "required": [
                                     "chart",
+                                    "labels",
                                     "feature"
                                 ],
                                 "properties": {
@@ -1682,6 +1719,27 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "proxyd"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "labels": {
+                                        "type": "object",
+                                        "required": [
+                                            "database.launchpad.graphops.xyz/chain",
+                                            "database.launchpad.graphops.xyz/layer"
+                                        ],
+                                        "properties": {
+                                            "database.launchpad.graphops.xyz/chain": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "ethereum"
+                                                ]
+                                            },
+                                            "database.launchpad.graphops.xyz/layer": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "proxy"
                                                 ]
                                             }
                                         }
