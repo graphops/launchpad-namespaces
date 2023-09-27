@@ -18,6 +18,7 @@ nimbus:
         storage: 300Gi
 {{- if (hasKey .Values.scaling "p2pStartPort") }}
   p2pNodePort:
+    enabled: true
     port: {{ add (mul (sub $scalingIndex 1) 2) .Values.scaling.p2pStartPort 1 }}
 {{- end }}
 
