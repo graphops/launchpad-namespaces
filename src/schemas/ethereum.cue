@@ -77,7 +77,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/layer":     "execution"
 					"app.launchpad.graphops.xyz/component": "erigon"
 				}
-				_template: {version: "0.8.2"}
+				_template: {version: "0.8.4"}
 				_scale: true
 			}
 
@@ -88,7 +88,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/component": "nimbus"
 				}
 				feature: #features.#nimbus
-				_template: {version: "0.5.2"}
+				_template: {version: "0.5.3"}
 				_scale: true
 			}
 
