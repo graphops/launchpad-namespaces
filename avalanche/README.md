@@ -106,24 +106,27 @@ helmfiles:
 
 | Key | Type | Default | Description |
 | :--- | :---: | :--- | :--- |
-annotations | object |  | Add annotations to releases on this namespace |
+annotations | object |  | Add annotations to release resources on this namespace |
 avalanche | object |  |  |
 avalanche.annotations | object |  | Add annotations to resources on this release |
 avalanche.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
 avalanche.chartVersion | string |  | Specify a specific chart version to use for this release |
 avalanche.labels | object |  | Adds helmfile labels to this release |
 avalanche.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+avalanche.resourceLabels | object |  | Adds labels to resources on this release |
 avalanche.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 flavor | string |  | suitable defaults for a mainnet archive node |
 kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
-labels | object |  | Adds labels to releases on this namespace |
+labels | object |  | Adds helmfile labels to releases on this namespace |
 proxyd | object |  |  |
 proxyd.annotations | object |  | Add annotations to resources on this release |
 proxyd.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
 proxyd.chartVersion | string |  | Specify a specific chart version to use for this release |
 proxyd.labels | object |  | Adds helmfile labels to this release |
 proxyd.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+proxyd.resourceLabels | object |  | Adds labels to resources on this release |
 proxyd.values | (object *or* list of objects) |  | Pass values to the release helm chart |
+resourceLabels | object |  | Adds labels to release resources on this namespace |
 targetNamespace | string | avalanche-mainnet | the default is avalanche-<flavor> |
 helmDefaults | object |  |  |
 helmDefaults.args | list of strings |  |  |

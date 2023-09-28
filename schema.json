@@ -542,6 +542,15 @@
                             }
                         ]
                     },
+                    "resourceLabels": {
+                        "description": "Adds labels to resources on this release",
+                        "type": "object",
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/map"
+                            }
+                        ]
+                    },
                     "labels": {
                         "description": "Adds helmfile labels to this release",
                         "type": "object",
@@ -575,6 +584,9 @@
                     }
                 }
             },
+            "base.resourceLabels": {
+                "type": "object"
+            },
             "base.values": {
                 "description": "Base namespace values interface schema",
                 "type": "object",
@@ -594,7 +606,16 @@
                         "type": "string"
                     },
                     "annotations": {
-                        "description": "Add annotations to releases on this namespace",
+                        "description": "Add annotations to release resources on this namespace",
+                        "type": "object",
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/map"
+                            }
+                        ]
+                    },
+                    "resourceLabels": {
+                        "description": "Adds labels to release resources on this namespace",
                         "type": "object",
                         "allOf": [
                             {
@@ -603,7 +624,7 @@
                         ]
                     },
                     "labels": {
-                        "description": "Adds labels to releases on this namespace",
+                        "description": "Adds helmfile labels to releases on this namespace",
                         "type": "object",
                         "allOf": [
                             {
@@ -757,7 +778,8 @@
                 "required": [
                     "meta",
                     "releases",
-                    "labels"
+                    "labels",
+                    "resourceLabels"
                 ],
                 "properties": {
                     "meta": {
@@ -947,6 +969,9 @@
                                 ]
                             }
                         ]
+                    },
+                    "resourceLabels": {
+                        "type": "object"
                     }
                 }
             },
@@ -1030,7 +1055,8 @@
                 "required": [
                     "meta",
                     "releases",
-                    "labels"
+                    "labels",
+                    "resourceLabels"
                 ],
                 "properties": {
                     "meta": {
@@ -1176,6 +1202,9 @@
                                 ]
                             }
                         ]
+                    },
+                    "resourceLabels": {
+                        "type": "object"
                     }
                 }
             },
@@ -1256,7 +1285,8 @@
                 "required": [
                     "meta",
                     "releases",
-                    "labels"
+                    "labels",
+                    "resourceLabels"
                 ],
                 "properties": {
                     "meta": {
@@ -1402,6 +1432,9 @@
                                 ]
                             }
                         ]
+                    },
+                    "resourceLabels": {
+                        "type": "object"
                     }
                 }
             },
@@ -1482,7 +1515,8 @@
                 "required": [
                     "meta",
                     "releases",
-                    "labels"
+                    "labels",
+                    "resourceLabels"
                 ],
                 "properties": {
                     "meta": {
@@ -1524,7 +1558,8 @@
                             "erigon": {
                                 "type": "object",
                                 "required": [
-                                    "chart"
+                                    "chart",
+                                    "labels"
                                 ],
                                 "properties": {
                                     "chart": {
@@ -1561,6 +1596,27 @@
                                                 ]
                                             }
                                         }
+                                    },
+                                    "labels": {
+                                        "type": "object",
+                                        "required": [
+                                            "app.launchpad.graphops.xyz/layer",
+                                            "app.launchpad.graphops.xyz/component"
+                                        ],
+                                        "properties": {
+                                            "app.launchpad.graphops.xyz/layer": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "execution"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/component": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "erigon"
+                                                ]
+                                            }
+                                        }
                                     }
                                 }
                             },
@@ -1568,6 +1624,7 @@
                                 "type": "object",
                                 "required": [
                                     "chart",
+                                    "labels",
                                     "feature"
                                 ],
                                 "properties": {
@@ -1606,6 +1663,27 @@
                                             }
                                         }
                                     },
+                                    "labels": {
+                                        "type": "object",
+                                        "required": [
+                                            "app.launchpad.graphops.xyz/layer",
+                                            "app.launchpad.graphops.xyz/component"
+                                        ],
+                                        "properties": {
+                                            "app.launchpad.graphops.xyz/layer": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "consensus"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/component": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "nimbus"
+                                                ]
+                                            }
+                                        }
+                                    },
                                     "feature": {
                                         "$ref": "#/components/schemas/namespaces.ethereum.features.nimbus"
                                     }
@@ -1615,6 +1693,7 @@
                                 "type": "object",
                                 "required": [
                                     "chart",
+                                    "labels",
                                     "feature"
                                 ],
                                 "properties": {
@@ -1653,6 +1732,27 @@
                                             }
                                         }
                                     },
+                                    "labels": {
+                                        "type": "object",
+                                        "required": [
+                                            "app.launchpad.graphops.xyz/layer",
+                                            "app.launchpad.graphops.xyz/component"
+                                        ],
+                                        "properties": {
+                                            "app.launchpad.graphops.xyz/layer": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "proxy"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/component": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "proxyd"
+                                                ]
+                                            }
+                                        }
+                                    },
                                     "feature": {
                                         "$ref": "#/components/schemas/namespaces.ethereum.features.proxyd"
                                     }
@@ -1668,6 +1768,24 @@
                                 "enum": [
                                     "ethereum"
                                 ]
+                            },
+                            "app.launchpad.graphops.xyz/type": {
+                                "type": "string",
+                                "enum": [
+                                    "blockchain"
+                                ]
+                            },
+                            "app.launchpad.graphops.xyz/chain": {
+                                "type": "string",
+                                "enum": [
+                                    "ethereum"
+                                ]
+                            },
+                            "app.launchpad.graphops.xyz/network": {
+                                "type": "string",
+                                "enum": [
+                                    "{{ .Values.flavor }}"
+                                ]
                             }
                         },
                         "allOf": [
@@ -1676,10 +1794,16 @@
                             },
                             {
                                 "required": [
-                                    "launchpad.graphops.xyz/namespace"
+                                    "launchpad.graphops.xyz/namespace",
+                                    "app.launchpad.graphops.xyz/type",
+                                    "app.launchpad.graphops.xyz/chain",
+                                    "app.launchpad.graphops.xyz/network"
                                 ]
                             }
                         ]
+                    },
+                    "resourceLabels": {
+                        "type": "object"
                     }
                 }
             },
@@ -1830,7 +1954,8 @@
                 "required": [
                     "meta",
                     "releases",
-                    "labels"
+                    "labels",
+                    "resourceLabels"
                 ],
                 "properties": {
                     "meta": {
@@ -2020,6 +2145,9 @@
                                 ]
                             }
                         ]
+                    },
+                    "resourceLabels": {
+                        "type": "object"
                     }
                 }
             },
@@ -2103,7 +2231,8 @@
                 "required": [
                     "meta",
                     "releases",
-                    "labels"
+                    "labels",
+                    "resourceLabels"
                 ],
                 "properties": {
                     "meta": {
@@ -2381,6 +2510,9 @@
                                 ]
                             }
                         ]
+                    },
+                    "resourceLabels": {
+                        "type": "object"
                     }
                 }
             },
@@ -2480,7 +2612,8 @@
                 "required": [
                     "meta",
                     "releases",
-                    "labels"
+                    "labels",
+                    "resourceLabels"
                 ],
                 "properties": {
                     "meta": {
@@ -2689,6 +2822,9 @@
                                 ]
                             }
                         ]
+                    },
+                    "resourceLabels": {
+                        "type": "object"
                     }
                 }
             },
@@ -2787,7 +2923,8 @@
                 "required": [
                     "meta",
                     "releases",
-                    "labels"
+                    "labels",
+                    "resourceLabels"
                 ],
                 "properties": {
                     "meta": {
@@ -3044,6 +3181,9 @@
                                 ]
                             }
                         ]
+                    },
+                    "resourceLabels": {
+                        "type": "object"
                     }
                 }
             },
@@ -3147,7 +3287,8 @@
                 "required": [
                     "meta",
                     "releases",
-                    "labels"
+                    "labels",
+                    "resourceLabels"
                 ],
                 "properties": {
                     "meta": {
@@ -3337,6 +3478,9 @@
                                 ]
                             }
                         ]
+                    },
+                    "resourceLabels": {
+                        "type": "object"
                     }
                 }
             },
@@ -3419,7 +3563,8 @@
                 "required": [
                     "meta",
                     "releases",
-                    "labels"
+                    "labels",
+                    "resourceLabels"
                 ],
                 "properties": {
                     "meta": {
@@ -3528,6 +3673,9 @@
                                 ]
                             }
                         ]
+                    },
+                    "resourceLabels": {
+                        "type": "object"
                     }
                 }
             },
@@ -3586,7 +3734,8 @@
                 "required": [
                     "meta",
                     "releases",
-                    "labels"
+                    "labels",
+                    "resourceLabels"
                 ],
                 "properties": {
                     "meta": {
@@ -3695,6 +3844,9 @@
                                 ]
                             }
                         ]
+                    },
+                    "resourceLabels": {
+                        "type": "object"
                     }
                 }
             },
@@ -3753,6 +3905,7 @@
                 "required": [
                     "meta",
                     "labels",
+                    "resourceLabels",
                     "releases"
                 ],
                 "properties": {
@@ -3818,6 +3971,9 @@
                                 ]
                             }
                         ]
+                    },
+                    "resourceLabels": {
+                        "type": "object"
                     },
                     "releases": {
                         "type": "object",

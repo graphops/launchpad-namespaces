@@ -19,9 +19,11 @@ info: {
 		kubeVersion?: string
 		// Sets the cluster namespace in which the releases will be deployed
 		targetNamespace: string
-		// Add annotations to releases on this namespace
+		// Add annotations to release resources on this namespace
 		annotations?: {...} & #map
-		// Adds labels to releases on this namespace
+		// Adds labels to release resources on this namespace
+		resourceLabels?: {...} & #map
+		// Adds helmfile labels to releases on this namespace
 		labels?: {...} & #map
 		...
 	}
@@ -31,6 +33,8 @@ info: {
 		mergeValues?: *true | bool
 		// Add annotations to resources on this release
 		annotations?: {...} & #map
+		// Adds labels to resources on this release
+		resourceLabels?: {...} & #map
 		// Adds helmfile labels to this release
 		labels?: {...} & #map
 		// Specify a specific chart version to use for this release
@@ -44,6 +48,7 @@ info: {
 	#helmfiles: upstreamHelmfile
 
 	#labels: {}
+	#resourceLabels: {}
 }
 
 #map: {
@@ -72,6 +77,7 @@ _#namespaceTemplate: {
 			}
 		}
 	}
-	labels:   _key.labels
-	releases: _key.releases
+	labels:         _key.labels
+	resourceLabels: _key.resourceLabels
+	releases:       _key.releases
 }

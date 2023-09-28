@@ -108,24 +108,26 @@ helmfiles:
 
 | Key | Type | Default | Description |
 | :--- | :---: | :--- | :--- |
-annotations | object |  | Add annotations to releases on this namespace |
+annotations | object |  | Add annotations to release resources on this namespace |
 erigon | object |  |  |
 erigon.annotations | object |  | Add annotations to resources on this release |
 erigon.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
 erigon.chartVersion | string |  | Specify a specific chart version to use for this release |
 erigon.labels | object |  | Adds helmfile labels to this release |
 erigon.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+erigon.resourceLabels | object |  | Adds labels to resources on this release |
 erigon.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 features | list of strings | [nimbus, proxyd] | *enum of:&nbsp;&nbsp;(nimbus \| proxyd)* |
 flavor | string |  |  |
 kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
-labels | object |  | Adds labels to releases on this namespace |
+labels | object |  | Adds helmfile labels to releases on this namespace |
 nimbus | object |  |  |
 nimbus.annotations | object |  | Add annotations to resources on this release |
 nimbus.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
 nimbus.chartVersion | string |  | Specify a specific chart version to use for this release |
 nimbus.labels | object |  | Adds helmfile labels to this release |
 nimbus.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+nimbus.resourceLabels | object |  | Adds labels to resources on this release |
 nimbus.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 proxyd | object |  |  |
 proxyd.annotations | object |  | Add annotations to resources on this release |
@@ -133,7 +135,9 @@ proxyd.chartUrl | string |  | Override this release's chart URL (i.e: an absolut
 proxyd.chartVersion | string |  | Specify a specific chart version to use for this release |
 proxyd.labels | object |  | Adds helmfile labels to this release |
 proxyd.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+proxyd.resourceLabels | object |  | Adds labels to resources on this release |
 proxyd.values | (object *or* list of objects) |  | Pass values to the release helm chart |
+resourceLabels | object |  | Adds labels to release resources on this namespace |
 scaling | object |  | ethereum scaling interface |
 scaling.deployments | integer | 1 | number of independent stateful sets to deploy |
 scaling.startP2PPort | integer |  | A beggining port for the range to use in P2P NodePorts |

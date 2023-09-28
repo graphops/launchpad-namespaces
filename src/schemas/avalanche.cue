@@ -58,6 +58,10 @@ package LaunchpadNamespaces
 			#base.#labels
 			"launchpad.graphops.xyz/namespace": "avalanche"
 		}
+
+		resourceLabels: {
+			#base.#resourceLabels
+		}
 	}
 }
 

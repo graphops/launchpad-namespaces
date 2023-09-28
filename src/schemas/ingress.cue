@@ -65,6 +65,10 @@ package LaunchpadNamespaces
 			"launchpad.graphops.xyz/namespace": "ingress"
 			"launchpad.graphops.xyz/layer":     "base"
 		}
+
+		resourceLabels: {
+			#base.#resourceLabels
+		}
 	}
 }
 

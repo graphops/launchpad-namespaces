@@ -108,13 +108,14 @@ helmfiles:
 
 | Key | Type | Default | Description |
 | :--- | :---: | :--- | :--- |
-annotations | object |  | Add annotations to releases on this namespace |
+annotations | object |  | Add annotations to release resources on this namespace |
 cert&#8209;manager | object |  |  |
 cert&#8209;manager.annotations | object |  | Add annotations to resources on this release |
 cert&#8209;manager.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
 cert&#8209;manager.chartVersion | string |  | Specify a specific chart version to use for this release |
 cert&#8209;manager.labels | object |  | Adds helmfile labels to this release |
 cert&#8209;manager.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+cert&#8209;manager.resourceLabels | object |  | Adds labels to resources on this release |
 cert&#8209;manager.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 cert&#8209;manager&#8209;resources | object |  |  |
 cert&#8209;manager&#8209;resources.annotations | object |  | Add annotations to resources on this release |
@@ -122,6 +123,7 @@ cert&#8209;manager&#8209;resources.chartUrl | string |  | Override this release'
 cert&#8209;manager&#8209;resources.chartVersion | string |  | Specify a specific chart version to use for this release |
 cert&#8209;manager&#8209;resources.labels | object |  | Adds helmfile labels to this release |
 cert&#8209;manager&#8209;resources.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+cert&#8209;manager&#8209;resources.resourceLabels | object |  | Adds labels to resources on this release |
 cert&#8209;manager&#8209;resources.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 features | list of strings | [ingress, cert-manager] | *enum of:&nbsp;&nbsp;(ingress \| cert-manager)* |
 ingress&#8209;nginx | object |  |  |
@@ -130,9 +132,11 @@ ingress&#8209;nginx.chartUrl | string |  | Override this release's chart URL (i.
 ingress&#8209;nginx.chartVersion | string |  | Specify a specific chart version to use for this release |
 ingress&#8209;nginx.labels | object |  | Adds helmfile labels to this release |
 ingress&#8209;nginx.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+ingress&#8209;nginx.resourceLabels | object |  | Adds labels to resources on this release |
 ingress&#8209;nginx.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
-labels | object |  | Adds labels to releases on this namespace |
+labels | object |  | Adds helmfile labels to releases on this namespace |
+resourceLabels | object |  | Adds labels to release resources on this namespace |
 targetNamespace | string | ingress | Sets the cluster namespace in which the releases will be deployed |
 helmDefaults | object |  |  |
 helmDefaults.args | list of strings |  |  |

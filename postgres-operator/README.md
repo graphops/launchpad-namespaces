@@ -104,16 +104,18 @@ helmfiles:
 
 | Key | Type | Default | Description |
 | :--- | :---: | :--- | :--- |
-annotations | object |  | Add annotations to releases on this namespace |
+annotations | object |  | Add annotations to release resources on this namespace |
 kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
-labels | object |  | Adds labels to releases on this namespace |
+labels | object |  | Adds helmfile labels to releases on this namespace |
 postgres&#8209;operator | object |  |  |
 postgres&#8209;operator.annotations | object |  | Add annotations to resources on this release |
 postgres&#8209;operator.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
 postgres&#8209;operator.chartVersion | string |  | Specify a specific chart version to use for this release |
 postgres&#8209;operator.labels | object |  | Adds helmfile labels to this release |
 postgres&#8209;operator.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+postgres&#8209;operator.resourceLabels | object |  | Adds labels to resources on this release |
 postgres&#8209;operator.values | (object *or* list of objects) |  | Pass values to the release helm chart |
+resourceLabels | object |  | Adds labels to release resources on this namespace |
 targetNamespace | string | postgres-operator | Sets the cluster namespace in which the releases will be deployed |
 helmDefaults | object |  |  |
 helmDefaults.args | list of strings |  |  |

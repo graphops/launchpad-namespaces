@@ -62,6 +62,10 @@ package LaunchpadNamespaces
 			#base.#labels
 			"launchpad.graphops.xyz/namespace": "polygon"
 		}
+
+		resourceLabels: {
+			#base.#resourceLabels
+		}
 	}
 }
 

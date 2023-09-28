@@ -43,6 +43,10 @@ package LaunchpadNamespaces
 			"launchpad.graphops.xyz/namespace": "postgres-operator"
 			"launchpad.graphops.xyz/layer":     "base"
 		}
+
+		resourceLabels: {
+			#base.#resourceLabels
+		}
 	}
 }
 
