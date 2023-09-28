@@ -403,12 +403,12 @@ _helmfile: {
 				  - template: "{{ $canonicalRelease }}"
 				  \(_releaseLabels)
 				  {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "labels" dict ) }}
-				  {{ $key }}: {{ $value }}
+				    {{ $key }}: {{ $value }}
 				  {{- $_ := set $_releaseResourceLabels $key $value }}
 				  {{- end }}
 				  {{- if (ne $release $canonicalRelease) }}
 				  {{- range $key,$value := ( $.Values | get $release dict | get "labels" dict ) }}
-				  {{ $key }}: {{ $value }}
+				    {{ $key }}: {{ $value }}
 				  {{- $_ := set $_releaseResourceLabels $key $value }}
 				  {{- end }}
 				  {{- end }}
