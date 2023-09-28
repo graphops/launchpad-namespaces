@@ -48,6 +48,7 @@ info: {
 	#helmfiles: upstreamHelmfile
 
 	#labels: {}
+	#resourceLabels: {}
 }
 
 #map: {
@@ -76,6 +77,7 @@ _#namespaceTemplate: {
 			}
 		}
 	}
-	labels:   _key.labels
-	releases: _key.releases
+	labels:         _key.labels
+	resourceLabels: _key.resourceLabels
+	releases:       _key.releases
 }

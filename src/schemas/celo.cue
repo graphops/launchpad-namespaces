@@ -57,6 +57,10 @@ package LaunchpadNamespaces
 			#base.#labels
 			"launchpad.graphops.xyz/namespace": "celo"
 		}
+
+		resourceLabels: {
+			#base.#resourceLabels
+		}
 	}
 }
 

@@ -76,6 +76,10 @@ package LaunchpadNamespaces
 			#base.#labels
 			"launchpad.graphops.xyz/namespace": "graph"
 		}
+
+		resourceLabels: {
+			#base.#resourceLabels
+		}
 	}
 }
 

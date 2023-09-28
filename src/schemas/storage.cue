@@ -46,6 +46,10 @@ package LaunchpadNamespaces
 			"launchpad.graphops.xyz/layer":     "base"
 		}
 
+		resourceLabels: {
+			#base.#resourceLabels
+		}
+
 		releases: {
 			"openebs": {
 				chart: {_repositories.openebs.charts.openebs}

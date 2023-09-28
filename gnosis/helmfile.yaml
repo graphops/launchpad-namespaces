@@ -13,8 +13,8 @@ environments:
 ---
 {{- $_tplTransforms := (print `
 {{- $_TemplatedResources := list "Deployment" "StatefulSet" "DaemonSet" -}}
-{{- $_labels := merge ( .Values | get .release dict | get "resourceLabels" dict ) ( .Values | get "labels" dict ) ( .commonLabels ) }}
-{{- $_annotations := merge ( .Values | get .release dict | get "annotations" dict ) ( .Values | get "annotations" dict ) }}
+{{- $_labels := .resourceLabels }}
+{{- $_annotations := merge ( .Values | get .release dict | get "annotations" dict ) ( .Values | get .canonicalRelease dict | get "annotations" dict ) ( .Values | get "annotations" dict ) }}
 transformers:
 - apiVersion: builtin
   kind: AnnotationsTransformer
@@ -88,12 +88,30 @@ kubeVersion: {{ .Values.kubeVersion }}
 #set default namespace
 {{ $_defaultNamespace := ( print "gnosis-" .Values.flavor ) }}
 
-commonLabels:
-  launchpad.graphops.xyz/namespace: gnosis
 
-{{ $_commonLabels := dict 
-  `launchpad.graphops.xyz/namespace` `gnosis`
+{{- $_commonLabels := dict 
+`launchpad.graphops.xyz/namespace` `gnosis`
 }}
+
+{{- $_commonResourceLabels := dict 
+
+}}
+{{ $_ := mergeOverwrite $_commonResourceLabels $_commonLabels }}
+{{- if hasKey .Values "labels" }}
+{{- range $key, $value := $.Values.labels }}
+{{- $_ := set $_commonLabels $key $value }}
+{{- $_ := set $_commonResourceLabels $key $value }}
+{{- end }}
+{{- end }}
+{{- if hasKey .Values "resourceLabels" }}
+{{- range $key, $value := $.Values.resourceLabels }}
+{{- $_ := set $_commonResourceLabels $key $value }}
+{{- end }}
+{{- end }}
+commonLabels:
+{{- range $key, $value := $_commonLabels }}
+  {{ $key }}: {{ $value }}
+{{- end }}
 repositories:
   - name: graphops
     url: https://graphops.github.io/launchpad-charts/canary
@@ -148,46 +166,88 @@ templates:
 releases:
   {{- $canonicalRelease := "nethermind" }}
   {{- $release := "nethermind" }}
+    {{- $_releaseResourceLabels := deepCopy $_commonResourceLabels }}
   - name: "{{ $release }}"
     inherit:
     - template: "{{ $canonicalRelease }}"
-    {{- tpl $_tplTransforms (dict "Values" .Values "release" $release "commonLabels" $_commonLabels )  | indent 4 -}}
-    {{- if ( .Values | get $release dict | get "labels" false ) }}
     labels:
-    {{- range $key,$value := ( .Values | get $release dict | get "labels" dict ) }}
-      {{ $key }}: {{ $value }}
+    {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "labels" dict ) }}
+    {{ $key }}: {{ $value }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- if (ne $release $canonicalRelease) }}
+    {{- range $key,$value := ( $.Values | get $release dict | get "labels" dict ) }}
+    {{ $key }}: {{ $value }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
     {{- end }}
     {{- end }}
+    {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "resourceLabels" dict ) }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- if (ne $release $canonicalRelease) }}
+    {{- range $key,$value := ( $.Values | get $release dict | get "resourceLabels" dict ) }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- end }}
+    {{- tpl $_tplTransforms (dict "Values" $.Values "release" $release "canonicalRelease" $canonicalRelease "resourceLabels" $_releaseResourceLabels  )  | indent 4 -}}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
   
   {{- $canonicalRelease := "nimbus" }}
   {{- $release := "nimbus" }}
+    {{- $_releaseResourceLabels := deepCopy $_commonResourceLabels }}
   - name: "{{ $release }}"
     inherit:
     - template: "{{ $canonicalRelease }}"
-    {{- tpl $_tplTransforms (dict "Values" .Values "release" $release "commonLabels" $_commonLabels )  | indent 4 -}}
-    {{- if ( .Values | get $release dict | get "labels" false ) }}
     labels:
-    {{- range $key,$value := ( .Values | get $release dict | get "labels" dict ) }}
-      {{ $key }}: {{ $value }}
+    {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "labels" dict ) }}
+    {{ $key }}: {{ $value }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- if (ne $release $canonicalRelease) }}
+    {{- range $key,$value := ( $.Values | get $release dict | get "labels" dict ) }}
+    {{ $key }}: {{ $value }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
     {{- end }}
     {{- end }}
+    {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "resourceLabels" dict ) }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- if (ne $release $canonicalRelease) }}
+    {{- range $key,$value := ( $.Values | get $release dict | get "resourceLabels" dict ) }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- end }}
+    {{- tpl $_tplTransforms (dict "Values" $.Values "release" $release "canonicalRelease" $canonicalRelease "resourceLabels" $_releaseResourceLabels  )  | indent 4 -}}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
   
   {{- $canonicalRelease := "proxyd" }}
   {{- $release := "proxyd" }}
+    {{- $_releaseResourceLabels := deepCopy $_commonResourceLabels }}
   - name: "{{ $release }}"
     inherit:
     - template: "{{ $canonicalRelease }}"
-    {{- tpl $_tplTransforms (dict "Values" .Values "release" $release "commonLabels" $_commonLabels )  | indent 4 -}}
-    {{- if ( .Values | get $release dict | get "labels" false ) }}
     labels:
-    {{- range $key,$value := ( .Values | get $release dict | get "labels" dict ) }}
-      {{ $key }}: {{ $value }}
+    {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "labels" dict ) }}
+    {{ $key }}: {{ $value }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- if (ne $release $canonicalRelease) }}
+    {{- range $key,$value := ( $.Values | get $release dict | get "labels" dict ) }}
+    {{ $key }}: {{ $value }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
     {{- end }}
     {{- end }}
+    {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "resourceLabels" dict ) }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- if (ne $release $canonicalRelease) }}
+    {{- range $key,$value := ( $.Values | get $release dict | get "resourceLabels" dict ) }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- end }}
+    {{- tpl $_tplTransforms (dict "Values" $.Values "release" $release "canonicalRelease" $canonicalRelease "resourceLabels" $_releaseResourceLabels  )  | indent 4 -}}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
   

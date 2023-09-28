@@ -70,6 +70,10 @@ package LaunchpadNamespaces
 			"launchpad.graphops.xyz/namespace": "monitoring"
 			"launchpad.graphops.xyz/layer":     "base"
 		}
+
+		resourceLabels: {
+			#base.#resourceLabels
+		}
 	}
 }
 

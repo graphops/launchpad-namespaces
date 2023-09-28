@@ -39,6 +39,10 @@ package LaunchpadNamespaces
 			"launchpad.graphops.xyz/namespace": "sealed-secrets"
 			"launchpad.graphops.xyz/layer":     "base"
 		}
+
+		resourceLabels: {
+			#base.#resourceLabels
+		}
 	}
 }
 

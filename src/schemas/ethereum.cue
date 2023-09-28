@@ -46,9 +46,9 @@ package LaunchpadNamespaces
 			// the default is eth-<flavor>
 			targetNamespace?: *"eth-mainnet" | string
 
-			features?: *[#features.#nimbus, #features.#proxyd] | [...#features.#enum]
-
 			_templatedTargetNamespace: '( print "eth-" .Values.flavor )'
+
+			features?: *[#features.#nimbus, #features.#proxyd] | [...#features.#enum]
 
 			flavor?: *"mainnet" | #flavor.#enum
 
@@ -74,9 +74,8 @@ package LaunchpadNamespaces
 			erigon: {
 				chart: {_repositories.graphops.charts.erigon}
 				labels: {
-					"database.launchpad.graphops.xyz/chain":   "ethereum"
-					"database.launchpad.graphops.xyz/network": "{{ .Values.flavor }}"
-					"database.launchpad.graphops.xyz/layer":   "execution"
+					"app.launchpad.graphops.xyz/layer":     "execution"
+					"app.launchpad.graphops.xyz/component": "erigon"
 				}
 				_template: {version: "0.8.2"}
 				_scale: true
@@ -85,8 +84,8 @@ package LaunchpadNamespaces
 			nimbus: {
 				chart: {_repositories.graphops.charts.nimbus}
 				labels: {
-					"database.launchpad.graphops.xyz/chain": "ethereum"
-					"database.launchpad.graphops.xyz/layer": "consensus"
+					"app.launchpad.graphops.xyz/layer":     "consensus"
+					"app.launchpad.graphops.xyz/component": "nimbus"
 				}
 				feature: #features.#nimbus
 				_template: {version: "0.5.2"}
@@ -96,8 +95,8 @@ package LaunchpadNamespaces
 			proxyd: {
 				chart: {_repositories.graphops.charts.proxyd}
 				labels: {
-					"database.launchpad.graphops.xyz/chain": "ethereum"
-					"database.launchpad.graphops.xyz/layer": "proxy"
+					"app.launchpad.graphops.xyz/layer":     "proxy"
+					"app.launchpad.graphops.xyz/component": "proxyd"
 				}
 				feature: #features.#proxyd
 				_template: {version: "0.3.4-canary.4"}
@@ -107,7 +106,14 @@ package LaunchpadNamespaces
 
 		labels: {
 			#base.#labels
-			"launchpad.graphops.xyz/namespace": "ethereum"
+			"launchpad.graphops.xyz/namespace":   "ethereum"
+			"app.launchpad.graphops.xyz/type":    "blockchain"
+			"app.launchpad.graphops.xyz/chain":   "ethereum"
+			"app.launchpad.graphops.xyz/network": "{{ .Values.flavor }}"
+		}
+
+		resourceLabels: {
+			#base.#resourceLabels
 		}
 	}
 }

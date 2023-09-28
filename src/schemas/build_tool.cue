@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"encoding/yaml"
 	"strings"
+	"list"
 )
 
 command: {
@@ -228,22 +229,100 @@ _helmfile: {
 		}
 	}
 
+	_#tplStructToDict: {
+		_dictName: string
+		_struct: {...}
+		_indent: *0 | int
+
+		_elements: {
+			for key, value in _struct if !strings.Contains("\(value)", "{{") {"\(key)": "`\(key)` `\(value)`"}
+		}
+
+		_templatedElementsList: list.SortStrings([ for key, value in _struct if strings.Contains("\(value)", "{{") {"\(key)"}])
+
+		_elements: {
+			for index, key in _templatedElementsList {"\(key)": "`\(key)` $_templatedValue_\(index)"}
+		}
+
+		_elementsStrings: [ for key, value in _elements {"\(value)"}]
+
+		_variableDecl: [ for index, key in _templatedElementsList let value = strings.Replace(strings.Replace(_struct[key], "{{", "", 1), "}}", "", 1) {"""
+		{{ $_templatedValue_\(index) := \(value) }}
+		"""
+		}]
+
+		_out: strings.Join([
+			strings.Join(_variableDecl, "\n"),
+			"{{- $\(_dictName) := dict ",
+			strings.Join(_elementsStrings, "\n"),
+			"}}",
+		], "\n")
+
+		if _indent == 0 {
+			out: _out
+		}
+
+		if _indent > 0 {
+			out: strings.Join([ for line in strings.Split(_out, "\n") {" "*_indent + line}], "\n")
+		}
+	}
+
+	_#tplStructToYaml: {
+		_name: string
+		_struct: {...}
+		_indent: *0 | int
+
+		_yaml:       yaml.Marshal({"\(_name)": _struct})
+		_yamlCleanP: strings.Replace(_yaml, "'{{", "{{", -1)
+		_yamlCleanS: strings.Replace(_yamlCleanP, "}}'", "}}", -1)
+		_yamlClean:  _yamlCleanS
+
+		_out: _yamlClean
+
+		if _indent == 0 {
+			out: _out
+		}
+
+		if _indent > 0 {
+			out: strings.Join([ for line in strings.Split(_out, "\n") {" "*_indent + line}], "\n")
+		}
+	}
+
 	_#labels: {
 		this=_namespace: string
 
-		_commonLabels: {
-			for key, value in _namespaces[this].labels {"\(key)": value}
+		_commonLabels: _#tplStructToDict & {
+			_dictName: "_commonLabels"
+			_struct:   _namespaces[this].labels
 		}
-		commonLabels: yaml.Marshal({commonLabels: _commonLabels})
-
-		_dictLabels: [ for key, value in _commonLabels {"  `\(key)` `\(value)`"}]
-		dictLabels: strings.Join(_dictLabels, "\n")
+		_commonResourceLabels: _#tplStructToDict & {
+			_dictName: "_commonResourceLabels"
+			_struct:   _namespaces[this].resourceLabels
+		}
 
 		out: strings.Join([
-			commonLabels,
-			"{{ $_commonLabels := dict ",
-			dictLabels,
-			"}}",
+			_commonLabels.out,
+			_commonResourceLabels.out,
+			"""
+				{{ $_ := mergeOverwrite $_commonResourceLabels $_commonLabels }}
+				{{- if hasKey .Values "labels" }}
+				{{- range $key, $value := $.Values.labels }}
+				{{- $_ := set $_commonLabels $key $value }}
+				{{- $_ := set $_commonResourceLabels $key $value }}
+				{{- end }}
+				{{- end }}
+				{{- if hasKey .Values "resourceLabels" }}
+				{{- range $key, $value := $.Values.resourceLabels }}
+				{{- $_ := set $_commonResourceLabels $key $value }}
+				{{- end }}
+				{{- end }}
+				""",
+			"""
+				commonLabels:
+				{{- range $key, $value := $_commonLabels }}
+				  {{ $key }}: {{ $value }}
+				{{- end }}
+				""",
 		], "\n")
 	}
 
@@ -318,16 +397,30 @@ _helmfile: {
 
 		_blocks: {
 			release: """
+				  {{- $_releaseResourceLabels := deepCopy $_commonResourceLabels }}
 				- name: "{{ $release }}"
 				  inherit:
 				  - template: "{{ $canonicalRelease }}"
-				  {{- tpl $_tplTransforms (dict "Values" .Values "release" $release "commonLabels" $_commonLabels )  | indent 4 -}}
-				  {{- if ( .Values | get $release dict | get "labels" false ) }}
 				  \(_releaseLabels)
-				  {{- range $key,$value := ( .Values | get $release dict | get "labels" dict ) }}
-				    {{ $key }}: {{ $value }}
+				  {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "labels" dict ) }}
+				  {{ $key }}: {{ $value }}
+				  {{- $_ := set $_releaseResourceLabels $key $value }}
+				  {{- end }}
+				  {{- if (ne $release $canonicalRelease) }}
+				  {{- range $key,$value := ( $.Values | get $release dict | get "labels" dict ) }}
+				  {{ $key }}: {{ $value }}
+				  {{- $_ := set $_releaseResourceLabels $key $value }}
 				  {{- end }}
 				  {{- end }}
+				  {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "resourceLabels" dict ) }}
+				  {{- $_ := set $_releaseResourceLabels $key $value }}
+				  {{- end }}
+				  {{- if (ne $release $canonicalRelease) }}
+				  {{- range $key,$value := ( $.Values | get $release dict | get "resourceLabels" dict ) }}
+				  {{- $_ := set $_releaseResourceLabels $key $value }}
+				  {{- end }}
+				  {{- end }}
+				  {{- tpl $_tplTransforms (dict "Values" $.Values "release" $release "canonicalRelease" $canonicalRelease "resourceLabels" $_releaseResourceLabels  )  | indent 4 -}}
 				  values:
 				  {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
 				"""
@@ -416,8 +509,8 @@ _templateBlocks: {
 	transforms: """
 		{{- $_tplTransforms := (print `
 		{{- $_TemplatedResources := list "Deployment" "StatefulSet" "DaemonSet" -}}
-		{{- $_labels := merge ( .Values | get .release dict | get "resourceLabels" dict ) ( .Values | get "labels" dict ) ( .commonLabels ) }}
-		{{- $_annotations := merge ( .Values | get .release dict | get "annotations" dict ) ( .Values | get "annotations" dict ) }}
+		{{- $_labels := .resourceLabels }}
+		{{- $_annotations := merge ( .Values | get .release dict | get "annotations" dict ) ( .Values | get .canonicalRelease dict | get "annotations" dict ) ( .Values | get "annotations" dict ) }}
 		transformers:
 		- apiVersion: builtin
 		  kind: AnnotationsTransformer
