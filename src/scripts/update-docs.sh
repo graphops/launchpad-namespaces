@@ -16,12 +16,6 @@ get_realpath() {
   fi
 }
 
-# if [[ $(uname -s) == Linux ]]; then
-#     base_rpath="realpath"
-# elif [[ $(uname -s) == Darwin ]]; then
-#     base_rpath="grealpath"
-# fi
-
 readonly BASEDIR="$(dirname -- "$0")"
 readonly REPOROOT="$(get_realpath "$BASEDIR/../..")"
 readonly GENOPENAPI="$(get_realpath "$REPOROOT/src/scripts/generate-openapi.sh")"
