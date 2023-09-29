@@ -2,17 +2,31 @@
 
 set -e
 
-if [[ $(uname -s) == Linux ]]; then
-    base_rpath="realpath"
-elif [[ $(uname -s) == Darwin ]]; then
-    base_rpath="grealpath"
-fi
+get_realpath() {
+  local target_file="$1"
+
+  # Check if 'realpath' exists
+  if command -v realpath >/dev/null 2>&1; then
+    realpath "$target_file"
+  elif command -v grealpath >/dev/null 2>&1; then
+    grealpath "$target_file"
+  else
+    echo "Neither realpath nor grealpath is installed. Exiting."
+    exit 1
+  fi
+}
+
+# if [[ $(uname -s) == Linux ]]; then
+#     base_rpath="realpath"
+# elif [[ $(uname -s) == Darwin ]]; then
+#     base_rpath="grealpath"
+# fi
 
 readonly BASEDIR="$(dirname -- "$0")"
-readonly REPOROOT="$("$base_rpath" "$BASEDIR/../..")"
-readonly GENOPENAPI="$("$base_rpath" "$REPOROOT/src/scripts/generate-openapi.sh")"
-readonly DOCSDIR="$("$base_rpath" "$REPOROOT/src/docs")"
-readonly TEMPLATESDIR="$("$base_rpath" "$DOCSDIR/macros")"
+readonly REPOROOT="$(get_realpath "$BASEDIR/../..")"
+readonly GENOPENAPI="$(get_realpath "$REPOROOT/src/scripts/generate-openapi.sh")"
+readonly DOCSDIR="$(get_realpath "$REPOROOT/src/docs")"
+readonly TEMPLATESDIR="$(get_realpath "$DOCSDIR/macros")"
 
 DATA_API_FILE="$(mktemp)"
 exec 3>"$DATA_API_FILE"
