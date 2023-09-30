@@ -2519,11 +2519,19 @@
             "namespaces.graph.flavor": {
                 "type": "object"
             },
+            "namespaces.graph.flavor.arbitrum_goerli": {
+                "description": "suitable defaults for an arbitrum-goerli indexer",
+                "type": "string",
+                "enum": [
+                    "arbitrum-goerli"
+                ]
+            },
             "namespaces.graph.flavor.enum": {
                 "type": "string",
                 "enum": [
                     "goerli",
-                    "mainnet"
+                    "mainnet",
+                    "arbitrum-goerli"
                 ]
             },
             "namespaces.graph.flavor.goerli": {

@@ -17,10 +17,13 @@ package LaunchpadNamespaces
 			// suitable defaults for a goerli indexer
 			#goerli: "goerli"
 
+			// suitable defaults for an arbitrum-goerli indexer
+			#arbitrum_goerli: "arbitrum-goerli"
+
 			// suitable defaults for a mainnet indexer
 			#mainnet: "mainnet"
 
-			#enum: ( #goerli | #mainnet )
+			#enum: ( #goerli | #mainnet | #arbitrum_goerli )
 		}
 
 		// Graph namespace values schema
