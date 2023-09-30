@@ -133,7 +133,7 @@ templates:
     version: {{ .Values | get "arbitrum-nitro" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "arbitrum-nitro" dict | get "chartVersion" false ) ( .Values | get "arbitrum-nitro" dict | get "chartUrl" false ) )) }}
-    version: "0.1.1"
+    version: "0.1.3"
     {{- end }}
   arbitrum-classic:
     {{- if ( .Values | get "arbitrum-classic" dict | get "chartUrl" false ) }}
@@ -147,7 +147,7 @@ templates:
     version: {{ .Values | get "arbitrum-classic" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "arbitrum-classic" dict | get "chartVersion" false ) ( .Values | get "arbitrum-classic" dict | get "chartUrl" false ) )) }}
-    version: "0.1.1"
+    version: "0.1.3"
     {{- end }}
   proxyd:
     {{- if ( .Values | get "proxyd" dict | get "chartUrl" false ) }}
@@ -161,7 +161,7 @@ templates:
     version: {{ .Values | get "proxyd" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "proxyd" dict | get "chartVersion" false ) ( .Values | get "proxyd" dict | get "chartUrl" false ) )) }}
-    version: "0.2.1"
+    version: "0.3.4-canary.4"
     {{- end }}
 releases:
   {{- $canonicalRelease := "arbitrum-nitro" }}
