@@ -71,6 +71,8 @@ jobs:
             if [ -n "${latest_canary}" ]; then
               tagmap["${namespace}-canary/latest"]="${latest_canary}"
             fi
+            unset major_vers
+            unset minor_vers
           done
 
           tagmap_str=""
