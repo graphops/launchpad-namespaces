@@ -3,12 +3,28 @@
 {{ $_ := set .Values "flavor" "mainnet" }}
 {{ end }}
 
+# Define default features when undefined
+{{ if not (hasKey .Values "features") }}
+{{ $_ := set .Values "features" (list
+`proxyd`
+) }}
+{{ end }}
 
+#set default number of deployments when missing
+{{ if not ( hasKey .Values  "scaling" ) }}
+{{ $_ := set .Values "scaling" dict }}
+{{ end }}
+{{ if not ( hasKey ( .Values | get "scaling" dict ) "deployments" ) }}
+{{ $_ := set .Values.scaling "deployments" 1 }}
+{{ end }}
 
 environments:
   {{ .Environment.Name }}:
     values:
       - flavor: {{ .Values.flavor }}
+      - features: {{ .Values.features | toYaml | nindent 10 }}
+      - scaling:
+          deployments: {{ .Values.scaling.deployments }}
 
 ---
 {{- $_tplTransforms := (print `
@@ -165,7 +181,9 @@ templates:
     {{- end }}
 releases:
   {{- $canonicalRelease := "arbitrum-nitro" }}
-  {{- $release := "arbitrum-nitro" }}
+  {{- range $index := until .Values.scaling.deployments }}
+  {{- $deploymentIndex := (add . 1) }}
+  {{- $release := (printf "%s%v" "arbitrum-nitro-" $deploymentIndex) }}
     {{- $_releaseResourceLabels := deepCopy $_commonResourceLabels }}
   - name: "{{ $release }}"
     inherit:
@@ -192,9 +210,11 @@ releases:
     {{- tpl $_tplTransforms (dict "Values" $.Values "release" $release "canonicalRelease" $canonicalRelease "resourceLabels" $_releaseResourceLabels  )  | indent 4 -}}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
-  
+  {{- end -}}
   {{- $canonicalRelease := "arbitrum-classic" }}
-  {{- $release := "arbitrum-classic" }}
+  {{- range $index := until .Values.scaling.deployments }}
+  {{- $deploymentIndex := (add . 1) }}
+  {{- $release := (printf "%s%v" "arbitrum-classic-" $deploymentIndex) }}
     {{- $_releaseResourceLabels := deepCopy $_commonResourceLabels }}
   - name: "{{ $release }}"
     inherit:
@@ -221,7 +241,8 @@ releases:
     {{- tpl $_tplTransforms (dict "Values" $.Values "release" $release "canonicalRelease" $canonicalRelease "resourceLabels" $_releaseResourceLabels  )  | indent 4 -}}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
-  
+  {{- end -}}
+  {{ if has "proxyd" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "proxyd" }}
   {{- $release := "proxyd" }}
     {{- $_releaseResourceLabels := deepCopy $_commonResourceLabels }}
@@ -251,3 +272,4 @@ releases:
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
   
+  {{- end -}}

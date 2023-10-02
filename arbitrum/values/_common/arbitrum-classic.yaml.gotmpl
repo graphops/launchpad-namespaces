@@ -1,9 +1,8 @@
-nitro:
+{{ $scalingIndex := splitList "-" .Release.Name | last }}
+arbitrum:
   extraArgs:
-    - --init.url="https://snapshot.arbitrum.io/mainnet/nitro.tar"
-    - --l1.url=http://your-eth-mainnet-url:8545  ## changeme
-    - --l2.chain-id=42161  # determines Arbitrum network - 42161 mainnet
-    - --node.rpc.classic-redirect=http://arbitrum-classic-archive-trace-mainnet:8547/
+    - --node.chain-id=42161  # determines Arbitrum network - 42161 mainnet
+    - --l1.url=http://your-eth-mainnet-url:8545  # change me
 
   resources:
     # We usually recommend not to specify default resources and to leave this as a conscious
@@ -14,7 +13,6 @@ nitro:
       # cpu: 100m
       memory: 50Gi
 
-
   # -- [PersistentVolumeClaimSpec](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.23/#persistentvolumeclaimspec-v1-core) for Erigon storage
   volumeClaimSpec:
     # -- The storage class to use when provisioning a persistent volume for Erigon
@@ -24,12 +22,23 @@ nitro:
         # -- The amount of disk space to provision for Erigon
         storage: 3Ti
 
+  restoreSnapshot:
+    # -- Enable initialising arbitrum state from a remote snapshot
+    enabled: true
+    # -- URL for snapshot to download and extract to restore state
+    snapshotUrl: https://snapshot.arbitrum.io/mainnet/db.tar
+
   extraLabels:
     app.kubernetes.io/workload-type: blockchain-stateful
-    app.kubernetes.io/blockchain: arbitrum-nitro-mainnet
+    app.kubernetes.io/blockchain: arbitrum-classic-mainnet
 
-  affinityPresets:
-    antiAffinityByHostname: false
+{{- if (hasKey .Values.scaling "p2pStartPort") }}
+  p2pNodePort:
+    # -- Expose P2P port via NodePort
+    enabled: true
+    # -- NodePort to be used. Must be unique.
+    port: {{ add (mul (sub $scalingIndex 1) 2) .Values.scaling.p2pStartPort }}
+{{- end }}
 
 prometheus:
   serviceMonitors:

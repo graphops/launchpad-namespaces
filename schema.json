@@ -805,7 +805,7 @@
                             "description": {
                                 "type": "string",
                                 "enum": [
-                                    "This *Namespace* provides a suitable stack to operate Arbitrum mainnet archive nodes."
+                                    "This *Namespace* provides a suitable stack to operate Arbitrum mainnet and görli archive nodes."
                                 ]
                             }
                         }
@@ -907,7 +907,8 @@
                             "proxyd": {
                                 "type": "object",
                                 "required": [
-                                    "chart"
+                                    "chart",
+                                    "feature"
                                 ],
                                 "properties": {
                                     "chart": {
@@ -944,6 +945,9 @@
                                                 ]
                                             }
                                         }
+                                    },
+                                    "feature": {
+                                        "$ref": "#/components/schemas/namespaces.arbitrum.features.proxyd"
                                     }
                                 }
                             }
@@ -975,21 +979,46 @@
                     }
                 }
             },
+            "namespaces.arbitrum.features": {
+                "description": "arbitrum namespace features schema",
+                "type": "object"
+            },
+            "namespaces.arbitrum.features.enum": {
+                "$ref": "#/components/schemas/namespaces.arbitrum.features.proxyd"
+            },
+            "namespaces.arbitrum.features.proxyd": {
+                "description": "Deploy proxyd",
+                "type": "string",
+                "enum": [
+                    "proxyd"
+                ]
+            },
             "namespaces.arbitrum.flavor": {
-                "description": "Suitable defaults for a mainnet archive node",
                 "type": "object"
             },
             "namespaces.arbitrum.flavor.enum": {
-                "$ref": "#/components/schemas/namespaces.arbitrum.flavor.mainnet"
+                "type": "string",
+                "enum": [
+                    "mainnet",
+                    "goerli"
+                ]
+            },
+            "namespaces.arbitrum.flavor.goerli": {
+                "description": "suitable defaults for a görli archive node",
+                "type": "string",
+                "enum": [
+                    "goerli"
+                ]
             },
             "namespaces.arbitrum.flavor.mainnet": {
+                "description": "suitable defaults for a mainnet archive node",
                 "type": "string",
                 "enum": [
                     "mainnet"
                 ]
             },
             "namespaces.arbitrum.helmfiles": {
-                "description": "Arbitrum helmfile schema",
+                "description": "arbitrum helmfile API",
                 "type": "object",
                 "properties": {
                     "path": {
@@ -1021,14 +1050,44 @@
                     }
                 ]
             },
+            "namespaces.arbitrum.scaling": {
+                "description": "arbitrum scaling interface",
+                "type": "object",
+                "required": [
+                    "deployments"
+                ],
+                "properties": {
+                    "deployments": {
+                        "description": "number of independent stateful sets to deploy",
+                        "type": "integer",
+                        "default": 1
+                    },
+                    "startP2PPort": {
+                        "description": "A beggining port for the range to use in P2P NodePorts",
+                        "type": "integer"
+                    }
+                }
+            },
             "namespaces.arbitrum.values": {
-                "description": "Arbitrum",
+                "description": "arbitrum namespace values schema",
                 "type": "object",
                 "properties": {
                     "targetNamespace": {
-                        "description": "the default is arbitrum-(flavor)",
+                        "description": "the default is arbitrum-<flavor>",
                         "type": "string",
                         "default": "arbitrum-mainnet"
+                    },
+                    "features": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/namespaces.arbitrum.features.enum"
+                        },
+                        "default": [
+                            "proxyd"
+                        ]
+                    },
+                    "flavor": {
+                        "$ref": "#/components/schemas/namespaces.arbitrum.flavor.enum"
                     },
                     "arbitrum-nitro": {
                         "$ref": "#/components/schemas/base.releaseValues"
@@ -1036,8 +1095,8 @@
                     "arbitrum-classic": {
                         "$ref": "#/components/schemas/base.releaseValues"
                     },
-                    "flavor": {
-                        "$ref": "#/components/schemas/namespaces.arbitrum.flavor.enum"
+                    "scaling": {
+                        "$ref": "#/components/schemas/namespaces.arbitrum.scaling"
                     },
                     "proxyd": {
                         "$ref": "#/components/schemas/base.releaseValues"
