@@ -19,7 +19,10 @@ package LaunchpadNamespaces
 
 			// suitable defaults for a göerli archive node
 			#goerli: "goerli"
-			#enum:   ( #mainnet | #goerli )
+
+			// suitable defaults for a holeśky ethereum testnet node
+			#holesky: "holesky"
+			#enum:   ( #mainnet | #goerli | #holesky )
 		}
 
 		// ethereum namespace features schema

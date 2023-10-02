@@ -1839,7 +1839,8 @@
                 "type": "string",
                 "enum": [
                     "mainnet",
-                    "goerli"
+                    "goerli",
+                    "holesky"
                 ]
             },
             "namespaces.ethereum.flavor.goerli": {
@@ -1847,6 +1848,13 @@
                 "type": "string",
                 "enum": [
                     "goerli"
+                ]
+            },
+            "namespaces.ethereum.flavor.holesky": {
+                "description": "suitable defaults for a holeśky ethereum testnet node",
+                "type": "string",
+                "enum": [
+                    "holesky"
                 ]
             },
             "namespaces.ethereum.flavor.mainnet": {

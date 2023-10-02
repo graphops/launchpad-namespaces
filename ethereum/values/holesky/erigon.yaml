@@ -1,0 +1,9 @@
+statefulNode:
+  extraArgs:
+    - --http.api=eth,debug,net,trace
+    - --chain=holesky
+
+  volumeClaimSpec:
+    resources:
+      requests:
+        storage: 1Ti
