@@ -2,7 +2,7 @@
 
 # Arbitrum Namespace
 
-This *Namespace* provides a suitable stack to operate Arbitrum mainnet archive nodes.
+This *Namespace* provides a suitable stack to operate Arbitrum one, görli and sepolia archive nodes.
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
@@ -125,6 +125,7 @@ arbitrum&#8209;nitro.labels | object |  | Adds helmfile labels to this release |
 arbitrum&#8209;nitro.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
 arbitrum&#8209;nitro.resourceLabels | object |  | Adds labels to resources on this release |
 arbitrum&#8209;nitro.values | (object *or* list of objects) |  | Pass values to the release helm chart |
+features | list of strings | [proxyd, arbitrum_classic, arbitrum_nitro] | *enum of:&nbsp;&nbsp;(proxyd \| arbitrum_classic \| arbitrum_nitro)* |
 flavor | string |  |  |
 kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
 labels | object |  | Adds helmfile labels to releases on this namespace |
@@ -137,7 +138,9 @@ proxyd.mergeValues | boolean | true | Merges passed values with namespace's defa
 proxyd.resourceLabels | object |  | Adds labels to resources on this release |
 proxyd.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 resourceLabels | object |  | Adds labels to release resources on this namespace |
-targetNamespace | string | arbitrum-mainnet | the default is arbitrum-(flavor) |
+scaling | object |  | arbitrum scaling interface |
+scaling.deployments | integer | 1 | number of independent stateful sets to deploy |
+targetNamespace | string | arbitrum-one | the default is arbitrum-<flavor> |
 helmDefaults | object |  |  |
 helmDefaults.args | list of strings |  |  |
 helmDefaults.cleanupOnFail | boolean |  |  |
