@@ -8,7 +8,7 @@ indexerDefaults:
 
 indexerAgent:
   config:
-    collect-receipts-endpoint: "https://gateway.network.thegraph.com/collect-receipts"
+    collect-receipts-endpoint: "https://gateway-arbitrum.network.thegraph.com/collect-receipts"
     network-subgraph-deployment: "QmcMEEdcVn32kfpkjwmiw5ZADFJdP2JDzm9j56h9iEVrXn" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
     epoch-subgraph-endpoint: "https://api.thegraph.com/subgraphs/name/graphprotocol/arbitrum-epoch-block-oracle" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
 
