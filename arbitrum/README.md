@@ -2,7 +2,7 @@
 
 # Arbitrum Namespace
 
-This *Namespace* provides a suitable stack to operate Arbitrum mainnet and görli archive nodes.
+This *Namespace* provides a suitable stack to operate Arbitrum onde and görli archive nodes.
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
@@ -141,7 +141,7 @@ resourceLabels | object |  | Adds labels to release resources on this namespace 
 scaling | object |  | arbitrum scaling interface |
 scaling.deployments | integer | 1 | number of independent stateful sets to deploy |
 scaling.startP2PPort | integer |  | A beggining port for the range to use in P2P NodePorts |
-targetNamespace | string | arbitrum-mainnet | the default is arbitrum-<flavor> |
+targetNamespace | string | arbitrum-one | the default is arbitrum-<flavor> |
 helmDefaults | object |  |  |
 helmDefaults.args | list of strings |  |  |
 helmDefaults.cleanupOnFail | boolean |  |  |

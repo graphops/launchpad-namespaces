@@ -1,6 +1,6 @@
 #set default flavor when missing
 {{ if not ( hasKey .Values "flavor" ) }}
-{{ $_ := set .Values "flavor" "mainnet" }}
+{{ $_ := set .Values "flavor" "one" }}
 {{ end }}
 
 # Define default features when undefined

@@ -8,17 +8,18 @@ package LaunchpadNamespaces
 			name: "arbitrum"
 			url:  "https://github.com/graphops/launchpad-namespaces/\(name)"
 			description: """
-				This *Namespace* provides a suitable stack to operate Arbitrum mainnet and görli archive nodes.
+				This *Namespace* provides a suitable stack to operate Arbitrum onde and görli archive nodes.
 				"""
 		}
 
 		#flavor: {
-			// suitable defaults for a mainnet archive node
-			#mainnet: "mainnet"
+			// suitable defaults for an arbitrum-one archive node
+			#one: "one"
 
-			// suitable defaults for a görli archive node
+			// suitable defaults for an arbitrum-görli archive node
 			#goerli: "goerli"
-			#enum:   ( #mainnet | #goerli )
+
+			#enum: ( #one | #goerli )
 		}
 
 		// arbitrum namespace features schema
@@ -37,17 +38,16 @@ package LaunchpadNamespaces
 			startP2PPort?: int
 		}
 
-
 		// arbitrum namespace values schema
 		#values: #base.#values & {
 			// the default is arbitrum-<flavor>
-			targetNamespace?: *"arbitrum-mainnet" | string
+			targetNamespace?: *"arbitrum-one" | string
 
 			_templatedTargetNamespace: '( print "arbitrum-" .Values.flavor )'
 
 			features?: *[#features.#proxyd] | [...#features.#enum]
 
-			flavor?: *"mainnet" | #flavor.#enum
+			flavor?: *"one" | #flavor.#enum
 
 			scaling?: #scaling
 

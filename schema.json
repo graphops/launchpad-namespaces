@@ -805,7 +805,7 @@
                             "description": {
                                 "type": "string",
                                 "enum": [
-                                    "This *Namespace* provides a suitable stack to operate Arbitrum mainnet and görli archive nodes."
+                                    "This *Namespace* provides a suitable stack to operate Arbitrum onde and görli archive nodes."
                                 ]
                             }
                         }
@@ -999,22 +999,22 @@
             "namespaces.arbitrum.flavor.enum": {
                 "type": "string",
                 "enum": [
-                    "mainnet",
+                    "one",
                     "goerli"
                 ]
             },
             "namespaces.arbitrum.flavor.goerli": {
-                "description": "suitable defaults for a görli archive node",
+                "description": "suitable defaults for an arbitrum-görli archive node",
                 "type": "string",
                 "enum": [
                     "goerli"
                 ]
             },
-            "namespaces.arbitrum.flavor.mainnet": {
-                "description": "suitable defaults for a mainnet archive node",
+            "namespaces.arbitrum.flavor.one": {
+                "description": "suitable defaults for an arbitrum-one archive node",
                 "type": "string",
                 "enum": [
-                    "mainnet"
+                    "one"
                 ]
             },
             "namespaces.arbitrum.helmfiles": {
@@ -1075,7 +1075,7 @@
                     "targetNamespace": {
                         "description": "the default is arbitrum-<flavor>",
                         "type": "string",
-                        "default": "arbitrum-mainnet"
+                        "default": "arbitrum-one"
                     },
                     "features": {
                         "type": "array",
