@@ -9,10 +9,10 @@ chains:
         url: http://proxyd-proxyd.eth-mainnet:8545
         features: [archive, traces]
 
-  arbitrum-goerli:
+  arbitrum-one:
     enabled: false
     shard: primary
     provider:
-      - label: arbitrum-goerli
-        url: http://proxyd-proxyd.arbitrum-goerli:8545
+      - label: arbitrum-one
+        url: http://proxyd-proxyd.arbitrum-one:8545
         features: [archive, traces]

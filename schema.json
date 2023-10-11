@@ -2534,12 +2534,20 @@
                     "arbitrum-goerli"
                 ]
             },
+            "namespaces.graph.flavor.arbitrum_one": {
+                "description": "suitable defaults for an arbitrum-one indexer",
+                "type": "string",
+                "enum": [
+                    "arbitrum-one"
+                ]
+            },
             "namespaces.graph.flavor.enum": {
                 "type": "string",
                 "enum": [
                     "goerli",
                     "mainnet",
-                    "arbitrum-goerli"
+                    "arbitrum-goerli",
+                    "arbitrum-one"
                 ]
             },
             "namespaces.graph.flavor.goerli": {
