@@ -76,6 +76,11 @@ package LaunchpadNamespaces
 				chart: {_repositories.graphops.charts["resource-injector"]}
 				_template: {version: "0.2.0"}
 			}
+
+			"subgraph-radio": {
+				chart: {_repositories.graphops.charts["subgraph-radio"]}
+				_template: {version: "0.2.3"}
+			}
 		}
 
 		labels: {

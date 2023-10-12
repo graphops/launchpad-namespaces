@@ -1,0 +1,4 @@
+secretEnv:
+  MNEMONIC:
+    secretName: graph-operator-mnemonic
+    key: mnemonic

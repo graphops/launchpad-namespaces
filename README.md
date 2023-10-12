@@ -212,6 +212,8 @@ Graph Node is an open source Rust implementation that event sources the Ethereum
 Manage Raw Kubernetes Resources using Helm
 - [graph-toolbox](https://github.com/graphops/docker-builds/tree/main/dockerfiles/graph-toolbox)<br>
 Utility kit for interacting and managing the Graph indexer stack.
+- [subgraph-radio](https://github.com/graphops/subgraph-radio)<br>
+Gossip about Subgraphs with other Graph Protocol Indexers
 ### [:ingress](/ingress)
 This *Namespace* adds ingress support and certificate management on kubernetes
 
