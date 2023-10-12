@@ -116,6 +116,7 @@ helmfiles:
 | Key | Type | Default | Description |
 | :--- | :---: | :--- | :--- |
 annotations | object |  | Add annotations to release resources on this namespace |
+features | list of strings | [subgraph-radio] | *enum of:&nbsp;&nbsp;(subgraph-radio)* |
 flavor | string |  |  |
 graph&#8209;database | object |  |  |
 graph&#8209;database.annotations | object |  | Add annotations to resources on this release |

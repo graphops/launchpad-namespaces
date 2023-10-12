@@ -29,12 +29,22 @@ package LaunchpadNamespaces
 			#enum: ( #goerli | #mainnet | #arbitrum_goerli | #arbitrum_one )
 		}
 
+		// ethereum namespace features schema
+		#features: {
+			// Deploy Subgraph Radio
+			#subgraph_radio: "subgraph-radio"
+
+			#enum: ( #subgraph_radio )
+		}
+
 		// Graph namespace values schema
 		#values: #base.#values & {
 			// the default is graph-<flavor>
 			targetNamespace?: *"graph-mainnet" | string
 
 			_templatedTargetNamespace: '( print "graph-" .Values.flavor )'
+
+			features?: *[#features.#subgraph_radio] | [...#features.#enum]
 
 			flavor?: *"mainnet" | #flavor.#enum
 
@@ -79,6 +89,7 @@ package LaunchpadNamespaces
 
 			"subgraph-radio": {
 				chart: {_repositories.graphops.charts["subgraph-radio"]}
+				feature: #features.#subgraph_radio
 				_template: {version: "0.2.3"}
 			}
 		}

@@ -3,12 +3,19 @@
 {{ $_ := set .Values "flavor" "mainnet" }}
 {{ end }}
 
+# Define default features when undefined
+{{ if not (hasKey .Values "features") }}
+{{ $_ := set .Values "features" (list
+`subgraph-radio`
+) }}
+{{ end }}
 
 
 environments:
   {{ .Environment.Name }}:
     values:
       - flavor: {{ .Values.flavor }}
+      - features: {{ .Values.features | toYaml | nindent 10 }}
 
 ---
 {{- $_tplTransforms := (print `
@@ -351,6 +358,7 @@ releases:
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
   
+  {{ if has "subgraph-radio" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "subgraph-radio" }}
   {{- $release := "subgraph-radio" }}
     {{- $_releaseResourceLabels := deepCopy $_commonResourceLabels }}
@@ -380,3 +388,4 @@ releases:
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
   
+  {{- end -}}

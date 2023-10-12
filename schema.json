@@ -2500,7 +2500,8 @@
                             "subgraph-radio": {
                                 "type": "object",
                                 "required": [
-                                    "chart"
+                                    "chart",
+                                    "feature"
                                 ],
                                 "properties": {
                                     "chart": {
@@ -2537,6 +2538,9 @@
                                                 ]
                                             }
                                         }
+                                    },
+                                    "feature": {
+                                        "$ref": "#/components/schemas/namespaces.graph.features.subgraph_radio"
                                     }
                                 }
                             }
@@ -2567,6 +2571,20 @@
                         "type": "object"
                     }
                 }
+            },
+            "namespaces.graph.features": {
+                "description": "ethereum namespace features schema",
+                "type": "object"
+            },
+            "namespaces.graph.features.enum": {
+                "$ref": "#/components/schemas/namespaces.graph.features.subgraph_radio"
+            },
+            "namespaces.graph.features.subgraph_radio": {
+                "description": "Deploy Subgraph Radio",
+                "type": "string",
+                "enum": [
+                    "subgraph-radio"
+                ]
             },
             "namespaces.graph.flavor": {
                 "type": "object"
@@ -2649,6 +2667,15 @@
                         "description": "the default is graph-<flavor>",
                         "type": "string",
                         "default": "graph-mainnet"
+                    },
+                    "features": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/namespaces.graph.features.enum"
+                        },
+                        "default": [
+                            "subgraph-radio"
+                        ]
                     },
                     "graph-node": {
                         "$ref": "#/components/schemas/base.releaseValues"
