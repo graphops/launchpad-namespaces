@@ -3,12 +3,19 @@
 {{ $_ := set .Values "flavor" "mainnet" }}
 {{ end }}
 
+# Define default features when undefined
+{{ if not (hasKey .Values "features") }}
+{{ $_ := set .Values "features" (list
+`subgraph-radio`
+) }}
+{{ end }}
 
 
 environments:
   {{ .Environment.Name }}:
     values:
       - flavor: {{ .Values.flavor }}
+      - features: {{ .Values.features | toYaml | nindent 10 }}
 
 ---
 {{- $_tplTransforms := (print `
@@ -191,6 +198,20 @@ templates:
     {{- if (not (or ( .Values | get "graph-database" dict | get "chartVersion" false ) ( .Values | get "graph-database" dict | get "chartUrl" false ) )) }}
     version: "0.2.0"
     {{- end }}
+  subgraph-radio:
+    {{- if ( .Values | get "subgraph-radio" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "subgraph-radio" | get "chartUrl" }}
+    {{- else }}
+    chart: "graphops/subgraph-radio"
+    {{- end }}
+    inherit:
+    - template: "defaults"
+    {{- if ( .Values | get "subgraph-radio" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "subgraph-radio" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "subgraph-radio" dict | get "chartVersion" false ) ( .Values | get "subgraph-radio" dict | get "chartUrl" false ) )) }}
+    version: "0.2.3"
+    {{- end }}
 releases:
   {{- $canonicalRelease := "graph-node" }}
   {{- $release := "graph-node" }}
@@ -337,3 +358,34 @@ releases:
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
   
+  {{ if has "subgraph-radio" ( .Values | get "features" list ) }}
+  {{- $canonicalRelease := "subgraph-radio" }}
+  {{- $release := "subgraph-radio" }}
+    {{- $_releaseResourceLabels := deepCopy $_commonResourceLabels }}
+  - name: "{{ $release }}"
+    inherit:
+    - template: "{{ $canonicalRelease }}"
+    labels:
+    {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "labels" dict ) }}
+      {{ $key }}: {{ $value }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- if (ne $release $canonicalRelease) }}
+    {{- range $key,$value := ( $.Values | get $release dict | get "labels" dict ) }}
+      {{ $key }}: {{ $value }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- end }}
+    {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "resourceLabels" dict ) }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- if (ne $release $canonicalRelease) }}
+    {{- range $key,$value := ( $.Values | get $release dict | get "resourceLabels" dict ) }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- end }}
+    {{- tpl $_tplTransforms (dict "Values" $.Values "release" $release "canonicalRelease" $canonicalRelease "resourceLabels" $_releaseResourceLabels  )  | indent 4 -}}
+    values:
+    {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
+  
+  {{- end -}}

@@ -92,6 +92,12 @@ package LaunchpadNamespaces
 					Utility kit for interacting and managing the Graph indexer stack.
 					"""
 			}
+			"subgraph-radio": {
+				url: "https://github.com/graphops/subgraph-radio"
+				description: """
+					Gossip about Subgraphs with other Graph Protocol Indexers
+					"""
+			}
 		}
 	}
 

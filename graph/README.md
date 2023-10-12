@@ -18,6 +18,8 @@ Graph Node is an open source Rust implementation that event sources the Ethereum
 Manage Raw Kubernetes Resources using Helm
 - [graph-toolbox](https://github.com/graphops/docker-builds/tree/main/dockerfiles/graph-toolbox)<br>
 Utility kit for interacting and managing the Graph indexer stack.
+- [subgraph-radio](https://github.com/graphops/subgraph-radio)<br>
+Gossip about Subgraphs with other Graph Protocol Indexers
 
 ## Features
 
@@ -114,6 +116,7 @@ helmfiles:
 | Key | Type | Default | Description |
 | :--- | :---: | :--- | :--- |
 annotations | object |  | Add annotations to release resources on this namespace |
+features | list of strings | [subgraph-radio] | *enum of:&nbsp;&nbsp;(subgraph-radio)* |
 flavor | string |  |  |
 graph&#8209;database | object |  |  |
 graph&#8209;database.annotations | object |  | Add annotations to resources on this release |
@@ -158,6 +161,14 @@ graph&#8209;toolbox.values | (object *or* list of objects) |  | Pass values to t
 kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
 labels | object |  | Adds helmfile labels to releases on this namespace |
 resourceLabels | object |  | Adds labels to release resources on this namespace |
+subgraph&#8209;radio | object |  |  |
+subgraph&#8209;radio.annotations | object |  | Add annotations to resources on this release |
+subgraph&#8209;radio.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
+subgraph&#8209;radio.chartVersion | string |  | Specify a specific chart version to use for this release |
+subgraph&#8209;radio.labels | object |  | Adds helmfile labels to this release |
+subgraph&#8209;radio.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+subgraph&#8209;radio.resourceLabels | object |  | Adds labels to resources on this release |
+subgraph&#8209;radio.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 targetNamespace | string | graph-mainnet | the default is graph-<flavor> |
 helmDefaults | object |  |  |
 helmDefaults.args | list of strings |  |  |

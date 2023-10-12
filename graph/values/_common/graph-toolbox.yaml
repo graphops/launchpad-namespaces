@@ -4,7 +4,7 @@ image:
 config:
   graphNode:
     # -- URL to Graph Node Admin API
-    adminApiUrl: http://graph-node-index:8020
+    adminApiUrl: http://graph-node-block-ingestor:8020
     existingConfigMap:
       # -- The name of the ConfigMap that contains your Graph Node config.toml
       configMapName: graph-node-config

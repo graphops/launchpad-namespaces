@@ -1,0 +1,4 @@
+env:
+  GRAPHCAST_NETWORK: "testnet"
+  REGISTRY_SUBGRAPH: https://api.thegraph.com/subgraphs/name/hopeyen/graphcast-registry-goerli
+  NETWORK_SUBGRAPH: https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-goerli

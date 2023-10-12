@@ -3,7 +3,7 @@
 indexerDefaults:
   config:
     graph-node-query-endpoint: "http://graph-node-query:8000"
-    graph-node-status-endpoint: "http://graph-node-index:8030/graphql"
+    graph-node-status-endpoint: "http://graph-node-block-ingestor:8030/graphql"
     postgres-host: "pg-indexer-metadata"
     postgres-database: "indexer"
 
@@ -12,7 +12,7 @@ indexerDefaults:
 
 indexerAgent:
   config:
-    graph-node-admin-endpoint: "http://graph-node-index:8020"
+    graph-node-admin-endpoint: "http://graph-node-block-ingestor:8020"
     public-indexer-url: "XXX_CHANGEME_XXX"
     index-node-ids: "graph-node-index-0" # TODO this should be removed as a requirement, in the mean time it should be a comma delimited list of index node ids
 

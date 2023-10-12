@@ -2278,7 +2278,8 @@
                             "graph-network-indexer",
                             "graph-toolbox",
                             "graph-operator-mnemonic",
-                            "graph-database"
+                            "graph-database",
+                            "subgraph-radio"
                         ],
                         "properties": {
                             "graph-node": {
@@ -2495,6 +2496,53 @@
                                         }
                                     }
                                 }
+                            },
+                            "subgraph-radio": {
+                                "type": "object",
+                                "required": [
+                                    "chart",
+                                    "feature"
+                                ],
+                                "properties": {
+                                    "chart": {
+                                        "type": "object",
+                                        "required": [
+                                            "url",
+                                            "repository",
+                                            "description",
+                                            "name"
+                                        ],
+                                        "properties": {
+                                            "url": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "https://github.com/graphops/subgraph-radio"
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "Gossip about Subgraphs with other Graph Protocol Indexers"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "subgraph-radio"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "feature": {
+                                        "$ref": "#/components/schemas/namespaces.graph.features.subgraph_radio"
+                                    }
+                                }
                             }
                         }
                     },
@@ -2523,6 +2571,20 @@
                         "type": "object"
                     }
                 }
+            },
+            "namespaces.graph.features": {
+                "description": "ethereum namespace features schema",
+                "type": "object"
+            },
+            "namespaces.graph.features.enum": {
+                "$ref": "#/components/schemas/namespaces.graph.features.subgraph_radio"
+            },
+            "namespaces.graph.features.subgraph_radio": {
+                "description": "Deploy Subgraph Radio",
+                "type": "string",
+                "enum": [
+                    "subgraph-radio"
+                ]
             },
             "namespaces.graph.flavor": {
                 "type": "object"
@@ -2606,6 +2668,15 @@
                         "type": "string",
                         "default": "graph-mainnet"
                     },
+                    "features": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/namespaces.graph.features.enum"
+                        },
+                        "default": [
+                            "subgraph-radio"
+                        ]
+                    },
                     "graph-node": {
                         "$ref": "#/components/schemas/base.releaseValues"
                     },
@@ -2618,10 +2689,13 @@
                     "graph-operator-mnemonic": {
                         "$ref": "#/components/schemas/base.releaseValues"
                     },
+                    "graph-database": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
                     "flavor": {
                         "$ref": "#/components/schemas/namespaces.graph.flavor.enum"
                     },
-                    "graph-database": {
+                    "subgraph-radio": {
                         "$ref": "#/components/schemas/base.releaseValues"
                     }
                 },
@@ -4442,7 +4516,8 @@
                                     "openebs-rawfile-localpv",
                                     "graph-node",
                                     "graph-network-indexer",
-                                    "graph-toolbox"
+                                    "graph-toolbox",
+                                    "subgraph-radio"
                                 ],
                                 "properties": {
                                     "erigon": {
@@ -4735,6 +4810,27 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "Utility kit for interacting and managing the Graph indexer stack."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "subgraph-radio": {
+                                        "type": "object",
+                                        "required": [
+                                            "url",
+                                            "description"
+                                        ],
+                                        "properties": {
+                                            "url": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "https://github.com/graphops/subgraph-radio"
+                                                ]
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "Gossip about Subgraphs with other Graph Protocol Indexers"
                                                 ]
                                             }
                                         }
