@@ -1,0 +1,26 @@
+name: Approve Renovate PRs
+
+on:
+  push:
+    branches:
+      - 'renovate/**'
+  pull_request:
+    branches:
+      - 'renovate/**'
+
+jobs:
+  approve:
+    if: ${{ ( github.event.pull_request.user.name == 'graphops-renovate[bot]' ) || ( github.event.pusher.name == 'graphops-renovate[bot]' ) }}
+    permissions:
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - run: gh pr review $PR --approve
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
