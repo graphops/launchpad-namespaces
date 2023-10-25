@@ -44,12 +44,12 @@ package LaunchpadNamespaces
 		releases: {
 			celo: {
 				chart: {_repositories.graphops.charts.celo}
-				_template: {version: "0.1.0"}
+				_template: {version: "0.1.1-canary.2"}
 			}
 
 			proxyd: {
 				chart: {_repositories.graphops.charts.proxyd}
-				_template: {version: "0.1.8"}
+				_template: {version: "0.3.4-canary.7"}
 			}
 		}
 
