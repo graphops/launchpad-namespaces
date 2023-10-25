@@ -4,8 +4,6 @@ resources:
     kind: StorageClass
     metadata:
       name: openebs-rawfile-localpv
-      annotations:
-        storageclass.kubernetes.io/is-default-class: "true"
     volumeBindingMode: WaitForFirstConsumer
     provisioner: rawfile.csi.openebs.io
     parameters: {}
