@@ -153,7 +153,7 @@ templates:
     version: {{ .Values | get "erigon" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "erigon" dict | get "chartVersion" false ) ( .Values | get "erigon" dict | get "chartUrl" false ) )) }}
-    version: "0.8.4"
+    version: "0.8.5-canary.9"
     {{- end }}
   nimbus:
     {{- if ( .Values | get "nimbus" dict | get "chartUrl" false ) }}
@@ -167,7 +167,7 @@ templates:
     version: {{ .Values | get "nimbus" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "nimbus" dict | get "chartVersion" false ) ( .Values | get "nimbus" dict | get "chartUrl" false ) )) }}
-    version: "0.5.3"
+    version: "0.5.4-canary.1"
     {{- end }}
   proxyd:
     {{- if ( .Values | get "proxyd" dict | get "chartUrl" false ) }}
@@ -181,7 +181,7 @@ templates:
     version: {{ .Values | get "proxyd" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "proxyd" dict | get "chartVersion" false ) ( .Values | get "proxyd" dict | get "chartUrl" false ) )) }}
-    version: "0.3.4-canary.4"
+    version: "0.3.4-canary.7"
     {{- end }}
 releases:
   {{- $canonicalRelease := "erigon" }}
