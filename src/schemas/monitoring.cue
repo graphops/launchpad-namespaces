@@ -44,24 +44,24 @@ package LaunchpadNamespaces
 				chart: {_repositories["prometheus-community"].charts["kube-prometheus-stack"]}
 				feature: #features.#metrics
 				_template: {
-					version:                    "51.0.2"
+					version:                    "52.1.0"
 					disableValidationOnInstall: true
 				}
 			}
 			"node-problem-detector": {
 				chart: {_repositories.deliveryhero.charts["node-problem-detector"]}
 				feature: #features.#metrics
-				_template: {version: "2.3.10"}
+				_template: {version: "2.3.11"}
 			}
 			loki: {
 				chart: {_repositories.grafana.charts["loki-distributed"]}
 				feature: #features.#logs
-				_template: {version: "0.74.1"}
+				_template: {version: "0.76.0"}
 			}
 			promtail: {
 				chart: {_repositories.grafana.charts.promtail}
 				feature: #features.#logs
-				_template: {version: "6.15.1"}
+				_template: {version: "6.15.3"}
 			}
 		}
 
