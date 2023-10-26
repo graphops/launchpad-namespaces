@@ -141,7 +141,7 @@ templates:
     version: {{ .Values | get "ingress-nginx" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "ingress-nginx" dict | get "chartVersion" false ) ( .Values | get "ingress-nginx" dict | get "chartUrl" false ) )) }}
-    version: "4.7.2"
+    version: "4.8.3"
     {{- end }}
   cert-manager:
     {{- if ( .Values | get "cert-manager" dict | get "chartUrl" false ) }}
@@ -155,7 +155,7 @@ templates:
     version: {{ .Values | get "cert-manager" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "cert-manager" dict | get "chartVersion" false ) ( .Values | get "cert-manager" dict | get "chartUrl" false ) )) }}
-    version: "v1.13.0"
+    version: "v1.13.1"
     {{- end }}
   cert-manager-resources:
     {{- if ( .Values | get "cert-manager-resources" dict | get "chartUrl" false ) }}
