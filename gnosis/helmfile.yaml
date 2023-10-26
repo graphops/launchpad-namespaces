@@ -133,7 +133,7 @@ templates:
     version: {{ .Values | get "nethermind" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "nethermind" dict | get "chartVersion" false ) ( .Values | get "nethermind" dict | get "chartUrl" false ) )) }}
-    version: "0.4.0"
+    version: "0.4.2"
     {{- end }}
   nimbus:
     {{- if ( .Values | get "nimbus" dict | get "chartUrl" false ) }}
@@ -147,7 +147,7 @@ templates:
     version: {{ .Values | get "nimbus" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "nimbus" dict | get "chartVersion" false ) ( .Values | get "nimbus" dict | get "chartUrl" false ) )) }}
-    version: "0.5.1"
+    version: "0.5.4-canary.1"
     {{- end }}
   proxyd:
     {{- if ( .Values | get "proxyd" dict | get "chartUrl" false ) }}
@@ -161,7 +161,7 @@ templates:
     version: {{ .Values | get "proxyd" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "proxyd" dict | get "chartVersion" false ) ( .Values | get "proxyd" dict | get "chartUrl" false ) )) }}
-    version: "0.3.2"
+    version: "0.3.4-canary.8"
     {{- end }}
 releases:
   {{- $canonicalRelease := "nethermind" }}
