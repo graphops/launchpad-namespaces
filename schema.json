@@ -821,7 +821,8 @@
                             "arbitrum-nitro": {
                                 "type": "object",
                                 "required": [
-                                    "chart"
+                                    "chart",
+                                    "feature"
                                 ],
                                 "properties": {
                                     "chart": {
@@ -858,6 +859,9 @@
                                                 ]
                                             }
                                         }
+                                    },
+                                    "feature": {
+                                        "$ref": "#/components/schemas/namespaces.arbitrum.features.arbitrum_nitro"
                                     }
                                 }
                             },
@@ -993,11 +997,18 @@
                     "arbitrum_classic"
                 ]
             },
+            "namespaces.arbitrum.features.arbitrum_nitro": {
+                "type": "string",
+                "enum": [
+                    "arbitrum_nitro"
+                ]
+            },
             "namespaces.arbitrum.features.enum": {
                 "type": "string",
                 "enum": [
                     "proxyd",
-                    "arbitrum_classic"
+                    "arbitrum_classic",
+                    "arbitrum_nitro"
                 ]
             },
             "namespaces.arbitrum.features.proxyd": {
@@ -1098,7 +1109,8 @@
                         },
                         "default": [
                             "proxyd",
-                            "arbitrum_classic"
+                            "arbitrum_classic",
+                            "arbitrum_nitro"
                         ]
                     },
                     "flavor": {

@@ -8,6 +8,7 @@
 {{ $_ := set .Values "features" (list
 `proxyd`
 `arbitrum_classic`
+`arbitrum_nitro`
 ) }}
 {{ end }}
 
@@ -181,6 +182,7 @@ templates:
     version: "0.3.4-canary.4"
     {{- end }}
 releases:
+  {{ if has "arbitrum_nitro" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "arbitrum-nitro" }}
   {{- range $index := until .Values.scaling.deployments }}
   {{- $deploymentIndex := (add . 1) }}
@@ -211,6 +213,7 @@ releases:
     {{- tpl $_tplTransforms (dict "Values" $.Values "release" $release "canonicalRelease" $canonicalRelease "resourceLabels" $_releaseResourceLabels  )  | indent 4 -}}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
+  {{- end -}}
   {{- end -}}
   {{ if has "arbitrum_classic" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "arbitrum-classic" }}

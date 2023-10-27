@@ -29,7 +29,9 @@ package LaunchpadNamespaces
 
 			#arbitrum_classic: "arbitrum_classic"
 
-			#enum: ( #proxyd | #arbitrum_classic )
+			#arbitrum_nitro: "arbitrum_nitro"
+
+			#enum: ( #proxyd | #arbitrum_classic | #arbitrum_nitro )
 		}
 
 		// arbitrum scaling interface
@@ -47,7 +49,7 @@ package LaunchpadNamespaces
 
 			_templatedTargetNamespace: '( print "arbitrum-" .Values.flavor )'
 
-			features?: *[#features.#proxyd , #features.#arbitrum_classic] | [...#features.#enum]
+			features?: *[#features.#proxyd , #features.#arbitrum_classic , #features.#arbitrum_nitro ] | [...#features.#enum]
 
 			flavor?: *"one" | #flavor.#enum
 
@@ -72,6 +74,7 @@ package LaunchpadNamespaces
 		releases: {
 			"arbitrum-nitro": {
 				chart: {_repositories.graphops.charts["arbitrum-nitro"]}
+				feature: #features.#arbitrum_nitro
 				_template: {version: "0.1.3"}
 				_scale: true
 			}
