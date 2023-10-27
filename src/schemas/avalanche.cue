@@ -45,7 +45,7 @@ package LaunchpadNamespaces
 		releases: {
 			avalanche: {
 				chart: {_repositories.graphops.charts.avalanche}
-				_template: {version: "0.1.3-canary.3"}
+				_template: {version: "0.1.3-canary.4"}
 			}
 
 			proxyd: {
