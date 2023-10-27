@@ -161,7 +161,7 @@ templates:
     version: {{ .Values | get "proxyd" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "proxyd" dict | get "chartVersion" false ) ( .Values | get "proxyd" dict | get "chartUrl" false ) )) }}
-    version: "0.3.4-canary.8"
+    version: "0.4.0"
     {{- end }}
 releases:
   {{- $canonicalRelease := "nethermind" }}
