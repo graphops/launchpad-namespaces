@@ -80,7 +80,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/layer":     "execution"
 					"app.launchpad.graphops.xyz/component": "erigon"
 				}
-				_template: {version: "0.8.5-canary.9"}
+				_template: {version: "0.8.5-canary.10"}
 				_scale: true
 			}
 
