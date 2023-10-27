@@ -44,7 +44,7 @@ package LaunchpadNamespaces
 		releases: {
 			erigon: {
 				chart: {_repositories.graphops.charts.erigon}
-				_template: {version: "0.8.5-canary.9"}
+				_template: {version: "0.8.5-canary.10"}
 			}
 
 			heimdall: {
@@ -54,7 +54,7 @@ package LaunchpadNamespaces
 
 			proxyd: {
 				chart: {_repositories.graphops.charts.proxyd}
-				_template: {version: "0.3.4-canary.8"}
+				_template: {version: "0.4.0"}
 			}
 		}
 
