@@ -8,7 +8,6 @@ on:
 
 jobs:
   find-tags-to-release:
-    if: ${{ github.actor == 'graphops-renovate[bot]' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write # for creating tags
@@ -41,7 +40,11 @@ jobs:
           for namespace_name in ${{ steps.list-changed-namespaces.outputs.all_modified_files }}; do
             latest_version="$(git -c 'versionsort.suffix=-' tag --sort 'version:refname' --list "$namespace_name-*" | grep -Ev '.*-[[:digit:]]+.[[:digit:]]+.[[:digit:]]+-.*' | tail -n1)"
 
-            next_patch="$(echo "$latest_version" | sed -E 's/(.*-)?v?([[:digit:]]+).([[:digit:]]+).([[:digit:]]+)/echo \2.\3.$((\4 + 1))/e')"
+            if [ -z "$latest_version" ]; then
+              latest_version="${namespace_name}-v0.0.0"
+            fi
+
+            next_patch="$(echo "$latest_version" | sed -E 's/(.*-)?v?([[:digit:]]+).([[:digit:]]+).([[:digit:]]+)/echo v\2.\3.$((\4 + 1))/e')"
             last_pre_tag="$(git -c 'versionsort.suffix=-' tag --sort 'version:refname' --list "$namespace_name-$next_patch-*" | tail -n1)"
             if [ -z "$last_pre_tag" ]; then
               index=1
@@ -61,7 +64,6 @@ jobs:
           echo "EOF" >> $GITHUB_OUTPUT
 
   call-update-tags:
-    if: ${{ github.actor == 'graphops-renovate[bot]' }}
     uses: ./.github/workflows/update-tags.yaml
     permissions:
       contents: write
