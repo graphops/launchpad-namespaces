@@ -864,7 +864,8 @@
                             "arbitrum-classic": {
                                 "type": "object",
                                 "required": [
-                                    "chart"
+                                    "chart",
+                                    "feature"
                                 ],
                                 "properties": {
                                     "chart": {
@@ -901,6 +902,9 @@
                                                 ]
                                             }
                                         }
+                                    },
+                                    "feature": {
+                                        "$ref": "#/components/schemas/namespaces.arbitrum.features.arbitrum_classic"
                                     }
                                 }
                             },
@@ -983,8 +987,18 @@
                 "description": "arbitrum namespace features schema",
                 "type": "object"
             },
+            "namespaces.arbitrum.features.arbitrum_classic": {
+                "type": "string",
+                "enum": [
+                    "arbitrum_classic"
+                ]
+            },
             "namespaces.arbitrum.features.enum": {
-                "$ref": "#/components/schemas/namespaces.arbitrum.features.proxyd"
+                "type": "string",
+                "enum": [
+                    "proxyd",
+                    "arbitrum_classic"
+                ]
             },
             "namespaces.arbitrum.features.proxyd": {
                 "description": "Deploy proxyd",
@@ -1083,7 +1097,8 @@
                             "$ref": "#/components/schemas/namespaces.arbitrum.features.enum"
                         },
                         "default": [
-                            "proxyd"
+                            "proxyd",
+                            "arbitrum_classic"
                         ]
                     },
                     "flavor": {

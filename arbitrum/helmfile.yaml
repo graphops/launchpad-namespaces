@@ -7,6 +7,7 @@
 {{ if not (hasKey .Values "features") }}
 {{ $_ := set .Values "features" (list
 `proxyd`
+`arbitrum_classic`
 ) }}
 {{ end }}
 
@@ -211,6 +212,7 @@ releases:
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
   {{- end -}}
+  {{ if has "arbitrum_classic" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "arbitrum-classic" }}
   {{- range $index := until .Values.scaling.deployments }}
   {{- $deploymentIndex := (add . 1) }}
@@ -241,6 +243,7 @@ releases:
     {{- tpl $_tplTransforms (dict "Values" $.Values "release" $release "canonicalRelease" $canonicalRelease "resourceLabels" $_releaseResourceLabels  )  | indent 4 -}}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
+  {{- end -}}
   {{- end -}}
   {{ if has "proxyd" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "proxyd" }}

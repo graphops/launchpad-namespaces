@@ -125,7 +125,7 @@ arbitrum&#8209;nitro.labels | object |  | Adds helmfile labels to this release |
 arbitrum&#8209;nitro.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
 arbitrum&#8209;nitro.resourceLabels | object |  | Adds labels to resources on this release |
 arbitrum&#8209;nitro.values | (object *or* list of objects) |  | Pass values to the release helm chart |
-features | list of strings | [proxyd] | *enum of:&nbsp;&nbsp;(proxyd)* |
+features | list of strings | [proxyd, arbitrum_classic] | *enum of:&nbsp;&nbsp;(proxyd \| arbitrum_classic)* |
 flavor | string |  |  |
 kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
 labels | object |  | Adds helmfile labels to releases on this namespace |
