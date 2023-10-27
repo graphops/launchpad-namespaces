@@ -12,23 +12,23 @@ package LaunchpadNamespaces
 				"""
 		}
 
-		// Suitable defaults for a mainnet archive node
+		// Suitable defaults for a mainnet/one archive node
 		#flavor: {
-			#mainnet: "mainnet"
+			#one: "one"
 
-			#enum: ( #mainnet )
+			#enum: ( #one )
 		}
 
 		// Arbitrum
 		#values: #base.#values & {
 			// the default is arbitrum-(flavor)
-			targetNamespace?: *"arbitrum-mainnet" | string
+			targetNamespace?: *"arbitrum-one" | string
 
 			_templatedTargetNamespace: '( print "arbitrum-" .Values.flavor )'
 
 			// Choose among default values best suited for different scenarios
-			// currently supports "mainnet" only
-			flavor?: *"mainnet" | #flavor.#enum
+			// currently supports "one" only
+			flavor?: *"one" | #flavor.#enum
 
 			// For overriding this release's values
 			for key, _ in releases {
@@ -46,17 +46,17 @@ package LaunchpadNamespaces
 		releases: {
 			"arbitrum-nitro": {
 				chart: {_repositories.graphops.charts["arbitrum-nitro"]}
-				_template: {version: "0.1.3"}
+				_template: {version: "0.1.4"}
 			}
 
 			"arbitrum-classic": {
 				chart: {_repositories.graphops.charts["arbitrum-classic"]}
-				_template: {version: "0.1.3"}
+				_template: {version: "0.1.4"}
 			}
 
 			proxyd: {
 				chart: {_repositories.graphops.charts.proxyd}
-				_template: {version: "0.3.4-canary.8"}
+				_template: {version: "0.4.0"}
 			}
 		}
 

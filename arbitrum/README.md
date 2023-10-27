@@ -137,7 +137,7 @@ proxyd.mergeValues | boolean | true | Merges passed values with namespace's defa
 proxyd.resourceLabels | object |  | Adds labels to resources on this release |
 proxyd.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 resourceLabels | object |  | Adds labels to release resources on this namespace |
-targetNamespace | string | arbitrum-mainnet | the default is arbitrum-(flavor) |
+targetNamespace | string | arbitrum-one | the default is arbitrum-(flavor) |
 helmDefaults | object |  |  |
 helmDefaults.args | list of strings |  |  |
 helmDefaults.cleanupOnFail | boolean |  |  |

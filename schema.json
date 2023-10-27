@@ -976,16 +976,16 @@
                 }
             },
             "namespaces.arbitrum.flavor": {
-                "description": "Suitable defaults for a mainnet archive node",
+                "description": "Suitable defaults for a mainnet/one archive node",
                 "type": "object"
             },
             "namespaces.arbitrum.flavor.enum": {
-                "$ref": "#/components/schemas/namespaces.arbitrum.flavor.mainnet"
+                "$ref": "#/components/schemas/namespaces.arbitrum.flavor.one"
             },
-            "namespaces.arbitrum.flavor.mainnet": {
+            "namespaces.arbitrum.flavor.one": {
                 "type": "string",
                 "enum": [
-                    "mainnet"
+                    "one"
                 ]
             },
             "namespaces.arbitrum.helmfiles": {
@@ -1028,7 +1028,7 @@
                     "targetNamespace": {
                         "description": "the default is arbitrum-(flavor)",
                         "type": "string",
-                        "default": "arbitrum-mainnet"
+                        "default": "arbitrum-one"
                     },
                     "arbitrum-nitro": {
                         "$ref": "#/components/schemas/base.releaseValues"
