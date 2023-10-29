@@ -46,17 +46,17 @@ package LaunchpadNamespaces
 		releases: {
 			"arbitrum-nitro": {
 				chart: {_repositories.graphops.charts["arbitrum-nitro"]}
-				_template: {version: "0.1.3"}
+				_template: {version: "0.1.4"}
 			}
 
 			"arbitrum-classic": {
 				chart: {_repositories.graphops.charts["arbitrum-classic"]}
-				_template: {version: "0.1.3"}
+				_template: {version: "0.1.4"}
 			}
 
 			proxyd: {
 				chart: {_repositories.graphops.charts.proxyd}
-				_template: {version: "0.3.4-canary.8"}
+				_template: {version: "0.4.0"}
 			}
 		}
 
