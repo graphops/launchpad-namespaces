@@ -49,7 +49,7 @@ package LaunchpadNamespaces
 
 			proxyd: {
 				chart: {_repositories.graphops.charts.proxyd}
-				_template: {version: "0.3.4-canary.8"}
+				_template: {version: "0.4.0"}
 			}
 		}
 
