@@ -51,7 +51,7 @@ package LaunchpadNamespaces
 			"cert-manager": {
 				chart: {_repositories.jetstack.charts["cert-manager"]}
 				feature: #features.#certManager
-				_template: {version: "v1.13.1"}
+				_template: {version: "v1.13.2"}
 			}
 			"cert-manager-resources": {
 				chart: {_repositories.graphops.charts["resource-injector"]}
