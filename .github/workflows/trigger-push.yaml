@@ -38,7 +38,7 @@ jobs:
         run: |
           tags=()
           for namespace_name in ${{ steps.list-changed-namespaces.outputs.all_modified_files }}; do
-            latest_version="$(git -c 'versionsort.suffix=-' tag --sort 'version:refname' --list "$namespace_name-*" | grep -Ev '.*-[[:digit:]]+.[[:digit:]]+.[[:digit:]]+-.*' | tail -n1)"
+            latest_version="$(git -c 'versionsort.suffix=-' tag --sort 'version:refname' --list "$namespace_name-*" | grep -E '.*-v?[[:digit:]]+.[[:digit:]]+.[[:digit:]]+$' | tail -n1)"
 
             if [ -z "$latest_version" ]; then
               latest_version="${namespace_name}-v0.0.0"
