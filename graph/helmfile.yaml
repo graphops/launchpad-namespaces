@@ -210,7 +210,7 @@ templates:
     version: {{ .Values | get "subgraph-radio" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "subgraph-radio" dict | get "chartVersion" false ) ( .Values | get "subgraph-radio" dict | get "chartUrl" false ) )) }}
-    version: "0.2.4-canary.1"
+    version: "0.2.4-canary.3"
     {{- end }}
 releases:
   {{- $canonicalRelease := "graph-node" }}
