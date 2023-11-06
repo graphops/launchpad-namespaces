@@ -143,7 +143,7 @@ templates:
     version: {{ .Values | get "arbitrum-nitro" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "arbitrum-nitro" dict | get "chartVersion" false ) ( .Values | get "arbitrum-nitro" dict | get "chartUrl" false ) )) }}
-    version: "0.1.4"
+    version: "0.1.5-canary.5"
     {{- end }}
   arbitrum-classic:
     {{- if ( .Values | get "arbitrum-classic" dict | get "chartUrl" false ) }}

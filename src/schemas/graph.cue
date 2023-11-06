@@ -90,12 +90,12 @@ package LaunchpadNamespaces
 		releases: {
 			"graph-node": {
 				chart: {_repositories.graphops.charts["graph-node"]}
-				_template: {version: "0.3.3-canary.1"}
+				_template: {version: "0.3.4-canary.1"}
 			}
 
 			"graph-network-indexer": {
 				chart: {_repositories.graphops.charts["graph-network-indexer"]}
-				_template: {version: "0.2.3-canary.2"}
+				_template: {version: "0.2.3-canary.3"}
 			}
 
 			"graph-toolbox": {
