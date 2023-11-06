@@ -50,7 +50,7 @@ package LaunchpadNamespaces
 
 			nimbus: {
 				chart: {_repositories.graphops.charts.nimbus}
-				_template: {version: "0.5.4-canary.1"}
+				_template: {version: "0.5.4-canary.2"}
 			}
 
 			proxyd: {
