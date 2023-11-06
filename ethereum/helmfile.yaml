@@ -1,5 +1,5 @@
 #namespace defaults
-{{ $_ := set .Values "_defaults" ( `{"flavor":"mainnet","mainnet":{"targetNamespace":"eth-mainnet","features":["nimbus","proxyd"],"scaling":{"deployments":1}},"goerli":{"targetNamespace":"eth-goerli","features":["nimbus","proxyd"],"scaling":{"deployments":1}},"common":{"features":["nimbus","proxyd"],"scaling":{"deployments":1}},"holesky":{"targetNamespace":"eth-holesky","features":["nimbus","proxyd"],"scaling":{"deployments":1}}}` | fromJson ) }}
+{{ $_ := set .Values "_defaults" ( `{"flavor":"mainnet","mainnet":{"targetNamespace":"eth-mainnet","features":["nimbus","proxyd"],"scaling":{"deployments":1}},"goerli":{"targetNamespace":"eth-goerli","features":["nimbus","proxyd"],"scaling":{"deployments":1}},"holesky":{"targetNamespace":"eth-holesky","features":["nimbus","proxyd"],"scaling":{"deployments":1}},"common":{"features":["nimbus","proxyd"],"scaling":{"deployments":1}},"sepolia":{"targetNamespace":"eth-sepolia","features":["nimbus","proxyd"],"scaling":{"deployments":1}}}` | fromJson ) }}
 #set default flavor when missing
 {{ if not ( hasKey .Values "flavor" ) }}
 {{ $_ := set .Values "flavor" "mainnet" }}

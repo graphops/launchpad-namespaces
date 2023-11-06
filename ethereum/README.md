@@ -2,7 +2,7 @@
 
 # Ethereum Namespace
 
-This *Namespace* provides a suitable stack to operate Ethereum mainnet and göerli archive nodes.
+This *Namespace* provides a suitable stack to operate Ethereum mainnet, göerli, holesky and sepolia archive nodes.
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
