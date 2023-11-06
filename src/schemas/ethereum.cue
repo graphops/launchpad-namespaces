@@ -22,7 +22,7 @@ package LaunchpadNamespaces
 
 			// suitable defaults for a holeśky ethereum testnet node
 			#holesky: "holesky"
-			#enum:   ( #mainnet | #goerli | #holesky )
+			#enum:    ( #mainnet | #goerli | #holesky )
 		}
 
 		// ethereum namespace features schema
@@ -46,16 +46,14 @@ package LaunchpadNamespaces
 
 		// ethereum namespace values schema
 		#values: #base.#values & {
+			flavor?: *defaults.flavor | #flavor.#enum
+
 			// the default is eth-<flavor>
-			targetNamespace?: *"eth-mainnet" | string
+			targetNamespace?: *defaults["\(defaults.flavor)"].targetNamespace | string
 
-			_templatedTargetNamespace: '( print "eth-" .Values.flavor )'
+			features?: *defaults["\(defaults.flavor)"].features | [...#features.#enum]
 
-			features?: *[#features.#nimbus, #features.#proxyd] | [...#features.#enum]
-
-			flavor?: *"mainnet" | #flavor.#enum
-
-			scaling?: #scaling
+			scaling?: *defaults["\(defaults.flavor)"].scaling | #scaling
 
 			// For overriding this release's values
 			for key, _ in releases {
@@ -71,6 +69,30 @@ package LaunchpadNamespaces
 		#helmfiles: #base.#helmfiles & {
 			path:    =~"*github.com/graphops/launchpad-namespaces.git@ethereum/helmfile.yaml*"
 			values?: #ethereum.#values | [...#ethereum.#values]
+		}
+
+		defaults: {
+			flavor: "mainnet"
+
+			#common: {
+				features: [#features.#nimbus, #features.#proxyd]
+				scaling: #scaling & {deployments: 1}
+			}
+
+			mainnet: {
+				#common
+				targetNamespace: "eth-mainnet"
+			}
+
+			goerli: {
+				#common
+				targetNamespace: "eth-goerli"
+			}
+
+			holesky: {
+				#common
+				targetNamespace: "eth-holesky"
+			}
 		}
 
 		releases: {

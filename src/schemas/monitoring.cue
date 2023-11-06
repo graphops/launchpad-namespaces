@@ -23,9 +23,9 @@ package LaunchpadNamespaces
 
 		// Monitoring namespace values interface schema
 		#values: #base.#values & {
-			targetNamespace?: *"monitoring" | string
+			targetNamespace?: *defaults.#common.targetNamespace | string
 
-			features?: *[#features.#metrics, #features.#logs] | [...#features.#enum]
+			features?: *defaults.#common.features | [...#features.#enum]
 
 			// For overriding this release's values
 			for key, _ in releases {
@@ -37,6 +37,13 @@ package LaunchpadNamespaces
 		#helmfiles: #base.#helmfiles & {
 			path:    =~"*github.com/graphops/launchpad-namespaces.git@monitoring/helmfile.yaml*"
 			values?: #monitoring.#values | [...#monitoring.#values]
+		}
+
+		defaults: {
+			#common: {
+				targetNamespace: "monitoring"
+				features: [#features.#metrics, #features.#logs]
+			}
 		}
 
 		releases: {

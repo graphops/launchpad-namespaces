@@ -22,12 +22,10 @@ package LaunchpadNamespaces
 
 		// avalanche namespace values schema
 		#values: #base.#values & {
+			flavor?: *defaults.flavor | #flavor.#enum
+
 			// the default is avalanche-<flavor>
-			targetNamespace?: *"avalanche-mainnet" | string
-
-			_templatedTargetNamespace: '( print "avalanche-" .Values.flavor )'
-
-			flavor?: *"mainnet" | #flavor.#enum
+			targetNamespace?: *defaults["\(defaults.flavor)"].targetNamespace | string
 
 			// For overriding this release's values
 			for key, _ in releases {
@@ -40,6 +38,17 @@ package LaunchpadNamespaces
 		#helmfiles: #base.#helmfiles & {
 			path:    =~"*github.com/graphops/launchpad-namespaces.git@avalanche/helmfile.yaml*"
 			values?: #avalanche.#values | [...#avalanche.#values]
+		}
+
+		defaults: {
+			flavor: "mainnet"
+
+			#common: {}
+
+			mainnet: {
+				#common
+				targetNamespace: "avalanche-mainnet"
+			}
 		}
 
 		releases: {
