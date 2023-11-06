@@ -777,6 +777,7 @@
                 "type": "object",
                 "required": [
                     "meta",
+                    "defaults",
                     "releases",
                     "labels",
                     "resourceLabels"
@@ -806,6 +807,42 @@
                                 "type": "string",
                                 "enum": [
                                     "This *Namespace* provides a suitable stack to operate Arbitrum mainnet archive nodes."
+                                ]
+                            }
+                        }
+                    },
+                    "defaults": {
+                        "type": "object",
+                        "required": [
+                            "flavor",
+                            "mainnet"
+                        ],
+                        "properties": {
+                            "flavor": {
+                                "type": "string",
+                                "enum": [
+                                    "mainnet"
+                                ]
+                            },
+                            "mainnet": {
+                                "type": "object",
+                                "properties": {
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "arbitrum-mainnet"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.arbitrum.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "targetNamespace"
+                                        ]
+                                    }
                                 ]
                             }
                         }
@@ -975,6 +1012,9 @@
                     }
                 }
             },
+            "namespaces.arbitrum.defaults.common": {
+                "type": "object"
+            },
             "namespaces.arbitrum.flavor": {
                 "description": "Suitable defaults for a mainnet archive node",
                 "type": "object"
@@ -1025,10 +1065,8 @@
                 "description": "Arbitrum",
                 "type": "object",
                 "properties": {
-                    "targetNamespace": {
-                        "description": "the default is arbitrum-(flavor)",
-                        "type": "string",
-                        "default": "arbitrum-mainnet"
+                    "flavor": {
+                        "$ref": "#/components/schemas/namespaces.arbitrum.flavor.enum"
                     },
                     "arbitrum-nitro": {
                         "$ref": "#/components/schemas/base.releaseValues"
@@ -1036,8 +1074,10 @@
                     "arbitrum-classic": {
                         "$ref": "#/components/schemas/base.releaseValues"
                     },
-                    "flavor": {
-                        "$ref": "#/components/schemas/namespaces.arbitrum.flavor.enum"
+                    "targetNamespace": {
+                        "description": "the default is arbitrum-(flavor)",
+                        "type": "string",
+                        "default": "arbitrum-mainnet"
                     },
                     "proxyd": {
                         "$ref": "#/components/schemas/base.releaseValues"
@@ -1054,6 +1094,7 @@
                 "type": "object",
                 "required": [
                     "meta",
+                    "defaults",
                     "releases",
                     "labels",
                     "resourceLabels"
@@ -1083,6 +1124,42 @@
                                 "type": "string",
                                 "enum": [
                                     "This *Namespace* provides a suitable stack to operate Avalanche mainnet archive nodes."
+                                ]
+                            }
+                        }
+                    },
+                    "defaults": {
+                        "type": "object",
+                        "required": [
+                            "flavor",
+                            "mainnet"
+                        ],
+                        "properties": {
+                            "flavor": {
+                                "type": "string",
+                                "enum": [
+                                    "mainnet"
+                                ]
+                            },
+                            "mainnet": {
+                                "type": "object",
+                                "properties": {
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "avalanche-mainnet"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.avalanche.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "targetNamespace"
+                                        ]
+                                    }
                                 ]
                             }
                         }
@@ -1208,6 +1285,9 @@
                     }
                 }
             },
+            "namespaces.avalanche.defaults.common": {
+                "type": "object"
+            },
             "namespaces.avalanche.flavor": {
                 "type": "object"
             },
@@ -1258,16 +1338,16 @@
                 "description": "avalanche namespace values schema",
                 "type": "object",
                 "properties": {
-                    "targetNamespace": {
-                        "description": "the default is avalanche-<flavor>",
-                        "type": "string",
-                        "default": "avalanche-mainnet"
+                    "flavor": {
+                        "$ref": "#/components/schemas/namespaces.avalanche.flavor.enum"
                     },
                     "avalanche": {
                         "$ref": "#/components/schemas/base.releaseValues"
                     },
-                    "flavor": {
-                        "$ref": "#/components/schemas/namespaces.avalanche.flavor.enum"
+                    "targetNamespace": {
+                        "description": "the default is avalanche-<flavor>",
+                        "type": "string",
+                        "default": "avalanche-mainnet"
                     },
                     "proxyd": {
                         "$ref": "#/components/schemas/base.releaseValues"
@@ -1284,6 +1364,7 @@
                 "type": "object",
                 "required": [
                     "meta",
+                    "defaults",
                     "releases",
                     "labels",
                     "resourceLabels"
@@ -1313,6 +1394,42 @@
                                 "type": "string",
                                 "enum": [
                                     "This *Namespace* provides a suitable stack to operate Celo mainnet archive nodes."
+                                ]
+                            }
+                        }
+                    },
+                    "defaults": {
+                        "type": "object",
+                        "required": [
+                            "flavor",
+                            "mainnet"
+                        ],
+                        "properties": {
+                            "flavor": {
+                                "type": "string",
+                                "enum": [
+                                    "mainnet"
+                                ]
+                            },
+                            "mainnet": {
+                                "type": "object",
+                                "properties": {
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "celo-mainnet"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.celo.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "targetNamespace"
+                                        ]
+                                    }
                                 ]
                             }
                         }
@@ -1438,6 +1555,9 @@
                     }
                 }
             },
+            "namespaces.celo.defaults.common": {
+                "type": "object"
+            },
             "namespaces.celo.flavor": {
                 "type": "object"
             },
@@ -1488,16 +1608,16 @@
                 "description": "celo namespace values schema",
                 "type": "object",
                 "properties": {
-                    "targetNamespace": {
-                        "description": "the default is celo-<flavor>",
-                        "type": "string",
-                        "default": "celo-mainnet"
+                    "flavor": {
+                        "$ref": "#/components/schemas/namespaces.celo.flavor.enum"
                     },
                     "celo": {
                         "$ref": "#/components/schemas/base.releaseValues"
                     },
-                    "flavor": {
-                        "$ref": "#/components/schemas/namespaces.celo.flavor.enum"
+                    "targetNamespace": {
+                        "description": "the default is celo-<flavor>",
+                        "type": "string",
+                        "default": "celo-mainnet"
                     },
                     "proxyd": {
                         "$ref": "#/components/schemas/base.releaseValues"
@@ -1514,6 +1634,7 @@
                 "type": "object",
                 "required": [
                     "meta",
+                    "defaults",
                     "releases",
                     "labels",
                     "resourceLabels"
@@ -1543,6 +1664,86 @@
                                 "type": "string",
                                 "enum": [
                                     "This *Namespace* provides a suitable stack to operate Ethereum mainnet and göerli archive nodes."
+                                ]
+                            }
+                        }
+                    },
+                    "defaults": {
+                        "type": "object",
+                        "required": [
+                            "flavor",
+                            "mainnet",
+                            "goerli",
+                            "holesky"
+                        ],
+                        "properties": {
+                            "flavor": {
+                                "type": "string",
+                                "enum": [
+                                    "mainnet"
+                                ]
+                            },
+                            "mainnet": {
+                                "type": "object",
+                                "properties": {
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "eth-mainnet"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.ethereum.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "targetNamespace"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "goerli": {
+                                "type": "object",
+                                "properties": {
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "eth-goerli"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.ethereum.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "targetNamespace"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "holesky": {
+                                "type": "object",
+                                "properties": {
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "eth-holesky"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.ethereum.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "targetNamespace"
+                                        ]
+                                    }
                                 ]
                             }
                         }
@@ -1807,6 +2008,57 @@
                     }
                 }
             },
+            "namespaces.ethereum.defaults.common": {
+                "type": "object",
+                "required": [
+                    "features",
+                    "scaling"
+                ],
+                "properties": {
+                    "features": {
+                        "type": "array",
+                        "items": [
+                            {
+                                "$ref": "#/components/schemas/namespaces.ethereum.features.nimbus"
+                            },
+                            {
+                                "$ref": "#/components/schemas/namespaces.ethereum.features.proxyd"
+                            }
+                        ],
+                        "enum": [
+                            [
+                                "nimbus",
+                                "proxyd"
+                            ]
+                        ],
+                        "default": [
+                            "nimbus",
+                            "proxyd"
+                        ]
+                    },
+                    "scaling": {
+                        "type": "object",
+                        "properties": {
+                            "deployments": {
+                                "type": "integer",
+                                "enum": [
+                                    1
+                                ]
+                            }
+                        },
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/namespaces.ethereum.scaling"
+                            },
+                            {
+                                "required": [
+                                    "deployments"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            },
             "namespaces.ethereum.features": {
                 "description": "ethereum namespace features schema",
                 "type": "object"
@@ -1919,6 +2171,9 @@
                 "description": "ethereum namespace values schema",
                 "type": "object",
                 "properties": {
+                    "flavor": {
+                        "$ref": "#/components/schemas/namespaces.ethereum.flavor.enum"
+                    },
                     "targetNamespace": {
                         "description": "the default is eth-<flavor>",
                         "type": "string",
@@ -1933,9 +2188,6 @@
                             "nimbus",
                             "proxyd"
                         ]
-                    },
-                    "flavor": {
-                        "$ref": "#/components/schemas/namespaces.ethereum.flavor.enum"
                     },
                     "erigon": {
                         "$ref": "#/components/schemas/base.releaseValues"
@@ -1961,6 +2213,7 @@
                 "type": "object",
                 "required": [
                     "meta",
+                    "defaults",
                     "releases",
                     "labels",
                     "resourceLabels"
@@ -1990,6 +2243,42 @@
                                 "type": "string",
                                 "enum": [
                                     "This *Namespace* provides a suitable stack to operate Gnosis mainnet archive nodes."
+                                ]
+                            }
+                        }
+                    },
+                    "defaults": {
+                        "type": "object",
+                        "required": [
+                            "flavor",
+                            "mainnet"
+                        ],
+                        "properties": {
+                            "flavor": {
+                                "type": "string",
+                                "enum": [
+                                    "mainnet"
+                                ]
+                            },
+                            "mainnet": {
+                                "type": "object",
+                                "properties": {
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "gnosis-mainnet"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.gnosis.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "targetNamespace"
+                                        ]
+                                    }
                                 ]
                             }
                         }
@@ -2159,6 +2448,9 @@
                     }
                 }
             },
+            "namespaces.gnosis.defaults.common": {
+                "type": "object"
+            },
             "namespaces.gnosis.flavor": {
                 "type": "object"
             },
@@ -2209,10 +2501,8 @@
                 "description": "gnosis namespace values schema",
                 "type": "object",
                 "properties": {
-                    "targetNamespace": {
-                        "description": "the default is gnosis-<flavor>",
-                        "type": "string",
-                        "default": "gnosis-mainnet"
+                    "flavor": {
+                        "$ref": "#/components/schemas/namespaces.gnosis.flavor.enum"
                     },
                     "nethermind": {
                         "$ref": "#/components/schemas/base.releaseValues"
@@ -2220,8 +2510,10 @@
                     "nimbus": {
                         "$ref": "#/components/schemas/base.releaseValues"
                     },
-                    "flavor": {
-                        "$ref": "#/components/schemas/namespaces.gnosis.flavor.enum"
+                    "targetNamespace": {
+                        "description": "the default is gnosis-<flavor>",
+                        "type": "string",
+                        "default": "gnosis-mainnet"
                     },
                     "proxyd": {
                         "$ref": "#/components/schemas/base.releaseValues"
@@ -2238,6 +2530,7 @@
                 "type": "object",
                 "required": [
                     "meta",
+                    "defaults",
                     "releases",
                     "labels",
                     "resourceLabels"
@@ -2267,6 +2560,108 @@
                                 "type": "string",
                                 "enum": [
                                     "This *Namespace* provides the necessary software to run a Graph Node and participate\nin the Graph Protocol Network"
+                                ]
+                            }
+                        }
+                    },
+                    "defaults": {
+                        "type": "object",
+                        "required": [
+                            "flavor",
+                            "goerli",
+                            "mainnet",
+                            "arbitrum_goerli",
+                            "arbitrum_one"
+                        ],
+                        "properties": {
+                            "flavor": {
+                                "type": "string",
+                                "enum": [
+                                    "mainnet"
+                                ]
+                            },
+                            "goerli": {
+                                "type": "object",
+                                "properties": {
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "graph-goerli"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.graph.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "targetNamespace"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "mainnet": {
+                                "type": "object",
+                                "properties": {
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "graph-mainnet"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.graph.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "targetNamespace"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "arbitrum_goerli": {
+                                "type": "object",
+                                "properties": {
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "graph-arbitrum-goerli"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.graph.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "targetNamespace"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "arbitrum_one": {
+                                "type": "object",
+                                "properties": {
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "graph-arbitrum-one"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.graph.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "targetNamespace"
+                                        ]
+                                    }
                                 ]
                             }
                         }
@@ -2572,6 +2967,30 @@
                     }
                 }
             },
+            "namespaces.graph.defaults.common": {
+                "type": "object",
+                "required": [
+                    "features"
+                ],
+                "properties": {
+                    "features": {
+                        "type": "array",
+                        "items": [
+                            {
+                                "$ref": "#/components/schemas/namespaces.graph.features.subgraph_radio"
+                            }
+                        ],
+                        "enum": [
+                            [
+                                "subgraph-radio"
+                            ]
+                        ],
+                        "default": [
+                            "subgraph-radio"
+                        ]
+                    }
+                }
+            },
             "namespaces.graph.features": {
                 "description": "ethereum namespace features schema",
                 "type": "object"
@@ -2663,19 +3082,13 @@
                 "description": "Graph namespace values schema",
                 "type": "object",
                 "properties": {
+                    "flavor": {
+                        "$ref": "#/components/schemas/namespaces.graph.flavor.enum"
+                    },
                     "targetNamespace": {
                         "description": "the default is graph-<flavor>",
                         "type": "string",
                         "default": "graph-mainnet"
-                    },
-                    "features": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/namespaces.graph.features.enum"
-                        },
-                        "default": [
-                            "subgraph-radio"
-                        ]
                     },
                     "graph-node": {
                         "$ref": "#/components/schemas/base.releaseValues"
@@ -2692,8 +3105,14 @@
                     "graph-database": {
                         "$ref": "#/components/schemas/base.releaseValues"
                     },
-                    "flavor": {
-                        "$ref": "#/components/schemas/namespaces.graph.flavor.enum"
+                    "features": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/namespaces.graph.features.enum"
+                        },
+                        "default": [
+                            "subgraph-radio"
+                        ]
                     },
                     "subgraph-radio": {
                         "$ref": "#/components/schemas/base.releaseValues"
@@ -2709,6 +3128,7 @@
                 "type": "object",
                 "required": [
                     "meta",
+                    "defaults",
                     "releases",
                     "labels",
                     "resourceLabels"
@@ -2741,6 +3161,9 @@
                                 ]
                             }
                         }
+                    },
+                    "defaults": {
+                        "type": "object"
                     },
                     "releases": {
                         "type": "object",
@@ -2926,6 +3349,42 @@
                     }
                 }
             },
+            "namespaces.ingress.defaults.common": {
+                "type": "object",
+                "required": [
+                    "targetNamespace",
+                    "features"
+                ],
+                "properties": {
+                    "targetNamespace": {
+                        "type": "string",
+                        "enum": [
+                            "ingress"
+                        ]
+                    },
+                    "features": {
+                        "type": "array",
+                        "items": [
+                            {
+                                "$ref": "#/components/schemas/namespaces.ingress.features.ingress"
+                            },
+                            {
+                                "$ref": "#/components/schemas/namespaces.ingress.features.certManager"
+                            }
+                        ],
+                        "enum": [
+                            [
+                                "ingress",
+                                "cert-manager"
+                            ]
+                        ],
+                        "default": [
+                            "ingress",
+                            "cert-manager"
+                        ]
+                    }
+                }
+            },
             "namespaces.ingress.features": {
                 "type": "object"
             },
@@ -3020,6 +3479,7 @@
                 "type": "object",
                 "required": [
                     "meta",
+                    "defaults",
                     "releases",
                     "labels",
                     "resourceLabels"
@@ -3052,6 +3512,9 @@
                                 ]
                             }
                         }
+                    },
+                    "defaults": {
+                        "type": "object"
                     },
                     "releases": {
                         "type": "object",
@@ -3285,6 +3748,42 @@
                     }
                 }
             },
+            "namespaces.monitoring.defaults.common": {
+                "type": "object",
+                "required": [
+                    "targetNamespace",
+                    "features"
+                ],
+                "properties": {
+                    "targetNamespace": {
+                        "type": "string",
+                        "enum": [
+                            "monitoring"
+                        ]
+                    },
+                    "features": {
+                        "type": "array",
+                        "items": [
+                            {
+                                "$ref": "#/components/schemas/namespaces.monitoring.features.metrics"
+                            },
+                            {
+                                "$ref": "#/components/schemas/namespaces.monitoring.features.logs"
+                            }
+                        ],
+                        "enum": [
+                            [
+                                "metrics",
+                                "logs"
+                            ]
+                        ],
+                        "default": [
+                            "metrics",
+                            "logs"
+                        ]
+                    }
+                }
+            },
             "namespaces.monitoring.features": {
                 "description": "Monitoring namespace features schema",
                 "type": "object"
@@ -3384,6 +3883,7 @@
                 "type": "object",
                 "required": [
                     "meta",
+                    "defaults",
                     "releases",
                     "labels",
                     "resourceLabels"
@@ -3413,6 +3913,42 @@
                                 "type": "string",
                                 "enum": [
                                     "This *Namespace* provides a suitable stack to operate Polygon mainnet archive nodes."
+                                ]
+                            }
+                        }
+                    },
+                    "defaults": {
+                        "type": "object",
+                        "required": [
+                            "flavor",
+                            "mainnet"
+                        ],
+                        "properties": {
+                            "flavor": {
+                                "type": "string",
+                                "enum": [
+                                    "mainnet"
+                                ]
+                            },
+                            "mainnet": {
+                                "type": "object",
+                                "properties": {
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "polygon-mainnet"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.polygon.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "targetNamespace"
+                                        ]
+                                    }
                                 ]
                             }
                         }
@@ -3582,6 +4118,9 @@
                     }
                 }
             },
+            "namespaces.polygon.defaults.common": {
+                "type": "object"
+            },
             "namespaces.polygon.flavor": {
                 "type": "object"
             },
@@ -3632,10 +4171,8 @@
                 "description": "polygon namespace values schema",
                 "type": "object",
                 "properties": {
-                    "targetNamespace": {
-                        "description": "the default is polygon-<flavor>",
-                        "type": "string",
-                        "default": "polygon-mainnet"
+                    "flavor": {
+                        "$ref": "#/components/schemas/namespaces.polygon.flavor.enum"
                     },
                     "erigon": {
                         "$ref": "#/components/schemas/base.releaseValues"
@@ -3643,8 +4180,10 @@
                     "heimdall": {
                         "$ref": "#/components/schemas/base.releaseValues"
                     },
-                    "flavor": {
-                        "$ref": "#/components/schemas/namespaces.polygon.flavor.enum"
+                    "targetNamespace": {
+                        "description": "the default is polygon-<flavor>",
+                        "type": "string",
+                        "default": "polygon-mainnet"
                     },
                     "proxyd": {
                         "$ref": "#/components/schemas/base.releaseValues"
@@ -3660,6 +4199,7 @@
                 "type": "object",
                 "required": [
                     "meta",
+                    "defaults",
                     "releases",
                     "labels",
                     "resourceLabels"
@@ -3692,6 +4232,9 @@
                                 ]
                             }
                         }
+                    },
+                    "defaults": {
+                        "type": "object"
                     },
                     "releases": {
                         "type": "object",
@@ -3777,6 +4320,20 @@
                     }
                 }
             },
+            "namespaces.postgresOperator.defaults.common": {
+                "type": "object",
+                "required": [
+                    "targetNamespace"
+                ],
+                "properties": {
+                    "targetNamespace": {
+                        "type": "string",
+                        "enum": [
+                            "postgres-operator"
+                        ]
+                    }
+                }
+            },
             "namespaces.postgresOperator.helmfiles": {
                 "type": "object",
                 "properties": {
@@ -3831,6 +4388,7 @@
                 "type": "object",
                 "required": [
                     "meta",
+                    "defaults",
                     "releases",
                     "labels",
                     "resourceLabels"
@@ -3863,6 +4421,9 @@
                                 ]
                             }
                         }
+                    },
+                    "defaults": {
+                        "type": "object"
                     },
                     "releases": {
                         "type": "object",
@@ -3948,6 +4509,20 @@
                     }
                 }
             },
+            "namespaces.sealedSecrets.defaults.common": {
+                "type": "object",
+                "required": [
+                    "targetNamespace"
+                ],
+                "properties": {
+                    "targetNamespace": {
+                        "type": "string",
+                        "enum": [
+                            "sealed-secrets"
+                        ]
+                    }
+                }
+            },
             "namespaces.sealedSecrets.helmfiles": {
                 "type": "object",
                 "properties": {
@@ -4002,6 +4577,7 @@
                 "type": "object",
                 "required": [
                     "meta",
+                    "defaults",
                     "labels",
                     "resourceLabels",
                     "releases"
@@ -4041,6 +4617,9 @@
                                 ]
                             }
                         }
+                    },
+                    "defaults": {
+                        "type": "object"
                     },
                     "labels": {
                         "type": "object",
@@ -4363,6 +4942,37 @@
                                 }
                             }
                         }
+                    }
+                }
+            },
+            "namespaces.storage.defaults.common": {
+                "type": "object",
+                "required": [
+                    "targetNamespace",
+                    "features"
+                ],
+                "properties": {
+                    "targetNamespace": {
+                        "type": "string",
+                        "enum": [
+                            "storage"
+                        ]
+                    },
+                    "features": {
+                        "type": "array",
+                        "items": [
+                            {
+                                "$ref": "#/components/schemas/namespaces.storage.features.rawfile"
+                            }
+                        ],
+                        "enum": [
+                            [
+                                "rawfile"
+                            ]
+                        ],
+                        "default": [
+                            "rawfile"
+                        ]
                     }
                 }
             },

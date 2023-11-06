@@ -21,12 +21,10 @@ package LaunchpadNamespaces
 
 		// polygon namespace values schema
 		#values: #base.#values & {
+			flavor?: *defaults.flavor | #flavor.#enum
+
 			// the default is polygon-<flavor>
-			targetNamespace?: *"polygon-mainnet" | string
-
-			_templatedTargetNamespace: '( print "polygon-" .Values.flavor )'
-
-			flavor?: *"mainnet" | #flavor.#enum
+			targetNamespace?: *defaults["\(defaults.flavor)"].targetNamespace | string
 
 			// For overriding this release's values
 			for key, _ in releases {
@@ -39,6 +37,17 @@ package LaunchpadNamespaces
 		#helmfiles: #base.#helmfiles & {
 			path:    =~"*github.com/graphops/launchpad-namespaces.git@polygon/helmfile.yaml*"
 			values?: #polygon.#values | [...#polygon.#values]
+		}
+
+		defaults: {
+			flavor: "mainnet"
+
+			#common: {}
+
+			mainnet: {
+				#common
+				targetNamespace: "polygon-mainnet"
+			}
 		}
 
 		releases: {

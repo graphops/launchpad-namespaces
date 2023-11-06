@@ -13,7 +13,7 @@ package LaunchpadNamespaces
 
 		// Sealed-Secrets namespace values schema
 		#values: #base.#values & {
-			targetNamespace?: *"sealed-secrets" | string
+			targetNamespace?: *defaults.#common.targetNamespace | string
 
 			// For overriding this release's values
 			for key, _ in releases {
@@ -25,6 +25,12 @@ package LaunchpadNamespaces
 		#helmfiles: #base.#helmfiles & {
 			path:    =~"*github.com/graphops/launchpad-namespaces.git@sealed-secrets/helmfile.yaml*"
 			values?: #values | [...#values]
+		}
+
+		defaults: {
+			#common: {
+				targetNamespace: "sealed-secrets"
+			}
 		}
 
 		releases: {

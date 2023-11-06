@@ -25,9 +25,9 @@ package LaunchpadNamespaces
 		}
 
 		#values: #base.#values & {
-			targetNamespace?: *"ingress" | string
+			targetNamespace?: *defaults.#common.targetNamespace | string
 
-			features?: *[#features.#ingress, #features.#certManager] | [...#features.#enum]
+			features?: *defaults.#common.features | [...#features.#enum]
 
 			// For overriding this release's values
 			for key, _ in releases {
@@ -40,6 +40,13 @@ package LaunchpadNamespaces
 		#helmfiles: #base.#helmfiles & {
 			path:    =~"*github.com/graphops/launchpad-namespaces.git@ingress/helmfile.yaml*"
 			values?: #ingress.#values | [...#ingress.#values]
+		}
+
+		defaults: {
+			#common: {
+				targetNamespace: "ingress"
+				features: [#features.#ingress, #features.#certManager]
+			}
 		}
 
 		releases: {
