@@ -44,12 +44,12 @@ package LaunchpadNamespaces
 		releases: {
 			erigon: {
 				chart: {_repositories.graphops.charts.erigon}
-				_template: {version: "0.8.5-canary.11"}
+				_template: {version: "0.8.5-canary.12"}
 			}
 
 			heimdall: {
 				chart: {_repositories.graphops.charts.heimdall}
-				_template: {version: "1.1.4-canary.1"}
+				_template: {version: "1.1.4-canary.2"}
 			}
 
 			proxyd: {
