@@ -1663,7 +1663,7 @@
                             "description": {
                                 "type": "string",
                                 "enum": [
-                                    "This *Namespace* provides a suitable stack to operate Ethereum mainnet and göerli archive nodes."
+                                    "This *Namespace* provides a suitable stack to operate Ethereum mainnet, göerli, holesky and sepolia archive nodes."
                                 ]
                             }
                         }
@@ -1674,7 +1674,8 @@
                             "flavor",
                             "mainnet",
                             "goerli",
-                            "holesky"
+                            "holesky",
+                            "sepolia"
                         ],
                         "properties": {
                             "flavor": {
@@ -1732,6 +1733,27 @@
                                         "type": "string",
                                         "enum": [
                                             "eth-holesky"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.ethereum.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "targetNamespace"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "sepolia": {
+                                "type": "object",
+                                "properties": {
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "eth-sepolia"
                                         ]
                                     }
                                 },
@@ -2092,7 +2114,8 @@
                 "enum": [
                     "mainnet",
                     "goerli",
-                    "holesky"
+                    "holesky",
+                    "sepolia"
                 ]
             },
             "namespaces.ethereum.flavor.goerli": {
@@ -2114,6 +2137,13 @@
                 "type": "string",
                 "enum": [
                     "mainnet"
+                ]
+            },
+            "namespaces.ethereum.flavor.sepolia": {
+                "description": "suitable defaults for a sepolia ethereum testnet node",
+                "type": "string",
+                "enum": [
+                    "sepolia"
                 ]
             },
             "namespaces.ethereum.helmfiles": {
@@ -2159,6 +2189,7 @@
                     "deployments": {
                         "description": "number of independent stateful sets to deploy",
                         "type": "integer",
+                        "minimum": 1,
                         "default": 1
                     },
                     "startP2PPort": {

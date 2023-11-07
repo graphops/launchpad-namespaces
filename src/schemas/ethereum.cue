@@ -9,7 +9,7 @@ package LaunchpadNamespaces
 			name: "ethereum"
 			url:  "https://github.com/graphops/launchpad-namespaces/\(name)"
 			description: """
-				This *Namespace* provides a suitable stack to operate Ethereum mainnet and göerli archive nodes.
+				This *Namespace* provides a suitable stack to operate Ethereum mainnet, göerli, holesky and sepolia archive nodes.
 				"""
 		}
 
@@ -22,7 +22,11 @@ package LaunchpadNamespaces
 
 			// suitable defaults for a holeśky ethereum testnet node
 			#holesky: "holesky"
-			#enum:    ( #mainnet | #goerli | #holesky )
+
+			// suitable defaults for a sepolia ethereum testnet node
+			#sepolia: "sepolia"
+
+			#enum: ( #mainnet | #goerli | #holesky | #sepolia )
 		}
 
 		// ethereum namespace features schema
@@ -39,7 +43,7 @@ package LaunchpadNamespaces
 		// ethereum scaling interface
 		#scaling: {
 			// number of independent stateful sets to deploy
-			deployments: *1 | int
+			deployments: *1 | ( int & >=1)
 			// A beggining port for the range to use in P2P NodePorts
 			startP2PPort?: int
 		}
@@ -92,6 +96,11 @@ package LaunchpadNamespaces
 			holesky: {
 				#common
 				targetNamespace: "eth-holesky"
+			}
+
+			sepolia: {
+				#common
+				targetNamespace: "eth-sepolia"
 			}
 		}
 

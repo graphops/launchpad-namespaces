@@ -181,7 +181,7 @@ Official golang implementation of the Celo blockchain
 - [proxyd](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
 Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
 ### [:ethereum](/ethereum)
-This *Namespace* provides a suitable stack to operate Ethereum mainnet and göerli archive nodes.
+This *Namespace* provides a suitable stack to operate Ethereum mainnet, göerli, holesky and sepolia archive nodes.
 
 - [erigon](https://github.com/ledgerwatch/erigon)<br>
 Erigon is an implementation of Ethereum (execution client with light client for consensus layer), on the efficiency frontier.
