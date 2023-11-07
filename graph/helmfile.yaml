@@ -1,5 +1,5 @@
 #namespace defaults
-{{ $_ := set .Values "_defaults" ( `{"flavor":"mainnet","goerli":{"targetNamespace":"graph-goerli","features":["subgraph-radio"]},"mainnet":{"targetNamespace":"graph-mainnet","features":["subgraph-radio"]},"arbitrum_goerli":{"targetNamespace":"graph-arbitrum-goerli","features":["subgraph-radio"]},"common":{"features":["subgraph-radio"]},"arbitrum_one":{"targetNamespace":"graph-arbitrum-one","features":["subgraph-radio"]}}` | fromJson ) }}
+{{ $_ := set .Values "_defaults" ( `{"flavor":"mainnet","goerli":{"targetNamespace":"graph-goerli","features":["subgraph-radio"]},"mainnet":{"targetNamespace":"graph-mainnet","features":["subgraph-radio"]},"arbitrum-goerli":{"targetNamespace":"graph-arbitrum-goerli","features":["subgraph-radio"]},"common":{"features":["subgraph-radio"]},"arbitrum-one":{"targetNamespace":"graph-arbitrum-one","features":["subgraph-radio"]}}` | fromJson ) }}
 #set default flavor when missing
 {{ if not ( hasKey .Values "flavor" ) }}
 {{ $_ := set .Values "flavor" "mainnet" }}
@@ -21,8 +21,6 @@ environments:
 environments:
   {{ .Environment.Name }}:
     values:
-      - flavor: {{ .Values.flavor }}
-      - _defaults: {{ .Values._defaults | toYaml | nindent 10 }}
       - features: {{ .Values.features | toYaml | nindent 10 }}
 
 ---

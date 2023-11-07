@@ -76,12 +76,12 @@ package LaunchpadNamespaces
 				targetNamespace: "graph-mainnet"
 			}
 
-			arbitrum_goerli: {
+			"arbitrum-goerli": {
 				#common
 				targetNamespace: "graph-arbitrum-goerli"
 			}
 
-			arbitrum_one: {
+			"arbitrum-one": {
 				#common
 				targetNamespace: "graph-arbitrum-one"
 			}

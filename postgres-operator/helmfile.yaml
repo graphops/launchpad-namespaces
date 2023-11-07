@@ -11,8 +11,7 @@ environments:
 
 environments:
   {{ .Environment.Name }}:
-    values:
-      - _defaults: {{ .Values._defaults | toYaml | nindent 10 }}
+    values: []
 
 ---
 {{- $_tplTransforms := (print `
