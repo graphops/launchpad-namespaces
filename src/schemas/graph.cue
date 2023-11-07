@@ -90,12 +90,12 @@ package LaunchpadNamespaces
 		releases: {
 			"graph-node": {
 				chart: {_repositories.graphops.charts["graph-node"]}
-				_template: {version: "0.3.4-canary.1"}
+				_template: {version: "0.3.4-canary.2"}
 			}
 
 			"graph-network-indexer": {
 				chart: {_repositories.graphops.charts["graph-network-indexer"]}
-				_template: {version: "0.2.3-canary.3"}
+				_template: {version: "0.2.3-canary.4"}
 			}
 
 			"graph-toolbox": {
@@ -116,7 +116,7 @@ package LaunchpadNamespaces
 			"subgraph-radio": {
 				chart: {_repositories.graphops.charts["subgraph-radio"]}
 				feature: #features.#subgraph_radio
-				_template: {version: "0.2.4-canary.3"}
+				_template: {version: "0.2.4-canary.4"}
 			}
 		}
 
