@@ -2570,8 +2570,8 @@
                             "flavor",
                             "goerli",
                             "mainnet",
-                            "arbitrum_goerli",
-                            "arbitrum_one"
+                            "arbitrum-goerli",
+                            "arbitrum-one"
                         ],
                         "properties": {
                             "flavor": {
@@ -2622,7 +2622,7 @@
                                     }
                                 ]
                             },
-                            "arbitrum_goerli": {
+                            "arbitrum-goerli": {
                                 "type": "object",
                                 "properties": {
                                     "targetNamespace": {
@@ -2643,7 +2643,7 @@
                                     }
                                 ]
                             },
-                            "arbitrum_one": {
+                            "arbitrum-one": {
                                 "type": "object",
                                 "properties": {
                                     "targetNamespace": {
