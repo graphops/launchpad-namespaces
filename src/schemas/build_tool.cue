@@ -240,12 +240,16 @@ _helmfile: {
 		this=_namespace: string
 		_flavorOnly:     *false | bool
 
-		_variables: {
-			if _namespaces[this].values.flavor != _|_ {
-				flavor: "{{ .Values.flavor }}"
-			}
-			if _namespaces[this].defaults != _|_ {
-				"_defaults": "{{ .Values._defaults | toYaml | nindent 10 }}"
+		_variables: {}
+
+		if _flavorOnly == true {
+			_variables: {
+				if _namespaces[this].values.flavor != _|_ {
+					flavor: "{{ .Values.flavor }}"
+				}
+				if _namespaces[this].defaults != _|_ {
+					"_defaults": "{{ .Values._defaults | toYaml | nindent 10 }}"
+				}
 			}
 		}
 		if _flavorOnly == false {
