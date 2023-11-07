@@ -1,4 +1,12 @@
+#namespace defaults
+{{ $_ := set .Values "_defaults" ( `{"common":{"targetNamespace":"postgres-operator"}}` | fromJson ) }}
 
+environments:
+  {{ .Environment.Name }}:
+    values:
+      - _defaults: {{ .Values._defaults | toYaml | nindent 10 }}
+
+---
 
 
 environments:
@@ -81,7 +89,7 @@ kubeVersion: {{ .Values.kubeVersion }}
 {{ end }}
 
 #set default namespace
-{{ $_defaultNamespace := `postgres-operator` }}
+{{ $_defaultNamespace := .Values._defaults.common.targetNamespace }}
 
 
 {{- $_commonLabels := dict 

@@ -69,7 +69,7 @@ _#namespaceTemplate: {
 		targetNamespace: _key.#values.targetNamespace
 		if _key.#features != _|_ {features: [..._key.#features.#enum]}
 		if _key.#flavor != _|_ {flavor: _key.#flavor.#enum}
-		if _key.#scaling != _|_ {scaling: deployments: _key.#scaling.deployments}
+		if _key.#scaling != _|_ {scaling: _key.#scaling}
 		for rkey, _ in _key.releases {
 			(rkey): {
 				mergeValues: _key.#values.#releaseValues.mergeValues
@@ -77,6 +77,8 @@ _#namespaceTemplate: {
 			}
 		}
 	}
+	defaults: _key.defaults
+	defaults: common: _key.defaults.#common
 	labels:         _key.labels
 	resourceLabels: _key.resourceLabels
 	releases:       _key.releases

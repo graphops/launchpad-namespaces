@@ -39,14 +39,12 @@ package LaunchpadNamespaces
 
 		// Graph namespace values schema
 		#values: #base.#values & {
+			flavor?: *defaults.flavor | #flavor.#enum
+
 			// the default is graph-<flavor>
-			targetNamespace?: *"graph-mainnet" | string
+			targetNamespace?: *defaults["\(defaults.flavor)"].targetNamespace | string
 
-			_templatedTargetNamespace: '( print "graph-" .Values.flavor )'
-
-			features?: *[#features.#subgraph_radio] | [...#features.#enum]
-
-			flavor?: *"mainnet" | #flavor.#enum
+			features?: *defaults["\(defaults.flavor)"].features | [...#features.#enum]
 
 			// For overriding this release's values
 			for key, _ in releases {
@@ -59,6 +57,34 @@ package LaunchpadNamespaces
 		#helmfiles: #base.#helmfiles & {
 			path:    =~"*github.com/graphops/launchpad-namespaces.git@graph/helmfile.yaml*"
 			values?: #graph.#values | [...#graph.#values]
+		}
+
+		defaults: {
+			flavor: "mainnet"
+
+			#common: {
+				features: [#features.#subgraph_radio]
+			}
+
+			goerli: {
+				#common
+				targetNamespace: "graph-goerli"
+			}
+
+			mainnet: {
+				#common
+				targetNamespace: "graph-mainnet"
+			}
+
+			"arbitrum-goerli": {
+				#common
+				targetNamespace: "graph-arbitrum-goerli"
+			}
+
+			"arbitrum-one": {
+				#common
+				targetNamespace: "graph-arbitrum-one"
+			}
 		}
 
 		releases: {

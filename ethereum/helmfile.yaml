@@ -1,14 +1,20 @@
+#namespace defaults
+{{ $_ := set .Values "_defaults" ( `{"flavor":"mainnet","mainnet":{"targetNamespace":"eth-mainnet","features":["nimbus","proxyd"],"scaling":{"deployments":1}},"goerli":{"targetNamespace":"eth-goerli","features":["nimbus","proxyd"],"scaling":{"deployments":1}},"common":{"features":["nimbus","proxyd"],"scaling":{"deployments":1}},"holesky":{"targetNamespace":"eth-holesky","features":["nimbus","proxyd"],"scaling":{"deployments":1}}}` | fromJson ) }}
 #set default flavor when missing
 {{ if not ( hasKey .Values "flavor" ) }}
 {{ $_ := set .Values "flavor" "mainnet" }}
 {{ end }}
 
+environments:
+  {{ .Environment.Name }}:
+    values:
+      - flavor: {{ .Values.flavor }}
+      - _defaults: {{ .Values._defaults | toYaml | nindent 10 }}
+
+---
 # Define default features when undefined
 {{ if not (hasKey .Values "features") }}
-{{ $_ := set .Values "features" (list
-`nimbus`
-`proxyd`
-) }}
+{{ $_ := set .Values "features" ( .Values._defaults | get .Values.flavor | get "features" ) }}
 {{ end }}
 
 #set default number of deployments when missing
@@ -16,13 +22,12 @@
 {{ $_ := set .Values "scaling" dict }}
 {{ end }}
 {{ if not ( hasKey ( .Values | get "scaling" dict ) "deployments" ) }}
-{{ $_ := set .Values.scaling "deployments" 1 }}
+{{ $_ := set .Values.scaling "deployments" ( .Values._defaults | get .Values.flavor | get "scaling" | get "deployments" ) }}
 {{ end }}
 
 environments:
   {{ .Environment.Name }}:
     values:
-      - flavor: {{ .Values.flavor }}
       - features: {{ .Values.features | toYaml | nindent 10 }}
       - scaling:
           deployments: {{ .Values.scaling.deployments }}
@@ -103,7 +108,7 @@ kubeVersion: {{ .Values.kubeVersion }}
 {{ end }}
 
 #set default namespace
-{{ $_defaultNamespace := ( print "eth-" .Values.flavor ) }}
+{{ $_defaultNamespace := .Values._defaults | get .Values.flavor | get "targetNamespace" }}
 
 {{ $_templatedValue_0 :=  .Values.flavor  }}
 {{- $_commonLabels := dict 

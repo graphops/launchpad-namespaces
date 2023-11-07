@@ -13,7 +13,7 @@ package LaunchpadNamespaces
 
 		// Postgres-Operator namespace values interface schema
 		#values: #base.#values & {
-			targetNamespace?: *"postgres-operator" | string
+			targetNamespace?: *defaults.#common.targetNamespace | string
 
 			// For overriding this release's values
 			for key, _ in releases {
@@ -25,6 +25,12 @@ package LaunchpadNamespaces
 		#helmfiles: #base.#helmfiles & {
 			path:    =~"*github.com/graphops/launchpad-namespaces.git@postgres-operator/helmfile.yaml*"
 			values?: #values | [...#values]
+		}
+
+		defaults: {
+			#common: {
+				targetNamespace: "postgres-operator"
+			}
 		}
 
 		releases: {

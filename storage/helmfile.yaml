@@ -1,9 +1,15 @@
+#namespace defaults
+{{ $_ := set .Values "_defaults" ( `{"common":{"targetNamespace":"storage","features":["rawfile"]}}` | fromJson ) }}
 
+environments:
+  {{ .Environment.Name }}:
+    values:
+      - _defaults: {{ .Values._defaults | toYaml | nindent 10 }}
+
+---
 # Define default features when undefined
 {{ if not (hasKey .Values "features") }}
-{{ $_ := set .Values "features" (list
-`rawfile`
-) }}
+{{ $_ := set .Values "features" .Values._defaults.common.features }}
 {{ end }}
 
 
@@ -88,7 +94,7 @@ kubeVersion: {{ .Values.kubeVersion }}
 {{ end }}
 
 #set default namespace
-{{ $_defaultNamespace := `storage` }}
+{{ $_defaultNamespace := .Values._defaults.common.targetNamespace }}
 
 
 {{- $_commonLabels := dict 

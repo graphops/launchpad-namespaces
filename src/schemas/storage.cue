@@ -25,9 +25,9 @@ package LaunchpadNamespaces
 		}
 
 		#values: #base.#values & {
-			targetNamespace?: *"storage" | string
+			targetNamespace?: *defaults.#common.targetNamespace | string
 
-			features?: *[#features.#rawfile] | [...#features.#enum]
+			features?: *defaults.#common.features | [...#features.#enum]
 
 			// For overriding this release's values
 			for key, _ in releases {
@@ -38,6 +38,13 @@ package LaunchpadNamespaces
 		#helmfiles: #base.#helmfiles & {
 			path:    =~"*github.com/graphops/launchpad-namespaces.git@storage/helmfile.yaml*"
 			values?: #storage.#values | [...#storage.#values]
+		}
+
+		defaults: {
+			#common: {
+				targetNamespace: "storage"
+				features: [#features.#rawfile]
+			}
 		}
 
 		labels: {

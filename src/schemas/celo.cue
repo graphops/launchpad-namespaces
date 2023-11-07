@@ -21,12 +21,10 @@ package LaunchpadNamespaces
 
 		// celo namespace values schema
 		#values: #base.#values & {
+			flavor?: *defaults.flavor | #flavor.#enum
+
 			// the default is celo-<flavor>
-			targetNamespace?: *"celo-mainnet" | string
-
-			_templatedTargetNamespace: '( print "celo-" .Values.flavor )'
-
-			flavor?: *"mainnet" | #flavor.#enum
+			targetNamespace?: *defaults["\(defaults.flavor)"].targetNamespace | string
 
 			// For overriding this release's values
 			for key, _ in releases {
@@ -39,6 +37,17 @@ package LaunchpadNamespaces
 		#helmfiles: #base.#helmfiles & {
 			path:    =~"*github.com/graphops/launchpad-namespaces.git@celo/helmfile.yaml*"
 			values?: #celo.#values | [...#celo.#values]
+		}
+
+		defaults: {
+			flavor: "mainnet"
+
+			#common: {}
+
+			mainnet: {
+				#common
+				targetNamespace: "celo-mainnet"
+			}
 		}
 
 		releases: {

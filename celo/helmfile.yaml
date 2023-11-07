@@ -1,14 +1,22 @@
+#namespace defaults
+{{ $_ := set .Values "_defaults" ( `{"flavor":"mainnet","common":{},"mainnet":{"targetNamespace":"celo-mainnet"}}` | fromJson ) }}
 #set default flavor when missing
 {{ if not ( hasKey .Values "flavor" ) }}
 {{ $_ := set .Values "flavor" "mainnet" }}
 {{ end }}
 
-
-
 environments:
   {{ .Environment.Name }}:
     values:
       - flavor: {{ .Values.flavor }}
+      - _defaults: {{ .Values._defaults | toYaml | nindent 10 }}
+
+---
+
+
+environments:
+  {{ .Environment.Name }}:
+    values: []
 
 ---
 {{- $_tplTransforms := (print `
@@ -86,7 +94,7 @@ kubeVersion: {{ .Values.kubeVersion }}
 {{ end }}
 
 #set default namespace
-{{ $_defaultNamespace := ( print "celo-" .Values.flavor ) }}
+{{ $_defaultNamespace := .Values._defaults | get .Values.flavor | get "targetNamespace" }}
 
 
 {{- $_commonLabels := dict 

@@ -21,14 +21,12 @@ package LaunchpadNamespaces
 
 		// Arbitrum
 		#values: #base.#values & {
-			// the default is arbitrum-(flavor)
-			targetNamespace?: *"arbitrum-mainnet" | string
-
-			_templatedTargetNamespace: '( print "arbitrum-" .Values.flavor )'
-
 			// Choose among default values best suited for different scenarios
 			// currently supports "mainnet" only
-			flavor?: *"mainnet" | #flavor.#enum
+			flavor?: *defaults.flavor | #flavor.#enum
+
+			// the default is arbitrum-(flavor)
+			targetNamespace?: *defaults["\(defaults.flavor)"].targetNamespace | string
 
 			// For overriding this release's values
 			for key, _ in releases {
@@ -41,6 +39,17 @@ package LaunchpadNamespaces
 		#helmfiles: #base.#helmfiles & {
 			path:    =~"*github.com/graphops/launchpad-namespaces.git@arbitrum/helmfile.yaml*"
 			values?: #arbitrum.#values | [...#arbitrum.#values]
+		}
+
+		defaults: {
+			flavor: "mainnet"
+
+			#common: {}
+
+			mainnet: {
+				#common
+				targetNamespace: "arbitrum-mainnet"
+			}
 		}
 
 		releases: {

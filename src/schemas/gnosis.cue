@@ -22,12 +22,10 @@ package LaunchpadNamespaces
 
 		// gnosis namespace values schema
 		#values: #base.#values & {
-			// the default is gnosis-<flavor>
-			targetNamespace?: *"gnosis-mainnet" | string
-
-			_templatedTargetNamespace: '( print "gnosis-" .Values.flavor )'
-
 			flavor?: *"mainnet" | #flavor.#enum
+
+			// the default is gnosis-<flavor>
+			targetNamespace?: *defaults["\(defaults.flavor)"].targetNamespace | string
 
 			// For overriding this release's values
 			for key, _ in releases {
@@ -40,6 +38,17 @@ package LaunchpadNamespaces
 		#helmfiles: #base.#helmfiles & {
 			path:    =~"*github.com/graphops/launchpad-namespaces.git@gnosis/helmfile.yaml*"
 			values?: #gnosis.#values | [...#gnosis.#values]
+		}
+
+		defaults: {
+			flavor: "mainnet"
+
+			#common: {}
+
+			mainnet: {
+				#common
+				targetNamespace: "gnosis-mainnet"
+			}
 		}
 
 		releases: {

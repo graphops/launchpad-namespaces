@@ -1,10 +1,15 @@
+#namespace defaults
+{{ $_ := set .Values "_defaults" ( `{"common":{"targetNamespace":"monitoring","features":["metrics","logs"]}}` | fromJson ) }}
 
+environments:
+  {{ .Environment.Name }}:
+    values:
+      - _defaults: {{ .Values._defaults | toYaml | nindent 10 }}
+
+---
 # Define default features when undefined
 {{ if not (hasKey .Values "features") }}
-{{ $_ := set .Values "features" (list
-`metrics`
-`logs`
-) }}
+{{ $_ := set .Values "features" .Values._defaults.common.features }}
 {{ end }}
 
 
@@ -89,7 +94,7 @@ kubeVersion: {{ .Values.kubeVersion }}
 {{ end }}
 
 #set default namespace
-{{ $_defaultNamespace := `monitoring` }}
+{{ $_defaultNamespace := .Values._defaults.common.targetNamespace }}
 
 
 {{- $_commonLabels := dict 
