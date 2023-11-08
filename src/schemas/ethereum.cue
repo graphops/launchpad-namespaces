@@ -122,7 +122,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/component": "nimbus"
 				}
 				feature: #features.#nimbus
-				_template: {version: "0.5.4-canary.2"}
+				_template: {version: "0.5.4"}
 				_scale: true
 			}
 
