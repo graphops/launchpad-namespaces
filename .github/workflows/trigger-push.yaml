@@ -36,6 +36,7 @@ jobs:
         id: list-release-tags
         shell: bash
         run: |
+          set -xe
           tags=()
           for namespace_name in ${{ steps.list-changed-namespaces.outputs.all_modified_files }}; do
             latest_version="$(git -c 'versionsort.suffix=-' tag --sort 'version:refname' --list "$namespace_name-*" | grep -E '.*-v?[[:digit:]]+.[[:digit:]]+.[[:digit:]]+$' | tail -n1)"
