@@ -1,5 +1,5 @@
 #namespace defaults
-{{ $_ := set .Values "_defaults" ( `{"flavor":"mainnet","common":{},"mainnet":{"targetNamespace":"gnosis-mainnet"}}` | fromJson ) }}
+{{ $_ := set .Values "_defaults" ( `{"flavor":"mainnet","mainnet":{"features":["erigon","lighthouse","proxyd"],"targetNamespace":"gnosis-mainnet"},"common":{},"chiado":{"features":["erigon","lighthouse","proxyd"],"targetNamespace":"gnosis-chiado"}}` | fromJson ) }}
 #set default flavor when missing
 {{ if not ( hasKey .Values "flavor" ) }}
 {{ $_ := set .Values "flavor" "mainnet" }}
@@ -12,11 +12,25 @@ environments:
       - _defaults: {{ .Values._defaults | toYaml | nindent 10 }}
 
 ---
+# Define default features when undefined
+{{ if not (hasKey .Values "features") }}
+{{ $_ := set .Values "features" ( .Values._defaults | get .Values.flavor | get "features" ) }}
+{{ end }}
 
+#set default number of deployments when missing
+{{ if not ( hasKey .Values  "scaling" ) }}
+{{ $_ := set .Values "scaling" dict }}
+{{ end }}
+{{ if not ( hasKey ( .Values | get "scaling" dict ) "deployments" ) }}
+{{ $_ := set .Values.scaling "deployments" ( .Values._defaults | get .Values.flavor | get "scaling" | get "deployments" ) }}
+{{ end }}
 
 environments:
   {{ .Environment.Name }}:
-    values: []
+    values:
+      - features: {{ .Values.features | toYaml | nindent 10 }}
+      - scaling:
+          deployments: {{ .Values.scaling.deployments }}
 
 ---
 {{- $_tplTransforms := (print `
@@ -129,33 +143,33 @@ templates:
     namespace: '{{ .Values | get "targetNamespace" $_defaultNamespace }}'
     missingFileHandler: Warn
   
-  nethermind:
-    {{- if ( .Values | get "nethermind" dict | get "chartUrl" false ) }}
-    chart: {{ .Values | get "nethermind" | get "chartUrl" }}
+  erigon:
+    {{- if ( .Values | get "erigon" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "erigon" | get "chartUrl" }}
     {{- else }}
-    chart: "graphops/nethermind"
+    chart: "graphops/erigon"
     {{- end }}
     inherit:
     - template: "defaults"
-    {{- if ( .Values | get "nethermind" dict | get "chartVersion" false ) }}
-    version: {{ .Values | get "nethermind" | get "chartVersion" }}
+    {{- if ( .Values | get "erigon" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "erigon" | get "chartVersion" }}
     {{- end }}
-    {{- if (not (or ( .Values | get "nethermind" dict | get "chartVersion" false ) ( .Values | get "nethermind" dict | get "chartUrl" false ) )) }}
-    version: "0.4.2"
+    {{- if (not (or ( .Values | get "erigon" dict | get "chartVersion" false ) ( .Values | get "erigon" dict | get "chartUrl" false ) )) }}
+    version: "0.9.0"
     {{- end }}
-  nimbus:
-    {{- if ( .Values | get "nimbus" dict | get "chartUrl" false ) }}
-    chart: {{ .Values | get "nimbus" | get "chartUrl" }}
+  lighthouse:
+    {{- if ( .Values | get "lighthouse" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "lighthouse" | get "chartUrl" }}
     {{- else }}
-    chart: "graphops/nimbus"
+    chart: "graphops/lighthouse"
     {{- end }}
     inherit:
     - template: "defaults"
-    {{- if ( .Values | get "nimbus" dict | get "chartVersion" false ) }}
-    version: {{ .Values | get "nimbus" | get "chartVersion" }}
+    {{- if ( .Values | get "lighthouse" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "lighthouse" | get "chartVersion" }}
     {{- end }}
-    {{- if (not (or ( .Values | get "nimbus" dict | get "chartVersion" false ) ( .Values | get "nimbus" dict | get "chartUrl" false ) )) }}
-    version: "0.5.4"
+    {{- if (not (or ( .Values | get "lighthouse" dict | get "chartVersion" false ) ( .Values | get "lighthouse" dict | get "chartUrl" false ) )) }}
+    version: "0.3.3-canary.5"
     {{- end }}
   proxyd:
     {{- if ( .Values | get "proxyd" dict | get "chartUrl" false ) }}
@@ -172,13 +186,19 @@ templates:
     version: "0.4.0"
     {{- end }}
 releases:
-  {{- $canonicalRelease := "nethermind" }}
-  {{- $release := "nethermind" }}
+  {{ if has "erigon" ( .Values | get "features" list ) }}
+  {{- $canonicalRelease := "erigon" }}
+  {{- range $index := until .Values.scaling.deployments }}
+  {{- $deploymentIndex := (add . 1) }}
+  {{- $release := (printf "%s%v" "erigon-" $deploymentIndex) }}
     {{- $_releaseResourceLabels := deepCopy $_commonResourceLabels }}
   - name: "{{ $release }}"
     inherit:
     - template: "{{ $canonicalRelease }}"
     labels:
+      app.launchpad.graphops.xyz/layer: execution
+      app.launchpad.graphops.xyz/component: erigon
+      
     {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "labels" dict ) }}
       {{ $key }}: {{ $value }}
     {{- $_ := set $_releaseResourceLabels $key $value }}
@@ -200,14 +220,21 @@ releases:
     {{- tpl $_tplTransforms (dict "Values" $.Values "release" $release "canonicalRelease" $canonicalRelease "resourceLabels" $_releaseResourceLabels  )  | indent 4 -}}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
-  
-  {{- $canonicalRelease := "nimbus" }}
-  {{- $release := "nimbus" }}
+  {{- end -}}
+  {{- end -}}
+  {{ if has "lighthouse" ( .Values | get "features" list ) }}
+  {{- $canonicalRelease := "lighthouse" }}
+  {{- range $index := until .Values.scaling.deployments }}
+  {{- $deploymentIndex := (add . 1) }}
+  {{- $release := (printf "%s%v" "lighthouse-" $deploymentIndex) }}
     {{- $_releaseResourceLabels := deepCopy $_commonResourceLabels }}
   - name: "{{ $release }}"
     inherit:
     - template: "{{ $canonicalRelease }}"
     labels:
+      app.launchpad.graphops.xyz/layer: consensus
+      app.launchpad.graphops.xyz/component: lighthouse
+      
     {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "labels" dict ) }}
       {{ $key }}: {{ $value }}
     {{- $_ := set $_releaseResourceLabels $key $value }}
@@ -229,7 +256,9 @@ releases:
     {{- tpl $_tplTransforms (dict "Values" $.Values "release" $release "canonicalRelease" $canonicalRelease "resourceLabels" $_releaseResourceLabels  )  | indent 4 -}}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
-  
+  {{- end -}}
+  {{- end -}}
+  {{ if has "proxyd" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "proxyd" }}
   {{- $release := "proxyd" }}
     {{- $_releaseResourceLabels := deepCopy $_commonResourceLabels }}
@@ -237,6 +266,9 @@ releases:
     inherit:
     - template: "{{ $canonicalRelease }}"
     labels:
+      app.launchpad.graphops.xyz/layer: proxy
+      app.launchpad.graphops.xyz/component: proxyd
+      
     {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "labels" dict ) }}
       {{ $key }}: {{ $value }}
     {{- $_ := set $_releaseResourceLabels $key $value }}
@@ -259,3 +291,4 @@ releases:
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
   
+  {{- end -}}

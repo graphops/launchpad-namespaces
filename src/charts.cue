@@ -98,6 +98,12 @@ package LaunchpadNamespaces
 					Gossip about Subgraphs with other Graph Protocol Indexers
 					"""
 			}
+			"lighthouse": {
+				url: "https://github.com/sigp/lighthouse"
+				description: """
+					An open-source Ethereum consensus client, written in Rust and maintained by Sigma Prime.
+					"""
+			}
 		}
 	}
 

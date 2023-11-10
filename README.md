@@ -192,10 +192,10 @@ Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by
 ### [:gnosis](/gnosis)
 This *Namespace* provides a suitable stack to operate Gnosis mainnet archive nodes.
 
-- [nethermind](https://github.com/NethermindEth/nethermind)<br>
-Nethermind is a high-performance, highly configurable full Ethereum protocol execution client built on .NET that runs on Linux, Windows, and macOS, and supports Clique, Aura, and Ethash.
-- [nimbus](https://github.com/status-im/nimbus-eth2)<br>
-Nimbus-eth2 is an extremely efficient consensus layer (eth2) client implementation.
+- [erigon](https://github.com/ledgerwatch/erigon)<br>
+Erigon is an implementation of Ethereum (execution client with light client for consensus layer), on the efficiency frontier.
+- [lighthouse](https://github.com/sigp/lighthouse)<br>
+An open-source Ethereum consensus client, written in Rust and maintained by Sigma Prime.
 - [proxyd](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
 Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
 ### [:graph](/graph)
