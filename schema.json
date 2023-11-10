@@ -2282,7 +2282,8 @@
                         "type": "object",
                         "required": [
                             "flavor",
-                            "mainnet"
+                            "mainnet",
+                            "chiado"
                         ],
                         "properties": {
                             "flavor": {
@@ -2294,6 +2295,32 @@
                             "mainnet": {
                                 "type": "object",
                                 "properties": {
+                                    "features": {
+                                        "type": "array",
+                                        "items": [
+                                            {
+                                                "$ref": "#/components/schemas/namespaces.gnosis.features.erigon"
+                                            },
+                                            {
+                                                "$ref": "#/components/schemas/namespaces.gnosis.features.lighthouse"
+                                            },
+                                            {
+                                                "$ref": "#/components/schemas/namespaces.gnosis.features.proxyd"
+                                            }
+                                        ],
+                                        "enum": [
+                                            [
+                                                "erigon",
+                                                "lighthouse",
+                                                "proxyd"
+                                            ]
+                                        ],
+                                        "default": [
+                                            "erigon",
+                                            "lighthouse",
+                                            "proxyd"
+                                        ]
+                                    },
                                     "targetNamespace": {
                                         "type": "string",
                                         "enum": [
@@ -2307,6 +2334,55 @@
                                     },
                                     {
                                         "required": [
+                                            "features",
+                                            "targetNamespace"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "chiado": {
+                                "type": "object",
+                                "properties": {
+                                    "features": {
+                                        "type": "array",
+                                        "items": [
+                                            {
+                                                "$ref": "#/components/schemas/namespaces.gnosis.features.erigon"
+                                            },
+                                            {
+                                                "$ref": "#/components/schemas/namespaces.gnosis.features.lighthouse"
+                                            },
+                                            {
+                                                "$ref": "#/components/schemas/namespaces.gnosis.features.proxyd"
+                                            }
+                                        ],
+                                        "enum": [
+                                            [
+                                                "erigon",
+                                                "lighthouse",
+                                                "proxyd"
+                                            ]
+                                        ],
+                                        "default": [
+                                            "erigon",
+                                            "lighthouse",
+                                            "proxyd"
+                                        ]
+                                    },
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "gnosis-chiado"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.gnosis.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "features",
                                             "targetNamespace"
                                         ]
                                     }
@@ -2317,15 +2393,17 @@
                     "releases": {
                         "type": "object",
                         "required": [
-                            "nethermind",
-                            "nimbus",
+                            "erigon",
+                            "lighthouse",
                             "proxyd"
                         ],
                         "properties": {
-                            "nethermind": {
+                            "erigon": {
                                 "type": "object",
                                 "required": [
-                                    "chart"
+                                    "chart",
+                                    "feature",
+                                    "labels"
                                 ],
                                 "properties": {
                                     "chart": {
@@ -2340,7 +2418,7 @@
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
-                                                    "https://github.com/NethermindEth/nethermind"
+                                                    "https://github.com/ledgerwatch/erigon"
                                                 ]
                                             },
                                             "repository": {
@@ -2352,23 +2430,49 @@
                                             "description": {
                                                 "type": "string",
                                                 "enum": [
-                                                    "Nethermind is a high-performance, highly configurable full Ethereum protocol execution client built on .NET that runs on Linux, Windows, and macOS, and supports Clique, Aura, and Ethash."
+                                                    "Erigon is an implementation of Ethereum (execution client with light client for consensus layer), on the efficiency frontier."
                                                 ]
                                             },
                                             "name": {
                                                 "type": "string",
                                                 "enum": [
-                                                    "nethermind"
+                                                    "erigon"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "feature": {
+                                        "$ref": "#/components/schemas/namespaces.gnosis.features.erigon"
+                                    },
+                                    "labels": {
+                                        "type": "object",
+                                        "required": [
+                                            "app.launchpad.graphops.xyz/layer",
+                                            "app.launchpad.graphops.xyz/component"
+                                        ],
+                                        "properties": {
+                                            "app.launchpad.graphops.xyz/layer": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "execution"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/component": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "erigon"
                                                 ]
                                             }
                                         }
                                     }
                                 }
                             },
-                            "nimbus": {
+                            "lighthouse": {
                                 "type": "object",
                                 "required": [
-                                    "chart"
+                                    "chart",
+                                    "feature",
+                                    "labels"
                                 ],
                                 "properties": {
                                     "chart": {
@@ -2383,7 +2487,7 @@
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
-                                                    "https://github.com/status-im/nimbus-eth2"
+                                                    "https://github.com/sigp/lighthouse"
                                                 ]
                                             },
                                             "repository": {
@@ -2395,13 +2499,37 @@
                                             "description": {
                                                 "type": "string",
                                                 "enum": [
-                                                    "Nimbus-eth2 is an extremely efficient consensus layer (eth2) client implementation."
+                                                    "An open-source Ethereum consensus client, written in Rust and maintained by Sigma Prime."
                                                 ]
                                             },
                                             "name": {
                                                 "type": "string",
                                                 "enum": [
-                                                    "nimbus"
+                                                    "lighthouse"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "feature": {
+                                        "$ref": "#/components/schemas/namespaces.gnosis.features.lighthouse"
+                                    },
+                                    "labels": {
+                                        "type": "object",
+                                        "required": [
+                                            "app.launchpad.graphops.xyz/layer",
+                                            "app.launchpad.graphops.xyz/component"
+                                        ],
+                                        "properties": {
+                                            "app.launchpad.graphops.xyz/layer": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "consensus"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/component": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "lighthouse"
                                                 ]
                                             }
                                         }
@@ -2411,7 +2539,9 @@
                             "proxyd": {
                                 "type": "object",
                                 "required": [
-                                    "chart"
+                                    "chart",
+                                    "feature",
+                                    "labels"
                                 ],
                                 "properties": {
                                     "chart": {
@@ -2442,6 +2572,30 @@
                                                 ]
                                             },
                                             "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "proxyd"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "feature": {
+                                        "$ref": "#/components/schemas/namespaces.gnosis.features.proxyd"
+                                    },
+                                    "labels": {
+                                        "type": "object",
+                                        "required": [
+                                            "app.launchpad.graphops.xyz/layer",
+                                            "app.launchpad.graphops.xyz/component"
+                                        ],
+                                        "properties": {
+                                            "app.launchpad.graphops.xyz/layer": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "proxy"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/component": {
                                                 "type": "string",
                                                 "enum": [
                                                     "proxyd"
@@ -2482,11 +2636,55 @@
             "namespaces.gnosis.defaults.common": {
                 "type": "object"
             },
+            "namespaces.gnosis.features": {
+                "description": "ethereum namespace features schema",
+                "type": "object"
+            },
+            "namespaces.gnosis.features.enum": {
+                "type": "string",
+                "enum": [
+                    "lighthouse",
+                    "erigon",
+                    "proxyd"
+                ]
+            },
+            "namespaces.gnosis.features.erigon": {
+                "description": "Use erigon as execution layer",
+                "type": "string",
+                "enum": [
+                    "erigon"
+                ]
+            },
+            "namespaces.gnosis.features.lighthouse": {
+                "description": "Use lighthouse as consensus layer",
+                "type": "string",
+                "enum": [
+                    "lighthouse"
+                ]
+            },
+            "namespaces.gnosis.features.proxyd": {
+                "description": "Use proxyd",
+                "type": "string",
+                "enum": [
+                    "proxyd"
+                ]
+            },
             "namespaces.gnosis.flavor": {
                 "type": "object"
             },
+            "namespaces.gnosis.flavor.chiado": {
+                "description": "suitable defaults for a chiado testnet archive node",
+                "type": "string",
+                "enum": [
+                    "chiado"
+                ]
+            },
             "namespaces.gnosis.flavor.enum": {
-                "$ref": "#/components/schemas/namespaces.gnosis.flavor.mainnet"
+                "type": "string",
+                "enum": [
+                    "mainnet",
+                    "chiado"
+                ]
             },
             "namespaces.gnosis.flavor.mainnet": {
                 "description": "suitable defaults for a mainnet archive node",
@@ -2528,6 +2726,25 @@
                     }
                 ]
             },
+            "namespaces.gnosis.scaling": {
+                "description": "gnosis scaling interface",
+                "type": "object",
+                "required": [
+                    "deployments"
+                ],
+                "properties": {
+                    "deployments": {
+                        "description": "number of independent stateful sets to deploy",
+                        "type": "integer",
+                        "minimum": 1,
+                        "default": 1
+                    },
+                    "startP2PPort": {
+                        "description": "A beggining port for the range to use in P2P NodePorts",
+                        "type": "integer"
+                    }
+                }
+            },
             "namespaces.gnosis.values": {
                 "description": "gnosis namespace values schema",
                 "type": "object",
@@ -2535,16 +2752,27 @@
                     "flavor": {
                         "$ref": "#/components/schemas/namespaces.gnosis.flavor.enum"
                     },
-                    "nethermind": {
-                        "$ref": "#/components/schemas/base.releaseValues"
-                    },
-                    "nimbus": {
-                        "$ref": "#/components/schemas/base.releaseValues"
-                    },
                     "targetNamespace": {
                         "description": "the default is gnosis-<flavor>",
                         "type": "string",
                         "default": "gnosis-mainnet"
+                    },
+                    "erigon": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
+                    "lighthouse": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
+                    "features": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/namespaces.gnosis.features.enum"
+                        },
+                        "default": [
+                            "erigon",
+                            "lighthouse",
+                            "proxyd"
+                        ]
                     },
                     "proxyd": {
                         "$ref": "#/components/schemas/base.releaseValues"
@@ -5158,7 +5386,8 @@
                                     "graph-node",
                                     "graph-network-indexer",
                                     "graph-toolbox",
-                                    "subgraph-radio"
+                                    "subgraph-radio",
+                                    "lighthouse"
                                 ],
                                 "properties": {
                                     "erigon": {
@@ -5472,6 +5701,27 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "Gossip about Subgraphs with other Graph Protocol Indexers"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "lighthouse": {
+                                        "type": "object",
+                                        "required": [
+                                            "url",
+                                            "description"
+                                        ],
+                                        "properties": {
+                                            "url": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "https://github.com/sigp/lighthouse"
+                                                ]
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "An open-source Ethereum consensus client, written in Rust and maintained by Sigma Prime."
                                                 ]
                                             }
                                         }

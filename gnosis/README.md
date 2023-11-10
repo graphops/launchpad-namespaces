@@ -7,10 +7,10 @@ This *Namespace* provides a suitable stack to operate Gnosis mainnet archive nod
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Releases
-- [nethermind](https://github.com/NethermindEth/nethermind)<br>
-Nethermind is a high-performance, highly configurable full Ethereum protocol execution client built on .NET that runs on Linux, Windows, and macOS, and supports Clique, Aura, and Ethash.
-- [nimbus](https://github.com/status-im/nimbus-eth2)<br>
-Nimbus-eth2 is an extremely efficient consensus layer (eth2) client implementation.
+- [erigon](https://github.com/ledgerwatch/erigon)<br>
+Erigon is an implementation of Ethereum (execution client with light client for consensus layer), on the efficiency frontier.
+- [lighthouse](https://github.com/sigp/lighthouse)<br>
+An open-source Ethereum consensus client, written in Rust and maintained by Sigma Prime.
 - [proxyd](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
 Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
 
@@ -109,25 +109,26 @@ helmfiles:
 | Key | Type | Default | Description |
 | :--- | :---: | :--- | :--- |
 annotations | object |  | Add annotations to release resources on this namespace |
-flavor | string |  | suitable defaults for a mainnet archive node |
+erigon | object |  |  |
+erigon.annotations | object |  | Add annotations to resources on this release |
+erigon.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
+erigon.chartVersion | string |  | Specify a specific chart version to use for this release |
+erigon.labels | object |  | Adds helmfile labels to this release |
+erigon.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+erigon.resourceLabels | object |  | Adds labels to resources on this release |
+erigon.values | (object *or* list of objects) |  | Pass values to the release helm chart |
+features | list of strings | [erigon, lighthouse, proxyd] | *enum of:&nbsp;&nbsp;(lighthouse \| erigon \| proxyd)* |
+flavor | string |  |  |
 kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
 labels | object |  | Adds helmfile labels to releases on this namespace |
-nethermind | object |  |  |
-nethermind.annotations | object |  | Add annotations to resources on this release |
-nethermind.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
-nethermind.chartVersion | string |  | Specify a specific chart version to use for this release |
-nethermind.labels | object |  | Adds helmfile labels to this release |
-nethermind.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
-nethermind.resourceLabels | object |  | Adds labels to resources on this release |
-nethermind.values | (object *or* list of objects) |  | Pass values to the release helm chart |
-nimbus | object |  |  |
-nimbus.annotations | object |  | Add annotations to resources on this release |
-nimbus.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
-nimbus.chartVersion | string |  | Specify a specific chart version to use for this release |
-nimbus.labels | object |  | Adds helmfile labels to this release |
-nimbus.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
-nimbus.resourceLabels | object |  | Adds labels to resources on this release |
-nimbus.values | (object *or* list of objects) |  | Pass values to the release helm chart |
+lighthouse | object |  |  |
+lighthouse.annotations | object |  | Add annotations to resources on this release |
+lighthouse.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
+lighthouse.chartVersion | string |  | Specify a specific chart version to use for this release |
+lighthouse.labels | object |  | Adds helmfile labels to this release |
+lighthouse.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+lighthouse.resourceLabels | object |  | Adds labels to resources on this release |
+lighthouse.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 proxyd | object |  |  |
 proxyd.annotations | object |  | Add annotations to resources on this release |
 proxyd.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |

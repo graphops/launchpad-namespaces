@@ -17,15 +17,42 @@ package LaunchpadNamespaces
 			// suitable defaults for a mainnet archive node
 			#mainnet: "mainnet"
 
-			#enum: ( #mainnet )
+			// suitable defaults for a chiado testnet archive node
+			#chiado: "chiado"
+
+			#enum: ( #mainnet | #chiado )
+		}
+
+		// ethereum namespace features schema
+		#features: {
+			// Use lighthouse as consensus layer
+			#lighthouse: "lighthouse"
+
+			// Use erigon as execution layer
+			#erigon: "erigon"
+
+			// Use proxyd
+			#proxyd: "proxyd"
+
+			#enum: ( #lighthouse | #erigon | #proxyd )
+		}
+
+		// gnosis scaling interface
+		#scaling: {
+			// number of independent stateful sets to deploy
+			deployments: *1 | ( int & >=1 )
+			// A beggining port for the range to use in P2P NodePorts
+			startP2PPort?: int
 		}
 
 		// gnosis namespace values schema
 		#values: #base.#values & {
-			flavor?: *"mainnet" | #flavor.#enum
+			flavor?: *defaults.flavor | #flavor.#enum
 
 			// the default is gnosis-<flavor>
 			targetNamespace?: *defaults["\(defaults.flavor)"].targetNamespace | string
+
+			features?: *defaults["\(defaults.flavor)"].features | [...#features.#enum]
 
 			// For overriding this release's values
 			for key, _ in releases {
@@ -47,24 +74,49 @@ package LaunchpadNamespaces
 
 			mainnet: {
 				#common
+				features: [#features.#erigon, #features.#lighthouse, #features.#proxyd]
 				targetNamespace: "gnosis-mainnet"
+			}
+
+			chiado: {
+				#common
+				features: [#features.#erigon, #features.#lighthouse, #features.#proxyd]
+				targetNamespace: "gnosis-chiado"
 			}
 		}
 
 		releases: {
-			nethermind: {
-				chart: {_repositories.graphops.charts.nethermind}
-				_template: {version: "0.4.2"}
+			erigon: {
+				chart: {_repositories.graphops.charts.erigon}
+				feature: #features.#erigon
+				labels: {
+					"app.launchpad.graphops.xyz/layer":     "execution"
+					"app.launchpad.graphops.xyz/component": "erigon"
+				}
+				_template: {version: "0.9.0"}
+				_scale: true
 			}
 
-			nimbus: {
-				chart: {_repositories.graphops.charts.nimbus}
-				_template: {version: "0.5.4"}
+			lighthouse: {
+				chart: {_repositories.graphops.charts.lighthouse}
+				feature: #features.#lighthouse
+				labels: {
+					"app.launchpad.graphops.xyz/layer":     "consensus"
+					"app.launchpad.graphops.xyz/component": "lighthouse"
+				}
+				_template: {version: "0.3.3-canary.5"}
+				_scale: true
 			}
 
 			proxyd: {
 				chart: {_repositories.graphops.charts.proxyd}
+				feature: #features.#proxyd
+				labels: {
+					"app.launchpad.graphops.xyz/layer":     "proxy"
+					"app.launchpad.graphops.xyz/component": "proxyd"
+				}
 				_template: {version: "0.4.0"}
+				_scale: false
 			}
 		}
 

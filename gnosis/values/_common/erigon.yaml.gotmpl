@@ -1,0 +1,36 @@
+{{ $scalingIndex := splitList "-" .Release.Name | last }}
+
+statefulNode:
+  jwt:
+    # Generate me with: openssl rand -hex 32
+    # Must match CL client jwt
+    fromLiteral: "XXX_CHANGEME_XXX"
+    # Instead specifying the JWT in plain text using fromLiteral, you can also reference an existing Kubernetes Secret
+    # existingSecret:
+    #   name: eth-goerli-jwt
+    #   key: jwt
+
+  # -- [PersistentVolumeClaimSpec](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.23/#persistentvolumeclaimspec-v1-core) for Erigon storage
+  volumeClaimSpec:
+    # -- The storage class to use when provisioning a persistent volume for Erigon
+    storageClassName: openebs-rawfile-localpv # change me if desired
+    resources:
+      requests:
+        storage: 1Ti
+
+{{- if (hasKey .Values.scaling "p2pStartPort") }}
+  p2pNodePort:
+    enabled: true
+    port: {{ add (mul (sub $scalingIndex 1) 2) .Values.scaling.p2pStartPort }}
+{{- end }}
+
+rpcdaemon:
+  enabled: true
+  replicaCount: 1 # scale me
+
+prometheus:
+  serviceMonitors:
+    enabled: true
+
+grafana:
+  dashboards: true
