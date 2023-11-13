@@ -52,12 +52,6 @@ package LaunchpadNamespaces
 					The old "classic" Arbitrum tech stack.
 					"""
 			}
-			avalanche: {
-				url: "https://github.com/ava-labs/avalanchego"
-				description: """
-					Node implementation for the Avalanche network - a blockchains platform with high throughput, and blazing fast transactions.
-					"""
-			}
 			nethermind: {
 				url: "https://github.com/NethermindEth/nethermind"
 				description: """
