@@ -111,7 +111,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/layer":     "execution"
 					"app.launchpad.graphops.xyz/component": "erigon"
 				}
-				_template: {version: "0.9.1-canary.1"}
+				_template: {version: "0.9.1-canary.3"}
 				_scale: true
 			}
 
@@ -122,7 +122,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/component": "nimbus"
 				}
 				feature: #features.#nimbus
-				_template: {version: "0.5.4"}
+				_template: {version: "0.5.5-canary.2"}
 				_scale: true
 			}
 
@@ -133,7 +133,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/component": "proxyd"
 				}
 				feature: #features.#proxyd
-				_template: {version: "0.4.0"}
+				_template: {version: "0.4.1-canary.2"}
 				_scale: false
 			}
 		}
