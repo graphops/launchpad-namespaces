@@ -55,12 +55,12 @@ package LaunchpadNamespaces
 		releases: {
 			"arbitrum-nitro": {
 				chart: {_repositories.graphops.charts["arbitrum-nitro"]}
-				_template: {version: "0.1.5-canary.5"}
+				_template: {version: "0.2.0"}
 			}
 
 			"arbitrum-classic": {
 				chart: {_repositories.graphops.charts["arbitrum-classic"]}
-				_template: {version: "0.1.4"}
+				_template: {version: "0.2.0"}
 			}
 
 			proxyd: {
