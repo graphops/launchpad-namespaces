@@ -169,7 +169,7 @@ templates:
     version: {{ .Values | get "lighthouse" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "lighthouse" dict | get "chartVersion" false ) ( .Values | get "lighthouse" dict | get "chartUrl" false ) )) }}
-    version: "0.3.3"
+    version: "0.4.0"
     {{- end }}
   proxyd:
     {{- if ( .Values | get "proxyd" dict | get "chartUrl" false ) }}
