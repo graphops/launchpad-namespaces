@@ -36,21 +36,27 @@ jobs:
         id: list-release-tags
         shell: bash
         run: |
+          set -e
           tags=()
           for namespace_name in ${{ steps.list-changed-namespaces.outputs.all_modified_files }}; do
+            set +e
             latest_version="$(git -c 'versionsort.suffix=-' tag --sort 'version:refname' --list "$namespace_name-*" | grep -E '.*-v?[[:digit:]]+.[[:digit:]]+.[[:digit:]]+$' | tail -n1)"
-
+            set -e
             if [ -z "$latest_version" ]; then
               latest_version="${namespace_name}-v0.0.0"
             fi
 
             next_patch="$(echo "$latest_version" | sed -E 's/(.*-)?v?([[:digit:]]+).([[:digit:]]+).([[:digit:]]+)/echo v\2.\3.$((\4 + 1))/e')"
+
+            set +e
             last_pre_tag="$(git -c 'versionsort.suffix=-' tag --sort 'version:refname' --list "$namespace_name-$next_patch-*" | tail -n1)"
+            set -e
             if [ -z "$last_pre_tag" ]; then
               index=1
             else
               index=$(echo "$last_pre_tag" | sed -E 's/(.*-)?v?[[:digit:]]+.[[:digit:]]+.[[:digit:]]+-canary.([[:digit:]]+)(#.*)?/echo $((\2 + 1))/e')
             fi
+
             next_tag="$namespace_name-$next_patch-canary.$index"
 
             tags+=("$next_tag")

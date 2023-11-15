@@ -111,7 +111,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/layer":     "execution"
 					"app.launchpad.graphops.xyz/component": "erigon"
 				}
-				_template: {version: "0.9.0"}
+				_template: {version: "0.9.1-canary.1"}
 				_scale: true
 			}
 
