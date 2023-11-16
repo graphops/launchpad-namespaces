@@ -112,7 +112,7 @@ kubeVersion: {{ .Values.kubeVersion }}
 
 
 {{- $_commonLabels := dict 
-`launchpad.graphops.xyz/namespace` `arbitrum`
+`launchpad.graphops.xyz/namespace` `arbitrum-one`
 }}
 
 {{- $_commonResourceLabels := dict 

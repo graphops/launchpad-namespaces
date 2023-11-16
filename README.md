@@ -30,7 +30,7 @@ As such:
 - Install *helmfile*, upstream guidance available here: [*Helmfile* Installation](https://github.com/helmfile/helmfile#installation)
 – Install *kustomize*, upstream guidance available here: [*Kustomize* Installation](https://kubectl.docs.kubernetes.io/installation/kustomize/). Although `launchpad–namespaces` doesn't explicitly use *kustomize*, it is a dependency for utilising *helmfile* features.
 
-Next, setup an `helmfile.yaml` file that makes use of the storage *Namespace* by creating it with the following contents:
+Next, setup an `helmfile.yaml` file that makes use of the Storage *Namespace* by creating it with the following contents:
 ```yaml
 helmfiles:
   - path: git::https://github.com/graphops/launchpad-namespaces.git@storage/helmfile.yaml?ref=storage-latest
@@ -157,7 +157,7 @@ One way to go about that would be to keep it in a git repository on some support
 
 The following namespaces are supported:
 
-### [:arbitrum](/arbitrum)
+### [:arbitrum-one](/arbitrum-one)
 This *Namespace* provides a suitable stack to operate Arbitrum One mainnet, görli and sepolia archive nodes.
 
 - [arbitrum-classic](https://github.com/OffchainLabs/arbitrum-classic)<br>

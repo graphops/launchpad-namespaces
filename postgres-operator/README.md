@@ -1,6 +1,6 @@
 
 
-# Postgres-Operator Namespace
+# Postgres Operator Namespace
 
 This *Namespace* extends your Kubernetes cluster with custom resources for easily creating and managing Postgres databases
 
@@ -29,7 +29,7 @@ As such:
 - Install *helmfile*, upstream guidance available here: [*Helmfile* Installation](https://github.com/helmfile/helmfile#installation)
 – Install *kustomize*, upstream guidance available here: [*Kustomize* Installation](https://kubectl.docs.kubernetes.io/installation/kustomize/). Although `launchpad–namespaces` doesn't explicitly use *kustomize*, it is a dependency for utilising *helmfile* features.
 
-Next, setup an `helmfile.yaml` file that makes use of the postgres-operator *Namespace* by creating it with the following contents:
+Next, setup an `helmfile.yaml` file that makes use of the Postgres Operator *Namespace* by creating it with the following contents:
 ```yaml
 helmfiles:
   - path: git::https://github.com/graphops/launchpad-namespaces.git@postgres-operator/helmfile.yaml?ref=postgres-operator-latest

@@ -1,10 +1,10 @@
-// schema:type=namespace schema:namespace=arbitrum_one
+// schema:type=namespace schema:namespace=arbitrum-one
 package LaunchpadNamespaces
 
 #namespaces: {
-	#arbitrum_one: {
+	#arbitrumOne: {
 		meta: {
-			name: "arbitrum"
+			name: "arbitrum-one"
 			url:  "https://github.com/graphops/launchpad-namespaces/\(name)"
 			description: """
 				This *Namespace* provides a suitable stack to operate Arbitrum One mainnet, görli and sepolia archive nodes.
@@ -24,7 +24,7 @@ package LaunchpadNamespaces
 			#enum: ( #mainnet | #goerli | #sepolia )
 		}
 
-		// arbitrum namespace features schema
+		// arbitrum-one namespace features schema
 		#features: {
 			// Deploy proxyd
 			#proxyd: "proxyd"
@@ -36,17 +36,17 @@ package LaunchpadNamespaces
 			#enum: ( #proxyd | #arbitrum_classic | #arbitrum_nitro )
 		}
 
-		// arbitrum scaling interface
+		// arbitrum-one scaling interface
 		#scaling: {
 			// number of independent stateful sets to deploy
 			deployments: *1 | ( int & >=1 )
 		}
 
-		// arbitrum namespace values schema
+		// arbitrum-one namespace values schema
 		#values: #base.#values & {
 			flavor?: *defaults.flavor | #flavor.#enum
 
-			// the default is arbitrum-<flavor>
+			// the default is arbitrum-one-<flavor>
 			targetNamespace?: *defaults["\(defaults.flavor)"].targetNamespace | string
 
 			features?: *defaults["\(defaults.flavor)"].features | [...#features.#enum]
@@ -63,10 +63,10 @@ package LaunchpadNamespaces
 			[string & "^(arbitrum-classic|arbitrum-nitro|proxyd)-[0-9]+$"]?: #base.#releaseValues
 		}
 
-		// arbitrum helmfile API
+		// arbitrum-one helmfile API
 		#helmfiles: #base.#helmfiles & {
-			path:    =~"*github.com/graphops/launchpad-namespaces.git@arbitrum/helmfile.yaml*"
-			values?: #arbitrum_one.#values | [...#arbitrum_one.#values]
+			path:    =~"*github.com/graphops/launchpad-namespaces.git@arbitrum-one/helmfile.yaml*"
+			values?: #arbitrumOne.#values | [...#arbitrumOne.#values]
 		}
 
 		defaults: {
@@ -120,7 +120,7 @@ package LaunchpadNamespaces
 
 		labels: {
 			#base.#labels
-			"launchpad.graphops.xyz/namespace": "arbitrum"
+			"launchpad.graphops.xyz/namespace": "arbitrum-one"
 		}
 
 		resourceLabels: {
@@ -130,4 +130,4 @@ package LaunchpadNamespaces
 }
 
 // instantiate namespace ojects for internal usage
-_namespaces: "arbitrum_one": _#namespaceTemplate & {_key: #namespaces.#arbitrum_one}
+_namespaces: "arbitrum-one": _#namespaceTemplate & {_key: #namespaces.#arbitrumOne}

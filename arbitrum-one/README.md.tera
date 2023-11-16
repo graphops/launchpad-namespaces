@@ -2,7 +2,7 @@
 {% import "sections.tera" as sections %}
 {% import "section.QuickStart.tera" as quickstart %}
 {% import "renderIndex.tera" as render %}
-{% set name = "arbitrum_one" %}
+{% set name = "arbitrum-one" %}
 
 {{ sections::graphopsTitle(namespace=name) }}
 

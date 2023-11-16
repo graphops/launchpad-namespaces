@@ -14,7 +14,7 @@ import (
 		#namespaces.#monitoring.#helmfiles |
 		#namespaces.#ingress.#helmfiles |
 		#namespaces.#ethereum.#helmfiles |
-		#namespaces.#arbitrum_one.#helmfiles |
+		#namespaces.#arbitrumOne.#helmfiles |
 		#namespaces.#gnosis.#helmfiles |
 		#namespaces.#celo.#helmfiles |
 		#namespaces.#graph.#helmfiles )]
