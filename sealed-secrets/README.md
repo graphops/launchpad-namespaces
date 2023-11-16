@@ -1,6 +1,6 @@
 
 
-# Sealed-Secrets Namespace
+# Sealed Secrets Namespace
 
 This *Namespace* provides a Kubernetes controller and tool for one-way encrypted Secrets
 
@@ -29,7 +29,7 @@ As such:
 - Install *helmfile*, upstream guidance available here: [*Helmfile* Installation](https://github.com/helmfile/helmfile#installation)
 – Install *kustomize*, upstream guidance available here: [*Kustomize* Installation](https://kubectl.docs.kubernetes.io/installation/kustomize/). Although `launchpad–namespaces` doesn't explicitly use *kustomize*, it is a dependency for utilising *helmfile* features.
 
-Next, setup an `helmfile.yaml` file that makes use of the sealed-secrets *Namespace* by creating it with the following contents:
+Next, setup an `helmfile.yaml` file that makes use of the Sealed Secrets *Namespace* by creating it with the following contents:
 ```yaml
 helmfiles:
   - path: git::https://github.com/graphops/launchpad-namespaces.git@sealed-secrets/helmfile.yaml?ref=sealed-secrets-latest

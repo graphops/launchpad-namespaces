@@ -2,7 +2,7 @@
     "openapi": "3.0.0",
     "info": {
         "description": "Launchpad Namespaces Schemas, by GraphOps (https://graphops.xyz)",
-        "title": "schema:type=namespace schema:namespace=arbitrum",
+        "title": "schema:type=namespace schema:namespace=arbitrum-one",
         "version": "no version"
     },
     "paths": {},
@@ -772,8 +772,7 @@
                 "description": "charts \"graphops.xyz/launchpad/namespaces:LaunchpadCharts\"",
                 "type": "object"
             },
-            "namespaces.arbitrum": {
-                "description": "Arbitrum *Namespace* values interface",
+            "namespaces.arbitrumOne": {
                 "type": "object",
                 "required": [
                     "meta",
@@ -794,19 +793,19 @@
                             "name": {
                                 "type": "string",
                                 "enum": [
-                                    "arbitrum"
+                                    "arbitrum-one"
                                 ]
                             },
                             "url": {
                                 "type": "string",
                                 "enum": [
-                                    "https://github.com/graphops/launchpad-namespaces/arbitrum"
+                                    "https://github.com/graphops/launchpad-namespaces/arbitrum-one"
                                 ]
                             },
                             "description": {
                                 "type": "string",
                                 "enum": [
-                                    "This *Namespace* provides a suitable stack to operate Arbitrum mainnet archive nodes."
+                                    "This *Namespace* provides a suitable stack to operate Arbitrum One mainnet, görli and sepolia archive nodes."
                                 ]
                             }
                         }
@@ -815,7 +814,9 @@
                         "type": "object",
                         "required": [
                             "flavor",
-                            "mainnet"
+                            "mainnet",
+                            "goerli",
+                            "sepolia"
                         ],
                         "properties": {
                             "flavor": {
@@ -830,17 +831,130 @@
                                     "targetNamespace": {
                                         "type": "string",
                                         "enum": [
-                                            "arbitrum-mainnet"
+                                            "arbitrum-one-mainnet"
+                                        ]
+                                    },
+                                    "features": {
+                                        "type": "array",
+                                        "items": [
+                                            {
+                                                "$ref": "#/components/schemas/namespaces.arbitrumOne.features.proxyd"
+                                            },
+                                            {
+                                                "$ref": "#/components/schemas/namespaces.arbitrumOne.features.arbitrum_classic"
+                                            },
+                                            {
+                                                "$ref": "#/components/schemas/namespaces.arbitrumOne.features.arbitrum_nitro"
+                                            }
+                                        ],
+                                        "enum": [
+                                            [
+                                                "proxyd",
+                                                "arbitrum_classic",
+                                                "arbitrum_nitro"
+                                            ]
+                                        ],
+                                        "default": [
+                                            "proxyd",
+                                            "arbitrum_classic",
+                                            "arbitrum_nitro"
                                         ]
                                     }
                                 },
                                 "allOf": [
                                     {
-                                        "$ref": "#/components/schemas/namespaces.arbitrum.defaults.common"
+                                        "$ref": "#/components/schemas/namespaces.arbitrumOne.defaults.common"
                                     },
                                     {
                                         "required": [
-                                            "targetNamespace"
+                                            "targetNamespace",
+                                            "features"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "goerli": {
+                                "type": "object",
+                                "properties": {
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "arbitrum-one-goerli"
+                                        ]
+                                    },
+                                    "features": {
+                                        "type": "array",
+                                        "items": [
+                                            {
+                                                "$ref": "#/components/schemas/namespaces.arbitrumOne.features.proxyd"
+                                            },
+                                            {
+                                                "$ref": "#/components/schemas/namespaces.arbitrumOne.features.arbitrum_nitro"
+                                            }
+                                        ],
+                                        "enum": [
+                                            [
+                                                "proxyd",
+                                                "arbitrum_nitro"
+                                            ]
+                                        ],
+                                        "default": [
+                                            "proxyd",
+                                            "arbitrum_nitro"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.arbitrumOne.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "targetNamespace",
+                                            "features"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "sepolia": {
+                                "type": "object",
+                                "properties": {
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "arbitrum-one-sepolia"
+                                        ]
+                                    },
+                                    "features": {
+                                        "type": "array",
+                                        "items": [
+                                            {
+                                                "$ref": "#/components/schemas/namespaces.arbitrumOne.features.proxyd"
+                                            },
+                                            {
+                                                "$ref": "#/components/schemas/namespaces.arbitrumOne.features.arbitrum_nitro"
+                                            }
+                                        ],
+                                        "enum": [
+                                            [
+                                                "proxyd",
+                                                "arbitrum_nitro"
+                                            ]
+                                        ],
+                                        "default": [
+                                            "proxyd",
+                                            "arbitrum_nitro"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.arbitrumOne.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "targetNamespace",
+                                            "features"
                                         ]
                                     }
                                 ]
@@ -858,7 +972,8 @@
                             "arbitrum-nitro": {
                                 "type": "object",
                                 "required": [
-                                    "chart"
+                                    "chart",
+                                    "feature"
                                 ],
                                 "properties": {
                                     "chart": {
@@ -895,13 +1010,17 @@
                                                 ]
                                             }
                                         }
+                                    },
+                                    "feature": {
+                                        "$ref": "#/components/schemas/namespaces.arbitrumOne.features.arbitrum_nitro"
                                     }
                                 }
                             },
                             "arbitrum-classic": {
                                 "type": "object",
                                 "required": [
-                                    "chart"
+                                    "chart",
+                                    "feature"
                                 ],
                                 "properties": {
                                     "chart": {
@@ -938,13 +1057,17 @@
                                                 ]
                                             }
                                         }
+                                    },
+                                    "feature": {
+                                        "$ref": "#/components/schemas/namespaces.arbitrumOne.features.arbitrum_classic"
                                     }
                                 }
                             },
                             "proxyd": {
                                 "type": "object",
                                 "required": [
-                                    "chart"
+                                    "chart",
+                                    "feature"
                                 ],
                                 "properties": {
                                     "chart": {
@@ -981,6 +1104,9 @@
                                                 ]
                                             }
                                         }
+                                    },
+                                    "feature": {
+                                        "$ref": "#/components/schemas/namespaces.arbitrumOne.features.proxyd"
                                     }
                                 }
                             }
@@ -992,7 +1118,7 @@
                             "launchpad.graphops.xyz/namespace": {
                                 "type": "string",
                                 "enum": [
-                                    "arbitrum"
+                                    "arbitrum-one"
                                 ]
                             }
                         },
@@ -1012,39 +1138,115 @@
                     }
                 }
             },
-            "namespaces.arbitrum.defaults.common": {
+            "namespaces.arbitrumOne.defaults.common": {
+                "type": "object",
+                "required": [
+                    "scaling"
+                ],
+                "properties": {
+                    "scaling": {
+                        "type": "object",
+                        "properties": {
+                            "deployments": {
+                                "type": "integer",
+                                "enum": [
+                                    1
+                                ]
+                            }
+                        },
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/namespaces.arbitrumOne.scaling"
+                            },
+                            {
+                                "required": [
+                                    "deployments"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            },
+            "namespaces.arbitrumOne.features": {
+                "description": "arbitrum-one namespace features schema",
                 "type": "object"
             },
-            "namespaces.arbitrum.flavor": {
-                "description": "Suitable defaults for a mainnet archive node",
+            "namespaces.arbitrumOne.features.arbitrum_classic": {
+                "type": "string",
+                "enum": [
+                    "arbitrum_classic"
+                ]
+            },
+            "namespaces.arbitrumOne.features.arbitrum_nitro": {
+                "type": "string",
+                "enum": [
+                    "arbitrum_nitro"
+                ]
+            },
+            "namespaces.arbitrumOne.features.enum": {
+                "type": "string",
+                "enum": [
+                    "proxyd",
+                    "arbitrum_classic",
+                    "arbitrum_nitro"
+                ]
+            },
+            "namespaces.arbitrumOne.features.proxyd": {
+                "description": "Deploy proxyd",
+                "type": "string",
+                "enum": [
+                    "proxyd"
+                ]
+            },
+            "namespaces.arbitrumOne.flavor": {
                 "type": "object"
             },
-            "namespaces.arbitrum.flavor.enum": {
-                "$ref": "#/components/schemas/namespaces.arbitrum.flavor.mainnet"
+            "namespaces.arbitrumOne.flavor.enum": {
+                "type": "string",
+                "enum": [
+                    "mainnet",
+                    "goerli",
+                    "sepolia"
+                ]
             },
-            "namespaces.arbitrum.flavor.mainnet": {
+            "namespaces.arbitrumOne.flavor.goerli": {
+                "description": "suitable defaults for an arbitrum-one-görli archive node",
+                "type": "string",
+                "enum": [
+                    "goerli"
+                ]
+            },
+            "namespaces.arbitrumOne.flavor.mainnet": {
+                "description": "suitable defaults for an arbitrum-one-mainnet archive node",
                 "type": "string",
                 "enum": [
                     "mainnet"
                 ]
             },
-            "namespaces.arbitrum.helmfiles": {
-                "description": "Arbitrum helmfile schema",
+            "namespaces.arbitrumOne.flavor.sepolia": {
+                "description": "suitable defaults for an arbitrum-one-sepolia archive node",
+                "type": "string",
+                "enum": [
+                    "sepolia"
+                ]
+            },
+            "namespaces.arbitrumOne.helmfiles": {
+                "description": "arbitrum-one helmfile API",
                 "type": "object",
                 "properties": {
                     "path": {
                         "type": "string",
-                        "pattern": "*github.com/graphops/launchpad-namespaces.git@arbitrum/helmfile.yaml*"
+                        "pattern": "*github.com/graphops/launchpad-namespaces.git@arbitrum-one/helmfile.yaml*"
                     },
                     "values": {
                         "oneOf": [
                             {
-                                "$ref": "#/components/schemas/namespaces.arbitrum.values"
+                                "$ref": "#/components/schemas/namespaces.arbitrumOne.values"
                             },
                             {
                                 "type": "array",
                                 "items": {
-                                    "$ref": "#/components/schemas/namespaces.arbitrum.values"
+                                    "$ref": "#/components/schemas/namespaces.arbitrumOne.values"
                                 }
                             }
                         ]
@@ -1061,12 +1263,43 @@
                     }
                 ]
             },
-            "namespaces.arbitrum.values": {
-                "description": "Arbitrum",
+            "namespaces.arbitrumOne.scaling": {
+                "description": "arbitrum-one scaling interface",
+                "type": "object",
+                "required": [
+                    "deployments"
+                ],
+                "properties": {
+                    "deployments": {
+                        "description": "number of independent stateful sets to deploy",
+                        "type": "integer",
+                        "minimum": 1,
+                        "default": 1
+                    }
+                }
+            },
+            "namespaces.arbitrumOne.values": {
+                "description": "arbitrum-one namespace values schema",
                 "type": "object",
                 "properties": {
                     "flavor": {
-                        "$ref": "#/components/schemas/namespaces.arbitrum.flavor.enum"
+                        "$ref": "#/components/schemas/namespaces.arbitrumOne.flavor.enum"
+                    },
+                    "targetNamespace": {
+                        "description": "the default is arbitrum-one-<flavor>",
+                        "type": "string",
+                        "default": "arbitrum-one-mainnet"
+                    },
+                    "features": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/namespaces.arbitrumOne.features.enum"
+                        },
+                        "default": [
+                            "proxyd",
+                            "arbitrum_classic",
+                            "arbitrum_nitro"
+                        ]
                     },
                     "arbitrum-nitro": {
                         "$ref": "#/components/schemas/base.releaseValues"
@@ -1074,10 +1307,8 @@
                     "arbitrum-classic": {
                         "$ref": "#/components/schemas/base.releaseValues"
                     },
-                    "targetNamespace": {
-                        "description": "the default is arbitrum-(flavor)",
-                        "type": "string",
-                        "default": "arbitrum-mainnet"
+                    "scaling": {
+                        "$ref": "#/components/schemas/namespaces.arbitrumOne.scaling"
                     },
                     "proxyd": {
                         "$ref": "#/components/schemas/base.releaseValues"
