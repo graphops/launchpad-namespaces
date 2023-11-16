@@ -104,7 +104,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/layer":     "consensus"
 					"app.launchpad.graphops.xyz/component": "lighthouse"
 				}
-				_template: {version: "0.3.3-canary.5"}
+				_template: {version: "0.4.0"}
 				_scale: true
 			}
 
