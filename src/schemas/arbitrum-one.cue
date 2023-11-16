@@ -1,28 +1,27 @@
-// schema:type=namespace schema:namespace=arbitrum
+// schema:type=namespace schema:namespace=arbitrum_one
 package LaunchpadNamespaces
 
 #namespaces: {
-	// Arbitrum *Namespace* values interface
-	#arbitrum: {
+	#arbitrum_one: {
 		meta: {
 			name: "arbitrum"
 			url:  "https://github.com/graphops/launchpad-namespaces/\(name)"
 			description: """
-				This *Namespace* provides a suitable stack to operate Arbitrum one, görli and sepolia archive nodes.
+				This *Namespace* provides a suitable stack to operate Arbitrum One mainnet, görli and sepolia archive nodes.
 				"""
 		}
 
 		#flavor: {
-			// suitable defaults for an arbitrum-one archive node
-			#one: "one"
+			// suitable defaults for an arbitrum-one-mainnet archive node
+			#mainnet: "mainnet"
 
-			// suitable defaults for an arbitrum-görli archive node
+			// suitable defaults for an arbitrum-one-görli archive node
 			#goerli: "goerli"
 
-			// suitable defaults for an arbitrum-sepolia archive node
+			// suitable defaults for an arbitrum-one-sepolia archive node
 			#sepolia: "sepolia"
 
-			#enum: ( #one | #goerli | #sepolia )
+			#enum: ( #mainnet | #goerli | #sepolia )
 		}
 
 		// arbitrum namespace features schema
@@ -67,31 +66,31 @@ package LaunchpadNamespaces
 		// arbitrum helmfile API
 		#helmfiles: #base.#helmfiles & {
 			path:    =~"*github.com/graphops/launchpad-namespaces.git@arbitrum/helmfile.yaml*"
-			values?: #arbitrum.#values | [...#arbitrum.#values]
+			values?: #arbitrum_one.#values | [...#arbitrum_one.#values]
 		}
 
 		defaults: {
-			flavor: "one"
+			flavor: "mainnet"
 
 			#common: {
 				scaling: #scaling & {deployments: 1}
 			}
 
-			one: {
+			mainnet: {
 				#common
-				targetNamespace: "arbitrum-one"
+				targetNamespace: "arbitrum-one-mainnet"
 				features: [#features.#proxyd, #features.#arbitrum_classic, #features.#arbitrum_nitro]
 			}
 
 			goerli: {
 				#common
-				targetNamespace: "arbitrum-goerli"
+				targetNamespace: "arbitrum-one-goerli"
 				features: [#features.#proxyd, #features.#arbitrum_nitro]
 			}
 
 			sepolia: {
 				#common
-				targetNamespace: "arbitrum-sepolia"
+				targetNamespace: "arbitrum-one-sepolia"
 				features: [#features.#proxyd, #features.#arbitrum_nitro]
 			}
 		}
@@ -131,4 +130,4 @@ package LaunchpadNamespaces
 }
 
 // instantiate namespace ojects for internal usage
-_namespaces: "arbitrum": _#namespaceTemplate & {_key: #namespaces.#arbitrum}
+_namespaces: "arbitrum_one": _#namespaceTemplate & {_key: #namespaces.#arbitrum_one}

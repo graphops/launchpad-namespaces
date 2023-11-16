@@ -1,8 +1,8 @@
 
 
-# Arbitrum Namespace
+# Arbitrum One Namespace
 
-This *Namespace* provides a suitable stack to operate Arbitrum one, görli and sepolia archive nodes.
+This *Namespace* provides a suitable stack to operate Arbitrum One mainnet, görli and sepolia archive nodes.
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
@@ -33,15 +33,15 @@ As such:
 - Install *helmfile*, upstream guidance available here: [*Helmfile* Installation](https://github.com/helmfile/helmfile#installation)
 – Install *kustomize*, upstream guidance available here: [*Kustomize* Installation](https://kubectl.docs.kubernetes.io/installation/kustomize/). Although `launchpad–namespaces` doesn't explicitly use *kustomize*, it is a dependency for utilising *helmfile* features.
 
-Next, setup an `helmfile.yaml` file that makes use of the arbitrum *Namespace* by creating it with the following contents:
+Next, setup an `helmfile.yaml` file that makes use of the arbitrum_one *Namespace* by creating it with the following contents:
 ```yaml
 helmfiles:
-  - path: git::https://github.com/graphops/launchpad-namespaces.git@arbitrum/helmfile.yaml?ref=arbitrum-latest
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@arbitrum_one/helmfile.yaml?ref=arbitrum_one-latest
     selectorsInherited: true
 ```
 
 > **Note**
-> On the path to the helmfile, you can use the query string's ref `(?ref=arbitrum-latest)` to track one of the release streams: `stable` and `canary`, pin to a specific version or just track a particular major or minor semantic version.
+> On the path to the helmfile, you can use the query string's ref `(?ref=arbitrum_one-latest)` to track one of the release streams: `stable` and `canary`, pin to a specific version or just track a particular major or minor semantic version.
 > For more on this, check the [*Updates*](/README.md#Updates) section
 
 This is a very minimalist helmfile but enough to get it done.
@@ -63,7 +63,7 @@ Answer 'y' and hopefully the installation will conclude successfully.
 To customize the configuration and deployment, you can pass values to override the default helmfile configuration like so:
 ```yaml
 helmfiles:
-  - path: git::https://github.com/graphops/launchpad-namespaces.git@arbitrum/helmfile.yaml?ref=arbitrum-latest
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@arbitrum_one/helmfile.yaml?ref=arbitrum_one-latest
     selectorsInherited: true
     values:
       targetNamespace: "i-choose-my-own-namespace"
@@ -77,7 +77,7 @@ where we add some labels to this *Namespace* releases, and set it to be deployed
 You can also easily override values for every release, like so:
 ```yaml
 helmfiles:
-  - path: git::https://github.com/graphops/launchpad-namespaces.git@arbitrum/helmfile.yaml?ref=arbitrum-latest
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@arbitrum_one/helmfile.yaml?ref=arbitrum_one-latest
     selectorsInherited: true
     values:
       targetNamespace: "i-choose-my-own-namespace"
@@ -94,10 +94,10 @@ Check out the *Namespaces* [list](/README.md#namespaces) below for release names
 To use multiple namespaces on the same cluster, just add more items to the helmfiles array like so:
 ```yaml
 helmfiles:
-  - path: git::https://github.com/graphops/launchpad-namespaces.git@arbitrum/helmfile.yaml?ref=arbitrum-latest
+  - path: git::https://github.com/graphops/launchpad-namespaces.git@arbitrum_one/helmfile.yaml?ref=arbitrum_one-latest
     selectorsInherited: true
     values:
-      <arbitrum values>
+      <arbitrum_one values>
   - path: git::https://github.com/graphops/launchpad-namespaces.git@<other namespace>/helmfile.yaml?ref=<other namespace>-latest
     selectorsInherited: true
     values:
@@ -140,7 +140,7 @@ proxyd.values | (object *or* list of objects) |  | Pass values to the release he
 resourceLabels | object |  | Adds labels to release resources on this namespace |
 scaling | object |  | arbitrum scaling interface |
 scaling.deployments | integer | 1 | number of independent stateful sets to deploy |
-targetNamespace | string | arbitrum-one | the default is arbitrum-<flavor> |
+targetNamespace | string | arbitrum-one-mainnet | the default is arbitrum-<flavor> |
 helmDefaults | object |  |  |
 helmDefaults.args | list of strings |  |  |
 helmDefaults.cleanupOnFail | boolean |  |  |

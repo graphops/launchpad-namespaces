@@ -1,6 +1,7 @@
 {%- import "utils.tera" as utils -%}
 {%- macro graphopsTitle(namespace) -%}
-{{ "# " ~ namespace ~ " Namespace" | title }}
+{%- set _namespace = namespace | lower | replace(from="_", to=" ") | title -%}
+{{ "# " ~ _namespace ~ " Namespace" | title }}
 {%- endmacro graphopsTitle -%}
 
 {%- macro graphopsBadges() -%}
