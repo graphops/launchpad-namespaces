@@ -28,7 +28,7 @@ proxyd:
             - key: app.launchpad.graphops.xyz/release # release name
               operator: In
               values:
-              - {{ `{{ .Release.Name }}` }}
+              - {{ .Release.Name }}
 
 prometheus:
   serviceMonitors:
