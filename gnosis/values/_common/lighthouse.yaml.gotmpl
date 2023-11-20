@@ -48,7 +48,7 @@ lighthouse:
               values:
               - blockchain
             - key: app.launchpad.graphops.xyz/chain
-              operator: NoIn
+              operator: NotIn
               values:
               - gnosis
             - key: app.launchpad.graphops.xyz/layer
@@ -92,7 +92,7 @@ lighthouse:
               values:
               - consensus
             - key: app.launchpad.graphops.xyz/chain
-              operator: NoIn
+              operator: NotIn
               values:
               - gnosis
       - weight: 10 # try to avoid scheduling with other consensus nodes for other networks
