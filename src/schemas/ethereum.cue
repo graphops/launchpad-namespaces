@@ -108,8 +108,10 @@ package LaunchpadNamespaces
 			erigon: {
 				chart: {_repositories.graphops.charts.erigon}
 				labels: {
-					"app.launchpad.graphops.xyz/layer":     "execution"
-					"app.launchpad.graphops.xyz/component": "erigon"
+					"app.launchpad.graphops.xyz/layer":        "execution"
+					"app.launchpad.graphops.xyz/release":      "{{ $release }}"
+					"app.launchpad.graphops.xyz/component":    "{{ $canonicalRelease }}"
+					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
 				}
 				_template: {version: "0.9.1-canary.1"}
 				_scale: true
@@ -118,8 +120,10 @@ package LaunchpadNamespaces
 			nimbus: {
 				chart: {_repositories.graphops.charts.nimbus}
 				labels: {
-					"app.launchpad.graphops.xyz/layer":     "consensus"
-					"app.launchpad.graphops.xyz/component": "nimbus"
+					"app.launchpad.graphops.xyz/layer":        "consensus"
+					"app.launchpad.graphops.xyz/release":      "{{ $release }}"
+					"app.launchpad.graphops.xyz/component":    "{{ $canonicalRelease }}"
+					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
 				}
 				feature: #features.#nimbus
 				_template: {version: "0.5.4"}
@@ -130,7 +134,8 @@ package LaunchpadNamespaces
 				chart: {_repositories.graphops.charts.proxyd}
 				labels: {
 					"app.launchpad.graphops.xyz/layer":     "proxy"
-					"app.launchpad.graphops.xyz/component": "proxyd"
+					"app.launchpad.graphops.xyz/release":   "{{ $release }}"
+					"app.launchpad.graphops.xyz/component": "{{ $canonicalRelease }}"
 				}
 				feature: #features.#proxyd
 				_template: {version: "0.4.0"}

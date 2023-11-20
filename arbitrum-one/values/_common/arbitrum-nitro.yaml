@@ -20,6 +20,74 @@ nitro:
 
   affinityPresets:
     antiAffinityByHostname: false
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - topologyKey: "kubernetes.io/hostname" # never run 2x execution nodes of the same namespace on same machine
+        namespaceSelector: {}
+        labelSelector:
+          matchExpressions:
+          - key: app.launchpad.graphops.xyz/type
+            operator: In
+            values:
+            - blockchain
+          - key: app.launchpad.graphops.xyz/chain
+            operator: In
+            values:
+            - arbitrum-one
+          - key: app.launchpad.graphops.xyz/network
+            operator: In
+            values:
+            - "{{ .Values.flavor }}"
+          - key: app.launchpad.graphops.xyz/component
+            operator: In
+            values:
+            - arbitrum-nitro
+          - key: app.launchpad.graphops.xyz/layer
+            operator: In
+            values:
+            - execution
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 60 # try to avoid scheduling with other deployments execution layer nodes of dif network
+          podAffinityTerm:
+            topologyKey: "kubernetes.io/hostname"
+            namespaceSelector: {}
+            labelSelector:
+              matchExpressions:
+              - key: app.launchpad.graphops.xyz/type
+                operator: In
+                values:
+                - blockchain
+              - key: app.launchpad.graphops.xyz/chain
+                operator: In
+                values:
+                - arbitrum-one
+              - key: app.launchpad.graphops.xyz/network
+                operator: NotIn
+                values:
+                - "{{ .Values.flavor }}"
+              - key: app.launchpad.graphops.xyz/layer
+                operator: In
+                values:
+                - execution
+        - weight: 60 # try to avoid scheduling with other deployments execution layer nodes of dif chain
+          podAffinityTerm:
+            topologyKey: "kubernetes.io/hostname"
+            namespaceSelector: {}
+            labelSelector:
+              matchExpressions:
+              - key: app.launchpad.graphops.xyz/type
+                operator: In
+                values:
+                - blockchain
+              - key: app.launchpad.graphops.xyz/chain
+                operator: NotIn
+                values:
+                - arbitrum-one
+              - key: app.launchpad.graphops.xyz/layer
+                operator: In
+                values:
+                - execution
 
 prometheus:
   serviceMonitors:

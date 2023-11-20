@@ -110,9 +110,12 @@ kubeVersion: {{ .Values.kubeVersion }}
 #set default namespace
 {{ $_defaultNamespace := .Values._defaults | get .Values.flavor | get "targetNamespace" }}
 
-
+{{ $_templatedValue_0 :=  .Values.flavor  }}
 {{- $_commonLabels := dict 
 `launchpad.graphops.xyz/namespace` `gnosis`
+`app.launchpad.graphops.xyz/type` `blockchain`
+`app.launchpad.graphops.xyz/chain` `gnosis`
+`app.launchpad.graphops.xyz/network` $_templatedValue_0
 }}
 
 {{- $_commonResourceLabels := dict 
@@ -197,7 +200,9 @@ releases:
     - template: "{{ $canonicalRelease }}"
     labels:
       app.launchpad.graphops.xyz/layer: execution
-      app.launchpad.graphops.xyz/component: erigon
+      app.launchpad.graphops.xyz/release: '{{ $release }}'
+      app.launchpad.graphops.xyz/component: '{{ $canonicalRelease }}'
+      app.launchpad.graphops.xyz/scalingIndex: '{{ $deploymentIndex }}'
       
     {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "labels" dict ) }}
       {{ $key }}: {{ $value }}
@@ -233,7 +238,9 @@ releases:
     - template: "{{ $canonicalRelease }}"
     labels:
       app.launchpad.graphops.xyz/layer: consensus
-      app.launchpad.graphops.xyz/component: lighthouse
+      app.launchpad.graphops.xyz/release: '{{ $release }}'
+      app.launchpad.graphops.xyz/component: '{{ $canonicalRelease }}'
+      app.launchpad.graphops.xyz/scalingIndex: '{{ $deploymentIndex }}'
       
     {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "labels" dict ) }}
       {{ $key }}: {{ $value }}
@@ -267,7 +274,8 @@ releases:
     - template: "{{ $canonicalRelease }}"
     labels:
       app.launchpad.graphops.xyz/layer: proxy
-      app.launchpad.graphops.xyz/component: proxyd
+      app.launchpad.graphops.xyz/release: '{{ $release }}'
+      app.launchpad.graphops.xyz/component: '{{ $canonicalRelease }}'
       
     {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "labels" dict ) }}
       {{ $key }}: {{ $value }}
