@@ -48,7 +48,7 @@ nimbus:
               values:
               - blockchain
             - key: app.launchpad.graphops.xyz/chain
-              operator: NoIn
+              operator: NotIn
               values:
               - ethereum
             - key: app.launchpad.graphops.xyz/layer
@@ -92,7 +92,7 @@ nimbus:
               values:
               - consensus
             - key: app.launchpad.graphops.xyz/chain
-              operator: NoIn
+              operator: NotIn
               values:
               - ethereum
       - weight: 10 # try to avoid scheduling with other consensus nodes for other networks
