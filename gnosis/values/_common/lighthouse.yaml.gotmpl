@@ -34,7 +34,7 @@ lighthouse:
             - key: app.launchpad.graphops.xyz/scalingIndex
               operator: In
               values:
-              - {{ $scalingIndex }}
+              - "{{ $scalingIndex }}"
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
       - weight: 25 # try to avoid scheduling with execution nodes for other chains
