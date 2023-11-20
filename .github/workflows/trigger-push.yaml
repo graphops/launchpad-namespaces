@@ -71,5 +71,7 @@ jobs:
 
   call-update-tags:
     uses: ./.github/workflows/update-tags.yaml
+    needs:
+      - find-tags-to-release
     permissions:
       contents: write
