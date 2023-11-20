@@ -1,20 +1,33 @@
-{{ $scalingIndex := splitList "-" .Release.Name | last }}
-nitro:
+arbitrum:
   config:
-    parentChainUrl: http://your-eth-mainnet-url:8545  ## changeme
-    classicUrl: http://arbitrum-classic-{{ $scalingIndex }}-0:8547
-    chain: 42161
+    parentChainUrl: http://your-eth-mainnet-url:8545  # change me
+
+  resources:
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    limits:
+      # cpu: 100m
+      memory: 50Gi
+
+  # -- [PersistentVolumeClaimSpec](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.23/#persistentvolumeclaimspec-v1-core) for Erigon storage
+  volumeClaimSpec:
+    # -- The storage class to use when provisioning a persistent volume for Erigon
+    storageClassName: openebs-rawfile-localpv # change me if desired
 
   restoreSnapshot:
+    # -- Enable initialising arbitrum state from a remote snapshot
     enabled: true
-    snapshotUrl: "https://snapshot.arbitrum.foundation/arb1/nitro-archive.tar"
+    # -- URL for snapshot to download and extract to restore state
+    snapshotUrl: https://snapshot.arbitrum.foundation/arb1/classic-archive.tar
 
   affinityPresets:
     antiAffinityByHostname: false
   affinity:
     podAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
-      - weight: 90 # try to schedule on same node as the classic node if possible
+      - weight: 90 # try to schedule on same node as the nitro node if possible
         podAffinityTerm:
           topologyKey: "kubernetes.io/hostname"
           labelSelector:
@@ -22,7 +35,7 @@ nitro:
             - key: app.launchpad.graphops.xyz/component # release name
               operator: In
               values:
-              - arbitrum-classic
+              - arbitrum-nitro
             - key: app.launchpad.graphops.xyz/scalingIndex
               operator: In
               values:
@@ -48,7 +61,7 @@ nitro:
           - key: app.launchpad.graphops.xyz/component
             operator: In
             values:
-            - arbitrum-nitro
+            - arbitrum-classic
           - key: app.launchpad.graphops.xyz/layer
             operator: In
             values:
@@ -94,3 +107,10 @@ nitro:
                 operator: In
                 values:
                 - execution
+
+prometheus:
+  serviceMonitors:
+    enabled: true
+
+grafana:
+  dashboards: false # needs fixing

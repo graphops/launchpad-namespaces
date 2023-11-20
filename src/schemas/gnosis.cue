@@ -90,8 +90,10 @@ package LaunchpadNamespaces
 				chart: {_repositories.graphops.charts.erigon}
 				feature: #features.#erigon
 				labels: {
-					"app.launchpad.graphops.xyz/layer":     "execution"
-					"app.launchpad.graphops.xyz/component": "erigon"
+					"app.launchpad.graphops.xyz/layer":        "execution"
+					"app.launchpad.graphops.xyz/release":      "{{ $release }}"
+					"app.launchpad.graphops.xyz/component":    "{{ $canonicalRelease }}"
+					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
 				}
 				_template: {version: "0.9.0"}
 				_scale: true
@@ -101,8 +103,10 @@ package LaunchpadNamespaces
 				chart: {_repositories.graphops.charts.lighthouse}
 				feature: #features.#lighthouse
 				labels: {
-					"app.launchpad.graphops.xyz/layer":     "consensus"
-					"app.launchpad.graphops.xyz/component": "lighthouse"
+					"app.launchpad.graphops.xyz/layer":        "consensus"
+					"app.launchpad.graphops.xyz/release":      "{{ $release }}"
+					"app.launchpad.graphops.xyz/component":    "{{ $canonicalRelease }}"
+					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
 				}
 				_template: {version: "0.4.0"}
 				_scale: true
@@ -113,7 +117,8 @@ package LaunchpadNamespaces
 				feature: #features.#proxyd
 				labels: {
 					"app.launchpad.graphops.xyz/layer":     "proxy"
-					"app.launchpad.graphops.xyz/component": "proxyd"
+					"app.launchpad.graphops.xyz/release":   "{{ $release }}"
+					"app.launchpad.graphops.xyz/component": "{{ $canonicalRelease }}"
 				}
 				_template: {version: "0.4.0"}
 				_scale: false
@@ -122,7 +127,10 @@ package LaunchpadNamespaces
 
 		labels: {
 			#base.#labels
-			"launchpad.graphops.xyz/namespace": "gnosis"
+			"launchpad.graphops.xyz/namespace":   "gnosis"
+			"app.launchpad.graphops.xyz/type":    "blockchain"
+			"app.launchpad.graphops.xyz/chain":   "gnosis"
+			"app.launchpad.graphops.xyz/network": "{{ .Values.flavor }}"
 		}
 
 		resourceLabels: {

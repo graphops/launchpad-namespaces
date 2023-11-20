@@ -98,6 +98,12 @@ package LaunchpadNamespaces
 		releases: {
 			"arbitrum-nitro": {
 				chart: {_repositories.graphops.charts["arbitrum-nitro"]}
+				labels: {
+					"app.launchpad.graphops.xyz/layer":        "execution"
+					"app.launchpad.graphops.xyz/release":      "{{ $release }}"
+					"app.launchpad.graphops.xyz/component":    "{{ $canonicalRelease }}"
+					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
+				}
 				feature: #features.#arbitrum_nitro
 				_template: {version: "0.2.0"}
 				_scale: true
@@ -105,6 +111,12 @@ package LaunchpadNamespaces
 
 			"arbitrum-classic": {
 				chart: {_repositories.graphops.charts["arbitrum-classic"]}
+				labels: {
+					"app.launchpad.graphops.xyz/layer":        "execution"
+					"app.launchpad.graphops.xyz/release":      "{{ $release }}"
+					"app.launchpad.graphops.xyz/component":    "{{ $canonicalRelease }}"
+					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
+				}
 				feature: #features.#arbitrum_classic
 				_template: {version: "0.2.0"}
 				_scale: true
@@ -112,6 +124,11 @@ package LaunchpadNamespaces
 
 			proxyd: {
 				chart: {_repositories.graphops.charts.proxyd}
+				labels: {
+					"app.launchpad.graphops.xyz/layer":     "proxy"
+					"app.launchpad.graphops.xyz/component": "{{ $canonicalRelease }}"
+					"app.launchpad.graphops.xyz/release":   "{{ $release }}"
+				}
 				feature: #features.#proxyd
 				_template: {version: "0.4.0"}
 				_scale: false
@@ -120,7 +137,10 @@ package LaunchpadNamespaces
 
 		labels: {
 			#base.#labels
-			"launchpad.graphops.xyz/namespace": "arbitrum-one"
+			"launchpad.graphops.xyz/namespace":   "arbitrum-one"
+			"app.launchpad.graphops.xyz/type":    "blockchain"
+			"app.launchpad.graphops.xyz/chain":   "arbitrum-one"
+			"app.launchpad.graphops.xyz/network": "{{ .Values.flavor }}"
 		}
 
 		resourceLabels: {

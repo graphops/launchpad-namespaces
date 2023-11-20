@@ -110,9 +110,12 @@ kubeVersion: {{ .Values.kubeVersion }}
 #set default namespace
 {{ $_defaultNamespace := .Values._defaults | get .Values.flavor | get "targetNamespace" }}
 
-
+{{ $_templatedValue_0 :=  .Values.flavor  }}
 {{- $_commonLabels := dict 
 `launchpad.graphops.xyz/namespace` `arbitrum-one`
+`app.launchpad.graphops.xyz/type` `blockchain`
+`app.launchpad.graphops.xyz/chain` `arbitrum-one`
+`app.launchpad.graphops.xyz/network` $_templatedValue_0
 }}
 
 {{- $_commonResourceLabels := dict 
@@ -196,6 +199,11 @@ releases:
     inherit:
     - template: "{{ $canonicalRelease }}"
     labels:
+      app.launchpad.graphops.xyz/layer: execution
+      app.launchpad.graphops.xyz/release: '{{ $release }}'
+      app.launchpad.graphops.xyz/component: '{{ $canonicalRelease }}'
+      app.launchpad.graphops.xyz/scalingIndex: '{{ $deploymentIndex }}'
+      
     {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "labels" dict ) }}
       {{ $key }}: {{ $value }}
     {{- $_ := set $_releaseResourceLabels $key $value }}
@@ -229,6 +237,11 @@ releases:
     inherit:
     - template: "{{ $canonicalRelease }}"
     labels:
+      app.launchpad.graphops.xyz/layer: execution
+      app.launchpad.graphops.xyz/release: '{{ $release }}'
+      app.launchpad.graphops.xyz/component: '{{ $canonicalRelease }}'
+      app.launchpad.graphops.xyz/scalingIndex: '{{ $deploymentIndex }}'
+      
     {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "labels" dict ) }}
       {{ $key }}: {{ $value }}
     {{- $_ := set $_releaseResourceLabels $key $value }}
@@ -260,6 +273,10 @@ releases:
     inherit:
     - template: "{{ $canonicalRelease }}"
     labels:
+      app.launchpad.graphops.xyz/layer: proxy
+      app.launchpad.graphops.xyz/component: '{{ $canonicalRelease }}'
+      app.launchpad.graphops.xyz/release: '{{ $release }}'
+      
     {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "labels" dict ) }}
       {{ $key }}: {{ $value }}
     {{- $_ := set $_releaseResourceLabels $key $value }}
