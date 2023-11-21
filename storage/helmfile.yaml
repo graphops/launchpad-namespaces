@@ -188,7 +188,7 @@ templates:
     version: {{ .Values | get "openebs-zfs-localpv" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "openebs-zfs-localpv" dict | get "chartVersion" false ) ( .Values | get "openebs-zfs-localpv" dict | get "chartUrl" false ) )) }}
-    version: "2.3.1"
+    version: "2.3.2"
     {{- end }}
   openebs-zfs-storageclass:
     {{- if ( .Values | get "openebs-zfs-storageclass" dict | get "chartUrl" false ) }}
