@@ -15,6 +15,8 @@ jobs:
     uses: ./.github/workflows/update-tags.yaml
     permissions:
       contents: write
+    secrets:
+      LABELS_TOKEN: "${{ secrets.LABELS_TOKEN }}"
 
   release:
     uses: ./.github/workflows/make-release.yaml
