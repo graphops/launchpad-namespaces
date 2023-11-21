@@ -75,3 +75,5 @@ jobs:
       - find-tags-to-release
     permissions:
       contents: write
+    secrets:
+      LABELS_TOKEN: "${{ secrets.LABELS_TOKEN }}"
