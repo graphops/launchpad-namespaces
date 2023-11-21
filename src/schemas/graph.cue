@@ -73,6 +73,11 @@ package LaunchpadNamespaces
 				#common
 				targetNamespace: "graph-arbitrum-one"
 			}
+
+			"arbitrum-one-sepolia": {
+				#common
+				targetNamespace: "graph-arbitrum-one-sepolia"
+			}
 		}
 
 		releases: {

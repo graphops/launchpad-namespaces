@@ -3000,6 +3000,27 @@
                                         ]
                                     }
                                 ]
+                            },
+                            "arbitrum-one-sepolia": {
+                                "type": "object",
+                                "properties": {
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "graph-arbitrum-one-sepolia"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.graph.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "targetNamespace"
+                                        ]
+                                    }
+                                ]
                             }
                         }
                     },
