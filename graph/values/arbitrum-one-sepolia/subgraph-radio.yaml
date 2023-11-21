@@ -1,5 +1,5 @@
 env:
   GRAPHCAST_NETWORK: "mainnet"
-  REGISTRY_SUBGRAPH: https://api.thegraph.com/subgraphs/name/hopeyen/graphcast-registry-arb-one
-  NETWORK_SUBGRAPH: https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-arbitrum
+  REGISTRY_SUBGRAPH: https://api.thegraph.com/subgraphs/name/hopeyen/graphcast-registry-arb-se
+  NETWORK_SUBGRAPH: https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-arbitrum-sepolia
 

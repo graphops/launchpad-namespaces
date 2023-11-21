@@ -18,6 +18,9 @@ package LaunchpadNamespaces
 			// suitable defaults for an arbitrum-one indexer
 			#arbitrum_one: "arbitrum-one"
 
+			// suitable defaults for an arbitrum-one indexer
+			#arbitrum_one_sepolia: "arbitrum-one-sepolia"
+
 			// suitable defaults for a mainnet indexer
 			#mainnet: "mainnet"
 

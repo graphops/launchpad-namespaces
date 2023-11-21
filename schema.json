@@ -3352,6 +3352,13 @@
                     "arbitrum-one"
                 ]
             },
+            "namespaces.graph.flavor.arbitrum_one_sepolia": {
+                "description": "suitable defaults for an arbitrum-one indexer",
+                "type": "string",
+                "enum": [
+                    "arbitrum-one-sepolia"
+                ]
+            },
             "namespaces.graph.flavor.enum": {
                 "type": "string",
                 "enum": [

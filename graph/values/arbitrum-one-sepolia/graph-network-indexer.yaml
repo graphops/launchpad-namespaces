@@ -9,9 +9,9 @@ indexerDefaults:
 indexerAgent:
   config:
     collect-receipts-endpoint: "https://gateway-arbitrum.network.thegraph.com/collect-receipts"
-    network-subgraph-deployment: "??" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
-    epoch-subgraph-endpoint: "https://api.thegraph.com/subgraphs/name/graphprotocol/arbitrum-epoch-block-oracle" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
+    network-subgraph-deployment: "QmT8UDGK7zKd2u2NQZwhLYHdA4KM55QsivkE3ouCuX6fEj" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
+    epoch-subgraph-endpoint: "https://api.thegraph.com/subgraphs/name/graphprotocol/arbitrum-sepolia-ebo" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
 
 indexerService:
   config:
-    client-signer-address: "??" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
+    client-signer-address: "0xe1EC4339019eC9628438F8755f847e3023e4ff9c" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md

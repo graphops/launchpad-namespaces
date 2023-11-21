@@ -14,5 +14,5 @@ chains:
     shard: primary
     provider:
       - label: arbitrum-one
-        url: http://proxyd-proxyd.arbitrum-one:8545
+        url: http://proxyd-proxyd.arbitrum-one-sepolia:8545
         features: [archive, traces]
