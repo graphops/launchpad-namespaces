@@ -139,6 +139,8 @@ templates:
     {{- if (not (or ( .Values | get "postgres-operator" dict | get "chartVersion" false ) ( .Values | get "postgres-operator" dict | get "chartUrl" false ) )) }}
     version: "1.10.1"
     {{- end }}
+    disableValidationOnInstall: true
+  
 releases:
   {{- $canonicalRelease := "postgres-operator" }}
   {{- $release := "postgres-operator" }}

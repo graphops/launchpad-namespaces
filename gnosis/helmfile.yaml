@@ -160,6 +160,7 @@ templates:
     {{- if (not (or ( .Values | get "erigon" dict | get "chartVersion" false ) ( .Values | get "erigon" dict | get "chartUrl" false ) )) }}
     version: "0.9.1"
     {{- end }}
+  
   lighthouse:
     {{- if ( .Values | get "lighthouse" dict | get "chartUrl" false ) }}
     chart: {{ .Values | get "lighthouse" | get "chartUrl" }}
@@ -174,6 +175,7 @@ templates:
     {{- if (not (or ( .Values | get "lighthouse" dict | get "chartVersion" false ) ( .Values | get "lighthouse" dict | get "chartUrl" false ) )) }}
     version: "0.4.0"
     {{- end }}
+  
   proxyd:
     {{- if ( .Values | get "proxyd" dict | get "chartUrl" false ) }}
     chart: {{ .Values | get "proxyd" | get "chartUrl" }}
@@ -188,6 +190,7 @@ templates:
     {{- if (not (or ( .Values | get "proxyd" dict | get "chartVersion" false ) ( .Values | get "proxyd" dict | get "chartUrl" false ) )) }}
     version: "0.4.0"
     {{- end }}
+  
 releases:
   {{ if has "erigon" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "erigon" }}

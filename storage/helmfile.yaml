@@ -148,6 +148,7 @@ templates:
     {{- if (not (or ( .Values | get "openebs" dict | get "chartVersion" false ) ( .Values | get "openebs" dict | get "chartUrl" false ) )) }}
     version: "3.9.0"
     {{- end }}
+  
   openebs-rawfile-localpv:
     {{- if ( .Values | get "openebs-rawfile-localpv" dict | get "chartUrl" false ) }}
     chart: {{ .Values | get "openebs-rawfile-localpv" | get "chartUrl" }}
@@ -162,6 +163,7 @@ templates:
     {{- if (not (or ( .Values | get "openebs-rawfile-localpv" dict | get "chartVersion" false ) ( .Values | get "openebs-rawfile-localpv" dict | get "chartUrl" false ) )) }}
     version: "0.8.3"
     {{- end }}
+  
   openebs-rawfile-storageclass:
     {{- if ( .Values | get "openebs-rawfile-storageclass" dict | get "chartUrl" false ) }}
     chart: {{ .Values | get "openebs-rawfile-storageclass" | get "chartUrl" }}
@@ -176,6 +178,7 @@ templates:
     {{- if (not (or ( .Values | get "openebs-rawfile-storageclass" dict | get "chartVersion" false ) ( .Values | get "openebs-rawfile-storageclass" dict | get "chartUrl" false ) )) }}
     version: "0.2.0"
     {{- end }}
+  
   openebs-zfs-localpv:
     {{- if ( .Values | get "openebs-zfs-localpv" dict | get "chartUrl" false ) }}
     chart: {{ .Values | get "openebs-zfs-localpv" | get "chartUrl" }}
@@ -190,6 +193,7 @@ templates:
     {{- if (not (or ( .Values | get "openebs-zfs-localpv" dict | get "chartVersion" false ) ( .Values | get "openebs-zfs-localpv" dict | get "chartUrl" false ) )) }}
     version: "2.3.2"
     {{- end }}
+  
   openebs-zfs-storageclass:
     {{- if ( .Values | get "openebs-zfs-storageclass" dict | get "chartUrl" false ) }}
     chart: {{ .Values | get "openebs-zfs-storageclass" | get "chartUrl" }}
@@ -204,6 +208,7 @@ templates:
     {{- if (not (or ( .Values | get "openebs-zfs-storageclass" dict | get "chartVersion" false ) ( .Values | get "openebs-zfs-storageclass" dict | get "chartUrl" false ) )) }}
     version: "0.2.0"
     {{- end }}
+  
   openebs-zfs-snapclass:
     {{- if ( .Values | get "openebs-zfs-snapclass" dict | get "chartUrl" false ) }}
     chart: {{ .Values | get "openebs-zfs-snapclass" | get "chartUrl" }}
@@ -218,6 +223,7 @@ templates:
     {{- if (not (or ( .Values | get "openebs-zfs-snapclass" dict | get "chartVersion" false ) ( .Values | get "openebs-zfs-snapclass" dict | get "chartUrl" false ) )) }}
     version: "0.2.0"
     {{- end }}
+  
 releases:
   {{- $canonicalRelease := "openebs" }}
   {{- $release := "openebs" }}

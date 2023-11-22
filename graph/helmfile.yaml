@@ -148,6 +148,7 @@ templates:
     {{- if (not (or ( .Values | get "graph-node" dict | get "chartVersion" false ) ( .Values | get "graph-node" dict | get "chartUrl" false ) )) }}
     version: "0.3.4"
     {{- end }}
+  
   graph-network-indexer:
     {{- if ( .Values | get "graph-network-indexer" dict | get "chartUrl" false ) }}
     chart: {{ .Values | get "graph-network-indexer" | get "chartUrl" }}
@@ -162,6 +163,7 @@ templates:
     {{- if (not (or ( .Values | get "graph-network-indexer" dict | get "chartVersion" false ) ( .Values | get "graph-network-indexer" dict | get "chartUrl" false ) )) }}
     version: "0.2.3"
     {{- end }}
+  
   graph-toolbox:
     {{- if ( .Values | get "graph-toolbox" dict | get "chartUrl" false ) }}
     chart: {{ .Values | get "graph-toolbox" | get "chartUrl" }}
@@ -176,6 +178,7 @@ templates:
     {{- if (not (or ( .Values | get "graph-toolbox" dict | get "chartVersion" false ) ( .Values | get "graph-toolbox" dict | get "chartUrl" false ) )) }}
     version: "0.1.0"
     {{- end }}
+  
   graph-operator-mnemonic:
     {{- if ( .Values | get "graph-operator-mnemonic" dict | get "chartUrl" false ) }}
     chart: {{ .Values | get "graph-operator-mnemonic" | get "chartUrl" }}
@@ -190,6 +193,7 @@ templates:
     {{- if (not (or ( .Values | get "graph-operator-mnemonic" dict | get "chartVersion" false ) ( .Values | get "graph-operator-mnemonic" dict | get "chartUrl" false ) )) }}
     version: "0.2.0"
     {{- end }}
+  
   graph-database:
     {{- if ( .Values | get "graph-database" dict | get "chartUrl" false ) }}
     chart: {{ .Values | get "graph-database" | get "chartUrl" }}
@@ -204,6 +208,7 @@ templates:
     {{- if (not (or ( .Values | get "graph-database" dict | get "chartVersion" false ) ( .Values | get "graph-database" dict | get "chartUrl" false ) )) }}
     version: "0.2.0"
     {{- end }}
+  
   subgraph-radio:
     {{- if ( .Values | get "subgraph-radio" dict | get "chartUrl" false ) }}
     chart: {{ .Values | get "subgraph-radio" | get "chartUrl" }}
@@ -218,6 +223,7 @@ templates:
     {{- if (not (or ( .Values | get "subgraph-radio" dict | get "chartVersion" false ) ( .Values | get "subgraph-radio" dict | get "chartUrl" false ) )) }}
     version: "0.2.5-canary.2"
     {{- end }}
+  
 releases:
   {{- $canonicalRelease := "graph-node" }}
   {{- $release := "graph-node" }}

@@ -148,6 +148,7 @@ templates:
     {{- if (not (or ( .Values | get "ingress-nginx" dict | get "chartVersion" false ) ( .Values | get "ingress-nginx" dict | get "chartUrl" false ) )) }}
     version: "4.8.3"
     {{- end }}
+  
   cert-manager:
     {{- if ( .Values | get "cert-manager" dict | get "chartUrl" false ) }}
     chart: {{ .Values | get "cert-manager" | get "chartUrl" }}
@@ -162,6 +163,8 @@ templates:
     {{- if (not (or ( .Values | get "cert-manager" dict | get "chartVersion" false ) ( .Values | get "cert-manager" dict | get "chartUrl" false ) )) }}
     version: "v1.13.2"
     {{- end }}
+    disableValidationOnInstall: true
+  
   cert-manager-resources:
     {{- if ( .Values | get "cert-manager-resources" dict | get "chartUrl" false ) }}
     chart: {{ .Values | get "cert-manager-resources" | get "chartUrl" }}
@@ -176,6 +179,7 @@ templates:
     {{- if (not (or ( .Values | get "cert-manager-resources" dict | get "chartVersion" false ) ( .Values | get "cert-manager-resources" dict | get "chartUrl" false ) )) }}
     version: "0.2.0"
     {{- end }}
+  
 releases:
   {{ if has "ingress" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "ingress-nginx" }}

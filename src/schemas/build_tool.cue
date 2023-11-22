@@ -6,6 +6,7 @@ import (
 	"encoding/yaml"
 	"strings"
 	"list"
+	"struct"
 )
 
 command: {
@@ -424,17 +425,17 @@ _helmfile: {
 						  {{- end }}
 						"""
 
-					if yaml.Marshal(_template) != "{}" {
+					if struct.MinFields(_template, 1) {
 						template: """
 							  \(yaml.Marshal(_template))
 							"""
 					}
 
-					if yaml.Marshal(_template) == "{}" {
+					if ! struct.MinFields(_template, 1) {
 						template: ""
 					}
 
-					out: strings.Join([releaseBlock, version, releaseBlock["\(releaseName)"].template], "\n")
+					out: strings.Join([releaseBlock, version, _releaseBlock["\(releaseName)"].template], "\n")
 				}
 			}
 
