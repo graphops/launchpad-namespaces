@@ -26,7 +26,7 @@ nitro:
             - key: app.launchpad.graphops.xyz/scalingIndex
               operator: In
               values:
-              - {{ $scalingIndex }}
+              - "{{ $scalingIndex }}"
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
       - topologyKey: "kubernetes.io/hostname" # never run 2x execution nodes of the same namespace on same machine
