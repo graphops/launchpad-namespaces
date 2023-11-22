@@ -432,7 +432,7 @@ _helmfile: {
 							"""
 					}
 
-					if !struct.MinFields(_template, 1) {
+					if ! struct.MinFields(_template, 1) {
 						template: ""
 					}
 
