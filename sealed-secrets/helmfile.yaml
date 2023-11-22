@@ -139,6 +139,7 @@ templates:
     {{- if (not (or ( .Values | get "sealed-secrets" dict | get "chartVersion" false ) ( .Values | get "sealed-secrets" dict | get "chartUrl" false ) )) }}
     version: "2.13.3"
     {{- end }}
+  
 releases:
   {{- $canonicalRelease := "sealed-secrets" }}
   {{- $release := "sealed-secrets" }}

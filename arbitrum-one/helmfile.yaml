@@ -160,6 +160,7 @@ templates:
     {{- if (not (or ( .Values | get "arbitrum-nitro" dict | get "chartVersion" false ) ( .Values | get "arbitrum-nitro" dict | get "chartUrl" false ) )) }}
     version: "0.2.0"
     {{- end }}
+  
   arbitrum-classic:
     {{- if ( .Values | get "arbitrum-classic" dict | get "chartUrl" false ) }}
     chart: {{ .Values | get "arbitrum-classic" | get "chartUrl" }}
@@ -174,6 +175,7 @@ templates:
     {{- if (not (or ( .Values | get "arbitrum-classic" dict | get "chartVersion" false ) ( .Values | get "arbitrum-classic" dict | get "chartUrl" false ) )) }}
     version: "0.2.0"
     {{- end }}
+  
   proxyd:
     {{- if ( .Values | get "proxyd" dict | get "chartUrl" false ) }}
     chart: {{ .Values | get "proxyd" | get "chartUrl" }}
@@ -188,6 +190,7 @@ templates:
     {{- if (not (or ( .Values | get "proxyd" dict | get "chartVersion" false ) ( .Values | get "proxyd" dict | get "chartUrl" false ) )) }}
     version: "0.4.0"
     {{- end }}
+  
 releases:
   {{ if has "arbitrum_nitro" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "arbitrum-nitro" }}

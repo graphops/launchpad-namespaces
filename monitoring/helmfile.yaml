@@ -148,6 +148,8 @@ templates:
     {{- if (not (or ( .Values | get "kube-prometheus-stack" dict | get "chartVersion" false ) ( .Values | get "kube-prometheus-stack" dict | get "chartUrl" false ) )) }}
     version: "54.2.1"
     {{- end }}
+    disableValidationOnInstall: true
+  
   node-problem-detector:
     {{- if ( .Values | get "node-problem-detector" dict | get "chartUrl" false ) }}
     chart: {{ .Values | get "node-problem-detector" | get "chartUrl" }}
@@ -162,6 +164,7 @@ templates:
     {{- if (not (or ( .Values | get "node-problem-detector" dict | get "chartVersion" false ) ( .Values | get "node-problem-detector" dict | get "chartUrl" false ) )) }}
     version: "2.3.11"
     {{- end }}
+  
   loki:
     {{- if ( .Values | get "loki" dict | get "chartUrl" false ) }}
     chart: {{ .Values | get "loki" | get "chartUrl" }}
@@ -176,6 +179,7 @@ templates:
     {{- if (not (or ( .Values | get "loki" dict | get "chartVersion" false ) ( .Values | get "loki" dict | get "chartUrl" false ) )) }}
     version: "0.76.1"
     {{- end }}
+  
   promtail:
     {{- if ( .Values | get "promtail" dict | get "chartUrl" false ) }}
     chart: {{ .Values | get "promtail" | get "chartUrl" }}
@@ -190,6 +194,7 @@ templates:
     {{- if (not (or ( .Values | get "promtail" dict | get "chartVersion" false ) ( .Values | get "promtail" dict | get "chartUrl" false ) )) }}
     version: "6.15.3"
     {{- end }}
+  
 releases:
   {{ if has "metrics" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "kube-prometheus-stack" }}
