@@ -1,7 +1,10 @@
 ingester:
   persistence:
     enabled: true # change to true to enable
-    storageClass: openebs-rawfile-localpv
+    claims:
+      - name: data
+        size: 20Gi
+        storageClass: openebs-rawfile-localpv  # change if not using openebs-rawfile-localpv
 
 loki:
   auth_enabled: false
