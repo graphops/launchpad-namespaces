@@ -48,15 +48,15 @@ jobs:
           declare -A tagmap
           for namespace in $(echo '${{ steps.namespaces.outputs.namespaces }}' | jq -r '. | @sh' | tr -d "'"); do
             declare -a major_vers minor_vers
-            for major_ver in $(git -c 'versionsrot.suffix=-' tag --sort 'version:refname' --list "${namespace}-v*" | grep -E '.*-v[[:digit:]]+.[[:digit:]]+.[[:digit:]]+' | sed -E 's/.*-v?([0-9]+)(.*)/\1/g' | sort -V | uniq); do
+            for major_ver in $(git -c 'versionsrot.suffix=-' tag --sort 'version:refname' --list "${namespace}-v*" | grep -E '.*-v[[:digit:]]+.[[:digit:]]+.[[:digit:]]+$' | sed -E 's/.*-v([0-9]+)(.*)/\1/g' | sort -V | uniq); do
               major_vers+=($major_ver)
             done
-            for minor_ver in $(git -c 'versionsrot.suffix=-' tag --sort 'version:refname' --list "${namespace}-v*" | grep -E '.*-v?[[:digit:]]+.[[:digit:]]+.[[:digit:]]+' | sed -E 's/.*-v?([0-9]+\.[0-9]+)(.*)/\1/g' | sort -V | uniq); do
+            for minor_ver in $(git -c 'versionsrot.suffix=-' tag --sort 'version:refname' --list "${namespace}-v*" | grep -E '.*-v[[:digit:]]+.[[:digit:]]+.[[:digit:]]+$' | sed -E 's/.*-v([0-9]+\.[0-9]+)(.*)/\1/g' | sort -V | uniq); do
               minor_vers+=($minor_ver)
             done
 
             for minor_ver in ${minor_vers[@]}; do
-              latest_patch_tag=$(git -c 'versionsrot.suffix=-' tag --sort 'version:refname' --list "${namespace}-v*" | grep -E '.*-v?[[:digit:]]+.[[:digit:]]+.[[:digit:]]+' | grep -E ".*-v?${minor_ver}.*" | sort -V | uniq | tail -n 1)
+              latest_patch_tag=$(git -c 'versionsrot.suffix=-' tag --sort 'version:refname' --list "${namespace}-v*" | grep -E '.*-v[[:digit:]]+.[[:digit:]]+.[[:digit:]]+$' | grep -E ".*-v${minor_ver}.*" | sort -V | uniq | tail -n 1)
               tagmap["${namespace}-v${minor_ver}"]="${latest_patch_tag}"
             done
 
@@ -65,14 +65,14 @@ jobs:
               tagmap["${namespace}-v${major_ver}"]=${tagmap["${namespace}-v${latest_minor}"]}
             done
 
-            latest_stable=$(git -c 'versionsrot.suffix=-' tag --sort 'version:refname' --list "${namespace}-v*" | grep -E '.*-v?[[:digit:]]+.[[:digit:]]+.[[:digit:]]+' | sort -V | tail -n 1)
+            latest_stable=$(git -c 'versionsrot.suffix=-' tag --sort 'version:refname' --list "${namespace}-v*" | grep -E '.*-v[[:digit:]]+.[[:digit:]]+.[[:digit:]]+$' | sort -V | tail -n 1)
 
             if [ -n "${latest_stable}" ]; then
               tagmap["${namespace}-latest"]="${latest_stable}"
               tagmap["${namespace}-stable/latest"]="${latest_stable}"
             fi
 
-            latest_canary=$(git -c 'versionsrot.suffix=-' tag --sort 'version:refname' --list "${namespace}-v*" | grep -E '.*-v?[[:digit:]]+.[[:digit:]]+.[[:digit:]]+(-.*)?' | sort -V | tail -n 1)
+            latest_canary=$(git -c 'versionsrot.suffix=-' tag --sort 'version:refname' --list "${namespace}-v*" | grep -E '.*-v[[:digit:]]+.[[:digit:]]+.[[:digit:]]+(-.*)?' | sort -V | tail -n 1)
             if [ -n "${latest_canary}" ]; then
               tagmap["${namespace}-canary/latest"]="${latest_canary}"
             fi
