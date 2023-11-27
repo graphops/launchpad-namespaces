@@ -11,16 +11,18 @@ on:
       - '*-v[0-9]+.[0-9]+.[0-9]+'
 
 jobs:
-  call-update-tags:
-    uses: ./.github/workflows/update-tags.yaml
-    permissions:
-      contents: write
-    secrets:
-      LABELS_TOKEN: "${{ secrets.LABELS_TOKEN }}"
-
   release:
     uses: ./.github/workflows/make-release.yaml
     permissions:
       contents: write
     with:
       tag: ${{ github.ref_name }}
+
+  call-update-tags:
+    uses: ./.github/workflows/update-tags.yaml
+    needs:
+      - release
+    permissions:
+      contents: write
+    secrets:
+      LABELS_TOKEN: "${{ secrets.LABELS_TOKEN }}"
