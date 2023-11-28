@@ -144,7 +144,7 @@ templates:
 releases:
   {{- $canonicalRelease := "postgres-operator" }}
   {{- $release := "postgres-operator" }}
-  
+  {{- $_releaseResourceLabels := dict }}
   {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:

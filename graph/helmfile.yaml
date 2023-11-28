@@ -227,7 +227,7 @@ templates:
 releases:
   {{- $canonicalRelease := "graph-node" }}
   {{- $release := "graph-node" }}
-  
+  {{- $_releaseResourceLabels := dict }}
   {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
@@ -257,7 +257,7 @@ releases:
   
   {{- $canonicalRelease := "graph-network-indexer" }}
   {{- $release := "graph-network-indexer" }}
-  
+  {{- $_releaseResourceLabels := dict }}
   {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
@@ -287,7 +287,7 @@ releases:
   
   {{- $canonicalRelease := "graph-toolbox" }}
   {{- $release := "graph-toolbox" }}
-  
+  {{- $_releaseResourceLabels := dict }}
   {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
@@ -317,7 +317,7 @@ releases:
   
   {{- $canonicalRelease := "graph-operator-mnemonic" }}
   {{- $release := "graph-operator-mnemonic" }}
-  
+  {{- $_releaseResourceLabels := dict }}
   {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
@@ -347,7 +347,7 @@ releases:
   
   {{- $canonicalRelease := "graph-database" }}
   {{- $release := "graph-database" }}
-  
+  {{- $_releaseResourceLabels := dict }}
   {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
@@ -378,7 +378,7 @@ releases:
   {{ if has "subgraph-radio" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "subgraph-radio" }}
   {{- $release := "subgraph-radio" }}
-  
+  {{- $_releaseResourceLabels := dict }}
   {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:

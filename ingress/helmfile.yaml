@@ -184,7 +184,7 @@ releases:
   {{ if has "ingress" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "ingress-nginx" }}
   {{- $release := "ingress-nginx" }}
-  
+  {{- $_releaseResourceLabels := dict }}
   {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
@@ -216,7 +216,7 @@ releases:
   {{ if has "cert-manager" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "cert-manager" }}
   {{- $release := "cert-manager" }}
-  
+  {{- $_releaseResourceLabels := dict }}
   {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
@@ -248,7 +248,7 @@ releases:
   {{ if has "cert-manager" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "cert-manager-resources" }}
   {{- $release := "cert-manager-resources" }}
-  
+  {{- $_releaseResourceLabels := dict }}
   {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:

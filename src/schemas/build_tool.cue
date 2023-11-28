@@ -454,7 +454,7 @@ _helmfile: {
 	_#release: {
 		this=_releaseName:      string
 		_releaseLabels:         *"labels:" | string
-		_releaseResourceLabels: *"" | string
+		_releaseResourceLabels: *"{{- $_releaseResourceLabels := dict }}" | string
 		scale=_scale:           *false | bool
 
 		_blocks: {

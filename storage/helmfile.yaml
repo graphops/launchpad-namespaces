@@ -227,7 +227,7 @@ templates:
 releases:
   {{- $canonicalRelease := "openebs" }}
   {{- $release := "openebs" }}
-  
+  {{- $_releaseResourceLabels := dict }}
   {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
@@ -258,7 +258,7 @@ releases:
   {{ if has "rawfile" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "openebs-rawfile-localpv" }}
   {{- $release := "openebs-rawfile-localpv" }}
-  
+  {{- $_releaseResourceLabels := dict }}
   {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
@@ -290,7 +290,7 @@ releases:
   {{ if has "rawfile" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "openebs-rawfile-storageclass" }}
   {{- $release := "openebs-rawfile-storageclass" }}
-  
+  {{- $_releaseResourceLabels := dict }}
   {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
@@ -322,7 +322,7 @@ releases:
   {{ if has "zfs" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "openebs-zfs-localpv" }}
   {{- $release := "openebs-zfs-localpv" }}
-  
+  {{- $_releaseResourceLabels := dict }}
   {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
@@ -354,7 +354,7 @@ releases:
   {{ if has "zfs" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "openebs-zfs-storageclass" }}
   {{- $release := "openebs-zfs-storageclass" }}
-  
+  {{- $_releaseResourceLabels := dict }}
   {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
@@ -386,7 +386,7 @@ releases:
   {{ if has "zfs" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "openebs-zfs-snapclass" }}
   {{- $release := "openebs-zfs-snapclass" }}
-  
+  {{- $_releaseResourceLabels := dict }}
   {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
