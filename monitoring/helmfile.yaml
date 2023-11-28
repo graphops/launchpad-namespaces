@@ -199,7 +199,8 @@ releases:
   {{ if has "metrics" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "kube-prometheus-stack" }}
   {{- $release := "kube-prometheus-stack" }}
-    {{- $_releaseResourceLabels := deepCopy $_commonResourceLabels }}
+  
+  {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
     - template: "{{ $canonicalRelease }}"
@@ -230,7 +231,8 @@ releases:
   {{ if has "metrics" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "node-problem-detector" }}
   {{- $release := "node-problem-detector" }}
-    {{- $_releaseResourceLabels := deepCopy $_commonResourceLabels }}
+  
+  {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
     - template: "{{ $canonicalRelease }}"
@@ -261,7 +263,8 @@ releases:
   {{ if has "logs" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "loki" }}
   {{- $release := "loki" }}
-    {{- $_releaseResourceLabels := deepCopy $_commonResourceLabels }}
+  
+  {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
     - template: "{{ $canonicalRelease }}"
@@ -292,7 +295,8 @@ releases:
   {{ if has "logs" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "promtail" }}
   {{- $release := "promtail" }}
-    {{- $_releaseResourceLabels := deepCopy $_commonResourceLabels }}
+  
+  {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
     - template: "{{ $canonicalRelease }}"

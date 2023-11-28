@@ -227,7 +227,8 @@ templates:
 releases:
   {{- $canonicalRelease := "graph-node" }}
   {{- $release := "graph-node" }}
-    {{- $_releaseResourceLabels := deepCopy $_commonResourceLabels }}
+  
+  {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
     - template: "{{ $canonicalRelease }}"
@@ -256,7 +257,8 @@ releases:
   
   {{- $canonicalRelease := "graph-network-indexer" }}
   {{- $release := "graph-network-indexer" }}
-    {{- $_releaseResourceLabels := deepCopy $_commonResourceLabels }}
+  
+  {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
     - template: "{{ $canonicalRelease }}"
@@ -285,7 +287,8 @@ releases:
   
   {{- $canonicalRelease := "graph-toolbox" }}
   {{- $release := "graph-toolbox" }}
-    {{- $_releaseResourceLabels := deepCopy $_commonResourceLabels }}
+  
+  {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
     - template: "{{ $canonicalRelease }}"
@@ -314,7 +317,8 @@ releases:
   
   {{- $canonicalRelease := "graph-operator-mnemonic" }}
   {{- $release := "graph-operator-mnemonic" }}
-    {{- $_releaseResourceLabels := deepCopy $_commonResourceLabels }}
+  
+  {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
     - template: "{{ $canonicalRelease }}"
@@ -343,7 +347,8 @@ releases:
   
   {{- $canonicalRelease := "graph-database" }}
   {{- $release := "graph-database" }}
-    {{- $_releaseResourceLabels := deepCopy $_commonResourceLabels }}
+  
+  {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
     - template: "{{ $canonicalRelease }}"
@@ -373,7 +378,8 @@ releases:
   {{ if has "subgraph-radio" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "subgraph-radio" }}
   {{- $release := "subgraph-radio" }}
-    {{- $_releaseResourceLabels := deepCopy $_commonResourceLabels }}
+  
+  {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
     - template: "{{ $canonicalRelease }}"

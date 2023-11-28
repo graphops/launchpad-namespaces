@@ -177,7 +177,8 @@ templates:
 releases:
   {{- $canonicalRelease := "erigon" }}
   {{- $release := "erigon" }}
-    {{- $_releaseResourceLabels := deepCopy $_commonResourceLabels }}
+  
+  {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
     - template: "{{ $canonicalRelease }}"
@@ -206,7 +207,8 @@ releases:
   
   {{- $canonicalRelease := "heimdall" }}
   {{- $release := "heimdall" }}
-    {{- $_releaseResourceLabels := deepCopy $_commonResourceLabels }}
+  
+  {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
     - template: "{{ $canonicalRelease }}"
@@ -235,7 +237,8 @@ releases:
   
   {{- $canonicalRelease := "proxyd" }}
   {{- $release := "proxyd" }}
-    {{- $_releaseResourceLabels := deepCopy $_commonResourceLabels }}
+  
+  {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
     - template: "{{ $canonicalRelease }}"
