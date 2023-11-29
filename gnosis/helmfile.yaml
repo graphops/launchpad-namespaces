@@ -110,7 +110,7 @@ kubeVersion: {{ .Values.kubeVersion }}
 #set default namespace
 {{ $_defaultNamespace := .Values._defaults | get .Values.flavor | get "targetNamespace" }}
 
-{{ $_templatedValue_0 :=  .Values.flavor  }}
+{{- $_templatedValue_0 :=  .Values.flavor  }}
 {{- $_commonLabels := dict 
 `launchpad.graphops.xyz/namespace` `gnosis`
 `app.launchpad.graphops.xyz/type` `blockchain`
@@ -197,7 +197,16 @@ releases:
   {{- range $index := until .Values.scaling.deployments }}
   {{- $deploymentIndex := (add . 1) }}
   {{- $release := (printf "%s%v" "erigon-" $deploymentIndex) }}
-    {{- $_releaseResourceLabels := deepCopy $_commonResourceLabels }}
+  {{- $_templatedValue_0 :=  $canonicalRelease  }}
+  {{- $_templatedValue_1 :=  $release  }}
+  {{- $_templatedValue_2 :=  $deploymentIndex  }}
+  {{- $_releaseResourceLabels := dict 
+  `app.launchpad.graphops.xyz/layer` `execution`
+  `app.launchpad.graphops.xyz/component` $_templatedValue_0
+  `app.launchpad.graphops.xyz/release` $_templatedValue_1
+  `app.launchpad.graphops.xyz/scalingIndex` $_templatedValue_2
+  }}
+  {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
     - template: "{{ $canonicalRelease }}"
@@ -235,7 +244,16 @@ releases:
   {{- range $index := until .Values.scaling.deployments }}
   {{- $deploymentIndex := (add . 1) }}
   {{- $release := (printf "%s%v" "lighthouse-" $deploymentIndex) }}
-    {{- $_releaseResourceLabels := deepCopy $_commonResourceLabels }}
+  {{- $_templatedValue_0 :=  $canonicalRelease  }}
+  {{- $_templatedValue_1 :=  $release  }}
+  {{- $_templatedValue_2 :=  $deploymentIndex  }}
+  {{- $_releaseResourceLabels := dict 
+  `app.launchpad.graphops.xyz/layer` `consensus`
+  `app.launchpad.graphops.xyz/component` $_templatedValue_0
+  `app.launchpad.graphops.xyz/release` $_templatedValue_1
+  `app.launchpad.graphops.xyz/scalingIndex` $_templatedValue_2
+  }}
+  {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
     - template: "{{ $canonicalRelease }}"
@@ -271,7 +289,14 @@ releases:
   {{ if has "proxyd" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "proxyd" }}
   {{- $release := "proxyd" }}
-    {{- $_releaseResourceLabels := deepCopy $_commonResourceLabels }}
+  {{- $_templatedValue_0 :=  $canonicalRelease  }}
+  {{- $_templatedValue_1 :=  $release  }}
+  {{- $_releaseResourceLabels := dict 
+  `app.launchpad.graphops.xyz/layer` `proxy`
+  `app.launchpad.graphops.xyz/component` $_templatedValue_0
+  `app.launchpad.graphops.xyz/release` $_templatedValue_1
+  }}
+  {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
     - template: "{{ $canonicalRelease }}"

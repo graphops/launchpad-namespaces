@@ -306,8 +306,9 @@ _helmfile: {
 
 		_elementsStrings: [ for key, value in _elements {"\(value)"}]
 
-		_variableDecl: [ for index, key in _templatedElementsList let value = strings.Replace(strings.Replace(_struct[key], "{{", "", 1), "}}", "", 1) {"""
-		{{ $_templatedValue_\(index) := \(value) }}
+		_variableDecl: [ for index, key in _templatedElementsList let value = strings.Replace(strings.Replace(_struct[key], "{{", "", 1), "}}", "", 1) {
+			"""
+		{{- $_templatedValue_\(index) := \(value) }}
 		"""
 		}]
 
@@ -431,7 +432,7 @@ _helmfile: {
 							"""
 					}
 
-					if ! struct.MinFields(_template, 1) {
+					if !struct.MinFields(_template, 1) {
 						template: ""
 					}
 
@@ -451,13 +452,15 @@ _helmfile: {
 	}
 
 	_#release: {
-		this=_releaseName: string
-		_releaseLabels:    *"labels:" | string
-		scale=_scale:      *false | bool
+		this=_releaseName:      string
+		_releaseLabels:         *"labels:" | string
+		_releaseResourceLabels: *"{{- $_releaseResourceLabels := dict }}" | string
+		scale=_scale:           *false | bool
 
 		_blocks: {
 			release: """
-				  {{- $_releaseResourceLabels := deepCopy $_commonResourceLabels }}
+				\(_releaseResourceLabels)
+				{{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
 				- name: "{{ $release }}"
 				  inherit:
 				  - template: "{{ $canonicalRelease }}"
@@ -528,9 +531,35 @@ _helmfile: {
 			if release.labels != _|_ {
 				_props: {"\(releaseName)": {#properties: {
 					...
-					_labels:         yaml.Marshal({for key, value in release.labels {"\(key)": value}})
-					_indentedLabels: strings.Join([ for line in strings.Split(_labels, "\n") {"    " + line}], "\n")
+					_labels: {for key, value in release.labels {"\(key)": value}}
+					_yamlLabels:     yaml.Marshal(_labels)
+					_indentedLabels: strings.Join([ for line in strings.Split(_yamlLabels, "\n") {"    " + line}], "\n")
 					_releaseLabels:  strings.Join(["labels:", _indentedLabels], "\n")
+				}}}
+			}
+
+			if release.labels != _|_ || release.resourceLabels != _|_ {
+				_props: {"\(releaseName)": {#properties: {
+					...
+					_baseResourceLabels: {...}
+					if release.labels != _|_ {
+						_baseResourceLabels: {for key, value in release.labels {"\(key)": value}}
+					}
+					_#baseResourceLabels: {
+						for key, value in _baseResourceLabels {"\(key)": *value | string}
+					}
+					_resourceLabels: {...}
+					if release.resourceLabels != _|_ {
+						_resourceLabels: _#baseResourceLabels & {for key, value in release.resourceLabels {"\(key)": value}}
+					}
+					if release.resourceLabels == _|_ {
+						_resourceLabels: _#baseResourceLabels
+					}
+					_sReleaseResourceLabels: _#tplStructToDict & {
+						_dictName: "_releaseResourceLabels"
+						_struct:   _resourceLabels
+					}
+					_releaseResourceLabels: _sReleaseResourceLabels.out
 				}}}
 			}
 

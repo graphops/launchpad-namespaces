@@ -162,7 +162,8 @@ templates:
 releases:
   {{- $canonicalRelease := "celo" }}
   {{- $release := "celo" }}
-    {{- $_releaseResourceLabels := deepCopy $_commonResourceLabels }}
+  {{- $_releaseResourceLabels := dict }}
+  {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
     - template: "{{ $canonicalRelease }}"
@@ -191,7 +192,8 @@ releases:
   
   {{- $canonicalRelease := "proxyd" }}
   {{- $release := "proxyd" }}
-    {{- $_releaseResourceLabels := deepCopy $_commonResourceLabels }}
+  {{- $_releaseResourceLabels := dict }}
+  {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
     - template: "{{ $canonicalRelease }}"
