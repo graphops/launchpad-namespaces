@@ -45,7 +45,8 @@
         "branchName": 'renovate/{{{replace "src/schemas/(.*)\.cue" "$1" packageFile}}}',
         "prTitle": 'ci(deps): update {{{replace "src/schemas/(.*)\.cue" "$1" packageFile}}} dependencies',
         "automerge": true,
-        "ignoreTests": true
+        "ignoreTests": true,
+        "recreateClosed": true
       },
 
       // **auto-genereated** section, don't edit manually
