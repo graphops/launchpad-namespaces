@@ -119,7 +119,7 @@ lighthouse:
               - "{{ .Values.flavor }}"
 
 {{- if (hasKey .Values.scaling "p2pStartPort") }}
-  p2pNodePort:
+  p2pHostPort:
     enabled: true
     port: {{ add (mul (sub $scalingIndex 1) 3) .Values.scaling.p2pStartPort 1 }}
 {{- end }}
