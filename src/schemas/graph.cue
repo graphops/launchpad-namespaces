@@ -95,7 +95,7 @@ package LaunchpadNamespaces
 
 			"graph-network-indexer": {
 				chart: {_repositories.graphops.charts["graph-network-indexer"]}
-				_template: {version: "0.2.3"}
+				_template: {version: "0.2.4"}
 			}
 
 			"graph-toolbox": {
