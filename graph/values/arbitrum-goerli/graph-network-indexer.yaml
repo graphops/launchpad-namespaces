@@ -7,6 +7,11 @@ indexerDefaults:
     network-subgraph-endpoint: "https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-arbitrum-goerli"
 
 indexerAgent:
+  # fixes "Network Subgraph is not fresh" error https://github.com/graphprotocol/indexer/pull/799
+  # TODO: choosing higher than upstream recommendation because reportedly 60 is still low, potentially tune in the future.
+  env:
+    INDEXER_AGENT_SUBGRAPH_MAX_BLOCK_DISTANCE: 100
+    INDEXER_AGENT_SUBGRAPH_FRESHNESS_SLEEP_MILLISECONDS: 10000
   config:
     collect-receipts-endpoint: "https://gateway-testnet-arbitrum.network.thegraph.com/collect-receipts"
     network-subgraph-deployment: "QmS1XDFgDH7SGSh46Y3BT4DizmERbCDqSEQD2ZMPRZMtqA" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
