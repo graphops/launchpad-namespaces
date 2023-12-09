@@ -7,7 +7,7 @@ indexerDefaults:
     network-subgraph-endpoint: "https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-arbitrum"
 
 indexerAgent:
-  # addresses "Network Subgraph is not fresh" https://github.com/graphprotocol/indexer/pull/799
+  # fixes "Network Subgraph is not fresh" error https://github.com/graphprotocol/indexer/pull/799
   env:
     INDEXER_AGENT_SUBGRAPH_MAX_BLOCK_DISTANCE: 100
     INDEXER_AGENT_SUBGRAPH_FRESHNESS_SLEEP_MILLISECONDS: 10000
