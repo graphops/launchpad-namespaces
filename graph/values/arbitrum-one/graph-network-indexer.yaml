@@ -8,6 +8,7 @@ indexerDefaults:
 
 indexerAgent:
   # fixes "Network Subgraph is not fresh" error https://github.com/graphprotocol/indexer/pull/799
+  # TODO: choosing higher than upstream recommendation because reportedly 60 is still low, potentially tune in the future.
   env:
     INDEXER_AGENT_SUBGRAPH_MAX_BLOCK_DISTANCE: 100
     INDEXER_AGENT_SUBGRAPH_FRESHNESS_SLEEP_MILLISECONDS: 10000
