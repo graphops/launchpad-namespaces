@@ -3001,7 +3001,6 @@
                         "type": "object",
                         "required": [
                             "flavor",
-                            "goerli",
                             "mainnet",
                             "arbitrum-goerli",
                             "arbitrum-one"
@@ -3011,27 +3010,6 @@
                                 "type": "string",
                                 "enum": [
                                     "mainnet"
-                                ]
-                            },
-                            "goerli": {
-                                "type": "object",
-                                "properties": {
-                                    "targetNamespace": {
-                                        "type": "string",
-                                        "enum": [
-                                            "graph-goerli"
-                                        ]
-                                    }
-                                },
-                                "allOf": [
-                                    {
-                                        "$ref": "#/components/schemas/namespaces.graph.defaults.common"
-                                    },
-                                    {
-                                        "required": [
-                                            "targetNamespace"
-                                        ]
-                                    }
                                 ]
                             },
                             "mainnet": {
@@ -3458,17 +3436,9 @@
             "namespaces.graph.flavor.enum": {
                 "type": "string",
                 "enum": [
-                    "goerli",
                     "mainnet",
                     "arbitrum-goerli",
                     "arbitrum-one"
-                ]
-            },
-            "namespaces.graph.flavor.goerli": {
-                "description": "suitable defaults for a goerli indexer",
-                "type": "string",
-                "enum": [
-                    "goerli"
                 ]
             },
             "namespaces.graph.flavor.mainnet": {

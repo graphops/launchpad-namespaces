@@ -14,8 +14,6 @@ package LaunchpadNamespaces
 		}
 
 		#flavor: {
-			// suitable defaults for a goerli indexer
-			#goerli: "goerli"
 
 			// suitable defaults for an arbitrum-goerli indexer
 			#arbitrum_goerli: "arbitrum-goerli"
@@ -26,7 +24,7 @@ package LaunchpadNamespaces
 			// suitable defaults for a mainnet indexer
 			#mainnet: "mainnet"
 
-			#enum: ( #goerli | #mainnet | #arbitrum_goerli | #arbitrum_one )
+			#enum: ( #mainnet | #arbitrum_goerli | #arbitrum_one )
 		}
 
 		// ethereum namespace features schema
@@ -64,11 +62,6 @@ package LaunchpadNamespaces
 
 			#common: {
 				features: [#features.#subgraph_radio]
-			}
-
-			goerli: {
-				#common
-				targetNamespace: "graph-goerli"
 			}
 
 			mainnet: {
