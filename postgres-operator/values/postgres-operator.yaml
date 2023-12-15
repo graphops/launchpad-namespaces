@@ -1,7 +1,5 @@
-postgres-operator:
-  values:
-    configPatroni:
-      # enable failsafe_mode feature to avoid leader demotion which puts dbs in read-only mode
-      # https://patroni.readthedocs.io/en/master/dcs_failsafe_mode.html
-      # https://github.com/zalando/postgres-operator/issues/2347
-      enable_patroni_failsafe_mode: true
+configPatroni:
+  # enable failsafe_mode feature to avoid leader demotion which puts dbs in read-only mode
+  # https://patroni.readthedocs.io/en/master/dcs_failsafe_mode.html
+  # https://github.com/zalando/postgres-operator/issues/2347
+  enable_patroni_failsafe_mode: true
