@@ -9,7 +9,7 @@ chains:
         url: http://proxyd-proxyd.eth-mainnet:8545
         features: [archive, traces]
 
-  arbitrum-one:
+  arbitrum-sepolia:
     enabled: false
     shard: primary
     provider:
