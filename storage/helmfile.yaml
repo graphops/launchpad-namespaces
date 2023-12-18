@@ -146,7 +146,7 @@ templates:
     version: {{ .Values | get "openebs" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "openebs" dict | get "chartVersion" false ) ( .Values | get "openebs" dict | get "chartUrl" false ) )) }}
-    version: "3.9.0"
+    version: "3.10.0"
     {{- end }}
   
   openebs-rawfile-localpv:
