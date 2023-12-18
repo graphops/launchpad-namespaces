@@ -3001,9 +3001,7 @@
                         "type": "object",
                         "required": [
                             "flavor",
-                            "goerli",
                             "mainnet",
-                            "arbitrum-goerli",
                             "arbitrum-one"
                         ],
                         "properties": {
@@ -3013,27 +3011,6 @@
                                     "mainnet"
                                 ]
                             },
-                            "goerli": {
-                                "type": "object",
-                                "properties": {
-                                    "targetNamespace": {
-                                        "type": "string",
-                                        "enum": [
-                                            "graph-goerli"
-                                        ]
-                                    }
-                                },
-                                "allOf": [
-                                    {
-                                        "$ref": "#/components/schemas/namespaces.graph.defaults.common"
-                                    },
-                                    {
-                                        "required": [
-                                            "targetNamespace"
-                                        ]
-                                    }
-                                ]
-                            },
                             "mainnet": {
                                 "type": "object",
                                 "properties": {
@@ -3041,27 +3018,6 @@
                                         "type": "string",
                                         "enum": [
                                             "graph-mainnet"
-                                        ]
-                                    }
-                                },
-                                "allOf": [
-                                    {
-                                        "$ref": "#/components/schemas/namespaces.graph.defaults.common"
-                                    },
-                                    {
-                                        "required": [
-                                            "targetNamespace"
-                                        ]
-                                    }
-                                ]
-                            },
-                            "arbitrum-goerli": {
-                                "type": "object",
-                                "properties": {
-                                    "targetNamespace": {
-                                        "type": "string",
-                                        "enum": [
-                                            "graph-arbitrum-goerli"
                                         ]
                                     }
                                 },
@@ -3441,13 +3397,6 @@
             "namespaces.graph.flavor": {
                 "type": "object"
             },
-            "namespaces.graph.flavor.arbitrum_goerli": {
-                "description": "suitable defaults for an arbitrum-goerli indexer",
-                "type": "string",
-                "enum": [
-                    "arbitrum-goerli"
-                ]
-            },
             "namespaces.graph.flavor.arbitrum_one": {
                 "description": "suitable defaults for an arbitrum-one indexer",
                 "type": "string",
@@ -3458,17 +3407,8 @@
             "namespaces.graph.flavor.enum": {
                 "type": "string",
                 "enum": [
-                    "goerli",
                     "mainnet",
-                    "arbitrum-goerli",
                     "arbitrum-one"
-                ]
-            },
-            "namespaces.graph.flavor.goerli": {
-                "description": "suitable defaults for a goerli indexer",
-                "type": "string",
-                "enum": [
-                    "goerli"
                 ]
             },
             "namespaces.graph.flavor.mainnet": {
