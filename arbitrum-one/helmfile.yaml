@@ -1,5 +1,5 @@
 #namespace defaults
-{{ $_ := set .Values "_defaults" ( `{"flavor":"mainnet","mainnet":{"targetNamespace":"arbitrum-one-mainnet","scaling":{"deployments":1},"features":["proxyd","arbitrum_classic","arbitrum_nitro"]},"goerli":{"targetNamespace":"arbitrum-one-goerli","scaling":{"deployments":1},"features":["proxyd","arbitrum_nitro"]},"common":{"scaling":{"deployments":1}},"sepolia":{"targetNamespace":"arbitrum-one-sepolia","scaling":{"deployments":1},"features":["proxyd","arbitrum_nitro"]}}` | fromJson ) }}
+{{ $_ := set .Values "_defaults" ( `{"flavor":"mainnet","mainnet":{"targetNamespace":"arbitrum-one-mainnet","scaling":{"deployments":1},"features":["proxyd","arbitrum_classic","arbitrum_nitro"]},"common":{"scaling":{"deployments":1}},"sepolia":{"targetNamespace":"arbitrum-one-sepolia","scaling":{"deployments":1},"features":["proxyd","arbitrum_nitro"]}}` | fromJson ) }}
 #set default flavor when missing
 {{ if not ( hasKey .Values "flavor" ) }}
 {{ $_ := set .Values "flavor" "mainnet" }}

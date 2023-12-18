@@ -815,7 +815,6 @@
                         "required": [
                             "flavor",
                             "mainnet",
-                            "goerli",
                             "sepolia"
                         ],
                         "properties": {
@@ -857,49 +856,6 @@
                                         "default": [
                                             "proxyd",
                                             "arbitrum_classic",
-                                            "arbitrum_nitro"
-                                        ]
-                                    }
-                                },
-                                "allOf": [
-                                    {
-                                        "$ref": "#/components/schemas/namespaces.arbitrumOne.defaults.common"
-                                    },
-                                    {
-                                        "required": [
-                                            "targetNamespace",
-                                            "features"
-                                        ]
-                                    }
-                                ]
-                            },
-                            "goerli": {
-                                "type": "object",
-                                "properties": {
-                                    "targetNamespace": {
-                                        "type": "string",
-                                        "enum": [
-                                            "arbitrum-one-goerli"
-                                        ]
-                                    },
-                                    "features": {
-                                        "type": "array",
-                                        "items": [
-                                            {
-                                                "$ref": "#/components/schemas/namespaces.arbitrumOne.features.proxyd"
-                                            },
-                                            {
-                                                "$ref": "#/components/schemas/namespaces.arbitrumOne.features.arbitrum_nitro"
-                                            }
-                                        ],
-                                        "enum": [
-                                            [
-                                                "proxyd",
-                                                "arbitrum_nitro"
-                                            ]
-                                        ],
-                                        "default": [
-                                            "proxyd",
                                             "arbitrum_nitro"
                                         ]
                                     }
@@ -1327,15 +1283,7 @@
                 "type": "string",
                 "enum": [
                     "mainnet",
-                    "goerli",
                     "sepolia"
-                ]
-            },
-            "namespaces.arbitrumOne.flavor.goerli": {
-                "description": "suitable defaults for an arbitrum-one-görli archive node",
-                "type": "string",
-                "enum": [
-                    "goerli"
                 ]
             },
             "namespaces.arbitrumOne.flavor.mainnet": {
