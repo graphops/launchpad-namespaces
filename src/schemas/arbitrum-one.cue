@@ -15,13 +15,10 @@ package LaunchpadNamespaces
 			// suitable defaults for an arbitrum-one-mainnet archive node
 			#mainnet: "mainnet"
 
-			// suitable defaults for an arbitrum-one-görli archive node
-			#goerli: "goerli"
-
 			// suitable defaults for an arbitrum-one-sepolia archive node
 			#sepolia: "sepolia"
 
-			#enum: ( #mainnet | #goerli | #sepolia )
+			#enum: ( #mainnet | #sepolia )
 		}
 
 		// arbitrum-one namespace features schema
@@ -80,12 +77,6 @@ package LaunchpadNamespaces
 				#common
 				targetNamespace: "arbitrum-one-mainnet"
 				features: [#features.#proxyd, #features.#arbitrum_classic, #features.#arbitrum_nitro]
-			}
-
-			goerli: {
-				#common
-				targetNamespace: "arbitrum-one-goerli"
-				features: [#features.#proxyd, #features.#arbitrum_nitro]
 			}
 
 			sepolia: {
