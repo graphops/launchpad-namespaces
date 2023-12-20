@@ -1,5 +1,11 @@
 # This is a values.yaml override file for https://github.com/graphops/launchpad-charts/tree/main/charts/graph-node
 
+graphNodeDefaults:
+  env:
+    # https://github.com/graphprotocol/graph-node/issues/4608
+    # https://discord.com/channels/438038660412342282/791422773348007936/1185311159855886387
+    GRAPH_ETH_CALL_NO_GAS: "421614,421613,42161" # chain IDs: arbitrum sepolia, arbitrum goerli, arbitrum one
+
 chains:
   mainnet:
     enabled: false
