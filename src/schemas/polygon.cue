@@ -63,7 +63,7 @@ package LaunchpadNamespaces
 
 			proxyd: {
 				chart: {_repositories.graphops.charts.proxyd}
-				_template: {version: "0.4.2"}
+				_template: {version: "0.4.3"}
 			}
 		}
 

@@ -171,7 +171,7 @@ templates:
     version: {{ .Values | get "proxyd" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "proxyd" dict | get "chartVersion" false ) ( .Values | get "proxyd" dict | get "chartUrl" false ) )) }}
-    version: "0.4.2"
+    version: "0.4.3"
     {{- end }}
   
 releases:
