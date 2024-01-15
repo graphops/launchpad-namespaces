@@ -138,7 +138,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/component": "{{ $canonicalRelease }}"
 				}
 				feature: #features.#proxyd
-				_template: {version: "0.4.2"}
+				_template: {version: "0.4.3"}
 				_scale: false
 			}
 		}
