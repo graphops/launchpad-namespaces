@@ -14,7 +14,7 @@ Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by
 
 ## Features
 
-- Actively maintained by [![GraphOps](https://avatars.githubusercontent.com/u/85314764?s=12&v=4) *GraphOps*](https://graphops.xyz) [and contributors](/graphs/contributors)
+- Actively maintained by [![GraphOps](https://avatars.githubusercontent.com/u/85314764?s=12&v=4) *GraphOps*](https://graphops.xyz) [and contributors](https://github.com/graphops/launchpad-namespaces/graphs/contributors)
 - Common values interfaces across all namespaces
 - Flexible and adaptable, allowing defaults to be overridden
 - Two release channels: `stable` and `canary`
