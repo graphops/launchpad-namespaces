@@ -51,14 +51,14 @@ package LaunchpadNamespaces
 				chart: {_repositories["prometheus-community"].charts["kube-prometheus-stack"]}
 				feature: #features.#metrics
 				_template: {
-					version:                    "55.8.1"
+					version:                    "56.0.0"
 					disableValidationOnInstall: true
 				}
 			}
 			"node-problem-detector": {
 				chart: {_repositories.deliveryhero.charts["node-problem-detector"]}
 				feature: #features.#metrics
-				_template: {version: "2.3.11"}
+				_template: {version: "2.3.12"}
 			}
 			loki: {
 				chart: {_repositories.grafana.charts["loki-distributed"]}
