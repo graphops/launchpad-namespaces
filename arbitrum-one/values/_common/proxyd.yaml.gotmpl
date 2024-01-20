@@ -15,6 +15,22 @@ backends:
       - archive-trace
   {{ end  }}
 
+proxyd:
+  affinityPresets:
+    antiAffinityByHostname: false
+  affinity:
+    podAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 90 # try to schedule replicas on different hosts if possible
+        podAntiAffinityTerm:
+          topologyKey: "kubernetes.io/hostname"
+          labelSelector:
+            matchExpressions:
+            - key: app.launchpad.graphops.xyz/release # release name
+              operator: In
+              values:
+              - "{{ .Release.Name }}"
+
 prometheus:
   serviceMonitors:
     enabled: true
