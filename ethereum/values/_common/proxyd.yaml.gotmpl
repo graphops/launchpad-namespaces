@@ -18,10 +18,10 @@ proxyd:
   affinityPresets:
     antiAffinityByHostname: false
   affinity:
-    podAffinity:
+    podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
       - weight: 90 # try to schedule replicas on different hosts if possible
-        podAntiAffinityTerm:
+        podAffinityTerm:
           topologyKey: "kubernetes.io/hostname"
           labelSelector:
             matchExpressions:
