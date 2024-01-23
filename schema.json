@@ -2950,7 +2950,8 @@
                         "required": [
                             "flavor",
                             "mainnet",
-                            "arbitrum-one"
+                            "arbitrum-one",
+                            "arbitrum-one-sepolia"
                         ],
                         "properties": {
                             "flavor": {
