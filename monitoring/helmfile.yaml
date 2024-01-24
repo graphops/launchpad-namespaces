@@ -177,7 +177,7 @@ templates:
     version: {{ .Values | get "loki" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "loki" dict | get "chartVersion" false ) ( .Values | get "loki" dict | get "chartUrl" false ) )) }}
-    version: "0.78.1"
+    version: "0.78.2"
     {{- end }}
   
   promtail:
@@ -192,7 +192,7 @@ templates:
     version: {{ .Values | get "promtail" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "promtail" dict | get "chartVersion" false ) ( .Values | get "promtail" dict | get "chartUrl" false ) )) }}
-    version: "6.15.3"
+    version: "6.15.4"
     {{- end }}
   
 releases:
