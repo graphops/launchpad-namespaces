@@ -146,7 +146,7 @@ templates:
     version: {{ .Values | get "ingress-nginx" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "ingress-nginx" dict | get "chartVersion" false ) ( .Values | get "ingress-nginx" dict | get "chartUrl" false ) )) }}
-    version: "4.9.0"
+    version: "4.9.1"
     {{- end }}
   
   cert-manager:
