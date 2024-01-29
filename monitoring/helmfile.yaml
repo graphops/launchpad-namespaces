@@ -192,7 +192,7 @@ templates:
     version: {{ .Values | get "promtail" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "promtail" dict | get "chartVersion" false ) ( .Values | get "promtail" dict | get "chartUrl" false ) )) }}
-    version: "6.15.4"
+    version: "6.15.5"
     {{- end }}
   
 releases:

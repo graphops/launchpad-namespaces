@@ -68,7 +68,7 @@ package LaunchpadNamespaces
 			promtail: {
 				chart: {_repositories.grafana.charts.promtail}
 				feature: #features.#logs
-				_template: {version: "6.15.4"}
+				_template: {version: "6.15.5"}
 			}
 		}
 
