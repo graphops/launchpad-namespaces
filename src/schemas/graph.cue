@@ -75,7 +75,7 @@ package LaunchpadNamespaces
 		releases: {
 			"graph-node": {
 				chart: {_repositories.graphops.charts["graph-node"]}
-				_template: {version: "0.3.7-canary.2"}
+				_template: {version: "0.3.7"}
 			}
 
 			"graph-network-indexer": {
