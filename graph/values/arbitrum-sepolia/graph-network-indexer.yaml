@@ -1,0 +1,18 @@
+# This is a values.yaml override file for https://github.com/graphops/launchpad-charts/tree/main/charts/graph-network-indexer
+
+indexerDefaults:
+  config:
+    ethereum: "http://proxyd-proxyd.arbitrum-one-sepolia:8545"
+    ethereum-network: "arbitrum-sepolia"
+    network-subgraph-endpoint: "https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-arbitrum-sepolia"
+
+indexerAgent:
+  config:
+    collect-receipts-endpoint: "https://gateway-testnet-arbitrum.network.thegraph.com/collect-receipts"
+    network-subgraph-deployment: "QmT8UDGK7zKd2u2NQZwhLYHdA4KM55QsivkE3ouCuX6fEj" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
+    epoch-subgraph-endpoint: "https://api.thegraph.com/subgraphs/name/graphprotocol/arbitrum-sepolia-ebo" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
+    epoch-subgraph-deployment: "QmTpu2mVquoMpr4SWSM77nGkU3tcUS1Bhk1sVHpjDrAUAx"
+
+indexerService:
+  config:
+    client-signer-address: "0xe1EC4339019eC9628438F8755f847e3023e4ff9c" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md

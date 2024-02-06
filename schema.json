@@ -2950,7 +2950,8 @@
                         "required": [
                             "flavor",
                             "mainnet",
-                            "arbitrum-one"
+                            "arbitrum-one",
+                            "arbitrum-sepolia"
                         ],
                         "properties": {
                             "flavor": {
@@ -2987,6 +2988,27 @@
                                         "type": "string",
                                         "enum": [
                                             "graph-arbitrum-one"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.graph.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "targetNamespace"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "arbitrum-sepolia": {
+                                "type": "object",
+                                "properties": {
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "graph-arbitrum-sepolia"
                                         ]
                                     }
                                 },
@@ -3352,11 +3374,19 @@
                     "arbitrum-one"
                 ]
             },
+            "namespaces.graph.flavor.arbitrum_sepolia": {
+                "description": "suitable defaults for an arbitrum-one indexer",
+                "type": "string",
+                "enum": [
+                    "arbitrum-sepolia"
+                ]
+            },
             "namespaces.graph.flavor.enum": {
                 "type": "string",
                 "enum": [
                     "mainnet",
-                    "arbitrum-one"
+                    "arbitrum-one",
+                    "arbitrum-sepolia"
                 ]
             },
             "namespaces.graph.flavor.mainnet": {
