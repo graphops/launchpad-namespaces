@@ -19,12 +19,12 @@ package LaunchpadNamespaces
 			#arbitrum_one: "arbitrum-one"
 
 			// suitable defaults for an arbitrum-one indexer
-			#arbitrum_one_sepolia: "arbitrum-one-sepolia"
+			#arbitrum_sepolia: "arbitrum-sepolia"
 
 			// suitable defaults for a mainnet indexer
 			#mainnet: "mainnet"
 
-			#enum: ( #mainnet | #arbitrum_one )
+			#enum: ( #mainnet | #arbitrum_one | #arbitrum_sepolia )
 		}
 
 		// ethereum namespace features schema
@@ -74,9 +74,9 @@ package LaunchpadNamespaces
 				targetNamespace: "graph-arbitrum-one"
 			}
 
-			"arbitrum-one-sepolia": {
+			"arbitrum-sepolia": {
 				#common
-				targetNamespace: "graph-arbitrum-one-sepolia"
+				targetNamespace: "graph-arbitrum-sepolia"
 			}
 		}
 

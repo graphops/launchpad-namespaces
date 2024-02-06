@@ -2951,7 +2951,7 @@
                             "flavor",
                             "mainnet",
                             "arbitrum-one",
-                            "arbitrum-one-sepolia"
+                            "arbitrum-sepolia"
                         ],
                         "properties": {
                             "flavor": {
@@ -3002,13 +3002,13 @@
                                     }
                                 ]
                             },
-                            "arbitrum-one-sepolia": {
+                            "arbitrum-sepolia": {
                                 "type": "object",
                                 "properties": {
                                     "targetNamespace": {
                                         "type": "string",
                                         "enum": [
-                                            "graph-arbitrum-one-sepolia"
+                                            "graph-arbitrum-sepolia"
                                         ]
                                     }
                                 },
@@ -3374,18 +3374,19 @@
                     "arbitrum-one"
                 ]
             },
-            "namespaces.graph.flavor.arbitrum_one_sepolia": {
+            "namespaces.graph.flavor.arbitrum_sepolia": {
                 "description": "suitable defaults for an arbitrum-one indexer",
                 "type": "string",
                 "enum": [
-                    "arbitrum-one-sepolia"
+                    "arbitrum-sepolia"
                 ]
             },
             "namespaces.graph.flavor.enum": {
                 "type": "string",
                 "enum": [
                     "mainnet",
-                    "arbitrum-one"
+                    "arbitrum-one",
+                    "arbitrum-sepolia"
                 ]
             },
             "namespaces.graph.flavor.mainnet": {
