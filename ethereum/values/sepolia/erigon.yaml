@@ -2,6 +2,7 @@ statefulNode:
   extraArgs:
     - --http.api=eth,debug,net,trace
     - --chain=sepolia
+    - --ws
 
   volumeClaimSpec:
     resources:

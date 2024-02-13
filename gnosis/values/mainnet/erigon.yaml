@@ -2,3 +2,4 @@ statefulNode:
   extraArgs:
     - --http.api=eth,debug,net,trace,web3,erigon
     - --chain=gnosis
+    - --ws
