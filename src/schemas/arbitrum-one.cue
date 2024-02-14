@@ -121,7 +121,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/release":   "{{ $release }}"
 				}
 				feature: #features.#proxyd
-				_template: {version: "0.4.4"}
+				_template: {version: "0.5.0"}
 				_scale: false
 			}
 		}
