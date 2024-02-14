@@ -2,6 +2,7 @@ statefulNode:
   extraArgs:
     - --http.api=eth,debug,net,trace
     - --chain=holesky
+    - --ws
 
   volumeClaimSpec:
     resources:
