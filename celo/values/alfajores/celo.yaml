@@ -1,0 +1,11 @@
+celo:
+  extraArgs:
+    - --verbosity 3
+    - --syncmode full
+    - --gcmode archive
+    - --txlookuplimit=0
+    - --cache.preimages
+    - --http.corsdomain=*
+    - --ws # enable ws
+    - --http.api=eth,net,web3,debug,admin,personal
+    - --alfajores

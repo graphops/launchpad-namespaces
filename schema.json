@@ -1433,7 +1433,9 @@
                         "type": "object",
                         "required": [
                             "flavor",
-                            "mainnet"
+                            "mainnet",
+                            "alfajores",
+                            "baklava"
                         ],
                         "properties": {
                             "flavor": {
@@ -1462,6 +1464,48 @@
                                         ]
                                     }
                                 ]
+                            },
+                            "alfajores": {
+                                "type": "object",
+                                "properties": {
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "celo-alfajores"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.celo.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "targetNamespace"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "baklava": {
+                                "type": "object",
+                                "properties": {
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "celo-baklava"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.celo.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "targetNamespace"
+                                        ]
+                                    }
+                                ]
                             }
                         }
                     },
@@ -1475,7 +1519,8 @@
                             "celo": {
                                 "type": "object",
                                 "required": [
-                                    "chart"
+                                    "chart",
+                                    "labels"
                                 ],
                                 "properties": {
                                     "chart": {
@@ -1512,13 +1557,50 @@
                                                 ]
                                             }
                                         }
+                                    },
+                                    "labels": {
+                                        "type": "object",
+                                        "required": [
+                                            "app.launchpad.graphops.xyz/layer",
+                                            "app.launchpad.graphops.xyz/release",
+                                            "app.launchpad.graphops.xyz/component",
+                                            "app.launchpad.graphops.xyz/scalingIndex"
+                                        ],
+                                        "properties": {
+                                            "app.launchpad.graphops.xyz/layer": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "execution"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/release": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $release }}"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/component": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $canonicalRelease }}"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/scalingIndex": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $deploymentIndex }}"
+                                                ]
+                                            }
+                                        }
                                     }
                                 }
                             },
                             "proxyd": {
                                 "type": "object",
                                 "required": [
-                                    "chart"
+                                    "chart",
+                                    "labels",
+                                    "feature"
                                 ],
                                 "properties": {
                                     "chart": {
@@ -1555,6 +1637,37 @@
                                                 ]
                                             }
                                         }
+                                    },
+                                    "labels": {
+                                        "type": "object",
+                                        "required": [
+                                            "app.launchpad.graphops.xyz/layer",
+                                            "app.launchpad.graphops.xyz/release",
+                                            "app.launchpad.graphops.xyz/component"
+                                        ],
+                                        "properties": {
+                                            "app.launchpad.graphops.xyz/layer": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "proxy"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/release": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $release }}"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/component": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $canonicalRelease }}"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "feature": {
+                                        "$ref": "#/components/schemas/namespaces.celo.features.proxyd"
                                     }
                                 }
                             }
@@ -1568,6 +1681,24 @@
                                 "enum": [
                                     "celo"
                                 ]
+                            },
+                            "app.launchpad.graphops.xyz/type": {
+                                "type": "string",
+                                "enum": [
+                                    "blockchain"
+                                ]
+                            },
+                            "app.launchpad.graphops.xyz/chain": {
+                                "type": "string",
+                                "enum": [
+                                    "ethereum"
+                                ]
+                            },
+                            "app.launchpad.graphops.xyz/network": {
+                                "type": "string",
+                                "enum": [
+                                    "{{ .Values.flavor }}"
+                                ]
                             }
                         },
                         "allOf": [
@@ -1576,7 +1707,10 @@
                             },
                             {
                                 "required": [
-                                    "launchpad.graphops.xyz/namespace"
+                                    "launchpad.graphops.xyz/namespace",
+                                    "app.launchpad.graphops.xyz/type",
+                                    "app.launchpad.graphops.xyz/chain",
+                                    "app.launchpad.graphops.xyz/network"
                                 ]
                             }
                         ]
@@ -1587,13 +1721,89 @@
                 }
             },
             "namespaces.celo.defaults.common": {
+                "type": "object",
+                "required": [
+                    "features",
+                    "scaling"
+                ],
+                "properties": {
+                    "features": {
+                        "type": "array",
+                        "items": [
+                            {
+                                "$ref": "#/components/schemas/namespaces.celo.features.proxyd"
+                            }
+                        ],
+                        "enum": [
+                            [
+                                "proxyd"
+                            ]
+                        ],
+                        "default": [
+                            "proxyd"
+                        ]
+                    },
+                    "scaling": {
+                        "type": "object",
+                        "properties": {
+                            "deployments": {
+                                "type": "integer",
+                                "enum": [
+                                    1
+                                ]
+                            }
+                        },
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/namespaces.celo.scaling"
+                            },
+                            {
+                                "required": [
+                                    "deployments"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            },
+            "namespaces.celo.features": {
+                "description": "celo namespace features schema",
                 "type": "object"
+            },
+            "namespaces.celo.features.enum": {
+                "$ref": "#/components/schemas/namespaces.celo.features.proxyd"
+            },
+            "namespaces.celo.features.proxyd": {
+                "description": "Deploy proxyd",
+                "type": "string",
+                "enum": [
+                    "proxyd"
+                ]
             },
             "namespaces.celo.flavor": {
                 "type": "object"
             },
+            "namespaces.celo.flavor.alfajores": {
+                "description": "suitable defaults for an alfajores archive node",
+                "type": "string",
+                "enum": [
+                    "alfajores"
+                ]
+            },
+            "namespaces.celo.flavor.baklava": {
+                "description": "suitable defaults for a baklava archive node",
+                "type": "string",
+                "enum": [
+                    "baklava"
+                ]
+            },
             "namespaces.celo.flavor.enum": {
-                "$ref": "#/components/schemas/namespaces.celo.flavor.mainnet"
+                "type": "string",
+                "enum": [
+                    "mainnet",
+                    "alfajores",
+                    "baklava"
+                ]
             },
             "namespaces.celo.flavor.mainnet": {
                 "description": "suitable defaults for a mainnet archive node",
@@ -1635,6 +1845,25 @@
                     }
                 ]
             },
+            "namespaces.celo.scaling": {
+                "description": "celo scaling interface",
+                "type": "object",
+                "required": [
+                    "deployments"
+                ],
+                "properties": {
+                    "deployments": {
+                        "description": "number of independent stateful sets to deploy",
+                        "type": "integer",
+                        "minimum": 1,
+                        "default": 1
+                    },
+                    "startP2PPort": {
+                        "description": "A beggining port for the range to use in P2P NodePorts",
+                        "type": "integer"
+                    }
+                }
+            },
             "namespaces.celo.values": {
                 "description": "celo namespace values schema",
                 "type": "object",
@@ -1642,13 +1871,25 @@
                     "flavor": {
                         "$ref": "#/components/schemas/namespaces.celo.flavor.enum"
                     },
-                    "celo": {
-                        "$ref": "#/components/schemas/base.releaseValues"
-                    },
                     "targetNamespace": {
                         "description": "the default is celo-<flavor>",
                         "type": "string",
                         "default": "celo-mainnet"
+                    },
+                    "features": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/namespaces.celo.features.enum"
+                        },
+                        "default": [
+                            "proxyd"
+                        ]
+                    },
+                    "celo": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
+                    "scaling": {
+                        "$ref": "#/components/schemas/namespaces.celo.scaling"
                     },
                     "proxyd": {
                         "$ref": "#/components/schemas/base.releaseValues"
