@@ -140,6 +140,12 @@ celo:
                 values:
                 - consensus
 
+{{- if (hasKey .Values.scaling "p2pStartPort") }}
+  p2pNodePort:
+    enabled: true
+    port: {{ add (mul (sub $scalingIndex 1) 2) .Values.scaling.p2pStartPort }}
+{{- end }}
+
 prometheus:
   serviceMonitors:
     enabled: true

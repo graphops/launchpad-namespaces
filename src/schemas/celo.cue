@@ -37,6 +37,8 @@ package LaunchpadNamespaces
 		#scaling: {
 			// number of independent stateful sets to deploy
 			deployments: *1 | ( int & >=1)
+			// A beggining port for the range to use in P2P NodePorts
+			startP2PPort?: int
 		}
 
 		// celo namespace values schema
