@@ -122,7 +122,7 @@ package LaunchpadNamespaces
 			#base.#labels
 			"launchpad.graphops.xyz/namespace":   "celo"
 			"app.launchpad.graphops.xyz/type":    "blockchain"
-			"app.launchpad.graphops.xyz/chain":   "ethereum"
+			"app.launchpad.graphops.xyz/chain":   "celo"
 			"app.launchpad.graphops.xyz/network": "{{ .Values.flavor }}"
 		}
 

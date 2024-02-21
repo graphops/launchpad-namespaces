@@ -1691,7 +1691,7 @@
                             "app.launchpad.graphops.xyz/chain": {
                                 "type": "string",
                                 "enum": [
-                                    "ethereum"
+                                    "celo"
                                 ]
                             },
                             "app.launchpad.graphops.xyz/network": {

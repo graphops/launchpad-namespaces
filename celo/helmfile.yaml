@@ -114,7 +114,7 @@ kubeVersion: {{ .Values.kubeVersion }}
 {{- $_commonLabels := dict 
 `launchpad.graphops.xyz/namespace` `celo`
 `app.launchpad.graphops.xyz/type` `blockchain`
-`app.launchpad.graphops.xyz/chain` `ethereum`
+`app.launchpad.graphops.xyz/chain` `celo`
 `app.launchpad.graphops.xyz/network` $_templatedValue_0
 }}
 
