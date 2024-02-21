@@ -1,3 +1,5 @@
+{{ $scalingIndex := splitList "-" .Release.Name | last }}
+
 celo:
   extraArgs:
     - --verbosity 3
