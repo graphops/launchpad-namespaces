@@ -173,7 +173,7 @@ templates:
     version: {{ .Values | get "nimbus" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "nimbus" dict | get "chartVersion" false ) ( .Values | get "nimbus" dict | get "chartUrl" false ) )) }}
-    version: "0.5.8"
+    version: "0.5.9-canary.1"
     {{- end }}
   
   proxyd:
