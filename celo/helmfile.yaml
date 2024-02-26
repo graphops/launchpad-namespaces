@@ -1,5 +1,5 @@
 #namespace defaults
-{{ $_ := set .Values "_defaults" ( `{"flavor":"mainnet","common":{},"mainnet":{"targetNamespace":"celo-mainnet"}}` | fromJson ) }}
+{{ $_ := set .Values "_defaults" ( `{"flavor":"mainnet","mainnet":{"targetNamespace":"celo-mainnet","features":["proxyd"],"scaling":{"deployments":1}},"alfajores":{"targetNamespace":"celo-alfajores","features":["proxyd"],"scaling":{"deployments":1}},"common":{"features":["proxyd"],"scaling":{"deployments":1}},"baklava":{"targetNamespace":"celo-baklava","features":["proxyd"],"scaling":{"deployments":1}}}` | fromJson ) }}
 #set default flavor when missing
 {{ if not ( hasKey .Values "flavor" ) }}
 {{ $_ := set .Values "flavor" "mainnet" }}
@@ -12,11 +12,25 @@ environments:
       - _defaults: {{ .Values._defaults | toYaml | nindent 10 }}
 
 ---
+# Define default features when undefined
+{{ if not (hasKey .Values "features") }}
+{{ $_ := set .Values "features" ( .Values._defaults | get .Values.flavor | get "features" ) }}
+{{ end }}
 
+#set default number of deployments when missing
+{{ if not ( hasKey .Values  "scaling" ) }}
+{{ $_ := set .Values "scaling" dict }}
+{{ end }}
+{{ if not ( hasKey ( .Values | get "scaling" dict ) "deployments" ) }}
+{{ $_ := set .Values.scaling "deployments" ( .Values._defaults | get .Values.flavor | get "scaling" | get "deployments" ) }}
+{{ end }}
 
 environments:
   {{ .Environment.Name }}:
-    values: []
+    values:
+      - features: {{ .Values.features | toYaml | nindent 10 }}
+      - scaling:
+          deployments: {{ .Values.scaling.deployments }}
 
 ---
 {{- $_tplTransforms := (print `
@@ -96,9 +110,12 @@ kubeVersion: {{ .Values.kubeVersion }}
 #set default namespace
 {{ $_defaultNamespace := .Values._defaults | get .Values.flavor | get "targetNamespace" }}
 
-
+{{- $_templatedValue_0 :=  .Values.flavor  }}
 {{- $_commonLabels := dict 
 `launchpad.graphops.xyz/namespace` `celo`
+`app.launchpad.graphops.xyz/type` `blockchain`
+`app.launchpad.graphops.xyz/chain` `celo`
+`app.launchpad.graphops.xyz/network` $_templatedValue_0
 }}
 
 {{- $_commonResourceLabels := dict 
@@ -141,7 +158,7 @@ templates:
     version: {{ .Values | get "celo" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "celo" dict | get "chartVersion" false ) ( .Values | get "celo" dict | get "chartUrl" false ) )) }}
-    version: "0.1.1-canary.6"
+    version: "0.1.1"
     {{- end }}
   
   proxyd:
@@ -156,18 +173,33 @@ templates:
     version: {{ .Values | get "proxyd" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "proxyd" dict | get "chartVersion" false ) ( .Values | get "proxyd" dict | get "chartUrl" false ) )) }}
-    version: "0.5.1-canary.3"
+    version: "0.5.1"
     {{- end }}
   
 releases:
   {{- $canonicalRelease := "celo" }}
-  {{- $release := "celo" }}
-  {{- $_releaseResourceLabels := dict }}
+  {{- range $index := until .Values.scaling.deployments }}
+  {{- $deploymentIndex := (add . 1) }}
+  {{- $release := (printf "%s%v" "celo-" $deploymentIndex) }}
+  {{- $_templatedValue_0 :=  $canonicalRelease  }}
+  {{- $_templatedValue_1 :=  $release  }}
+  {{- $_templatedValue_2 :=  $deploymentIndex  }}
+  {{- $_releaseResourceLabels := dict 
+  `app.launchpad.graphops.xyz/layer` `execution`
+  `app.launchpad.graphops.xyz/component` $_templatedValue_0
+  `app.launchpad.graphops.xyz/release` $_templatedValue_1
+  `app.launchpad.graphops.xyz/scalingIndex` $_templatedValue_2
+  }}
   {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
     - template: "{{ $canonicalRelease }}"
     labels:
+      app.launchpad.graphops.xyz/layer: execution
+      app.launchpad.graphops.xyz/release: '{{ $release }}'
+      app.launchpad.graphops.xyz/component: '{{ $canonicalRelease }}'
+      app.launchpad.graphops.xyz/scalingIndex: '{{ $deploymentIndex }}'
+      
     {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "labels" dict ) }}
       {{ $key }}: {{ $value }}
     {{- $_ := set $_releaseResourceLabels $key $value }}
@@ -189,15 +221,26 @@ releases:
     {{- tpl $_tplTransforms (dict "Values" $.Values "release" $release "canonicalRelease" $canonicalRelease "resourceLabels" $_releaseResourceLabels  )  | indent 4 -}}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
-  
+  {{- end -}}
+  {{ if has "proxyd" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "proxyd" }}
   {{- $release := "proxyd" }}
-  {{- $_releaseResourceLabels := dict }}
+  {{- $_templatedValue_0 :=  $canonicalRelease  }}
+  {{- $_templatedValue_1 :=  $release  }}
+  {{- $_releaseResourceLabels := dict 
+  `app.launchpad.graphops.xyz/layer` `proxy`
+  `app.launchpad.graphops.xyz/component` $_templatedValue_0
+  `app.launchpad.graphops.xyz/release` $_templatedValue_1
+  }}
   {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
     - template: "{{ $canonicalRelease }}"
     labels:
+      app.launchpad.graphops.xyz/layer: proxy
+      app.launchpad.graphops.xyz/release: '{{ $release }}'
+      app.launchpad.graphops.xyz/component: '{{ $canonicalRelease }}'
+      
     {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "labels" dict ) }}
       {{ $key }}: {{ $value }}
     {{- $_ := set $_releaseResourceLabels $key $value }}
@@ -220,3 +263,4 @@ releases:
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
   
+  {{- end -}}

@@ -115,7 +115,8 @@ celo.labels | object |  | Adds helmfile labels to this release |
 celo.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
 celo.resourceLabels | object |  | Adds labels to resources on this release |
 celo.values | (object *or* list of objects) |  | Pass values to the release helm chart |
-flavor | string |  | suitable defaults for a mainnet archive node |
+features | list of strings | [proxyd] | *enum of:&nbsp;&nbsp;(proxyd)* |
+flavor | string |  |  |
 kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
 labels | object |  | Adds helmfile labels to releases on this namespace |
 proxyd | object |  |  |
@@ -127,6 +128,9 @@ proxyd.mergeValues | boolean | true | Merges passed values with namespace's defa
 proxyd.resourceLabels | object |  | Adds labels to resources on this release |
 proxyd.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 resourceLabels | object |  | Adds labels to release resources on this namespace |
+scaling | object |  | celo scaling interface |
+scaling.deployments | integer | 1 | number of independent stateful sets to deploy |
+scaling.startP2PPort | integer |  | A beggining port for the range to use in P2P NodePorts |
 targetNamespace | string | celo-mainnet | the default is celo-<flavor> |
 helmDefaults | object |  |  |
 helmDefaults.args | list of strings |  |  |

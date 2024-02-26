@@ -16,7 +16,29 @@ package LaunchpadNamespaces
 			// suitable defaults for a mainnet archive node
 			#mainnet: "mainnet"
 
-			#enum: ( #mainnet )
+			// suitable defaults for an alfajores archive node
+			#alfajores: "alfajores"
+
+			// suitable defaults for a baklava archive node
+			#baklava: "baklava"
+
+			#enum: ( #mainnet | #alfajores | #baklava )
+		}
+
+		// celo namespace features schema
+		#features: {
+			// Deploy proxyd
+			#proxyd: "proxyd"
+
+			#enum: ( #proxyd )
+		}
+
+		// celo scaling interface
+		#scaling: {
+			// number of independent stateful sets to deploy
+			deployments: *1 | ( int & >=1)
+			// A beggining port for the range to use in P2P NodePorts
+			startP2PPort?: int
 		}
 
 		// celo namespace values schema
@@ -26,11 +48,18 @@ package LaunchpadNamespaces
 			// the default is celo-<flavor>
 			targetNamespace?: *defaults["\(defaults.flavor)"].targetNamespace | string
 
+			features?: *defaults["\(defaults.flavor)"].features | [...#features.#enum]
+
+			scaling?: *defaults["\(defaults.flavor)"].scaling | #scaling
+
 			// For overriding this release's values
 			for key, _ in releases {
 				// For overriding this release's values
 				(key)?: #base.#releaseValues
 			}
+
+			// For overriding this release's values
+			[string & "^(proxyd)-[0-9]+$"]?: #base.#releaseValues
 		}
 
 		// celo helmfile API
@@ -42,29 +71,59 @@ package LaunchpadNamespaces
 		defaults: {
 			flavor: "mainnet"
 
-			#common: {}
+			#common: {
+				features: [#features.#proxyd]
+				scaling: #scaling & {deployments: 1}
+			}
 
 			mainnet: {
 				#common
 				targetNamespace: "celo-mainnet"
+			}
+
+			alfajores: {
+				#common
+				targetNamespace: "celo-alfajores"
+			}
+
+			baklava: {
+				#common
+				targetNamespace: "celo-baklava"
 			}
 		}
 
 		releases: {
 			celo: {
 				chart: {_repositories.graphops.charts.celo}
-				_template: {version: "0.1.1-canary.6"}
+				labels: {
+					"app.launchpad.graphops.xyz/layer":        "execution"
+					"app.launchpad.graphops.xyz/release":      "{{ $release }}"
+					"app.launchpad.graphops.xyz/component":    "{{ $canonicalRelease }}"
+					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
+				}
+				_template: {version: "0.1.1"}
+				_scale: true
 			}
 
 			proxyd: {
 				chart: {_repositories.graphops.charts.proxyd}
-				_template: {version: "0.5.1-canary.3"}
+				labels: {
+					"app.launchpad.graphops.xyz/layer":     "proxy"
+					"app.launchpad.graphops.xyz/release":   "{{ $release }}"
+					"app.launchpad.graphops.xyz/component": "{{ $canonicalRelease }}"
+				}
+				feature: #features.#proxyd
+				_template: {version: "0.5.1"}
+				_scale: false
 			}
 		}
 
 		labels: {
 			#base.#labels
-			"launchpad.graphops.xyz/namespace": "celo"
+			"launchpad.graphops.xyz/namespace":   "celo"
+			"app.launchpad.graphops.xyz/type":    "blockchain"
+			"app.launchpad.graphops.xyz/chain":   "celo"
+			"app.launchpad.graphops.xyz/network": "{{ .Values.flavor }}"
 		}
 
 		resourceLabels: {
