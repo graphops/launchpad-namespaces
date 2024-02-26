@@ -158,7 +158,7 @@ templates:
     version: {{ .Values | get "celo" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "celo" dict | get "chartVersion" false ) ( .Values | get "celo" dict | get "chartUrl" false ) )) }}
-    version: "0.1.1-canary.6"
+    version: "0.1.1"
     {{- end }}
   
   proxyd:
@@ -173,7 +173,7 @@ templates:
     version: {{ .Values | get "proxyd" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "proxyd" dict | get "chartVersion" false ) ( .Values | get "proxyd" dict | get "chartUrl" false ) )) }}
-    version: "0.5.1-canary.3"
+    version: "0.5.1"
     {{- end }}
   
 releases:
