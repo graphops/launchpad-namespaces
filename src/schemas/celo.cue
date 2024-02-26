@@ -53,7 +53,7 @@ package LaunchpadNamespaces
 		releases: {
 			celo: {
 				chart: {_repositories.graphops.charts.celo}
-				_template: {version: "0.1.1-canary.4"}
+				_template: {version: "0.1.1-canary.6"}
 			}
 
 			proxyd: {
