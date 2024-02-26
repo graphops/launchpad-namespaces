@@ -158,7 +158,7 @@ templates:
     version: {{ .Values | get "erigon" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "erigon" dict | get "chartVersion" false ) ( .Values | get "erigon" dict | get "chartUrl" false ) )) }}
-    version: "0.9.7-canary.2"
+    version: "0.9.7-canary.4"
     {{- end }}
   
   nimbus:
