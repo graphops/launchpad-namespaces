@@ -96,7 +96,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
 				}
 				feature: #features.#arbitrum_nitro
-				_template: {version: "0.3.0"}
+				_template: {version: "0.3.1"}
 				_scale: true
 			}
 
@@ -121,7 +121,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/release":   "{{ $release }}"
 				}
 				feature: #features.#proxyd
-				_template: {version: "0.5.2-canary.1"}
+				_template: {version: "0.5.1"}
 				_scale: false
 			}
 		}
