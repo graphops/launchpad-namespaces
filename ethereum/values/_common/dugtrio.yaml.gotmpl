@@ -1,0 +1,71 @@
+# -- Affinity configuration for pods
+affinity: {}
+
+resources: {}
+# limits:
+#   cpu: 500m
+#   memory: 2Gi
+# requests:
+#   cpu: 300m
+#   memory: 1Gi
+
+serviceAccount:
+  # -- Specifies whether a service account should be created
+  create: true
+  # -- Annotations to add to the service account
+  annotations: {}
+  # -- The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+# -- HTTP port for dugtrio interface
+httpPort: 8080
+
+# -- An array of endpoints to use for dugtrio
+# -- url is the only required field
+endpoints:
+  {{ range $elem := until .Values.scaling.deployments }}
+  {{ $scalingIndex := (add $elem 1) }}
+  - name: nimbus-{{ $scalingIndex }}
+    url: "http://nimbus-{{ $scalingIndex }}-nimbus:5052"
+    headers: {}
+  {{ end }}
+
+# -- dugtrio pool scheduler mode
+dugtrioPoolScheduler: "rr"
+
+# -- number of blocks to keep in dugtrio cache to sort out forks
+dugtrioPoolFollowDistance: 10
+
+# -- max head distance for endpoints before not using them anymore
+dugtrioPoolMaxHeadDistance: 2
+
+# -- number of HTTP proxies in front of dugtrio
+dugtrioProxyCount: 1
+
+# -- timeout for dugtrio proxy calls
+dugtrioProxyCallTimeout: 55s
+
+# -- timeout for dugtrio sessions (used for rate limiting & endpoint stickiness)
+dugtrioProxySessionTimeout: 10m
+
+# -- reuse the same endpoint for sessions as long as available
+dugtrioProxyStickyEndpoint: true
+
+# -- dugtrio call rate limit (number of calls per second per ip)
+dugtrioProxyCallRateLimit: 100
+
+# -- dugtrio call rate burst (burst number of calls per ip)
+dugtrioProxyCallRateBurst: 1000
+
+# -- blocked proxy paths (regular expressions, eg. "^/eth/v[0-9]+/debug/.*")
+dugtrioProxyBlockedPaths: []
+
+# -- Enable dugtrio UI
+dugtrioFrontendEnabled: false
+
+# -- Dugtrio UI title
+dugtrioFrontendTitle: "Dugtrio"
+
+# -- Enable dugtrio metrics endpoint
+dugtrioMetricsEnabled: true

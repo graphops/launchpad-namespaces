@@ -61,7 +61,8 @@
       {"matchDepPatterns":"sealed-secrets\\/.*","registryUrls":["https://bitnami-labs.github.io/sealed-secrets"]},
       {"matchDepPatterns":"openebs\\/.*","registryUrls":["https://openebs.github.io/charts"]},
       {"matchDepPatterns":"openebs-zfs-localpv\\/.*","registryUrls":["https://openebs.github.io/zfs-localpv"]},
-      {"matchDepPatterns":"openebs-monitoring\\/.*","registryUrls":["https://openebs.github.io/monitoring/"]}
+      {"matchDepPatterns":"openebs-monitoring\\/.*","registryUrls":["https://openebs.github.io/monitoring/"]},
+      {"matchDepPatterns":"ethereum-helm-charts\\/.*","registryUrls":["https://ethpandaops.github.io/ethereum-helm-charts"]}
       // #### END Helm Chart repositories ####
     ],
 

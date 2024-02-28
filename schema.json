@@ -2047,6 +2047,7 @@
                         "required": [
                             "erigon",
                             "nimbus",
+                            "dugtrio",
                             "proxyd"
                         ],
                         "properties": {
@@ -2212,6 +2213,82 @@
                                     }
                                 }
                             },
+                            "dugtrio": {
+                                "type": "object",
+                                "required": [
+                                    "chart",
+                                    "labels",
+                                    "feature"
+                                ],
+                                "properties": {
+                                    "chart": {
+                                        "type": "object",
+                                        "required": [
+                                            "url",
+                                            "repository",
+                                            "description",
+                                            "name"
+                                        ],
+                                        "properties": {
+                                            "url": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "https://github.com/ethpandaops/dugtrio"
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "ethereum-helm-charts"
+                                                ]
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "Dugtrio is a load balancing proxy for the ethereum beacon chain."
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "dugtrio"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "labels": {
+                                        "type": "object",
+                                        "required": [
+                                            "app.launchpad.graphops.xyz/layer",
+                                            "app.launchpad.graphops.xyz/release",
+                                            "app.launchpad.graphops.xyz/component"
+                                        ],
+                                        "properties": {
+                                            "app.launchpad.graphops.xyz/layer": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "proxy"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/release": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $release }}"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/component": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $canonicalRelease }}"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "feature": {
+                                        "$ref": "#/components/schemas/namespaces.ethereum.features.dugtrio"
+                                    }
+                                }
+                            },
                             "proxyd": {
                                 "type": "object",
                                 "required": [
@@ -2351,17 +2428,22 @@
                                 "$ref": "#/components/schemas/namespaces.ethereum.features.nimbus"
                             },
                             {
+                                "$ref": "#/components/schemas/namespaces.ethereum.features.dugtrio"
+                            },
+                            {
                                 "$ref": "#/components/schemas/namespaces.ethereum.features.proxyd"
                             }
                         ],
                         "enum": [
                             [
                                 "nimbus",
+                                "dugtrio",
                                 "proxyd"
                             ]
                         ],
                         "default": [
                             "nimbus",
+                            "dugtrio",
                             "proxyd"
                         ]
                     },
@@ -2392,10 +2474,18 @@
                 "description": "ethereum namespace features schema",
                 "type": "object"
             },
+            "namespaces.ethereum.features.dugtrio": {
+                "description": "Deploy dugtrio",
+                "type": "string",
+                "enum": [
+                    "dugtrio"
+                ]
+            },
             "namespaces.ethereum.features.enum": {
                 "type": "string",
                 "enum": [
                     "nimbus",
+                    "dugtrio",
                     "proxyd"
                 ]
             },
@@ -2524,6 +2614,7 @@
                         },
                         "default": [
                             "nimbus",
+                            "dugtrio",
                             "proxyd"
                         ]
                     },
@@ -2531,6 +2622,9 @@
                         "$ref": "#/components/schemas/base.releaseValues"
                     },
                     "nimbus": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
+                    "dugtrio": {
                         "$ref": "#/components/schemas/base.releaseValues"
                     },
                     "scaling": {
@@ -5679,7 +5773,8 @@
                     "sealed-secrets",
                     "openebs",
                     "openebs-zfs-localpv",
-                    "openebs-monitoring"
+                    "openebs-monitoring",
+                    "ethereum-helm-charts"
                 ],
                 "properties": {
                     "graphops": {
@@ -6565,6 +6660,57 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "A set of Grafana dashboards and Prometheus alerts for OpenEBS that can be installed as a helm chart or imported as jsonnet mixin."
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "ethereum-helm-charts": {
+                        "type": "object",
+                        "required": [
+                            "url",
+                            "description",
+                            "charts"
+                        ],
+                        "properties": {
+                            "url": {
+                                "type": "string",
+                                "enum": [
+                                    "https://ethpandaops.github.io/ethereum-helm-charts"
+                                ]
+                            },
+                            "description": {
+                                "type": "string",
+                                "enum": [
+                                    "A set of Helm charts to run multiple components of the Ethereum blockchain on Kubernetes."
+                                ]
+                            },
+                            "charts": {
+                                "type": "object",
+                                "required": [
+                                    "dugtrio"
+                                ],
+                                "properties": {
+                                    "dugtrio": {
+                                        "type": "object",
+                                        "required": [
+                                            "url",
+                                            "description"
+                                        ],
+                                        "properties": {
+                                            "url": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "https://github.com/ethpandaops/dugtrio"
+                                                ]
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "Dugtrio is a load balancing proxy for the ethereum beacon chain."
                                                 ]
                                             }
                                         }

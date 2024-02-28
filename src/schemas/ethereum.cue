@@ -34,10 +34,13 @@ package LaunchpadNamespaces
 			// Use nimbus as consensus layer
 			#nimbus: "nimbus"
 
+			// Deploy dugtrio
+			#dugtrio: "dugtrio"
+
 			// Deploy proxyd
 			#proxyd: "proxyd"
 
-			#enum: ( #nimbus | #proxyd )
+			#enum: ( #nimbus | #dugtrio | #proxyd )
 		}
 
 		// ethereum scaling interface
@@ -79,7 +82,7 @@ package LaunchpadNamespaces
 			flavor: "mainnet"
 
 			#common: {
-				features: [#features.#nimbus, #features.#proxyd]
+				features: [#features.#nimbus, #features.#dugtrio, #features.#proxyd]
 				scaling: #scaling & {deployments: 1}
 			}
 
@@ -128,6 +131,18 @@ package LaunchpadNamespaces
 				feature: #features.#nimbus
 				_template: {version: "0.5.10-canary.1"}
 				_scale: true
+			}
+
+			dugtrio: {
+				chart: {_repositories["ethereum-helm-charts"].charts.dugtrio}
+				labels: {
+					"app.launchpad.graphops.xyz/layer":        "proxy"
+					"app.launchpad.graphops.xyz/release":      "{{ $release }}"
+					"app.launchpad.graphops.xyz/component":    "{{ $canonicalRelease }}"
+				}
+				feature: #features.#dugtrio
+				_template: {version: "0.0.3"}
+				_scale: false
 			}
 
 			proxyd: {

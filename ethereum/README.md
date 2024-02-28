@@ -7,6 +7,8 @@ This *Namespace* provides a suitable stack to operate Ethereum mainnet, göerli,
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Releases
+- [dugtrio](https://github.com/ethpandaops/dugtrio)<br>
+Dugtrio is a load balancing proxy for the ethereum beacon chain.
 - [erigon](https://github.com/ledgerwatch/erigon)<br>
 Erigon is an implementation of Ethereum (execution client with light client for consensus layer), on the efficiency frontier.
 - [nimbus](https://github.com/status-im/nimbus-eth2)<br>
@@ -109,6 +111,14 @@ helmfiles:
 | Key | Type | Default | Description |
 | :--- | :---: | :--- | :--- |
 annotations | object |  | Add annotations to release resources on this namespace |
+dugtrio | object |  |  |
+dugtrio.annotations | object |  | Add annotations to resources on this release |
+dugtrio.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
+dugtrio.chartVersion | string |  | Specify a specific chart version to use for this release |
+dugtrio.labels | object |  | Adds helmfile labels to this release |
+dugtrio.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+dugtrio.resourceLabels | object |  | Adds labels to resources on this release |
+dugtrio.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 erigon | object |  |  |
 erigon.annotations | object |  | Add annotations to resources on this release |
 erigon.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
@@ -117,7 +127,7 @@ erigon.labels | object |  | Adds helmfile labels to this release |
 erigon.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
 erigon.resourceLabels | object |  | Adds labels to resources on this release |
 erigon.values | (object *or* list of objects) |  | Pass values to the release helm chart |
-features | list of strings | [nimbus, proxyd] | *enum of:&nbsp;&nbsp;(nimbus \| proxyd)* |
+features | list of strings | [nimbus, dugtrio, proxyd] | *enum of:&nbsp;&nbsp;(nimbus \| dugtrio \| proxyd)* |
 flavor | string |  |  |
 kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
 labels | object |  | Adds helmfile labels to releases on this namespace |

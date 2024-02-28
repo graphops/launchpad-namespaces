@@ -226,6 +226,19 @@ package LaunchpadNamespaces
 			}
 		}
 	}
+
+	"ethereum-helm-charts": {
+		url: "https://ethpandaops.github.io/ethereum-helm-charts"
+		description: """
+			A set of Helm charts to run multiple components of the Ethereum blockchain on Kubernetes.
+			"""
+		charts: {
+			"dugtrio": {
+				url:         "https://github.com/ethpandaops/dugtrio"
+				description: "Dugtrio is a load balancing proxy for the ethereum beacon chain."
+			}
+		}
+	}
 }
 
 // instantiate a #repositories object for internal usage

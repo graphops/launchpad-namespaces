@@ -176,6 +176,8 @@ Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by
 ### [:ethereum](/ethereum)
 This *Namespace* provides a suitable stack to operate Ethereum mainnet, göerli, holesky and sepolia archive nodes.
 
+- [dugtrio](https://github.com/ethpandaops/dugtrio)<br>
+Dugtrio is a load balancing proxy for the ethereum beacon chain.
 - [erigon](https://github.com/ledgerwatch/erigon)<br>
 Erigon is an implementation of Ethereum (execution client with light client for consensus layer), on the efficiency frontier.
 - [nimbus](https://github.com/status-im/nimbus-eth2)<br>

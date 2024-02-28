@@ -1,5 +1,5 @@
 #namespace defaults
-{{ $_ := set .Values "_defaults" ( `{"flavor":"mainnet","mainnet":{"targetNamespace":"eth-mainnet","features":["nimbus","proxyd"],"scaling":{"deployments":1}},"goerli":{"targetNamespace":"eth-goerli","features":["nimbus","proxyd"],"scaling":{"deployments":1}},"holesky":{"targetNamespace":"eth-holesky","features":["nimbus","proxyd"],"scaling":{"deployments":1}},"common":{"features":["nimbus","proxyd"],"scaling":{"deployments":1}},"sepolia":{"targetNamespace":"eth-sepolia","features":["nimbus","proxyd"],"scaling":{"deployments":1}}}` | fromJson ) }}
+{{ $_ := set .Values "_defaults" ( `{"flavor":"mainnet","mainnet":{"targetNamespace":"eth-mainnet","features":["nimbus","dugtrio","proxyd"],"scaling":{"deployments":1}},"goerli":{"targetNamespace":"eth-goerli","features":["nimbus","dugtrio","proxyd"],"scaling":{"deployments":1}},"holesky":{"targetNamespace":"eth-holesky","features":["nimbus","dugtrio","proxyd"],"scaling":{"deployments":1}},"common":{"features":["nimbus","dugtrio","proxyd"],"scaling":{"deployments":1}},"sepolia":{"targetNamespace":"eth-sepolia","features":["nimbus","dugtrio","proxyd"],"scaling":{"deployments":1}}}` | fromJson ) }}
 #set default flavor when missing
 {{ if not ( hasKey .Values "flavor" ) }}
 {{ $_ := set .Values "flavor" "mainnet" }}
@@ -140,6 +140,8 @@ commonLabels:
 repositories:
   - name: graphops
     url: https://graphops.github.io/launchpad-charts/canary
+  - name: ethereum-helm-charts
+    url: https://ethpandaops.github.io/ethereum-helm-charts
   
 templates:
   defaults:
@@ -174,6 +176,21 @@ templates:
     {{- end }}
     {{- if (not (or ( .Values | get "nimbus" dict | get "chartVersion" false ) ( .Values | get "nimbus" dict | get "chartUrl" false ) )) }}
     version: "0.5.10-canary.1"
+    {{- end }}
+  
+  dugtrio:
+    {{- if ( .Values | get "dugtrio" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "dugtrio" | get "chartUrl" }}
+    {{- else }}
+    chart: "ethereum-helm-charts/dugtrio"
+    {{- end }}
+    inherit:
+    - template: "defaults"
+    {{- if ( .Values | get "dugtrio" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "dugtrio" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "dugtrio" dict | get "chartVersion" false ) ( .Values | get "dugtrio" dict | get "chartUrl" false ) )) }}
+    version: "0.0.3"
     {{- end }}
   
   proxyd:
@@ -283,6 +300,48 @@ releases:
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
   {{- end -}}
+  {{- end -}}
+  {{ if has "dugtrio" ( .Values | get "features" list ) }}
+  {{- $canonicalRelease := "dugtrio" }}
+  {{- $release := "dugtrio" }}
+  {{- $_templatedValue_0 :=  $canonicalRelease  }}
+  {{- $_templatedValue_1 :=  $release  }}
+  {{- $_releaseResourceLabels := dict 
+  `app.launchpad.graphops.xyz/layer` `proxy`
+  `app.launchpad.graphops.xyz/component` $_templatedValue_0
+  `app.launchpad.graphops.xyz/release` $_templatedValue_1
+  }}
+  {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
+  - name: "{{ $release }}"
+    inherit:
+    - template: "{{ $canonicalRelease }}"
+    labels:
+      app.launchpad.graphops.xyz/layer: proxy
+      app.launchpad.graphops.xyz/release: '{{ $release }}'
+      app.launchpad.graphops.xyz/component: '{{ $canonicalRelease }}'
+      
+    {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "labels" dict ) }}
+      {{ $key }}: {{ $value }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- if (ne $release $canonicalRelease) }}
+    {{- range $key,$value := ( $.Values | get $release dict | get "labels" dict ) }}
+      {{ $key }}: {{ $value }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- end }}
+    {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "resourceLabels" dict ) }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- if (ne $release $canonicalRelease) }}
+    {{- range $key,$value := ( $.Values | get $release dict | get "resourceLabels" dict ) }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- end }}
+    {{- tpl $_tplTransforms (dict "Values" $.Values "release" $release "canonicalRelease" $canonicalRelease "resourceLabels" $_releaseResourceLabels  )  | indent 4 -}}
+    values:
+    {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
+  
   {{- end -}}
   {{ if has "proxyd" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "proxyd" }}
