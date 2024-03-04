@@ -96,7 +96,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
 				}
 				feature: #features.#arbitrum_nitro
-				_template: {version: "0.3.2-canary.2"}
+				_template: {version: "0.3.2-canary.3"}
 				_scale: true
 			}
 
