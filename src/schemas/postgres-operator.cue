@@ -37,7 +37,7 @@ package LaunchpadNamespaces
 			"postgres-operator": {
 				chart: {_repositories["postgres-operator-charts"].charts["postgres-operator"]}
 				_template: {
-					version: "1.10.1"
+					version: "1.11.0"
 					// so that it can be installed in the absence of the CRDs
 					disableValidationOnInstall: true
 				}
