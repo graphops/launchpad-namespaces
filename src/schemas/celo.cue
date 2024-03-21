@@ -64,7 +64,7 @@ package LaunchpadNamespaces
 
 		// celo helmfile API
 		#helmfiles: #base.#helmfiles & {
-			path:    =~"*github.com/graphops/launchpad-namespaces.git@celo/helmfile.yaml*"
+			path: =~"*github.com/graphops/launchpad-namespaces.git@celo/helmfile.yaml*"
 			values?: #celo.#values | [...#celo.#values]
 		}
 

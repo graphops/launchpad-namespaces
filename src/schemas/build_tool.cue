@@ -14,29 +14,29 @@ command: {
 		var: {
 			namespace: string @tag(namespace)
 		}
-		_out:  _helmfile.#render & {_namespace: var.namespace}
-		print: cli.Print & {text:               _out.out}
+		_out: _helmfile.#render & {_namespace: var.namespace}
+		print: cli.Print & {text: _out.out}
 	}
 	"build:renovate": {
-		_out:  _renovate.render
+		_out:                     _renovate.render
 		print: cli.Print & {text: _out.out}
 	}
 }
 
 _renovate: {
 	_#repo: {
-		_repo:   string
-		_url:    _repositories[_repo].url
+		_repo: string
+		_url:  _repositories[_repo].url
 		_struct: {
 			matchDepPatterns: "\(_repo)\\/.*"
 			registryUrls: ["\(_url)"]
 		} & {if _repositories[_repo]._renovate != _|_ {_repositories[_repo]._renovate}}
 		render: json.Marshal(_struct)
-		out:    strings.Join([ for line in strings.Split(render, "\n") {"      " + line}], "\n")
+		out: strings.Join([for line in strings.Split(render, "\n") {"      " + line}], "\n")
 	}
 	render: {
-		_blocks: [ for repoName, _ in _repositories {_#repo & {_repo: repoName}}]
-		out: strings.Join([ for block in _blocks {block.out}], ",\n")
+		_blocks: [for repoName, _ in _repositories {_#repo & {_repo: repoName}}]
+		out: strings.Join([for block in _blocks {block.out}], ",\n")
 	}
 }
 
@@ -53,16 +53,16 @@ _helmfile: {
 		kubeVersion: _helmfile._kubeVersion.out
 
 		_setDefaults: _helmfile._#setDefaults & {_namespace: this}
-		setDefaults:  _setDefaults.out
+		setDefaults: _setDefaults.out
 
 		_defaultFlavor: _helmfile._#defaultFlavor & {_namespace: this}
-		defaultFlavor:  _defaultFlavor.out
+		defaultFlavor: _defaultFlavor.out
 
 		_defaultFeatures: _helmfile._#defaultFeatures & {_namespace: this}
-		defaultFeatures:  _defaultFeatures.out
+		defaultFeatures: _defaultFeatures.out
 
 		_defaultScaling: _helmfile._#defaultScaling & {_namespace: this}
-		defaultScaling:  _defaultScaling.out
+		defaultScaling: _defaultScaling.out
 
 		_environmentFlavor: _helmfile._#environment & {
 			_namespace:  this
@@ -71,21 +71,21 @@ _helmfile: {
 		environmentFlavor: _environmentFlavor.out
 
 		_environment: _helmfile._#environment & {_namespace: this}
-		environment:  _environment.out
+		environment: _environment.out
 
 		_defaultNamespace: _helmfile._#defaultNamespace & {_namespace: this}
-		defaultNamespace:  _defaultNamespace.out
+		defaultNamespace: _defaultNamespace.out
 
 		_labels: _helmfile._#labels & {_namespace: this}
-		labels:  _labels.out
+		labels: _labels.out
 
 		_templates: _helmfile._#templates & {_namespace: this}
-		templates:  _templates.out
+		templates: _templates.out
 
 		_releases: _helmfile._#releases & {_namespace: this}
-		releases:  _releases.out
+		releases: _releases.out
 
-		_repos:       _helmfile._repos & {_namespace: this}
+		_repos: _helmfile._repos & {_namespace: this}
 		repositories: _repos.out
 
 		out: strings.Join([
@@ -127,8 +127,8 @@ _helmfile: {
 			}
 		}
 
-		_render:   yaml.Marshal([ for repoName, repo in repositoriesSet {repo}])
-		_indented: strings.Join([ for line in strings.Split(_render, "\n") {"  " + line}], "\n")
+		_render: yaml.Marshal([for repoName, repo in repositoriesSet {repo}])
+		_indented: strings.Join([for line in strings.Split(_render, "\n") {"  " + line}], "\n")
 
 		out: strings.Join(["repositories:", _indented], "\n")
 	}
@@ -264,7 +264,7 @@ _helmfile: {
 			}
 		}
 
-		_yaml:       yaml.Marshal({environments: "{{ .Environment.Name }}": values: [ for key, value in _variables {(key): value}]})
+		_yaml: yaml.Marshal({environments: "{{ .Environment.Name }}": values: [for key, value in _variables {(key): value}]})
 		_yamlCleanP: strings.Replace(_yaml, "'{{", "{{", -1)
 		_yamlCleanS: strings.Replace(_yamlCleanP, "}}'", "}}", -1)
 		_yamlClean:  _yamlCleanS
@@ -298,15 +298,15 @@ _helmfile: {
 			for key, value in _struct if !strings.Contains("\(value)", "{{") {"\(key)": "`\(key)` `\(value)`"}
 		}
 
-		_templatedElementsList: list.SortStrings([ for key, value in _struct if strings.Contains("\(value)", "{{") {"\(key)"}])
+		_templatedElementsList: list.SortStrings([for key, value in _struct if strings.Contains("\(value)", "{{") {"\(key)"}])
 
 		_elements: {
 			for index, key in _templatedElementsList {"\(key)": "`\(key)` $_templatedValue_\(index)"}
 		}
 
-		_elementsStrings: [ for key, value in _elements {"\(value)"}]
+		_elementsStrings: [for key, value in _elements {"\(value)"}]
 
-		_variableDecl: [ for index, key in _templatedElementsList let value = strings.Replace(strings.Replace(_struct[key], "{{", "", 1), "}}", "", 1) {
+		_variableDecl: [for index, key in _templatedElementsList let value = strings.Replace(strings.Replace(_struct[key], "{{", "", 1), "}}", "", 1) {
 			"""
 		{{- $_templatedValue_\(index) := \(value) }}
 		"""
@@ -324,7 +324,7 @@ _helmfile: {
 		}
 
 		if _indent > 0 {
-			out: strings.Join([ for line in strings.Split(_out, "\n") {" "*_indent + line}], "\n")
+			out: strings.Join([for line in strings.Split(_out, "\n") {" "*_indent + line}], "\n")
 		}
 	}
 
@@ -333,7 +333,7 @@ _helmfile: {
 		_struct: {...}
 		_indent: *0 | int
 
-		_yaml:       yaml.Marshal({"\(_name)": _struct})
+		_yaml: yaml.Marshal({"\(_name)": _struct})
 		_yamlCleanP: strings.Replace(_yaml, "'{{", "{{", -1)
 		_yamlCleanS: strings.Replace(_yamlCleanP, "}}'", "}}", -1)
 		_yamlClean:  _yamlCleanS
@@ -345,7 +345,7 @@ _helmfile: {
 		}
 
 		if _indent > 0 {
-			out: strings.Join([ for line in strings.Split(_out, "\n") {" "*_indent + line}], "\n")
+			out: strings.Join([for line in strings.Split(_out, "\n") {" "*_indent + line}], "\n")
 		}
 	}
 
@@ -445,8 +445,8 @@ _helmfile: {
 			}
 		}
 
-		_allblocks:      strings.Join([ for name, block in _blocks {block}], "\n")
-		_indentedBlocks: strings.Join([ for line in strings.Split(_allblocks, "\n") {"  " + line}], "\n")
+		_allblocks: strings.Join([for name, block in _blocks {block}], "\n")
+		_indentedBlocks: strings.Join([for line in strings.Split(_allblocks, "\n") {"  " + line}], "\n")
 
 		out: strings.Join(["templates:", _indentedBlocks], "\n")
 	}
@@ -532,9 +532,9 @@ _helmfile: {
 				_props: {"\(releaseName)": {#properties: {
 					...
 					_labels: {for key, value in release.labels {"\(key)": value}}
-					_yamlLabels:     yaml.Marshal(_labels)
-					_indentedLabels: strings.Join([ for line in strings.Split(_yamlLabels, "\n") {"    " + line}], "\n")
-					_releaseLabels:  strings.Join(["labels:", _indentedLabels], "\n")
+					_yamlLabels: yaml.Marshal(_labels)
+					_indentedLabels: strings.Join([for line in strings.Split(_yamlLabels, "\n") {"    " + line}], "\n")
+					_releaseLabels: strings.Join(["labels:", _indentedLabels], "\n")
 				}}}
 			}
 
@@ -578,17 +578,17 @@ _helmfile: {
 			if release.feature != _|_ {
 				_blocks: {
 					"\(releaseName)": strings.Join([
-								"{{ if has \"\(release.feature)\" ( .Values | get \"features\" list ) }}",
-								temp.out,
-								"{{- end -}}",
+						"{{ if has \"\(release.feature)\" ( .Values | get \"features\" list ) }}",
+						temp.out,
+						"{{- end -}}",
 					], "\n")
 				}
 
 			}
 		}
 
-		_allblocks:      strings.Join([ for name, block in _blocks {block}], "\n")
-		_indentedBlocks: strings.Join([ for line in strings.Split(_allblocks, "\n") {"  " + line}], "\n")
+		_allblocks: strings.Join([for name, block in _blocks {block}], "\n")
+		_indentedBlocks: strings.Join([for line in strings.Split(_allblocks, "\n") {"  " + line}], "\n")
 
 		out: strings.Join(["releases:", _indentedBlocks], "\n")
 	}
@@ -615,6 +615,9 @@ _templateBlocks: {
 		    path: spec/template/metadata/annotations
 		    create: true
 		{{- end }}
+		  - path: spec/volumeClaimTemplates[]/metadata/annotations
+		    kind: StatefulSet
+		    create: true
 		- apiVersion: builtin
 		  kind: LabelTransformer
 		  metadata:
@@ -629,6 +632,9 @@ _templateBlocks: {
 		    path: spec/template/metadata/labels
 		    create: true
 		{{- end }}
+		  - path: spec/volumeClaimTemplates[]/metadata/labels
+		    kind: StatefulSet
+		    create: true
 		`) -}}
 		"""
 

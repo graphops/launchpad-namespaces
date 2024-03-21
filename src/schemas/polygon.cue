@@ -35,7 +35,7 @@ package LaunchpadNamespaces
 
 		// polygon helmfile API
 		#helmfiles: #base.#helmfiles & {
-			path:    =~"*github.com/graphops/launchpad-namespaces.git@polygon/helmfile.yaml*"
+			path: =~"*github.com/graphops/launchpad-namespaces.git@polygon/helmfile.yaml*"
 			values?: #polygon.#values | [...#polygon.#values]
 		}
 

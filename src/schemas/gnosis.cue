@@ -63,7 +63,7 @@ package LaunchpadNamespaces
 
 		// gnosis helmfile API
 		#helmfiles: #base.#helmfiles & {
-			path:    =~"*github.com/graphops/launchpad-namespaces.git@gnosis/helmfile.yaml*"
+			path: =~"*github.com/graphops/launchpad-namespaces.git@gnosis/helmfile.yaml*"
 			values?: #gnosis.#values | [...#gnosis.#values]
 		}
 

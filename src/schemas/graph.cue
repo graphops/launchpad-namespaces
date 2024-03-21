@@ -53,7 +53,7 @@ package LaunchpadNamespaces
 
 		// Graph helmfile API
 		#helmfiles: #base.#helmfiles & {
-			path:    =~"*github.com/graphops/launchpad-namespaces.git@graph/helmfile.yaml*"
+			path: =~"*github.com/graphops/launchpad-namespaces.git@graph/helmfile.yaml*"
 			values?: #graph.#values | [...#graph.#values]
 		}
 

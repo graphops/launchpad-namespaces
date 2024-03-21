@@ -63,8 +63,8 @@ info: {
 
 // template for instantiating namespace ojects for internal usage
 _#namespaceTemplate: {
-	_key:   _
-	meta:   _key.meta
+	_key: _
+	meta: _key.meta
 	values: _key.#values & {
 		targetNamespace: _key.#values.targetNamespace
 		if _key.#features != _|_ {features: [..._key.#features.#enum]}
