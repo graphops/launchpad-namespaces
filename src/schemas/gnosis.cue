@@ -120,7 +120,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/release":   "{{ $release }}"
 					"app.launchpad.graphops.xyz/component": "{{ $canonicalRelease }}"
 				}
-				_template: {version: "0.5.2"}
+				_template: {version: "0.5.3-canary.2"}
 				_scale: false
 			}
 		}
