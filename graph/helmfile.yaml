@@ -43,6 +43,9 @@ transformers:
     path: spec/template/metadata/annotations
     create: true
 {{- end }}
+  - path: spec/volumeClaimTemplates[]/metadata/annotations
+    kind: StatefulSet
+    create: true
 - apiVersion: builtin
   kind: LabelTransformer
   metadata:
@@ -57,6 +60,9 @@ transformers:
     path: spec/template/metadata/labels
     create: true
 {{- end }}
+  - path: spec/volumeClaimTemplates[]/metadata/labels
+    kind: StatefulSet
+    create: true
 `) -}}
 {{- $_tplReleaseValues := (print `
 {{- if ( .Values | get .release dict | get "mergeValues" true ) -}}

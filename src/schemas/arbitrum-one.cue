@@ -62,7 +62,7 @@ package LaunchpadNamespaces
 
 		// arbitrum-one helmfile API
 		#helmfiles: #base.#helmfiles & {
-			path:    =~"*github.com/graphops/launchpad-namespaces.git@arbitrum-one/helmfile.yaml*"
+			path: =~"*github.com/graphops/launchpad-namespaces.git@arbitrum-one/helmfile.yaml*"
 			values?: #arbitrumOne.#values | [...#arbitrumOne.#values]
 		}
 

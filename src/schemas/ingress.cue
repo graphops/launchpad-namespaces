@@ -38,7 +38,7 @@ package LaunchpadNamespaces
 		}
 
 		#helmfiles: #base.#helmfiles & {
-			path:    =~"*github.com/graphops/launchpad-namespaces.git@ingress/helmfile.yaml*"
+			path: =~"*github.com/graphops/launchpad-namespaces.git@ingress/helmfile.yaml*"
 			values?: #ingress.#values | [...#ingress.#values]
 		}
 

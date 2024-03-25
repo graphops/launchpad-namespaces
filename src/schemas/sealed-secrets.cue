@@ -23,7 +23,7 @@ package LaunchpadNamespaces
 		}
 
 		#helmfiles: #base.#helmfiles & {
-			path:    =~"*github.com/graphops/launchpad-namespaces.git@sealed-secrets/helmfile.yaml*"
+			path: =~"*github.com/graphops/launchpad-namespaces.git@sealed-secrets/helmfile.yaml*"
 			values?: #values | [...#values]
 		}
 

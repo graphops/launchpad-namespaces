@@ -71,7 +71,7 @@ package LaunchpadNamespaces
 
 		// ethereum helmfile API
 		#helmfiles: #base.#helmfiles & {
-			path:    =~"*github.com/graphops/launchpad-namespaces.git@ethereum/helmfile.yaml*"
+			path: =~"*github.com/graphops/launchpad-namespaces.git@ethereum/helmfile.yaml*"
 			values?: #ethereum.#values | [...#ethereum.#values]
 		}
 
