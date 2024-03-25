@@ -185,7 +185,7 @@ templates:
     version: {{ .Values | get "heimdall" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "heimdall" dict | get "chartVersion" false ) ( .Values | get "heimdall" dict | get "chartUrl" false ) )) }}
-    version: "1.1.5-canary.4"
+    version: "1.1.5-canary.6"
     {{- end }}
   
   proxyd:
