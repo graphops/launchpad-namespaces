@@ -1,5 +1,5 @@
 backends:
-  {{ range $elem := until .Values.scaling.deployments }}
+  {{ range $elem := until ( .Values.scaling | get "celo" dict | get "deployments" .Values.scaling.deployments ) }}
   {{ $scalingIndex := (add $elem 1) }}
   celo-archive-trace-{{ $scalingIndex }}:
     enabled: true
