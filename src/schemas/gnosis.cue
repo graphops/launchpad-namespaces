@@ -43,6 +43,14 @@ package LaunchpadNamespaces
 			deployments: *1 | ( int & >=1 )
 			// A beggining port for the range to use in P2P NodePorts
 			startP2PPort?: int
+
+			erigon: {
+				deployments?: int & >=1
+			}
+
+			lighthouse: {
+				deployments?: int & >=1
+			}
 		}
 
 		// gnosis namespace values schema
@@ -70,17 +78,18 @@ package LaunchpadNamespaces
 		defaults: {
 			flavor: "mainnet"
 
-			#common: {}
+			#common: {
+				features: [#features.#erigon, #features.#lighthouse, #features.#proxyd]
+				scaling: #scaling & {deployments: 1}
+			}
 
 			mainnet: {
 				#common
-				features: [#features.#erigon, #features.#lighthouse, #features.#proxyd]
 				targetNamespace: "gnosis-mainnet"
 			}
 
 			chiado: {
 				#common
-				features: [#features.#erigon, #features.#lighthouse, #features.#proxyd]
 				targetNamespace: "gnosis-chiado"
 			}
 		}
@@ -96,7 +105,6 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
 				}
 				_template: {version: "0.9.9-canary.1"}
-				_scale: true
 			}
 
 			lighthouse: {
@@ -109,7 +117,6 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
 				}
 				_template: {version: "0.5.5-canary.1"}
-				_scale: true
 			}
 
 			proxyd: {
@@ -121,7 +128,6 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/component": "{{ $canonicalRelease }}"
 				}
 				_template: {version: "0.5.3-canary.2"}
-				_scale: false
 			}
 		}
 

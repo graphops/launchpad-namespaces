@@ -3,7 +3,7 @@ nitro:
   config:
     parentChainUrl: http://your-eth-mainnet-url:8545  ## changeme
     parentChainBeaconUrl: http://your-eth-consensus-node-url:5052  ## changeme
-    classicUrl: http://arbitrum-classic-{{ $scalingIndex }}:8547
+    classicUrl: http://proxyd-classic-proxyd:8545
     chain: 42161
     extraArgs:
       - --ws.addr=0.0.0.0

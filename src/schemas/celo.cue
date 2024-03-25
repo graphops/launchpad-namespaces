@@ -39,6 +39,10 @@ package LaunchpadNamespaces
 			deployments: *1 | ( int & >=1)
 			// A beggining port for the range to use in P2P NodePorts
 			startP2PPort?: int
+
+			celo: {
+				deployments?: int & >=1
+			}
 		}
 
 		// celo namespace values schema
@@ -102,7 +106,6 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
 				}
 				_template: {version: "0.1.2"}
-				_scale: true
 			}
 
 			proxyd: {
@@ -114,7 +117,6 @@ package LaunchpadNamespaces
 				}
 				feature: #features.#proxyd
 				_template: {version: "0.5.3-canary.2"}
-				_scale: false
 			}
 		}
 

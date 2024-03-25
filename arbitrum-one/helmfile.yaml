@@ -1,5 +1,5 @@
 #namespace defaults
-{{ $_ := set .Values "_defaults" ( `{"flavor":"mainnet","mainnet":{"targetNamespace":"arbitrum-one-mainnet","scaling":{"deployments":1},"features":["proxyd","arbitrum_classic","arbitrum_nitro"]},"common":{"scaling":{"deployments":1}},"sepolia":{"targetNamespace":"arbitrum-one-sepolia","scaling":{"deployments":1},"features":["proxyd","arbitrum_nitro"]}}` | fromJson ) }}
+{{ $_ := set .Values "_namespaceDefaults" ( `{"flavor":"mainnet","mainnet":{"targetNamespace":"arbitrum-one-mainnet","scaling":{"deployments":1,"arbitrum-classic":{},"arbitrum-nitro":{}},"features":["proxyd-classic","proxyd-nitro","arbitrum-classic","arbitrum-nitro"]},"common":{"scaling":{"deployments":1,"arbitrum-classic":{},"arbitrum-nitro":{}}},"sepolia":{"targetNamespace":"arbitrum-one-sepolia","scaling":{"deployments":1,"arbitrum-classic":{},"arbitrum-nitro":{}},"features":["proxyd-nitro","arbitrum-nitro"]}}` | fromJson ) }}
 #set default flavor when missing
 {{ if not ( hasKey .Values "flavor" ) }}
 {{ $_ := set .Values "flavor" "mainnet" }}
@@ -9,12 +9,18 @@ environments:
   {{ .Environment.Name }}:
     values:
       - flavor: {{ .Values.flavor }}
-      - _defaults: {{ .Values._defaults | toYaml | nindent 10 }}
+      - _namespaceDefaults: {{ .Values._namespaceDefaults | toYaml | nindent 10 }}
+
+---
+environments:
+  {{ .Environment.Name }}:
+    values:
+      - _defaults: {{ .Values._namespaceDefaults | get .Values.flavor | toYaml | nindent 10 }}
 
 ---
 # Define default features when undefined
 {{ if not (hasKey .Values "features") }}
-{{ $_ := set .Values "features" ( .Values._defaults | get .Values.flavor | get "features" ) }}
+{{ $_ := set .Values "features" .Values._defaults.features }}
 {{ end }}
 
 #set default number of deployments when missing
@@ -22,7 +28,7 @@ environments:
 {{ $_ := set .Values "scaling" dict }}
 {{ end }}
 {{ if not ( hasKey ( .Values | get "scaling" dict ) "deployments" ) }}
-{{ $_ := set .Values.scaling "deployments" ( .Values._defaults | get .Values.flavor | get "scaling" | get "deployments" ) }}
+{{ $_ := set .Values.scaling "deployments" .Values._defaults.scaling.deployments }}
 {{ end }}
 
 environments:
@@ -114,7 +120,7 @@ kubeVersion: {{ .Values.kubeVersion }}
 {{ end }}
 
 #set default namespace
-{{ $_defaultNamespace := .Values._defaults | get .Values.flavor | get "targetNamespace" }}
+{{ $_defaultNamespace := .Values._defaults.targetNamespace }}
 
 {{- $_templatedValue_0 :=  .Values.flavor  }}
 {{- $_commonLabels := dict 
@@ -182,25 +188,40 @@ templates:
     version: "0.2.0"
     {{- end }}
   
-  proxyd:
-    {{- if ( .Values | get "proxyd" dict | get "chartUrl" false ) }}
-    chart: {{ .Values | get "proxyd" | get "chartUrl" }}
+  proxyd-nitro:
+    {{- if ( .Values | get "proxyd-nitro" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "proxyd-nitro" | get "chartUrl" }}
     {{- else }}
     chart: "graphops/proxyd"
     {{- end }}
     inherit:
     - template: "defaults"
-    {{- if ( .Values | get "proxyd" dict | get "chartVersion" false ) }}
-    version: {{ .Values | get "proxyd" | get "chartVersion" }}
+    {{- if ( .Values | get "proxyd-nitro" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "proxyd-nitro" | get "chartVersion" }}
     {{- end }}
-    {{- if (not (or ( .Values | get "proxyd" dict | get "chartVersion" false ) ( .Values | get "proxyd" dict | get "chartUrl" false ) )) }}
+    {{- if (not (or ( .Values | get "proxyd-nitro" dict | get "chartVersion" false ) ( .Values | get "proxyd-nitro" dict | get "chartUrl" false ) )) }}
+    version: "0.5.3-canary.2"
+    {{- end }}
+  
+  proxyd-classic:
+    {{- if ( .Values | get "proxyd-classic" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "proxyd-classic" | get "chartUrl" }}
+    {{- else }}
+    chart: "graphops/proxyd"
+    {{- end }}
+    inherit:
+    - template: "defaults"
+    {{- if ( .Values | get "proxyd-classic" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "proxyd-classic" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "proxyd-classic" dict | get "chartVersion" false ) ( .Values | get "proxyd-classic" dict | get "chartUrl" false ) )) }}
     version: "0.5.3-canary.2"
     {{- end }}
   
 releases:
-  {{ if has "arbitrum_nitro" ( .Values | get "features" list ) }}
+  {{ if has "arbitrum-nitro" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "arbitrum-nitro" }}
-  {{- range $index := until .Values.scaling.deployments }}
+  {{- range $index := until (.Values.scaling | get $canonicalRelease dict | get "deployments" .Values.scaling.deployments) }}
   {{- $deploymentIndex := (add . 1) }}
   {{- $release := (printf "%s%v" "arbitrum-nitro-" $deploymentIndex) }}
   {{- $_templatedValue_0 :=  $canonicalRelease  }}
@@ -245,9 +266,9 @@ releases:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
   {{- end -}}
   {{- end -}}
-  {{ if has "arbitrum_classic" ( .Values | get "features" list ) }}
+  {{ if has "arbitrum-classic" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "arbitrum-classic" }}
-  {{- range $index := until .Values.scaling.deployments }}
+  {{- range $index := until (.Values.scaling | get $canonicalRelease dict | get "deployments" .Values.scaling.deployments) }}
   {{- $deploymentIndex := (add . 1) }}
   {{- $release := (printf "%s%v" "arbitrum-classic-" $deploymentIndex) }}
   {{- $_templatedValue_0 :=  $canonicalRelease  }}
@@ -292,9 +313,51 @@ releases:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
   {{- end -}}
   {{- end -}}
-  {{ if has "proxyd" ( .Values | get "features" list ) }}
-  {{- $canonicalRelease := "proxyd" }}
-  {{- $release := "proxyd" }}
+  {{ if has "proxyd-nitro" ( .Values | get "features" list ) }}
+  {{- $canonicalRelease := "proxyd-nitro" }}
+  {{- $release := "proxyd-nitro" }}
+  {{- $_templatedValue_0 :=  $canonicalRelease  }}
+  {{- $_templatedValue_1 :=  $release  }}
+  {{- $_releaseResourceLabels := dict 
+  `app.launchpad.graphops.xyz/layer` `proxy`
+  `app.launchpad.graphops.xyz/component` $_templatedValue_0
+  `app.launchpad.graphops.xyz/release` $_templatedValue_1
+  }}
+  {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
+  - name: "{{ $release }}"
+    inherit:
+    - template: "{{ $canonicalRelease }}"
+    labels:
+      app.launchpad.graphops.xyz/layer: proxy
+      app.launchpad.graphops.xyz/component: '{{ $canonicalRelease }}'
+      app.launchpad.graphops.xyz/release: '{{ $release }}'
+      
+    {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "labels" dict ) }}
+      {{ $key }}: {{ $value }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- if (ne $release $canonicalRelease) }}
+    {{- range $key,$value := ( $.Values | get $release dict | get "labels" dict ) }}
+      {{ $key }}: {{ $value }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- end }}
+    {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "resourceLabels" dict ) }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- if (ne $release $canonicalRelease) }}
+    {{- range $key,$value := ( $.Values | get $release dict | get "resourceLabels" dict ) }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- end }}
+    {{- tpl $_tplTransforms (dict "Values" $.Values "release" $release "canonicalRelease" $canonicalRelease "resourceLabels" $_releaseResourceLabels  )  | indent 4 -}}
+    values:
+    {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
+  
+  {{- end -}}
+  {{ if has "proxyd-classic" ( .Values | get "features" list ) }}
+  {{- $canonicalRelease := "proxyd-classic" }}
+  {{- $release := "proxyd-classic" }}
   {{- $_templatedValue_0 :=  $canonicalRelease  }}
   {{- $_templatedValue_1 :=  $release  }}
   {{- $_releaseResourceLabels := dict 

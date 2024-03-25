@@ -837,7 +837,10 @@
                                         "type": "array",
                                         "items": [
                                             {
-                                                "$ref": "#/components/schemas/namespaces.arbitrumOne.features.proxyd"
+                                                "$ref": "#/components/schemas/namespaces.arbitrumOne.features.proxyd_classic"
+                                            },
+                                            {
+                                                "$ref": "#/components/schemas/namespaces.arbitrumOne.features.proxyd_nitro"
                                             },
                                             {
                                                 "$ref": "#/components/schemas/namespaces.arbitrumOne.features.arbitrum_classic"
@@ -848,15 +851,17 @@
                                         ],
                                         "enum": [
                                             [
-                                                "proxyd",
-                                                "arbitrum_classic",
-                                                "arbitrum_nitro"
+                                                "proxyd-classic",
+                                                "proxyd-nitro",
+                                                "arbitrum-classic",
+                                                "arbitrum-nitro"
                                             ]
                                         ],
                                         "default": [
-                                            "proxyd",
-                                            "arbitrum_classic",
-                                            "arbitrum_nitro"
+                                            "proxyd-classic",
+                                            "proxyd-nitro",
+                                            "arbitrum-classic",
+                                            "arbitrum-nitro"
                                         ]
                                     }
                                 },
@@ -885,7 +890,7 @@
                                         "type": "array",
                                         "items": [
                                             {
-                                                "$ref": "#/components/schemas/namespaces.arbitrumOne.features.proxyd"
+                                                "$ref": "#/components/schemas/namespaces.arbitrumOne.features.proxyd_nitro"
                                             },
                                             {
                                                 "$ref": "#/components/schemas/namespaces.arbitrumOne.features.arbitrum_nitro"
@@ -893,13 +898,13 @@
                                         ],
                                         "enum": [
                                             [
-                                                "proxyd",
-                                                "arbitrum_nitro"
+                                                "proxyd-nitro",
+                                                "arbitrum-nitro"
                                             ]
                                         ],
                                         "default": [
-                                            "proxyd",
-                                            "arbitrum_nitro"
+                                            "proxyd-nitro",
+                                            "arbitrum-nitro"
                                         ]
                                     }
                                 },
@@ -922,7 +927,8 @@
                         "required": [
                             "arbitrum-nitro",
                             "arbitrum-classic",
-                            "proxyd"
+                            "proxyd-nitro",
+                            "proxyd-classic"
                         ],
                         "properties": {
                             "arbitrum-nitro": {
@@ -1091,7 +1097,7 @@
                                     }
                                 }
                             },
-                            "proxyd": {
+                            "proxyd-nitro": {
                                 "type": "object",
                                 "required": [
                                     "chart",
@@ -1163,7 +1169,83 @@
                                         }
                                     },
                                     "feature": {
-                                        "$ref": "#/components/schemas/namespaces.arbitrumOne.features.proxyd"
+                                        "$ref": "#/components/schemas/namespaces.arbitrumOne.features.proxyd_nitro"
+                                    }
+                                }
+                            },
+                            "proxyd-classic": {
+                                "type": "object",
+                                "required": [
+                                    "chart",
+                                    "labels",
+                                    "feature"
+                                ],
+                                "properties": {
+                                    "chart": {
+                                        "type": "object",
+                                        "required": [
+                                            "url",
+                                            "repository",
+                                            "description",
+                                            "name"
+                                        ],
+                                        "properties": {
+                                            "url": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "https://github.com/ethereum-optimism/optimism/tree/develop/proxyd"
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching."
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "proxyd"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "labels": {
+                                        "type": "object",
+                                        "required": [
+                                            "app.launchpad.graphops.xyz/layer",
+                                            "app.launchpad.graphops.xyz/component",
+                                            "app.launchpad.graphops.xyz/release"
+                                        ],
+                                        "properties": {
+                                            "app.launchpad.graphops.xyz/layer": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "proxy"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/component": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $canonicalRelease }}"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/release": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $release }}"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "feature": {
+                                        "$ref": "#/components/schemas/namespaces.arbitrumOne.features.proxyd_classic"
                                     }
                                 }
                             }
@@ -1252,28 +1334,36 @@
             "namespaces.arbitrumOne.features.arbitrum_classic": {
                 "type": "string",
                 "enum": [
-                    "arbitrum_classic"
+                    "arbitrum-classic"
                 ]
             },
             "namespaces.arbitrumOne.features.arbitrum_nitro": {
                 "type": "string",
                 "enum": [
-                    "arbitrum_nitro"
+                    "arbitrum-nitro"
                 ]
             },
             "namespaces.arbitrumOne.features.enum": {
                 "type": "string",
                 "enum": [
-                    "proxyd",
-                    "arbitrum_classic",
-                    "arbitrum_nitro"
+                    "proxyd-classic",
+                    "proxyd-nitro",
+                    "arbitrum-classic",
+                    "arbitrum-nitro"
                 ]
             },
-            "namespaces.arbitrumOne.features.proxyd": {
-                "description": "Deploy proxyd",
+            "namespaces.arbitrumOne.features.proxyd_classic": {
+                "description": "Deploy proxyd for arbitrum-classic",
                 "type": "string",
                 "enum": [
-                    "proxyd"
+                    "proxyd-classic"
+                ]
+            },
+            "namespaces.arbitrumOne.features.proxyd_nitro": {
+                "description": "Deploy proxyd for arbitrum-nitro",
+                "type": "string",
+                "enum": [
+                    "proxyd-nitro"
                 ]
             },
             "namespaces.arbitrumOne.flavor": {
@@ -1337,7 +1427,9 @@
                 "description": "arbitrum-one scaling interface",
                 "type": "object",
                 "required": [
-                    "deployments"
+                    "deployments",
+                    "arbitrum-classic",
+                    "arbitrum-nitro"
                 ],
                 "properties": {
                     "deployments": {
@@ -1345,6 +1437,24 @@
                         "type": "integer",
                         "minimum": 1,
                         "default": 1
+                    },
+                    "arbitrum-classic": {
+                        "type": "object",
+                        "properties": {
+                            "deployments": {
+                                "type": "integer",
+                                "minimum": 1
+                            }
+                        }
+                    },
+                    "arbitrum-nitro": {
+                        "type": "object",
+                        "properties": {
+                            "deployments": {
+                                "type": "integer",
+                                "minimum": 1
+                            }
+                        }
                     }
                 }
             },
@@ -1366,9 +1476,10 @@
                             "$ref": "#/components/schemas/namespaces.arbitrumOne.features.enum"
                         },
                         "default": [
-                            "proxyd",
-                            "arbitrum_classic",
-                            "arbitrum_nitro"
+                            "proxyd-classic",
+                            "proxyd-nitro",
+                            "arbitrum-classic",
+                            "arbitrum-nitro"
                         ]
                     },
                     "arbitrum-nitro": {
@@ -1377,10 +1488,13 @@
                     "arbitrum-classic": {
                         "$ref": "#/components/schemas/base.releaseValues"
                     },
+                    "proxyd-nitro": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
                     "scaling": {
                         "$ref": "#/components/schemas/namespaces.arbitrumOne.scaling"
                     },
-                    "proxyd": {
+                    "proxyd-classic": {
                         "$ref": "#/components/schemas/base.releaseValues"
                     }
                 },
@@ -1849,7 +1963,8 @@
                 "description": "celo scaling interface",
                 "type": "object",
                 "required": [
-                    "deployments"
+                    "deployments",
+                    "celo"
                 ],
                 "properties": {
                     "deployments": {
@@ -1861,6 +1976,15 @@
                     "startP2PPort": {
                         "description": "A beggining port for the range to use in P2P NodePorts",
                         "type": "integer"
+                    },
+                    "celo": {
+                        "type": "object",
+                        "properties": {
+                            "deployments": {
+                                "type": "integer",
+                                "minimum": 1
+                            }
+                        }
                     }
                 }
             },
@@ -2490,7 +2614,9 @@
                 "description": "ethereum scaling interface",
                 "type": "object",
                 "required": [
-                    "deployments"
+                    "deployments",
+                    "erigon",
+                    "nimbus"
                 ],
                 "properties": {
                     "deployments": {
@@ -2502,6 +2628,24 @@
                     "startP2PPort": {
                         "description": "A beggining port for the range to use in P2P NodePorts",
                         "type": "integer"
+                    },
+                    "erigon": {
+                        "type": "object",
+                        "properties": {
+                            "deployments": {
+                                "type": "integer",
+                                "minimum": 1
+                            }
+                        }
+                    },
+                    "nimbus": {
+                        "type": "object",
+                        "properties": {
+                            "deployments": {
+                                "type": "integer",
+                                "minimum": 1
+                            }
+                        }
                     }
                 }
             },
@@ -2602,32 +2746,6 @@
                             "mainnet": {
                                 "type": "object",
                                 "properties": {
-                                    "features": {
-                                        "type": "array",
-                                        "items": [
-                                            {
-                                                "$ref": "#/components/schemas/namespaces.gnosis.features.erigon"
-                                            },
-                                            {
-                                                "$ref": "#/components/schemas/namespaces.gnosis.features.lighthouse"
-                                            },
-                                            {
-                                                "$ref": "#/components/schemas/namespaces.gnosis.features.proxyd"
-                                            }
-                                        ],
-                                        "enum": [
-                                            [
-                                                "erigon",
-                                                "lighthouse",
-                                                "proxyd"
-                                            ]
-                                        ],
-                                        "default": [
-                                            "erigon",
-                                            "lighthouse",
-                                            "proxyd"
-                                        ]
-                                    },
                                     "targetNamespace": {
                                         "type": "string",
                                         "enum": [
@@ -2641,7 +2759,6 @@
                                     },
                                     {
                                         "required": [
-                                            "features",
                                             "targetNamespace"
                                         ]
                                     }
@@ -2650,32 +2767,6 @@
                             "chiado": {
                                 "type": "object",
                                 "properties": {
-                                    "features": {
-                                        "type": "array",
-                                        "items": [
-                                            {
-                                                "$ref": "#/components/schemas/namespaces.gnosis.features.erigon"
-                                            },
-                                            {
-                                                "$ref": "#/components/schemas/namespaces.gnosis.features.lighthouse"
-                                            },
-                                            {
-                                                "$ref": "#/components/schemas/namespaces.gnosis.features.proxyd"
-                                            }
-                                        ],
-                                        "enum": [
-                                            [
-                                                "erigon",
-                                                "lighthouse",
-                                                "proxyd"
-                                            ]
-                                        ],
-                                        "default": [
-                                            "erigon",
-                                            "lighthouse",
-                                            "proxyd"
-                                        ]
-                                    },
                                     "targetNamespace": {
                                         "type": "string",
                                         "enum": [
@@ -2689,7 +2780,6 @@
                                     },
                                     {
                                         "required": [
-                                            "features",
                                             "targetNamespace"
                                         ]
                                     }
@@ -2997,7 +3087,60 @@
                 }
             },
             "namespaces.gnosis.defaults.common": {
-                "type": "object"
+                "type": "object",
+                "required": [
+                    "features",
+                    "scaling"
+                ],
+                "properties": {
+                    "features": {
+                        "type": "array",
+                        "items": [
+                            {
+                                "$ref": "#/components/schemas/namespaces.gnosis.features.erigon"
+                            },
+                            {
+                                "$ref": "#/components/schemas/namespaces.gnosis.features.lighthouse"
+                            },
+                            {
+                                "$ref": "#/components/schemas/namespaces.gnosis.features.proxyd"
+                            }
+                        ],
+                        "enum": [
+                            [
+                                "erigon",
+                                "lighthouse",
+                                "proxyd"
+                            ]
+                        ],
+                        "default": [
+                            "erigon",
+                            "lighthouse",
+                            "proxyd"
+                        ]
+                    },
+                    "scaling": {
+                        "type": "object",
+                        "properties": {
+                            "deployments": {
+                                "type": "integer",
+                                "enum": [
+                                    1
+                                ]
+                            }
+                        },
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/namespaces.gnosis.scaling"
+                            },
+                            {
+                                "required": [
+                                    "deployments"
+                                ]
+                            }
+                        ]
+                    }
+                }
             },
             "namespaces.gnosis.features": {
                 "description": "ethereum namespace features schema",
@@ -3093,7 +3236,9 @@
                 "description": "gnosis scaling interface",
                 "type": "object",
                 "required": [
-                    "deployments"
+                    "deployments",
+                    "erigon",
+                    "lighthouse"
                 ],
                 "properties": {
                     "deployments": {
@@ -3105,6 +3250,24 @@
                     "startP2PPort": {
                         "description": "A beggining port for the range to use in P2P NodePorts",
                         "type": "integer"
+                    },
+                    "erigon": {
+                        "type": "object",
+                        "properties": {
+                            "deployments": {
+                                "type": "integer",
+                                "minimum": 1
+                            }
+                        }
+                    },
+                    "lighthouse": {
+                        "type": "object",
+                        "properties": {
+                            "deployments": {
+                                "type": "integer",
+                                "minimum": 1
+                            }
+                        }
                     }
                 }
             },
