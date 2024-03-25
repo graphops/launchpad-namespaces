@@ -104,7 +104,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/component":    "{{ $canonicalRelease }}"
 					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
 				}
-				_template: {version: "0.9.9-canary.1"}
+				_template: {version: "0.9.9"}
 			}
 
 			lighthouse: {
@@ -116,7 +116,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/component":    "{{ $canonicalRelease }}"
 					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
 				}
-				_template: {version: "0.5.5-canary.1"}
+				_template: {version: "0.5.5"}
 			}
 
 			proxyd: {
@@ -127,7 +127,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/release":   "{{ $release }}"
 					"app.launchpad.graphops.xyz/component": "{{ $canonicalRelease }}"
 				}
-				_template: {version: "0.5.3-canary.3"}
+				_template: {version: "0.5.3"}
 			}
 		}
 
