@@ -1,0 +1,123 @@
+heimdall:
+  {{ $scalingIndex := splitList "-" .Release.Name | last }}
+
+  config:
+    fromSnapshot:
+      # -- Enable initialising Heimdall from a remote Snapshot
+      enabled: false
+      # -- URL to snapshot to download and extract, see [here](https://snapshots.matic.today)
+      #snapshotUrl: https://matic-blockchain-snapshots.s3-accelerate.amazonaws.com/matic-mainnet/heimdall-snapshot-2022-12-07.tar.gz
+
+  affinityPresets:
+    antiAffinityByHostname: false
+  affinity:
+    podAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 90 # try to schedule on same node as execution node if possible
+        podAffinityTerm:
+          topologyKey: "kubernetes.io/hostname"
+          labelSelector:
+            matchExpressions:
+            - key: app.launchpad.graphops.xyz/component # release name
+              operator: In
+              values:
+              - erigon
+            - key: app.launchpad.graphops.xyz/scalingIndex
+              operator: In
+              values:
+              - "{{ $scalingIndex }}"
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 25 # try to avoid scheduling with execution nodes for other chains
+        podAffinityTerm:
+          topologyKey: "kubernetes.io/hostname"
+          namespaceSelector: {}
+          labelSelector:
+            matchExpressions:
+            - key: app.launchpad.graphops.xyz/type
+              operator: In
+              values:
+              - blockchain
+            - key: app.launchpad.graphops.xyz/chain
+              operator: NotIn
+              values:
+              - polygon
+            - key: app.launchpad.graphops.xyz/layer
+              operator: In
+              values:
+              - execution
+      - weight: 25 # try to avoid scheduling with execution nodes for other networks
+        podAffinityTerm:
+          topologyKey: "kubernetes.io/hostname"
+          namespaceSelector: {}
+          labelSelector:
+            matchExpressions:
+            - key: app.launchpad.graphops.xyz/type
+              operator: In
+              values:
+              - blockchain
+            - key: app.launchpad.graphops.xyz/chain
+              operator: In
+              values:
+              - polygon
+            - key: app.launchpad.graphops.xyz/network
+              operator: NotIn
+              values:
+              - "{{ .Values.flavor }}"
+            - key: app.launchpad.graphops.xyz/layer
+              operator: In
+              values:
+              - execution
+      - weight: 10 # try to avoid scheduling with other consensus nodes for other chains
+        podAffinityTerm:
+          topologyKey: "kubernetes.io/hostname"
+          namespaceSelector: {}
+          labelSelector:
+            matchExpressions:
+            - key: app.launchpad.graphops.xyz/type
+              operator: In
+              values:
+              - blockchain
+            - key: app.launchpad.graphops.xyz/layer
+              operator: In
+              values:
+              - consensus
+            - key: app.launchpad.graphops.xyz/chain
+              operator: NotIn
+              values:
+              - polygon
+      - weight: 10 # try to avoid scheduling with other consensus nodes for other networks
+        podAffinityTerm:
+          topologyKey: "kubernetes.io/hostname"
+          namespaceSelector: {}
+          labelSelector:
+            matchExpressions:
+            - key: app.launchpad.graphops.xyz/type
+              operator: In
+              values:
+              - blockchain
+            - key: app.launchpad.graphops.xyz/layer
+              operator: In
+              values:
+              - consensus
+            - key: app.launchpad.graphops.xyz/chain
+              operator: In
+              values:
+              - polygon
+            - key: app.launchpad.graphops.xyz/network
+              operator: NotIn
+              values:
+              - "{{ .Values.flavor }}"
+
+{{- if (hasKey .Values.scaling "p2pStartPort") }}
+  p2pNodePort:
+    enabled: true
+    port: {{ add (mul (sub $scalingIndex 1) 2) .Values.scaling.p2pStartPort 1 }}
+{{- end }}
+
+prometheus:
+  serviceMonitors:
+    enabled: true
+
+grafana:
+  dashboards: true

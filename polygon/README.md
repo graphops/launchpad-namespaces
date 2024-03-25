@@ -2,7 +2,7 @@
 
 # Polygon Namespace
 
-This *Namespace* provides a suitable stack to operate Polygon mainnet archive nodes.
+This *Namespace* provides a suitable stack to operate Polygon mainnet and mumbai testnet archive nodes.
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
@@ -117,7 +117,8 @@ erigon.labels | object |  | Adds helmfile labels to this release |
 erigon.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
 erigon.resourceLabels | object |  | Adds labels to resources on this release |
 erigon.values | (object *or* list of objects) |  | Pass values to the release helm chart |
-flavor | string |  | suitable defaults for a mainnet archive node |
+features | list of strings | [proxyd] | *enum of:&nbsp;&nbsp;(proxyd)* |
+flavor | string |  |  |
 heimdall | object |  |  |
 heimdall.annotations | object |  | Add annotations to resources on this release |
 heimdall.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
@@ -137,6 +138,11 @@ proxyd.mergeValues | boolean | true | Merges passed values with namespace's defa
 proxyd.resourceLabels | object |  | Adds labels to resources on this release |
 proxyd.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 resourceLabels | object |  | Adds labels to release resources on this namespace |
+scaling | object |  | polygon scaling interface |
+scaling.deployments | integer | 1 | number of independent stateful sets to deploy |
+scaling.erigon | object |  |  |
+scaling.heimdall | object |  |  |
+scaling.startP2PPort | integer |  | A beggining port for the range to use in P2P NodePorts |
 targetNamespace | string | polygon-mainnet | the default is polygon-<flavor> |
 helmDefaults | object |  |  |
 helmDefaults.args | list of strings |  |  |

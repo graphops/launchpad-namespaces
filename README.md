@@ -230,7 +230,7 @@ This chart installs a node-problem-detector daemonset. This tool aims to make va
 - [promtail](https://github.com/grafana/helm-charts/tree/main/charts/promtail)<br>
 Promtail is an agent which ships the contents of local logs to a Loki instance
 ### [:polygon](/polygon)
-This *Namespace* provides a suitable stack to operate Polygon mainnet archive nodes.
+This *Namespace* provides a suitable stack to operate Polygon mainnet and mumbai testnet archive nodes.
 
 - [erigon](https://github.com/ledgerwatch/erigon)<br>
 Erigon is an implementation of Ethereum (execution client with light client for consensus layer), on the efficiency frontier.

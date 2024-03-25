@@ -4667,7 +4667,7 @@
                             "description": {
                                 "type": "string",
                                 "enum": [
-                                    "This *Namespace* provides a suitable stack to operate Polygon mainnet archive nodes."
+                                    "This *Namespace* provides a suitable stack to operate Polygon mainnet and mumbai testnet archive nodes."
                                 ]
                             }
                         }
@@ -4676,7 +4676,9 @@
                         "type": "object",
                         "required": [
                             "flavor",
-                            "mainnet"
+                            "mainnet",
+                            "mumbai",
+                            "amoy"
                         ],
                         "properties": {
                             "flavor": {
@@ -4705,6 +4707,48 @@
                                         ]
                                     }
                                 ]
+                            },
+                            "mumbai": {
+                                "type": "object",
+                                "properties": {
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "polygon-mumbai"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.polygon.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "targetNamespace"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "amoy": {
+                                "type": "object",
+                                "properties": {
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "polygon-amoy"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.polygon.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "targetNamespace"
+                                        ]
+                                    }
+                                ]
                             }
                         }
                     },
@@ -4719,7 +4763,8 @@
                             "erigon": {
                                 "type": "object",
                                 "required": [
-                                    "chart"
+                                    "chart",
+                                    "labels"
                                 ],
                                 "properties": {
                                     "chart": {
@@ -4756,13 +4801,49 @@
                                                 ]
                                             }
                                         }
+                                    },
+                                    "labels": {
+                                        "type": "object",
+                                        "required": [
+                                            "app.launchpad.graphops.xyz/layer",
+                                            "app.launchpad.graphops.xyz/release",
+                                            "app.launchpad.graphops.xyz/component",
+                                            "app.launchpad.graphops.xyz/scalingIndex"
+                                        ],
+                                        "properties": {
+                                            "app.launchpad.graphops.xyz/layer": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "execution"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/release": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $release }}"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/component": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $canonicalRelease }}"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/scalingIndex": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $deploymentIndex }}"
+                                                ]
+                                            }
+                                        }
                                     }
                                 }
                             },
                             "heimdall": {
                                 "type": "object",
                                 "required": [
-                                    "chart"
+                                    "chart",
+                                    "labels"
                                 ],
                                 "properties": {
                                     "chart": {
@@ -4799,13 +4880,50 @@
                                                 ]
                                             }
                                         }
+                                    },
+                                    "labels": {
+                                        "type": "object",
+                                        "required": [
+                                            "app.launchpad.graphops.xyz/layer",
+                                            "app.launchpad.graphops.xyz/release",
+                                            "app.launchpad.graphops.xyz/component",
+                                            "app.launchpad.graphops.xyz/scalingIndex"
+                                        ],
+                                        "properties": {
+                                            "app.launchpad.graphops.xyz/layer": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "consensus"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/release": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $release }}"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/component": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $canonicalRelease }}"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/scalingIndex": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $deploymentIndex }}"
+                                                ]
+                                            }
+                                        }
                                     }
                                 }
                             },
                             "proxyd": {
                                 "type": "object",
                                 "required": [
-                                    "chart"
+                                    "chart",
+                                    "labels",
+                                    "feature"
                                 ],
                                 "properties": {
                                     "chart": {
@@ -4842,6 +4960,37 @@
                                                 ]
                                             }
                                         }
+                                    },
+                                    "labels": {
+                                        "type": "object",
+                                        "required": [
+                                            "app.launchpad.graphops.xyz/layer",
+                                            "app.launchpad.graphops.xyz/release",
+                                            "app.launchpad.graphops.xyz/component"
+                                        ],
+                                        "properties": {
+                                            "app.launchpad.graphops.xyz/layer": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "proxy"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/release": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $release }}"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/component": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $canonicalRelease }}"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "feature": {
+                                        "$ref": "#/components/schemas/namespaces.polygon.features.proxyd"
                                     }
                                 }
                             }
@@ -4855,6 +5004,24 @@
                                 "enum": [
                                     "polygon"
                                 ]
+                            },
+                            "app.launchpad.graphops.xyz/type": {
+                                "type": "string",
+                                "enum": [
+                                    "blockchain"
+                                ]
+                            },
+                            "app.launchpad.graphops.xyz/chain": {
+                                "type": "string",
+                                "enum": [
+                                    "polygon"
+                                ]
+                            },
+                            "app.launchpad.graphops.xyz/network": {
+                                "type": "string",
+                                "enum": [
+                                    "{{ .Values.flavor }}"
+                                ]
                             }
                         },
                         "allOf": [
@@ -4863,7 +5030,10 @@
                             },
                             {
                                 "required": [
-                                    "launchpad.graphops.xyz/namespace"
+                                    "launchpad.graphops.xyz/namespace",
+                                    "app.launchpad.graphops.xyz/type",
+                                    "app.launchpad.graphops.xyz/chain",
+                                    "app.launchpad.graphops.xyz/network"
                                 ]
                             }
                         ]
@@ -4874,19 +5044,95 @@
                 }
             },
             "namespaces.polygon.defaults.common": {
+                "type": "object",
+                "required": [
+                    "features",
+                    "scaling"
+                ],
+                "properties": {
+                    "features": {
+                        "type": "array",
+                        "items": [
+                            {
+                                "$ref": "#/components/schemas/namespaces.polygon.features.proxyd"
+                            }
+                        ],
+                        "enum": [
+                            [
+                                "proxyd"
+                            ]
+                        ],
+                        "default": [
+                            "proxyd"
+                        ]
+                    },
+                    "scaling": {
+                        "type": "object",
+                        "properties": {
+                            "deployments": {
+                                "type": "integer",
+                                "enum": [
+                                    1
+                                ]
+                            }
+                        },
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/namespaces.polygon.scaling"
+                            },
+                            {
+                                "required": [
+                                    "deployments"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            },
+            "namespaces.polygon.features": {
+                "description": "polygon namespace features schema",
                 "type": "object"
+            },
+            "namespaces.polygon.features.enum": {
+                "$ref": "#/components/schemas/namespaces.polygon.features.proxyd"
+            },
+            "namespaces.polygon.features.proxyd": {
+                "description": "Deploy proxyd",
+                "type": "string",
+                "enum": [
+                    "proxyd"
+                ]
             },
             "namespaces.polygon.flavor": {
                 "type": "object"
             },
+            "namespaces.polygon.flavor.amoy": {
+                "description": "suitable defaults for an amoy testnet archive node",
+                "type": "string",
+                "enum": [
+                    "amoy"
+                ]
+            },
             "namespaces.polygon.flavor.enum": {
-                "$ref": "#/components/schemas/namespaces.polygon.flavor.mainnet"
+                "type": "string",
+                "enum": [
+                    "mainnet",
+                    "mumbai",
+                    "amoy"
+                ]
             },
             "namespaces.polygon.flavor.mainnet": {
                 "description": "suitable defaults for a mainnet archive node",
                 "type": "string",
                 "enum": [
                     "mainnet"
+                ]
+            },
+            "namespaces.polygon.flavor.mumbai": {
+                "description": "suitable defaults for a mumbai testnet archive node",
+                "type": "string",
+                "enum": [
+                    "mumbai"
                 ]
             },
             "namespaces.polygon.helmfiles": {
@@ -4922,6 +5168,45 @@
                     }
                 ]
             },
+            "namespaces.polygon.scaling": {
+                "description": "polygon scaling interface",
+                "type": "object",
+                "required": [
+                    "deployments",
+                    "erigon",
+                    "heimdall"
+                ],
+                "properties": {
+                    "deployments": {
+                        "description": "number of independent stateful sets to deploy",
+                        "type": "integer",
+                        "minimum": 1,
+                        "default": 1
+                    },
+                    "startP2PPort": {
+                        "description": "A beggining port for the range to use in P2P NodePorts",
+                        "type": "integer"
+                    },
+                    "erigon": {
+                        "type": "object",
+                        "properties": {
+                            "deployments": {
+                                "type": "integer",
+                                "minimum": 1
+                            }
+                        }
+                    },
+                    "heimdall": {
+                        "type": "object",
+                        "properties": {
+                            "deployments": {
+                                "type": "integer",
+                                "minimum": 1
+                            }
+                        }
+                    }
+                }
+            },
             "namespaces.polygon.values": {
                 "description": "polygon namespace values schema",
                 "type": "object",
@@ -4929,16 +5214,28 @@
                     "flavor": {
                         "$ref": "#/components/schemas/namespaces.polygon.flavor.enum"
                     },
+                    "targetNamespace": {
+                        "description": "the default is polygon-<flavor>",
+                        "type": "string",
+                        "default": "polygon-mainnet"
+                    },
+                    "features": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/namespaces.polygon.features.enum"
+                        },
+                        "default": [
+                            "proxyd"
+                        ]
+                    },
                     "erigon": {
                         "$ref": "#/components/schemas/base.releaseValues"
                     },
                     "heimdall": {
                         "$ref": "#/components/schemas/base.releaseValues"
                     },
-                    "targetNamespace": {
-                        "description": "the default is polygon-<flavor>",
-                        "type": "string",
-                        "default": "polygon-mainnet"
+                    "scaling": {
+                        "$ref": "#/components/schemas/namespaces.polygon.scaling"
                     },
                     "proxyd": {
                         "$ref": "#/components/schemas/base.releaseValues"
