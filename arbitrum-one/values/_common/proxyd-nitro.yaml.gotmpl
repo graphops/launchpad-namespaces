@@ -1,21 +1,19 @@
 backends:
-  {{ range $elem := until ( .Values.scaling | get "celo" dict | get "deployments" .Values.scaling.deployments ) }}
+  {{ range $elem := until ( .Values.scaling | get "arbitrum-nitro" dict | get "deployments" .Values.scaling.deployments ) }}
   {{ $scalingIndex := (add $elem 1) }}
-  celo-archive-trace-{{ $scalingIndex }}:
+  arbitrum-nitro-{{ $scalingIndex }}:
     enabled: true
-    # -- Define the JSON-RPC URL for the backend
-    rpcUrl: http://celo-{{ $scalingIndex }}-celo:8545
-    # -- Define the WS-RPC URL for the backend
-    wsUrl: ws://celo-{{ $scalingIndex }}-celo:8546
+    # -- Define the RPC URL for the backend
+    rpcUrl: http://arbitrum-nitro-{{ $scalingIndex }}:8547
+    # -- Define the WS URL for the backend
+    wsUrl: ws://arbitrum-nitro-{{ $scalingIndex }}:8548
     # -- Define additional configuration keys for the backend (see [proxyd config](https://github.com/ethereum-optimism/optimism/blob/5d309e6a6d5e1ef6a88c1ce827b7e6d47f033bbb/proxyd/example.config.toml#L47))
-    extraConfig: {}
+    extraConfig:
+      consensus_skip_peer_count: true
     # -- Define which backend groups the backend is part of
     groups:
       - main
-  {{ end }}
-
-backendGroups:
-    consensus_aware: false
+  {{ end  }}
 
 proxyd:
   affinityPresets:

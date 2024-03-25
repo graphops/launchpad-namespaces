@@ -1,0 +1,20 @@
+{{ $scalingIndex := splitList "-" .Release.Name | last }}
+
+statefulNode:
+  extraArgs:
+    - --http.api=eth,debug,net,trace
+    - --chain=amoy
+    - --bor.heimdall=http://heimdall-{{ $scalingIndex }}-heimdall:1317
+    - --torrent.download.rate=100mb # Download snapshot files faster
+    - --torrent.download.slots=6 # 3 is default
+    - --db.read.concurrency=16 # Does limit amount of parallel db reads. Default: equal to GOMAXPROCS (or number of CPU) (default: 10)
+    - --http.corsdomain=*
+    - --ws # enable ws
+    - --http.api=eth,debug,net,trace
+    - --trace.maxtraces=10000
+    - --externalcl
+    - --snapshots=true # needed for Polygon
+  volumeClaimSpec:
+    resources:
+      requests:
+        storage: 1Ti

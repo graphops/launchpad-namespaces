@@ -1,23 +1,30 @@
 {{ $scalingIndex := splitList "-" .Release.Name | last }}
-nitro:
-  config:
-    parentChainUrl: http://your-eth-mainnet-url:8545  ## changeme
-    parentChainBeaconUrl: http://your-eth-consensus-node-url:5052  ## changeme
-    classicUrl: http://proxyd-classic-proxyd:8545
-    chain: 42161
-    extraArgs:
-      - --ws.addr=0.0.0.0
+
+statefulNode:
+  jwt:
+    # Generate me with: openssl rand -hex 32
+    # Must match CL client jwt
+    fromLiteral: "XXX_CHANGEME_XXX"
+    # Instead specifying the JWT in plain text using fromLiteral, you can also reference an existing Kubernetes Secret
+    # existingSecret:
+    #   name: eth-goerli-jwt
+    #   key: jwt
+
+  # -- [PersistentVolumeClaimSpec](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.23/#persistentvolumeclaimspec-v1-core) for Erigon storage
+  volumeClaimSpec:
+    # -- The storage class to use when provisioning a persistent volume for Erigon
+    storageClassName: openebs-rawfile-localpv # change me if desired
 
   restoreSnapshot:
-    enabled: true
-    snapshotUrl: "https://snapshot.arbitrum.foundation/arb1/nitro-archive.tar"
+    enabled: false
+    snapshotRestorePath: "/storage"
 
   affinityPresets:
     antiAffinityByHostname: false
   affinity:
     podAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
-      - weight: 90 # try to schedule on same node as the classic node if possible
+      - weight: 90 # try to schedule on same node as consensus node if possible
         podAffinityTerm:
           topologyKey: "kubernetes.io/hostname"
           labelSelector:
@@ -25,7 +32,7 @@ nitro:
             - key: app.launchpad.graphops.xyz/component # release name
               operator: In
               values:
-              - arbitrum-classic
+              - heimdall
             - key: app.launchpad.graphops.xyz/scalingIndex
               operator: In
               values:
@@ -43,15 +50,11 @@ nitro:
           - key: app.launchpad.graphops.xyz/chain
             operator: In
             values:
-            - arbitrum-one
+            - polygon
           - key: app.launchpad.graphops.xyz/network
             operator: In
             values:
             - "{{ .Values.flavor }}"
-          - key: app.launchpad.graphops.xyz/component
-            operator: In
-            values:
-            - arbitrum-nitro
           - key: app.launchpad.graphops.xyz/layer
             operator: In
             values:
@@ -70,7 +73,7 @@ nitro:
               - key: app.launchpad.graphops.xyz/chain
                 operator: In
                 values:
-                - arbitrum-one
+                - polygon
               - key: app.launchpad.graphops.xyz/network
                 operator: NotIn
                 values:
@@ -92,8 +95,64 @@ nitro:
               - key: app.launchpad.graphops.xyz/chain
                 operator: NotIn
                 values:
-                - arbitrum-one
+                - polygon
               - key: app.launchpad.graphops.xyz/layer
                 operator: In
                 values:
                 - execution
+        - weight: 30 # try to avoid scheduling with other deployments consesus layer nodes of dif network
+          podAffinityTerm:
+            topologyKey: "kubernetes.io/hostname"
+            namespaceSelector: {}
+            labelSelector:
+              matchExpressions:
+              - key: app.launchpad.graphops.xyz/type
+                operator: In
+                values:
+                - blockchain
+              - key: app.launchpad.graphops.xyz/chain
+                operator: NotIn
+                values:
+                - polygon
+              - key: app.launchpad.graphops.xyz/layer
+                operator: In
+                values:
+                - consensus
+        - weight: 30 # try to avoid scheduling with other deployments consesus layer nodes of dif chain
+          podAffinityTerm:
+            topologyKey: "kubernetes.io/hostname"
+            namespaceSelector: {}
+            labelSelector:
+              matchExpressions:
+              - key: app.launchpad.graphops.xyz/type
+                operator: In
+                values:
+                - blockchain
+              - key: app.launchpad.graphops.xyz/chain
+                operator: In
+                values:
+                - polygon
+              - key: app.launchpad.graphops.xyz/network
+                operator: NotIn
+                values:
+                - "{{ .Values.flavor }}"
+              - key: app.launchpad.graphops.xyz/layer
+                operator: In
+                values:
+                - consensus
+{{- if (hasKey .Values.scaling "p2pStartPort") }}
+  p2pNodePort:
+    enabled: true
+    port: {{ add (mul (sub $scalingIndex 1) 2) .Values.scaling.p2pStartPort }}
+{{- end }}
+
+rpcdaemon:
+  enabled: false
+  replicaCount: 1 # scale me
+
+prometheus:
+  serviceMonitors:
+    enabled: true
+
+grafana:
+  dashboards: true

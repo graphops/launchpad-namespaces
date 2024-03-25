@@ -1,5 +1,5 @@
 #namespace defaults
-{{ $_ := set .Values "_defaults" ( `{"flavor":"mainnet","mainnet":{"targetNamespace":"graph-mainnet","features":["subgraph-radio"]},"arbitrum-one":{"targetNamespace":"graph-arbitrum-one","features":["subgraph-radio"]},"common":{"features":["subgraph-radio"]},"arbitrum-sepolia":{"targetNamespace":"graph-arbitrum-sepolia","features":["subgraph-radio"]}}` | fromJson ) }}
+{{ $_ := set .Values "_namespaceDefaults" ( `{"flavor":"mainnet","mainnet":{"targetNamespace":"graph-mainnet","features":["subgraph-radio"]},"arbitrum-one":{"targetNamespace":"graph-arbitrum-one","features":["subgraph-radio"]},"common":{"features":["subgraph-radio"]},"arbitrum-sepolia":{"targetNamespace":"graph-arbitrum-sepolia","features":["subgraph-radio"]}}` | fromJson ) }}
 #set default flavor when missing
 {{ if not ( hasKey .Values "flavor" ) }}
 {{ $_ := set .Values "flavor" "mainnet" }}
@@ -9,12 +9,18 @@ environments:
   {{ .Environment.Name }}:
     values:
       - flavor: {{ .Values.flavor }}
-      - _defaults: {{ .Values._defaults | toYaml | nindent 10 }}
+      - _namespaceDefaults: {{ .Values._namespaceDefaults | toYaml | nindent 10 }}
+
+---
+environments:
+  {{ .Environment.Name }}:
+    values:
+      - _defaults: {{ .Values._namespaceDefaults | get .Values.flavor | toYaml | nindent 10 }}
 
 ---
 # Define default features when undefined
 {{ if not (hasKey .Values "features") }}
-{{ $_ := set .Values "features" ( .Values._defaults | get .Values.flavor | get "features" ) }}
+{{ $_ := set .Values "features" .Values._defaults.features }}
 {{ end }}
 
 
@@ -105,7 +111,7 @@ kubeVersion: {{ .Values.kubeVersion }}
 {{ end }}
 
 #set default namespace
-{{ $_defaultNamespace := .Values._defaults | get .Values.flavor | get "targetNamespace" }}
+{{ $_defaultNamespace := .Values._defaults.targetNamespace }}
 
 
 {{- $_commonLabels := dict 

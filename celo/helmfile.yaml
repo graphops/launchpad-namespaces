@@ -1,5 +1,5 @@
 #namespace defaults
-{{ $_ := set .Values "_defaults" ( `{"flavor":"mainnet","mainnet":{"targetNamespace":"celo-mainnet","features":["proxyd"],"scaling":{"deployments":1}},"alfajores":{"targetNamespace":"celo-alfajores","features":["proxyd"],"scaling":{"deployments":1}},"common":{"features":["proxyd"],"scaling":{"deployments":1}},"baklava":{"targetNamespace":"celo-baklava","features":["proxyd"],"scaling":{"deployments":1}}}` | fromJson ) }}
+{{ $_ := set .Values "_namespaceDefaults" ( `{"flavor":"mainnet","mainnet":{"targetNamespace":"celo-mainnet","features":["proxyd"],"scaling":{"deployments":1,"celo":{}}},"alfajores":{"targetNamespace":"celo-alfajores","features":["proxyd"],"scaling":{"deployments":1,"celo":{}}},"common":{"features":["proxyd"],"scaling":{"deployments":1,"celo":{}}},"baklava":{"targetNamespace":"celo-baklava","features":["proxyd"],"scaling":{"deployments":1,"celo":{}}}}` | fromJson ) }}
 #set default flavor when missing
 {{ if not ( hasKey .Values "flavor" ) }}
 {{ $_ := set .Values "flavor" "mainnet" }}
@@ -9,12 +9,18 @@ environments:
   {{ .Environment.Name }}:
     values:
       - flavor: {{ .Values.flavor }}
-      - _defaults: {{ .Values._defaults | toYaml | nindent 10 }}
+      - _namespaceDefaults: {{ .Values._namespaceDefaults | toYaml | nindent 10 }}
+
+---
+environments:
+  {{ .Environment.Name }}:
+    values:
+      - _defaults: {{ .Values._namespaceDefaults | get .Values.flavor | toYaml | nindent 10 }}
 
 ---
 # Define default features when undefined
 {{ if not (hasKey .Values "features") }}
-{{ $_ := set .Values "features" ( .Values._defaults | get .Values.flavor | get "features" ) }}
+{{ $_ := set .Values "features" .Values._defaults.features }}
 {{ end }}
 
 #set default number of deployments when missing
@@ -22,7 +28,7 @@ environments:
 {{ $_ := set .Values "scaling" dict }}
 {{ end }}
 {{ if not ( hasKey ( .Values | get "scaling" dict ) "deployments" ) }}
-{{ $_ := set .Values.scaling "deployments" ( .Values._defaults | get .Values.flavor | get "scaling" | get "deployments" ) }}
+{{ $_ := set .Values.scaling "deployments" .Values._defaults.scaling.deployments }}
 {{ end }}
 
 environments:
@@ -114,7 +120,7 @@ kubeVersion: {{ .Values.kubeVersion }}
 {{ end }}
 
 #set default namespace
-{{ $_defaultNamespace := .Values._defaults | get .Values.flavor | get "targetNamespace" }}
+{{ $_defaultNamespace := .Values._defaults.targetNamespace }}
 
 {{- $_templatedValue_0 :=  .Values.flavor  }}
 {{- $_commonLabels := dict 
@@ -184,7 +190,7 @@ templates:
   
 releases:
   {{- $canonicalRelease := "celo" }}
-  {{- range $index := until .Values.scaling.deployments }}
+  {{- range $index := until (.Values.scaling | get $canonicalRelease dict | get "deployments" .Values.scaling.deployments) }}
   {{- $deploymentIndex := (add . 1) }}
   {{- $release := (printf "%s%v" "celo-" $deploymentIndex) }}
   {{- $_templatedValue_0 :=  $canonicalRelease  }}

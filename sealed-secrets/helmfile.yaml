@@ -1,10 +1,16 @@
 #namespace defaults
-{{ $_ := set .Values "_defaults" ( `{"common":{"targetNamespace":"sealed-secrets"}}` | fromJson ) }}
+{{ $_ := set .Values "_namespaceDefaults" ( `{"common":{"targetNamespace":"sealed-secrets"}}` | fromJson ) }}
 
 environments:
   {{ .Environment.Name }}:
     values:
-      - _defaults: {{ .Values._defaults | toYaml | nindent 10 }}
+      - _namespaceDefaults: {{ .Values._namespaceDefaults | toYaml | nindent 10 }}
+
+---
+environments:
+  {{ .Environment.Name }}:
+    values:
+      - _defaults: {{ .Values._namespaceDefaults.common | toYaml | nindent 10 }}
 
 ---
 
@@ -95,7 +101,7 @@ kubeVersion: {{ .Values.kubeVersion }}
 {{ end }}
 
 #set default namespace
-{{ $_defaultNamespace := .Values._defaults.common.targetNamespace }}
+{{ $_defaultNamespace := .Values._defaults.targetNamespace }}
 
 
 {{- $_commonLabels := dict 

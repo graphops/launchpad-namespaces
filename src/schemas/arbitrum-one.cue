@@ -23,20 +23,31 @@ package LaunchpadNamespaces
 
 		// arbitrum-one namespace features schema
 		#features: {
-			// Deploy proxyd
-			#proxyd: "proxyd"
+			// Deploy proxyd for arbitrum-classic
+			#proxyd_classic: "proxyd-classic"
 
-			#arbitrum_classic: "arbitrum_classic"
+			#arbitrum_classic: "arbitrum-classic"
 
-			#arbitrum_nitro: "arbitrum_nitro"
+			// Deploy proxyd for arbitrum-nitro
+			#proxyd_nitro: "proxyd-nitro"
 
-			#enum: ( #proxyd | #arbitrum_classic | #arbitrum_nitro )
+			#arbitrum_nitro: "arbitrum-nitro"
+
+			#enum: ( #proxyd_classic | #proxyd_nitro | #arbitrum_classic | #arbitrum_nitro )
 		}
 
 		// arbitrum-one scaling interface
 		#scaling: {
 			// number of independent stateful sets to deploy
 			deployments: *1 | ( int & >=1 )
+
+			"arbitrum-classic": {
+				deployments?: int & >=1
+			}
+
+			"arbitrum-nitro": {
+				deployments?: int & >=1
+			}
 		}
 
 		// arbitrum-one namespace values schema
@@ -57,7 +68,7 @@ package LaunchpadNamespaces
 			}
 
 			// For overriding this release's values
-			[string & "^(arbitrum-classic|arbitrum-nitro|proxyd)-[0-9]+$"]?: #base.#releaseValues
+			[string & "^(arbitrum-classic|arbitrum-nitro|proxyd-classic|proxyd-nitro)-[0-9]+$"]?: #base.#releaseValues
 		}
 
 		// arbitrum-one helmfile API
@@ -76,13 +87,13 @@ package LaunchpadNamespaces
 			mainnet: {
 				#common
 				targetNamespace: "arbitrum-one-mainnet"
-				features: [#features.#proxyd, #features.#arbitrum_classic, #features.#arbitrum_nitro]
+				features: [#features.#proxyd_classic, #features.#proxyd_nitro, #features.#arbitrum_classic, #features.#arbitrum_nitro]
 			}
 
 			sepolia: {
 				#common
 				targetNamespace: "arbitrum-one-sepolia"
-				features: [#features.#proxyd, #features.#arbitrum_nitro]
+				features: [#features.#proxyd_nitro, #features.#arbitrum_nitro]
 			}
 		}
 
@@ -97,7 +108,6 @@ package LaunchpadNamespaces
 				}
 				feature: #features.#arbitrum_nitro
 				_template: {version: "0.3.3-canary.1"}
-				_scale: true
 			}
 
 			"arbitrum-classic": {
@@ -110,19 +120,28 @@ package LaunchpadNamespaces
 				}
 				feature: #features.#arbitrum_classic
 				_template: {version: "0.2.0"}
-				_scale: true
 			}
 
-			proxyd: {
+			"proxyd-nitro": {
 				chart: {_repositories.graphops.charts.proxyd}
 				labels: {
 					"app.launchpad.graphops.xyz/layer":     "proxy"
 					"app.launchpad.graphops.xyz/component": "{{ $canonicalRelease }}"
 					"app.launchpad.graphops.xyz/release":   "{{ $release }}"
 				}
-				feature: #features.#proxyd
+				feature: #features.#proxyd_nitro
 				_template: {version: "0.5.3-canary.2"}
-				_scale: false
+			}
+
+			"proxyd-classic": {
+				chart: {_repositories.graphops.charts.proxyd}
+				labels: {
+					"app.launchpad.graphops.xyz/layer":     "proxy"
+					"app.launchpad.graphops.xyz/component": "{{ $canonicalRelease }}"
+					"app.launchpad.graphops.xyz/release":   "{{ $release }}"
+				}
+				feature: #features.#proxyd_classic
+				_template: {version: "0.5.3-canary.2"}
 			}
 		}
 

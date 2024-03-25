@@ -52,8 +52,8 @@ _helmfile: {
 
 		kubeVersion: _helmfile._kubeVersion.out
 
-		_setDefaults: _helmfile._#setDefaults & {_namespace: this}
-		setDefaults: _setDefaults.out
+		_setNamespaceDefaults: _helmfile._#setNamespaceDefaults & {_namespace: this}
+		setNamespaceDefaults: _setNamespaceDefaults.out
 
 		_defaultFlavor: _helmfile._#defaultFlavor & {_namespace: this}
 		defaultFlavor: _defaultFlavor.out
@@ -64,11 +64,11 @@ _helmfile: {
 		_defaultScaling: _helmfile._#defaultScaling & {_namespace: this}
 		defaultScaling: _defaultScaling.out
 
-		_environmentFlavor: _helmfile._#environment & {
-			_namespace:  this
-			_flavorOnly: true
-		}
+		_environmentFlavor: _helmfile._#environmentFlavor & {_namespace: this}
 		environmentFlavor: _environmentFlavor.out
+
+		_environmentRuntimeDefaults: _helmfile._#environmentRuntimeDefaults & {_namespace: this}
+		environmentRuntimeDefaults: _environmentRuntimeDefaults.out
 
 		_environment: _helmfile._#environment & {_namespace: this}
 		environment: _environment.out
@@ -89,9 +89,11 @@ _helmfile: {
 		repositories: _repos.out
 
 		out: strings.Join([
-			setDefaults,
+			setNamespaceDefaults,
 			defaultFlavor,
 			environmentFlavor,
+			"---",
+			environmentRuntimeDefaults,
 			"---",
 			defaultFeatures,
 			defaultScaling,
@@ -154,7 +156,7 @@ _helmfile: {
 		"""
 	}
 
-	_#setDefaults: {
+	_#setNamespaceDefaults: {
 		this=_namespace: string
 
 		_json:       json.Marshal(_namespaces[this].defaults)
@@ -163,7 +165,7 @@ _helmfile: {
 		_jsonClean:  _jsonCleanS
 		out:         """
 			#namespace defaults
-			{{ $_ := set .Values \"_defaults\" ( `\(_jsonClean)` | fromJson ) }}
+			{{ $_ := set .Values \"_namespaceDefaults\" ( `\(_jsonClean)` | fromJson ) }}
 			"""
 	}
 
@@ -185,24 +187,13 @@ _helmfile: {
 		this=_namespace: string
 		out:             *"" | string
 		if _namespaces[this].values.features != _|_ {
-			if _namespaces[this].values.flavor != _|_ {
-				out: """
-					# Define default features when undefined
-					{{ if not (hasKey .Values "features") }}
-					{{ $_ := set .Values "features" ( .Values._defaults | get .Values.flavor | get "features" ) }}
-					{{ end }}
+			out: """
+				# Define default features when undefined
+				{{ if not (hasKey .Values "features") }}
+				{{ $_ := set .Values "features" .Values._defaults.features }}
+				{{ end }}
 
-					"""
-			}
-			if _namespaces[this].values.flavor == _|_ {
-				out: """
-					# Define default features when undefined
-					{{ if not (hasKey .Values "features") }}
-					{{ $_ := set .Values "features" .Values._defaults.common.features }}
-					{{ end }}
-
-					"""
-			}
+				"""
 		}
 	}
 
@@ -210,57 +201,71 @@ _helmfile: {
 		this=_namespace: string
 		out:             *"" | string
 		if _namespaces[this].values.scaling != _|_ {
+			out: """
+				#set default number of deployments when missing
+				{{ if not ( hasKey .Values  "scaling" ) }}
+				{{ $_ := set .Values "scaling" dict }}
+				{{ end }}
+				{{ if not ( hasKey ( .Values | get "scaling" dict ) \"deployments\" ) }}
+				{{ $_ := set .Values.scaling "deployments" .Values._defaults.scaling.deployments }}
+				{{ end }}
+
+				"""
+		}
+	}
+
+	_#environmentFlavor: {
+		this=_namespace: string
+
+		_variables: {}
+
+		_variables: {
 			if _namespaces[this].values.flavor != _|_ {
-				out: """
-					#set default number of deployments when missing
-					{{ if not ( hasKey .Values  "scaling" ) }}
-					{{ $_ := set .Values "scaling" dict }}
-					{{ end }}
-					{{ if not ( hasKey ( .Values | get "scaling" dict ) \"deployments\" ) }}
-					{{ $_ := set .Values.scaling "deployments" ( .Values._defaults | get .Values.flavor | get "scaling" | get "deployments" ) }}
-					{{ end }}
-
-					"""
+				flavor: "{{ .Values.flavor }}"
 			}
-			if _namespaces[this].values.flavor == _|_ {
-				out: """
-					#set default number of deployments when missing
-					{{ if not ( hasKey .Values  "scaling" ) }}
-					{{ $_ := set .Values "scaling" dict }}
-					{{ end }}
-					{{ if not ( hasKey ( .Values | get "scaling" dict ) \"deployments\" ) }}
-					{{ $_ := set .Values.scaling "deployments" .Values._defaults.common.scaling.deployments }}
-					{{ end }}
-
-					"""
+			if _namespaces[this].defaults != _|_ {
+				"_namespaceDefaults": "{{ .Values._namespaceDefaults | toYaml | nindent 10 }}"
 			}
 		}
+		_yaml: yaml.Marshal({environments: "{{ .Environment.Name }}": values: [for key, value in _variables {(key): value}]})
+		_yamlCleanP: strings.Replace(_yaml, "'{{", "{{", -1)
+		_yamlCleanS: strings.Replace(_yamlCleanP, "}}'", "}}", -1)
+		_yamlClean:  _yamlCleanS
+		out:         _yamlClean
+	}
+
+	_#environmentRuntimeDefaults: {
+		this=_namespace: string
+
+		_variables: {}
+
+		_variables: {
+			if _namespaces[this].values.flavor == _|_ {
+				"_defaults": "{{ .Values._namespaceDefaults.common | toYaml | nindent 10 }}"
+			}
+			if _namespaces[this].values.flavor != _|_ {
+				"_defaults": "{{ .Values._namespaceDefaults | get .Values.flavor | toYaml | nindent 10 }}"
+			}
+		}
+
+		_yaml: yaml.Marshal({environments: "{{ .Environment.Name }}": values: [for key, value in _variables {(key): value}]})
+		_yamlCleanP: strings.Replace(_yaml, "'{{", "{{", -1)
+		_yamlCleanS: strings.Replace(_yamlCleanP, "}}'", "}}", -1)
+		_yamlClean:  _yamlCleanS
+		out:         _yamlClean
 	}
 
 	_#environment: {
 		this=_namespace: string
-		_flavorOnly:     *false | bool
 
 		_variables: {}
 
-		if _flavorOnly == true {
-			_variables: {
-				if _namespaces[this].values.flavor != _|_ {
-					flavor: "{{ .Values.flavor }}"
-				}
-				if _namespaces[this].defaults != _|_ {
-					"_defaults": "{{ .Values._defaults | toYaml | nindent 10 }}"
-				}
+		_variables: {
+			if _namespaces[this].values.features != _|_ {
+				features: "{{ .Values.features | toYaml | nindent 10 }}"
 			}
-		}
-		if _flavorOnly == false {
-			_variables: {
-				if _namespaces[this].values.features != _|_ {
-					features: "{{ .Values.features | toYaml | nindent 10 }}"
-				}
-				if _namespaces[this].values.scaling != _|_ {
-					scaling: deployments: "{{ .Values.scaling.deployments }}"
-				}
+			if _namespaces[this].values.scaling != _|_ {
+				scaling: deployments: "{{ .Values.scaling.deployments }}"
 			}
 		}
 
@@ -272,21 +277,11 @@ _helmfile: {
 	}
 
 	_#defaultNamespace: {
-		this=_namespace: string
-		if _namespaces[this].values.flavor != _|_ {
-			out: """
-				#set default namespace
-				{{ $_defaultNamespace := .Values._defaults | get .Values.flavor | get "targetNamespace" }}
+		out: """
+			#set default namespace
+			{{ $_defaultNamespace := .Values._defaults.targetNamespace }}
 
-				"""
-		}
-		if _namespaces[this].values.flavor == _|_ {
-			out: """
-				#set default namespace
-				{{ $_defaultNamespace := .Values._defaults.common.targetNamespace }}
-
-				"""
-		}
+			"""
 	}
 
 	_#tplStructToDict: {
@@ -491,7 +486,7 @@ _helmfile: {
 			if scale {
 				header: """
 				{{- $canonicalRelease := "\(this)" }}
-				{{- range $index := until .Values.scaling.deployments }}
+				{{- range $index := until (.Values.scaling | get $canonicalRelease dict | get "deployments" .Values.scaling.deployments) }}
 				{{- $deploymentIndex := (add . 1) }}
 				{{- $release := (printf "%s%v" "\(this)-" $deploymentIndex) }}
 				"""
@@ -522,12 +517,13 @@ _helmfile: {
 				...
 				_releaseName: releaseName
 			}}}
-			if _namespaces[this].values.scaling.deployments != _|_ {if release._scale {
-				_props: {"\(releaseName)": {#properties: {
-					...
-					_scale: true
-				}}}
-			}}
+			if _namespaces[this].values.scaling != _|_ {
+				if list.Contains([for key, _ in _namespaces[this].values.scaling {key}], releaseName) {
+					_props: {"\(releaseName)": {#properties: {
+						...
+						_scale: true
+					}}}
+				}}
 			if release.labels != _|_ {
 				_props: {"\(releaseName)": {#properties: {
 					...

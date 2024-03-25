@@ -11,7 +11,9 @@ This *Namespace* provides a suitable stack to operate Arbitrum One mainnet, gör
 The old "classic" Arbitrum tech stack.
 - [arbitrum-nitro](https://github.com/OffchainLabs/nitro/)<br>
 Nitro is the latest iteration of the Arbitrum technology. It is a fully integrated, complete layer 2 optimistic rollup system, including fraud proofs, the sequencer, the token bridges, advanced calldata compression, and more.
-- [proxyd](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
+- [proxyd-classic](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
+Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
+- [proxyd-nitro](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
 Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
 
 ## Features
@@ -125,20 +127,30 @@ arbitrum&#8209;nitro.labels | object |  | Adds helmfile labels to this release |
 arbitrum&#8209;nitro.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
 arbitrum&#8209;nitro.resourceLabels | object |  | Adds labels to resources on this release |
 arbitrum&#8209;nitro.values | (object *or* list of objects) |  | Pass values to the release helm chart |
-features | list of strings | [proxyd, arbitrum_classic, arbitrum_nitro] | *enum of:&nbsp;&nbsp;(proxyd \| arbitrum_classic \| arbitrum_nitro)* |
+features | list of strings | [proxyd-classic, proxyd-nitro, arbitrum-classic, arbitrum-nitro] | *enum of:&nbsp;&nbsp;(proxyd-classic \| proxyd-nitro \| arbitrum-classic \| arbitrum-nitro)* |
 flavor | string |  |  |
 kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
 labels | object |  | Adds helmfile labels to releases on this namespace |
-proxyd | object |  |  |
-proxyd.annotations | object |  | Add annotations to resources on this release |
-proxyd.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
-proxyd.chartVersion | string |  | Specify a specific chart version to use for this release |
-proxyd.labels | object |  | Adds helmfile labels to this release |
-proxyd.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
-proxyd.resourceLabels | object |  | Adds labels to resources on this release |
-proxyd.values | (object *or* list of objects) |  | Pass values to the release helm chart |
+proxyd&#8209;classic | object |  |  |
+proxyd&#8209;classic.annotations | object |  | Add annotations to resources on this release |
+proxyd&#8209;classic.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
+proxyd&#8209;classic.chartVersion | string |  | Specify a specific chart version to use for this release |
+proxyd&#8209;classic.labels | object |  | Adds helmfile labels to this release |
+proxyd&#8209;classic.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+proxyd&#8209;classic.resourceLabels | object |  | Adds labels to resources on this release |
+proxyd&#8209;classic.values | (object *or* list of objects) |  | Pass values to the release helm chart |
+proxyd&#8209;nitro | object |  |  |
+proxyd&#8209;nitro.annotations | object |  | Add annotations to resources on this release |
+proxyd&#8209;nitro.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
+proxyd&#8209;nitro.chartVersion | string |  | Specify a specific chart version to use for this release |
+proxyd&#8209;nitro.labels | object |  | Adds helmfile labels to this release |
+proxyd&#8209;nitro.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+proxyd&#8209;nitro.resourceLabels | object |  | Adds labels to resources on this release |
+proxyd&#8209;nitro.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 resourceLabels | object |  | Adds labels to release resources on this namespace |
 scaling | object |  | arbitrum-one scaling interface |
+scaling.arbitrum&#8209;classic | object |  |  |
+scaling.arbitrum&#8209;nitro | object |  |  |
 scaling.deployments | integer | 1 | number of independent stateful sets to deploy |
 targetNamespace | string | arbitrum-one-mainnet | the default is arbitrum-one-<flavor> |
 helmDefaults | object |  |  |

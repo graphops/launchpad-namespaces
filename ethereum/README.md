@@ -140,6 +140,8 @@ proxyd.values | (object *or* list of objects) |  | Pass values to the release he
 resourceLabels | object |  | Adds labels to release resources on this namespace |
 scaling | object |  | ethereum scaling interface |
 scaling.deployments | integer | 1 | number of independent stateful sets to deploy |
+scaling.erigon | object |  |  |
+scaling.nimbus | object |  |  |
 scaling.startP2PPort | integer |  | A beggining port for the range to use in P2P NodePorts |
 targetNamespace | string | eth-mainnet | the default is eth-<flavor> |
 helmDefaults | object |  |  |
