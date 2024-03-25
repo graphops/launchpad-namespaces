@@ -129,6 +129,7 @@ proxyd.resourceLabels | object |  | Adds labels to resources on this release |
 proxyd.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 resourceLabels | object |  | Adds labels to release resources on this namespace |
 scaling | object |  | celo scaling interface |
+scaling.celo | object |  |  |
 scaling.deployments | integer | 1 | number of independent stateful sets to deploy |
 scaling.startP2PPort | integer |  | A beggining port for the range to use in P2P NodePorts |
 targetNamespace | string | celo-mainnet | the default is celo-<flavor> |

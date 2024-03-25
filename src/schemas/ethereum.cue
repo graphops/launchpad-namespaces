@@ -46,6 +46,14 @@ package LaunchpadNamespaces
 			deployments: *1 | ( int & >=1)
 			// A beggining port for the range to use in P2P NodePorts
 			startP2PPort?: int
+
+			erigon: {
+				deployments?: int & >=1
+			}
+
+			nimbus: {
+				deployments?: int & >=1
+			}
 		}
 
 		// ethereum namespace values schema
@@ -114,7 +122,6 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
 				}
 				_template: {version: "0.9.9-canary.1"}
-				_scale: true
 			}
 
 			nimbus: {
@@ -127,7 +134,6 @@ package LaunchpadNamespaces
 				}
 				feature: #features.#nimbus
 				_template: {version: "0.5.11-canary.1"}
-				_scale: true
 			}
 
 			proxyd: {
@@ -139,7 +145,6 @@ package LaunchpadNamespaces
 				}
 				feature: #features.#proxyd
 				_template: {version: "0.5.3-canary.2"}
-				_scale: false
 			}
 		}
 

@@ -1,5 +1,5 @@
 #namespace defaults
-{{ $_ := set .Values "_defaults" ( `{"flavor":"mainnet","common":{},"mainnet":{"targetNamespace":"polygon-mainnet"}}` | fromJson ) }}
+{{ $_ := set .Values "_namespaceDefaults" ( `{"flavor":"mainnet","common":{},"mainnet":{"targetNamespace":"polygon-mainnet"}}` | fromJson ) }}
 #set default flavor when missing
 {{ if not ( hasKey .Values "flavor" ) }}
 {{ $_ := set .Values "flavor" "mainnet" }}
@@ -9,7 +9,13 @@ environments:
   {{ .Environment.Name }}:
     values:
       - flavor: {{ .Values.flavor }}
-      - _defaults: {{ .Values._defaults | toYaml | nindent 10 }}
+      - _namespaceDefaults: {{ .Values._namespaceDefaults | toYaml | nindent 10 }}
+
+---
+environments:
+  {{ .Environment.Name }}:
+    values:
+      - _defaults: {{ .Values._namespaceDefaults | get .Values.flavor | toYaml | nindent 10 }}
 
 ---
 
@@ -100,7 +106,7 @@ kubeVersion: {{ .Values.kubeVersion }}
 {{ end }}
 
 #set default namespace
-{{ $_defaultNamespace := .Values._defaults | get .Values.flavor | get "targetNamespace" }}
+{{ $_defaultNamespace := .Values._defaults.targetNamespace }}
 
 
 {{- $_commonLabels := dict 
