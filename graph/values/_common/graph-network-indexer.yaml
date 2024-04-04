@@ -31,7 +31,7 @@ indexerAgent:
 
 
 indexerService:
-  replicaCount: 1 # scale me
+  replicas: 1 # scale me
 
   env: {}
 
