@@ -174,7 +174,7 @@ templates:
     version: {{ .Values | get "node-problem-detector" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "node-problem-detector" dict | get "chartVersion" false ) ( .Values | get "node-problem-detector" dict | get "chartUrl" false ) )) }}
-    version: "2.3.12"
+    version: "2.3.13"
     {{- end }}
   
   loki:
