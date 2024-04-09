@@ -158,7 +158,7 @@ templates:
     version: {{ .Values | get "graph-node" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "graph-node" dict | get "chartVersion" false ) ( .Values | get "graph-node" dict | get "chartUrl" false ) )) }}
-    version: "0.4.0"
+    version: "0.4.1"
     {{- end }}
   
   graph-network-indexer:
