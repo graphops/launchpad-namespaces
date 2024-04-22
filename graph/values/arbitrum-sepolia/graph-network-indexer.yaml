@@ -2,7 +2,7 @@
 
 indexerDefaults:
   config:
-    ethereum: "http://proxyd-proxyd.arbitrum-one-sepolia:8545"
+    ethereum: "http://proxyd-proxyd.arbitrum-sepolia:8545"
     ethereum-network: "arbitrum-sepolia"
     network-subgraph-endpoint: "https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-arbitrum-sepolia"
 

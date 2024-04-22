@@ -13,6 +13,6 @@ chains:
     enabled: false
     shard: primary
     provider:
-      - label: arbitrum-one
-        url: http://proxyd-proxyd.arbitrum-one-sepolia:8545
+      - label: arbitrum-sepolia
+        url: http://proxyd-proxyd.arbitrum-sepolia:8545
         features: [archive, traces]
