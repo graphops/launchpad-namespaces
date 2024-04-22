@@ -805,7 +805,7 @@
                             "description": {
                                 "type": "string",
                                 "enum": [
-                                    "This *Namespace* provides a suitable stack to operate Arbitrum One one, görli and sepolia archive nodes."
+                                    "This *Namespace* provides a suitable stack to operate Arbitrum One and Arbitrum Sepolia archive nodes."
                                 ]
                             }
                         }
@@ -830,7 +830,7 @@
                                     "targetNamespace": {
                                         "type": "string",
                                         "enum": [
-                                            "arbitrum"
+                                            "arbitrum-one"
                                         ]
                                     },
                                     "features": {
@@ -1468,7 +1468,7 @@
                     "targetNamespace": {
                         "description": "the default is arbitrum-<flavor>",
                         "type": "string",
-                        "default": "arbitrum"
+                        "default": "arbitrum-one"
                     },
                     "features": {
                         "type": "array",

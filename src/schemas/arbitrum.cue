@@ -7,7 +7,7 @@ package LaunchpadNamespaces
 			name: "arbitrum"
 			url:  "https://github.com/graphops/launchpad-namespaces/\(name)"
 			description: """
-				This *Namespace* provides a suitable stack to operate Arbitrum One one, görli and sepolia archive nodes.
+				This *Namespace* provides a suitable stack to operate Arbitrum One and Arbitrum Sepolia archive nodes.
 				"""
 		}
 
@@ -86,7 +86,7 @@ package LaunchpadNamespaces
 
 			one: {
 				#common
-				targetNamespace: "arbitrum"
+				targetNamespace: "arbitrum-one"
 				features: [#features.#proxyd_classic, #features.#proxyd_nitro, #features.#arbitrum_classic, #features.#arbitrum_nitro]
 			}
 

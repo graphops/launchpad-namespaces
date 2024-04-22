@@ -2,7 +2,7 @@
 
 # Arbitrum Namespace
 
-This *Namespace* provides a suitable stack to operate Arbitrum One one, görli and sepolia archive nodes.
+This *Namespace* provides a suitable stack to operate Arbitrum One and Arbitrum Sepolia archive nodes.
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
@@ -152,7 +152,7 @@ scaling | object |  | arbitrum scaling interface |
 scaling.arbitrum&#8209;classic | object |  |  |
 scaling.arbitrum&#8209;nitro | object |  |  |
 scaling.deployments | integer | 1 | number of independent stateful sets to deploy |
-targetNamespace | string | arbitrum | the default is arbitrum-<flavor> |
+targetNamespace | string | arbitrum-one | the default is arbitrum-<flavor> |
 helmDefaults | object |  |  |
 helmDefaults.args | list of strings |  |  |
 helmDefaults.cleanupOnFail | boolean |  |  |
