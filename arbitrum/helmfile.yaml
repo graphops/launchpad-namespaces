@@ -1,8 +1,8 @@
 #namespace defaults
-{{ $_ := set .Values "_namespaceDefaults" ( `{"flavor":"mainnet","mainnet":{"targetNamespace":"arbitrum-one-mainnet","scaling":{"deployments":1,"arbitrum-classic":{},"arbitrum-nitro":{}},"features":["proxyd-classic","proxyd-nitro","arbitrum-classic","arbitrum-nitro"]},"common":{"scaling":{"deployments":1,"arbitrum-classic":{},"arbitrum-nitro":{}}},"sepolia":{"targetNamespace":"arbitrum-one-sepolia","scaling":{"deployments":1,"arbitrum-classic":{},"arbitrum-nitro":{}},"features":["proxyd-nitro","arbitrum-nitro"]}}` | fromJson ) }}
+{{ $_ := set .Values "_namespaceDefaults" ( `{"flavor":"one","one":{"targetNamespace":"arbitrum-one","scaling":{"deployments":1,"arbitrum-classic":{},"arbitrum-nitro":{}},"features":["proxyd-classic","proxyd-nitro","arbitrum-classic","arbitrum-nitro"]},"common":{"scaling":{"deployments":1,"arbitrum-classic":{},"arbitrum-nitro":{}}},"sepolia":{"targetNamespace":"arbitrum-sepolia","scaling":{"deployments":1,"arbitrum-classic":{},"arbitrum-nitro":{}},"features":["proxyd-nitro","arbitrum-nitro"]}}` | fromJson ) }}
 #set default flavor when missing
 {{ if not ( hasKey .Values "flavor" ) }}
-{{ $_ := set .Values "flavor" "mainnet" }}
+{{ $_ := set .Values "flavor" "one" }}
 {{ end }}
 
 environments:
@@ -124,7 +124,7 @@ kubeVersion: {{ .Values.kubeVersion }}
 
 {{- $_templatedValue_0 :=  .Values.flavor  }}
 {{- $_commonLabels := dict 
-`launchpad.graphops.xyz/namespace` `arbitrum-one`
+`launchpad.graphops.xyz/namespace` `arbitrum`
 `app.launchpad.graphops.xyz/type` `blockchain`
 `app.launchpad.graphops.xyz/chain` `arbitrum-one`
 `app.launchpad.graphops.xyz/network` $_templatedValue_0

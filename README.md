@@ -157,8 +157,8 @@ One way to go about that would be to keep it in a git repository on some support
 
 The following namespaces are supported:
 
-### [:arbitrum-one](/arbitrum-one)
-This *Namespace* provides a suitable stack to operate Arbitrum One mainnet, görli and sepolia archive nodes.
+### [:arbitrum](/arbitrum)
+This *Namespace* provides a suitable stack to operate Arbitrum One and Arbitrum Sepolia archive nodes.
 
 - [arbitrum-classic](https://github.com/OffchainLabs/arbitrum-classic)<br>
 The old "classic" Arbitrum tech stack.

@@ -1,27 +1,27 @@
-// schema:type=namespace schema:namespace=arbitrum-one
+// schema:type=namespace schema:namespace=arbitrum
 package LaunchpadNamespaces
 
 #namespaces: {
-	#arbitrumOne: {
+	#arbitrum: {
 		meta: {
-			name: "arbitrum-one"
+			name: "arbitrum"
 			url:  "https://github.com/graphops/launchpad-namespaces/\(name)"
 			description: """
-				This *Namespace* provides a suitable stack to operate Arbitrum One mainnet, görli and sepolia archive nodes.
+				This *Namespace* provides a suitable stack to operate Arbitrum One and Arbitrum Sepolia archive nodes.
 				"""
 		}
 
 		#flavor: {
-			// suitable defaults for an arbitrum-one-mainnet archive node
-			#mainnet: "mainnet"
+			// suitable defaults for an arbitrum-one archive node
+			#one: "one"
 
-			// suitable defaults for an arbitrum-one-sepolia archive node
+			// suitable defaults for an arbitrum-sepolia archive node
 			#sepolia: "sepolia"
 
-			#enum: ( #mainnet | #sepolia )
+			#enum: ( #one | #sepolia )
 		}
 
-		// arbitrum-one namespace features schema
+		// arbitrum namespace features schema
 		#features: {
 			// Deploy proxyd for arbitrum-classic
 			#proxyd_classic: "proxyd-classic"
@@ -36,7 +36,7 @@ package LaunchpadNamespaces
 			#enum: ( #proxyd_classic | #proxyd_nitro | #arbitrum_classic | #arbitrum_nitro )
 		}
 
-		// arbitrum-one scaling interface
+		// arbitrum scaling interface
 		#scaling: {
 			// number of independent stateful sets to deploy
 			deployments: *1 | ( int & >=1 )
@@ -50,11 +50,11 @@ package LaunchpadNamespaces
 			}
 		}
 
-		// arbitrum-one namespace values schema
+		// arbitrum namespace values schema
 		#values: #base.#values & {
 			flavor?: *defaults.flavor | #flavor.#enum
 
-			// the default is arbitrum-one-<flavor>
+			// the default is arbitrum-<flavor>
 			targetNamespace?: *defaults["\(defaults.flavor)"].targetNamespace | string
 
 			features?: *defaults["\(defaults.flavor)"].features | [...#features.#enum]
@@ -71,28 +71,28 @@ package LaunchpadNamespaces
 			[string & "^(arbitrum-classic|arbitrum-nitro|proxyd-classic|proxyd-nitro)-[0-9]+$"]?: #base.#releaseValues
 		}
 
-		// arbitrum-one helmfile API
+		// arbitrum helmfile API
 		#helmfiles: #base.#helmfiles & {
-			path: =~"*github.com/graphops/launchpad-namespaces.git@arbitrum-one/helmfile.yaml*"
-			values?: #arbitrumOne.#values | [...#arbitrumOne.#values]
+			path: =~"*github.com/graphops/launchpad-namespaces.git@arbitrum/helmfile.yaml*"
+			values?: #arbitrum.#values | [...#arbitrum.#values]
 		}
 
 		defaults: {
-			flavor: "mainnet"
+			flavor: "one"
 
 			#common: {
 				scaling: #scaling & {deployments: 1}
 			}
 
-			mainnet: {
+			one: {
 				#common
-				targetNamespace: "arbitrum-one-mainnet"
+				targetNamespace: "arbitrum-one"
 				features: [#features.#proxyd_classic, #features.#proxyd_nitro, #features.#arbitrum_classic, #features.#arbitrum_nitro]
 			}
 
 			sepolia: {
 				#common
-				targetNamespace: "arbitrum-one-sepolia"
+				targetNamespace: "arbitrum-sepolia"
 				features: [#features.#proxyd_nitro, #features.#arbitrum_nitro]
 			}
 		}
@@ -147,7 +147,7 @@ package LaunchpadNamespaces
 
 		labels: {
 			#base.#labels
-			"launchpad.graphops.xyz/namespace":   "arbitrum-one"
+			"launchpad.graphops.xyz/namespace":   "arbitrum"
 			"app.launchpad.graphops.xyz/type":    "blockchain"
 			"app.launchpad.graphops.xyz/chain":   "arbitrum-one"
 			"app.launchpad.graphops.xyz/network": "{{ .Values.flavor }}"
@@ -160,4 +160,4 @@ package LaunchpadNamespaces
 }
 
 // instantiate namespace ojects for internal usage
-_namespaces: "arbitrum-one": _#namespaceTemplate & {_key: #namespaces.#arbitrumOne}
+_namespaces: "arbitrum": _#namespaceTemplate & {_key: #namespaces.#arbitrum}
