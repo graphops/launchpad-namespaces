@@ -4,11 +4,11 @@ nitro:
     parentChainUrl: http://your-eth-sepolia-url:8545  ## changeme
     parentChainBeaconUrl: http://your-eth-consensus-node-url:5052  ## changeme
 
-  # -- [PersistentVolumeClaimSpec](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.23/#persistentvolumeclaimspec-v1-core) for Erigon storage
+  # -- [PersistentVolumeClaimSpec](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.23/#persistentvolumeclaimspec-v1-core) for Arbitrum Nitro storage
   volumeClaimSpec:
     resources:
       requests:
-        # -- The amount of disk space to provision for Erigon
+        # -- The amount of disk space to provision for Arbitrum Nitro
         storage: 1Ti
 
   restoreSnapshot:
