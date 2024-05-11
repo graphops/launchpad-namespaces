@@ -109,7 +109,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/component":    "{{ $canonicalRelease }}"
 					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
 				}
-				_template: {version: "0.9.9-canary.1"}
+				_template: {version: "0.9.10"}
 			}
 
 			heimdall: {
@@ -120,7 +120,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/component":    "{{ $canonicalRelease }}"
 					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
 				}
-				_template: {version: "1.1.5-canary.6"}
+				_template: {version: "1.1.5-canary.8"}
 			}
 
 			proxyd: {
@@ -131,7 +131,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/component": "{{ $canonicalRelease }}"
 				}
 				feature: #features.#proxyd
-				_template: {version: "0.5.3-canary.2"}
+				_template: {version: "0.5.3"}
 			}
 		}
 
