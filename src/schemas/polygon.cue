@@ -53,7 +53,7 @@ package LaunchpadNamespaces
 		releases: {
 			erigon: {
 				chart: {_repositories.graphops.charts.erigon}
-				_template: {version: "0.9.10"}
+				_template: {version: "0.9.11-canary.1"}
 			}
 
 			heimdall: {
