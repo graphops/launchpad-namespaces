@@ -120,7 +120,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/component":    "{{ $canonicalRelease }}"
 					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
 				}
-				_template: {version: "1.1.5-canary.8"}
+				_template: {version: "1.1.5-canary.9"}
 			}
 
 			proxyd: {
