@@ -5,11 +5,11 @@ indexerDefaults:
     ethereum: "http://proxyd-proxyd.eth-mainnet:8545"
     ethereum-network: "mainnet"
     network-subgraph-endpoint: "https://gateway.thegraph.com/network"
+    network-subgraph-deployment: "QmWaCrvdyepm1Pe6RPkJFT3u8KmaZahAvJEFCt27HRWyK4" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
 
 indexerAgent:
   config:
     collect-receipts-endpoint: "https://gateway.network.thegraph.com/collect-receipts"
-    network-subgraph-deployment: "QmWaCrvdyepm1Pe6RPkJFT3u8KmaZahAvJEFCt27HRWyK4" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
     dai-contract: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
     epoch-subgraph-endpoint: "https://api.thegraph.com/subgraphs/name/graphprotocol/mainnet-epoch-block-oracle" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
 
