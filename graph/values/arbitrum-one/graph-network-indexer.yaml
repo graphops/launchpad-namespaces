@@ -5,7 +5,7 @@ indexerDefaults:
     ethereum: "http://proxyd-nitro-proxyd.arbitrum-one:8545"
     ethereum-network: "arbitrum-one"
     network-subgraph-endpoint: "https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-arbitrum"
-    network-subgraph-deployment: "QmZtNN8NbxjJ1KD5uKBYa7Gj29CT8xypSXnAmXbrLNTQgX" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
+    network-subgraph-deployment: "QmSWxvd8SaQK6qZKJ7xtfxCCGoRzGnoi2WNzmJYYJW9BXY" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
 
 indexerAgent:
   # fixes "Network Subgraph is not fresh" error https://github.com/graphprotocol/indexer/pull/799
@@ -13,6 +13,7 @@ indexerAgent:
   env:
     INDEXER_AGENT_SUBGRAPH_MAX_BLOCK_DISTANCE: 100
     INDEXER_AGENT_SUBGRAPH_FRESHNESS_SLEEP_MILLISECONDS: 10000
+
   config:
     collect-receipts-endpoint: "https://gateway-arbitrum.network.thegraph.com/collect-receipts"
     epoch-subgraph-endpoint: "https://api.thegraph.com/subgraphs/name/graphprotocol/arbitrum-epoch-block-oracle" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
