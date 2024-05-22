@@ -5,11 +5,11 @@ indexerDefaults:
     ethereum: "http://proxyd-nitro-proxyd.arbitrum-sepolia:8545"
     ethereum-network: "arbitrum-sepolia"
     network-subgraph-endpoint: "https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-arbitrum-sepolia"
+    network-subgraph-deployment: "QmXnGVrg6DvscnvJd86aHAPLGyGrkM17weMrAsFAEMmQLL" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
 
 indexerAgent:
   config:
     collect-receipts-endpoint: "https://gateway-testnet-arbitrum.network.thegraph.com/collect-receipts"
-    network-subgraph-deployment: "QmT8UDGK7zKd2u2NQZwhLYHdA4KM55QsivkE3ouCuX6fEj" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
     epoch-subgraph-endpoint: "https://api.thegraph.com/subgraphs/name/graphprotocol/arbitrum-sepolia-ebo" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
     epoch-subgraph-deployment: "QmTpu2mVquoMpr4SWSM77nGkU3tcUS1Bhk1sVHpjDrAUAx"
 
