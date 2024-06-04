@@ -1,5 +1,5 @@
 #namespace defaults
-{{ $_ := set .Values "_namespaceDefaults" ( `{"flavor":"mainnet","mainnet":{"targetNamespace":"polygon-mainnet","features":["proxyd"],"scaling":{"deployments":1,"erigon":{},"heimdall":{}}},"mumbai":{"targetNamespace":"polygon-mumbai","features":["proxyd"],"scaling":{"deployments":1,"erigon":{},"heimdall":{}}},"common":{"features":["proxyd"],"scaling":{"deployments":1,"erigon":{},"heimdall":{}}},"amoy":{"targetNamespace":"polygon-amoy","features":["proxyd"],"scaling":{"deployments":1,"erigon":{},"heimdall":{}}}}` | fromJson ) }}
+{{ $_ := set .Values "_namespaceDefaults" ( `{"flavor":"mainnet","mainnet":{"targetNamespace":"polygon-mainnet","features":["proxyd","erigon","heimdall","heimdall-svc"],"scaling":{"deployments":1,"erigon":{},"heimdall":{}}},"common":{"features":["proxyd","erigon","heimdall","heimdall-svc"],"scaling":{"deployments":1,"erigon":{},"heimdall":{}}},"amoy":{"targetNamespace":"polygon-amoy","features":["proxyd","erigon","heimdall","heimdall-svc"],"scaling":{"deployments":1,"erigon":{},"heimdall":{}}}}` | fromJson ) }}
 #set default flavor when missing
 {{ if not ( hasKey .Values "flavor" ) }}
 {{ $_ := set .Values "flavor" "mainnet" }}
@@ -188,6 +188,21 @@ templates:
     version: "1.1.5-canary.11"
     {{- end }}
   
+  heimdall-svc:
+    {{- if ( .Values | get "heimdall-svc" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "heimdall-svc" | get "chartUrl" }}
+    {{- else }}
+    chart: "graphops/resource-injector"
+    {{- end }}
+    inherit:
+    - template: "defaults"
+    {{- if ( .Values | get "heimdall-svc" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "heimdall-svc" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "heimdall-svc" dict | get "chartVersion" false ) ( .Values | get "heimdall-svc" dict | get "chartUrl" false ) )) }}
+    version: "0.2.0"
+    {{- end }}
+  
   proxyd:
     {{- if ( .Values | get "proxyd" dict | get "chartUrl" false ) }}
     chart: {{ .Values | get "proxyd" | get "chartUrl" }}
@@ -204,6 +219,7 @@ templates:
     {{- end }}
   
 releases:
+  {{ if has "erigon" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "erigon" }}
   {{- range $index := until (.Values.scaling | get $canonicalRelease dict | get "deployments" .Values.scaling.deployments) }}
   {{- $deploymentIndex := (add . 1) }}
@@ -249,6 +265,8 @@ releases:
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
   {{- end -}}
+  {{- end -}}
+  {{ if has "heimdall" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "heimdall" }}
   {{- range $index := until (.Values.scaling | get $canonicalRelease dict | get "deployments" .Values.scaling.deployments) }}
   {{- $deploymentIndex := (add . 1) }}
@@ -293,6 +311,49 @@ releases:
     {{- tpl $_tplTransforms (dict "Values" $.Values "release" $release "canonicalRelease" $canonicalRelease "resourceLabels" $_releaseResourceLabels  )  | indent 4 -}}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
+  {{- end -}}
+  {{- end -}}
+  {{ if has "heimdall-svc" ( .Values | get "features" list ) }}
+  {{- $canonicalRelease := "heimdall-svc" }}
+  {{- $release := "heimdall-svc" }}
+  {{- $_templatedValue_0 :=  $canonicalRelease  }}
+  {{- $_templatedValue_1 :=  $release  }}
+  {{- $_releaseResourceLabels := dict 
+  `app.launchpad.graphops.xyz/layer` `consensus`
+  `app.launchpad.graphops.xyz/component` $_templatedValue_0
+  `app.launchpad.graphops.xyz/release` $_templatedValue_1
+  }}
+  {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
+  - name: "{{ $release }}"
+    inherit:
+    - template: "{{ $canonicalRelease }}"
+    labels:
+      app.launchpad.graphops.xyz/layer: consensus
+      app.launchpad.graphops.xyz/release: '{{ $release }}'
+      app.launchpad.graphops.xyz/component: '{{ $canonicalRelease }}'
+      
+    {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "labels" dict ) }}
+      {{ $key }}: {{ $value }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- if (ne $release $canonicalRelease) }}
+    {{- range $key,$value := ( $.Values | get $release dict | get "labels" dict ) }}
+      {{ $key }}: {{ $value }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- end }}
+    {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "resourceLabels" dict ) }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- if (ne $release $canonicalRelease) }}
+    {{- range $key,$value := ( $.Values | get $release dict | get "resourceLabels" dict ) }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- end }}
+    {{- tpl $_tplTransforms (dict "Values" $.Values "release" $release "canonicalRelease" $canonicalRelease "resourceLabels" $_releaseResourceLabels  )  | indent 4 -}}
+    values:
+    {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
+  
   {{- end -}}
   {{ if has "proxyd" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "proxyd" }}

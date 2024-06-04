@@ -2,7 +2,7 @@
 
 # Polygon Namespace
 
-This *Namespace* provides a suitable stack to operate Polygon mainnet and mumbai testnet archive nodes.
+This *Namespace* provides a suitable stack to operate Polygon mainnet and amoy testnet archive nodes.
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
@@ -11,6 +11,8 @@ This *Namespace* provides a suitable stack to operate Polygon mainnet and mumbai
 Erigon is an implementation of Ethereum (execution client with light client for consensus layer), on the efficiency frontier.
 - [heimdall](https://github.com/maticnetwork/heimdall)<br>
 Validator node for Matic Network.
+- [heimdall-svc](https://github.com/graphops/launchpad-charts/tree/main/charts/resource-injector)<br>
+Manage Raw Kubernetes Resources using Helm
 - [proxyd](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
 Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
 
@@ -117,7 +119,7 @@ erigon.labels | object |  | Adds helmfile labels to this release |
 erigon.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
 erigon.resourceLabels | object |  | Adds labels to resources on this release |
 erigon.values | (object *or* list of objects) |  | Pass values to the release helm chart |
-features | list of strings | [proxyd] | *enum of:&nbsp;&nbsp;(proxyd)* |
+features | list of strings | [proxyd, erigon, heimdall, heimdall-svc] | *enum of:&nbsp;&nbsp;(proxyd \| erigon \| heimdall \| heimdall-svc)* |
 flavor | string |  |  |
 heimdall | object |  |  |
 heimdall.annotations | object |  | Add annotations to resources on this release |
@@ -127,6 +129,14 @@ heimdall.labels | object |  | Adds helmfile labels to this release |
 heimdall.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
 heimdall.resourceLabels | object |  | Adds labels to resources on this release |
 heimdall.values | (object *or* list of objects) |  | Pass values to the release helm chart |
+heimdall&#8209;svc | object |  |  |
+heimdall&#8209;svc.annotations | object |  | Add annotations to resources on this release |
+heimdall&#8209;svc.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
+heimdall&#8209;svc.chartVersion | string |  | Specify a specific chart version to use for this release |
+heimdall&#8209;svc.labels | object |  | Adds helmfile labels to this release |
+heimdall&#8209;svc.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
+heimdall&#8209;svc.resourceLabels | object |  | Adds labels to resources on this release |
+heimdall&#8209;svc.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
 labels | object |  | Adds helmfile labels to releases on this namespace |
 proxyd | object |  |  |

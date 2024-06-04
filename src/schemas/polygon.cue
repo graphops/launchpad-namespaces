@@ -8,7 +8,7 @@ package LaunchpadNamespaces
 			name: "polygon"
 			url:  "https://github.com/graphops/launchpad-namespaces/\(name)"
 			description: """
-				This *Namespace* provides a suitable stack to operate Polygon mainnet and mumbai testnet archive nodes.
+				This *Namespace* provides a suitable stack to operate Polygon mainnet and amoy testnet archive nodes.
 				"""
 		}
 
@@ -16,13 +16,10 @@ package LaunchpadNamespaces
 			// suitable defaults for a mainnet archive node
 			#mainnet: "mainnet"
 
-			// suitable defaults for a mumbai testnet archive node
-			#mumbai: "mumbai"
-
 			// suitable defaults for an amoy testnet archive node
 			#amoy: "amoy"
 
-			#enum: ( #mainnet | #mumbai | #amoy )
+			#enum: ( #mainnet | #amoy )
 		}
 
 		// polygon namespace features schema
@@ -30,7 +27,16 @@ package LaunchpadNamespaces
 			// Deploy proxyd
 			#proxyd: "proxyd"
 
-			#enum: ( #proxyd )
+			// Deploy the erigon RPC
+			#erigon: "erigon"
+
+			// Deploy heimdall
+			#heimdall: "heimdall"
+
+			// Provide an heimdall front SVC
+			#heimdall_svc: "heimdall-svc"
+
+			#enum: ( #proxyd | #erigon | #heimdall | #heimdall_svc )
 		}
 
 		// polygon scaling interface
@@ -80,18 +86,13 @@ package LaunchpadNamespaces
 			flavor: "mainnet"
 
 			#common: {
-				features: [#features.#proxyd]
+				features: [#features.#proxyd, #features.#erigon, #features.#heimdall, #features.#heimdall_svc]
 				scaling: #scaling & {deployments: 1}
 			}
 
 			mainnet: {
 				#common
 				targetNamespace: "polygon-mainnet"
-			}
-
-			mumbai: {
-				#common
-				targetNamespace: "polygon-mumbai"
 			}
 
 			amoy: {
@@ -109,6 +110,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/component":    "{{ $canonicalRelease }}"
 					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
 				}
+				feature: #features.#erigon
 				_template: {version: "0.9.10"}
 			}
 
@@ -120,7 +122,19 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/component":    "{{ $canonicalRelease }}"
 					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
 				}
+				feature: #features.#heimdall
 				_template: {version: "1.1.5-canary.11"}
+			}
+
+			"heimdall-svc": {
+				chart: {_repositories.graphops.charts["resource-injector"]}
+				labels: {
+					"app.launchpad.graphops.xyz/layer":     "consensus"
+					"app.launchpad.graphops.xyz/release":   "{{ $release }}"
+					"app.launchpad.graphops.xyz/component": "{{ $canonicalRelease }}"
+				}
+				feature: #features.#heimdall_svc
+				_template: {version: "0.2.0"}
 			}
 
 			proxyd: {

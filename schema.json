@@ -4667,7 +4667,7 @@
                             "description": {
                                 "type": "string",
                                 "enum": [
-                                    "This *Namespace* provides a suitable stack to operate Polygon mainnet and mumbai testnet archive nodes."
+                                    "This *Namespace* provides a suitable stack to operate Polygon mainnet and amoy testnet archive nodes."
                                 ]
                             }
                         }
@@ -4677,7 +4677,6 @@
                         "required": [
                             "flavor",
                             "mainnet",
-                            "mumbai",
                             "amoy"
                         ],
                         "properties": {
@@ -4694,27 +4693,6 @@
                                         "type": "string",
                                         "enum": [
                                             "polygon-mainnet"
-                                        ]
-                                    }
-                                },
-                                "allOf": [
-                                    {
-                                        "$ref": "#/components/schemas/namespaces.polygon.defaults.common"
-                                    },
-                                    {
-                                        "required": [
-                                            "targetNamespace"
-                                        ]
-                                    }
-                                ]
-                            },
-                            "mumbai": {
-                                "type": "object",
-                                "properties": {
-                                    "targetNamespace": {
-                                        "type": "string",
-                                        "enum": [
-                                            "polygon-mumbai"
                                         ]
                                     }
                                 },
@@ -4757,6 +4735,7 @@
                         "required": [
                             "erigon",
                             "heimdall",
+                            "heimdall-svc",
                             "proxyd"
                         ],
                         "properties": {
@@ -4764,7 +4743,8 @@
                                 "type": "object",
                                 "required": [
                                     "chart",
-                                    "labels"
+                                    "labels",
+                                    "feature"
                                 ],
                                 "properties": {
                                     "chart": {
@@ -4836,6 +4816,9 @@
                                                 ]
                                             }
                                         }
+                                    },
+                                    "feature": {
+                                        "$ref": "#/components/schemas/namespaces.polygon.features.erigon"
                                     }
                                 }
                             },
@@ -4843,7 +4826,8 @@
                                 "type": "object",
                                 "required": [
                                     "chart",
-                                    "labels"
+                                    "labels",
+                                    "feature"
                                 ],
                                 "properties": {
                                     "chart": {
@@ -4915,6 +4899,85 @@
                                                 ]
                                             }
                                         }
+                                    },
+                                    "feature": {
+                                        "$ref": "#/components/schemas/namespaces.polygon.features.heimdall"
+                                    }
+                                }
+                            },
+                            "heimdall-svc": {
+                                "type": "object",
+                                "required": [
+                                    "chart",
+                                    "labels",
+                                    "feature"
+                                ],
+                                "properties": {
+                                    "chart": {
+                                        "type": "object",
+                                        "required": [
+                                            "url",
+                                            "repository",
+                                            "description",
+                                            "name"
+                                        ],
+                                        "properties": {
+                                            "url": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "https://github.com/graphops/launchpad-charts/tree/main/charts/resource-injector"
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "Manage Raw Kubernetes Resources using Helm"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "resource-injector"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "labels": {
+                                        "type": "object",
+                                        "required": [
+                                            "app.launchpad.graphops.xyz/layer",
+                                            "app.launchpad.graphops.xyz/release",
+                                            "app.launchpad.graphops.xyz/component"
+                                        ],
+                                        "properties": {
+                                            "app.launchpad.graphops.xyz/layer": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "consensus"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/release": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $release }}"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/component": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $canonicalRelease }}"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "feature": {
+                                        "$ref": "#/components/schemas/namespaces.polygon.features.heimdall_svc"
                                     }
                                 }
                             },
@@ -5055,15 +5118,30 @@
                         "items": [
                             {
                                 "$ref": "#/components/schemas/namespaces.polygon.features.proxyd"
+                            },
+                            {
+                                "$ref": "#/components/schemas/namespaces.polygon.features.erigon"
+                            },
+                            {
+                                "$ref": "#/components/schemas/namespaces.polygon.features.heimdall"
+                            },
+                            {
+                                "$ref": "#/components/schemas/namespaces.polygon.features.heimdall_svc"
                             }
                         ],
                         "enum": [
                             [
-                                "proxyd"
+                                "proxyd",
+                                "erigon",
+                                "heimdall",
+                                "heimdall-svc"
                             ]
                         ],
                         "default": [
-                            "proxyd"
+                            "proxyd",
+                            "erigon",
+                            "heimdall",
+                            "heimdall-svc"
                         ]
                     },
                     "scaling": {
@@ -5094,7 +5172,34 @@
                 "type": "object"
             },
             "namespaces.polygon.features.enum": {
-                "$ref": "#/components/schemas/namespaces.polygon.features.proxyd"
+                "type": "string",
+                "enum": [
+                    "proxyd",
+                    "erigon",
+                    "heimdall",
+                    "heimdall-svc"
+                ]
+            },
+            "namespaces.polygon.features.erigon": {
+                "description": "Deploy the erigon RPC",
+                "type": "string",
+                "enum": [
+                    "erigon"
+                ]
+            },
+            "namespaces.polygon.features.heimdall": {
+                "description": "Deploy heimdall",
+                "type": "string",
+                "enum": [
+                    "heimdall"
+                ]
+            },
+            "namespaces.polygon.features.heimdall_svc": {
+                "description": "Provide an heimdall front SVC",
+                "type": "string",
+                "enum": [
+                    "heimdall-svc"
+                ]
             },
             "namespaces.polygon.features.proxyd": {
                 "description": "Deploy proxyd",
@@ -5117,7 +5222,6 @@
                 "type": "string",
                 "enum": [
                     "mainnet",
-                    "mumbai",
                     "amoy"
                 ]
             },
@@ -5126,13 +5230,6 @@
                 "type": "string",
                 "enum": [
                     "mainnet"
-                ]
-            },
-            "namespaces.polygon.flavor.mumbai": {
-                "description": "suitable defaults for a mumbai testnet archive node",
-                "type": "string",
-                "enum": [
-                    "mumbai"
                 ]
             },
             "namespaces.polygon.helmfiles": {
@@ -5225,13 +5322,19 @@
                             "$ref": "#/components/schemas/namespaces.polygon.features.enum"
                         },
                         "default": [
-                            "proxyd"
+                            "proxyd",
+                            "erigon",
+                            "heimdall",
+                            "heimdall-svc"
                         ]
                     },
                     "erigon": {
                         "$ref": "#/components/schemas/base.releaseValues"
                     },
                     "heimdall": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
+                    "heimdall-svc": {
                         "$ref": "#/components/schemas/base.releaseValues"
                     },
                     "scaling": {
