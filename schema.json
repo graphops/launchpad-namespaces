@@ -4735,7 +4735,7 @@
                         "required": [
                             "erigon",
                             "heimdall",
-                            "heimdall-svc",
+                            "heimdall-ha-svc",
                             "proxyd"
                         ],
                         "properties": {
@@ -4905,7 +4905,7 @@
                                     }
                                 }
                             },
-                            "heimdall-svc": {
+                            "heimdall-ha-svc": {
                                 "type": "object",
                                 "required": [
                                     "chart",
@@ -4977,7 +4977,7 @@
                                         }
                                     },
                                     "feature": {
-                                        "$ref": "#/components/schemas/namespaces.polygon.features.heimdall_svc"
+                                        "$ref": "#/components/schemas/namespaces.polygon.features.heimdall_ha_svc"
                                     }
                                 }
                             },
@@ -5126,7 +5126,7 @@
                                 "$ref": "#/components/schemas/namespaces.polygon.features.heimdall"
                             },
                             {
-                                "$ref": "#/components/schemas/namespaces.polygon.features.heimdall_svc"
+                                "$ref": "#/components/schemas/namespaces.polygon.features.heimdall_ha_svc"
                             }
                         ],
                         "enum": [
@@ -5134,14 +5134,14 @@
                                 "proxyd",
                                 "erigon",
                                 "heimdall",
-                                "heimdall-svc"
+                                "heimdall-ha-svc"
                             ]
                         ],
                         "default": [
                             "proxyd",
                             "erigon",
                             "heimdall",
-                            "heimdall-svc"
+                            "heimdall-ha-svc"
                         ]
                     },
                     "scaling": {
@@ -5177,7 +5177,7 @@
                     "proxyd",
                     "erigon",
                     "heimdall",
-                    "heimdall-svc"
+                    "heimdall-ha-svc"
                 ]
             },
             "namespaces.polygon.features.erigon": {
@@ -5194,11 +5194,11 @@
                     "heimdall"
                 ]
             },
-            "namespaces.polygon.features.heimdall_svc": {
-                "description": "Provide an heimdall front SVC",
+            "namespaces.polygon.features.heimdall_ha_svc": {
+                "description": "Provide an heimdall front SVC for HA",
                 "type": "string",
                 "enum": [
-                    "heimdall-svc"
+                    "heimdall-ha-svc"
                 ]
             },
             "namespaces.polygon.features.proxyd": {
@@ -5325,7 +5325,7 @@
                             "proxyd",
                             "erigon",
                             "heimdall",
-                            "heimdall-svc"
+                            "heimdall-ha-svc"
                         ]
                     },
                     "erigon": {
@@ -5334,7 +5334,7 @@
                     "heimdall": {
                         "$ref": "#/components/schemas/base.releaseValues"
                     },
-                    "heimdall-svc": {
+                    "heimdall-ha-svc": {
                         "$ref": "#/components/schemas/base.releaseValues"
                     },
                     "scaling": {

@@ -33,10 +33,10 @@ package LaunchpadNamespaces
 			// Deploy heimdall
 			#heimdall: "heimdall"
 
-			// Provide an heimdall front SVC
-			#heimdall_svc: "heimdall-svc"
+			// Provide an heimdall front SVC for HA
+			#heimdall_ha_svc: "heimdall-ha-svc"
 
-			#enum: ( #proxyd | #erigon | #heimdall | #heimdall_svc )
+			#enum: ( #proxyd | #erigon | #heimdall | #heimdall_ha_svc )
 		}
 
 		// polygon scaling interface
@@ -86,7 +86,7 @@ package LaunchpadNamespaces
 			flavor: "mainnet"
 
 			#common: {
-				features: [#features.#proxyd, #features.#erigon, #features.#heimdall, #features.#heimdall_svc]
+				features: [#features.#proxyd, #features.#erigon, #features.#heimdall, #features.#heimdall_ha_svc]
 				scaling: #scaling & {deployments: 1}
 			}
 
@@ -111,7 +111,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
 				}
 				feature: #features.#erigon
-				_template: {version: "0.9.10"}
+				_template: {version: "0.10.1"}
 			}
 
 			heimdall: {
@@ -123,17 +123,17 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
 				}
 				feature: #features.#heimdall
-				_template: {version: "1.1.5-canary.11"}
+				_template: {version: "1.2.0"}
 			}
 
-			"heimdall-svc": {
+			"heimdall-ha-svc": {
 				chart: {_repositories.graphops.charts["resource-injector"]}
 				labels: {
 					"app.launchpad.graphops.xyz/layer":     "consensus"
 					"app.launchpad.graphops.xyz/release":   "{{ $release }}"
 					"app.launchpad.graphops.xyz/component": "{{ $canonicalRelease }}"
 				}
-				feature: #features.#heimdall_svc
+				feature: #features.#heimdall_ha_svc
 				_template: {version: "0.2.0"}
 			}
 

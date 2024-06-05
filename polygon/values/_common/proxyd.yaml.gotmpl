@@ -13,6 +13,9 @@ backends:
       - main
   {{ end }}
 
+backendGroups:
+  consensus_aware: false
+
 proxyd:
   affinityPresets:
     antiAffinityByHostname: false

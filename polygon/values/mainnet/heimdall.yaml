@@ -1,3 +1,8 @@
 heimdall:
   config:
     network: mainnet
+  volumeClaimSpec:
+    resources:
+      requests:
+        # -- The amount of disk space to provision for Heimdall
+        storage: 600Gi
