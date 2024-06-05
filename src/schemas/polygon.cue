@@ -58,7 +58,7 @@ package LaunchpadNamespaces
 
 			heimdall: {
 				chart: {_repositories.graphops.charts.heimdall}
-				_template: {version: "1.1.5-canary.11"}
+				_template: {version: "1.1.5-canary.13"}
 			}
 
 			proxyd: {
