@@ -1,5 +1,5 @@
 #namespace defaults
-{{ $_ := set .Values "_namespaceDefaults" ( `{"flavor":"mainnet","common":{},"mainnet":{"targetNamespace":"polygon-mainnet"}}` | fromJson ) }}
+{{ $_ := set .Values "_namespaceDefaults" ( `{"flavor":"mainnet","mainnet":{"targetNamespace":"polygon-mainnet","features":["proxyd","erigon","heimdall","heimdall-ha-svc"],"scaling":{"deployments":1,"erigon":{},"heimdall":{}}},"common":{"features":["proxyd","erigon","heimdall","heimdall-ha-svc"],"scaling":{"deployments":1,"erigon":{},"heimdall":{}}},"amoy":{"targetNamespace":"polygon-amoy","features":["proxyd","erigon","heimdall","heimdall-ha-svc"],"scaling":{"deployments":1,"erigon":{},"heimdall":{}}}}` | fromJson ) }}
 #set default flavor when missing
 {{ if not ( hasKey .Values "flavor" ) }}
 {{ $_ := set .Values "flavor" "mainnet" }}
@@ -18,11 +18,25 @@ environments:
       - _defaults: {{ .Values._namespaceDefaults | get .Values.flavor | toYaml | nindent 10 }}
 
 ---
+# Define default features when undefined
+{{ if not (hasKey .Values "features") }}
+{{ $_ := set .Values "features" .Values._defaults.features }}
+{{ end }}
 
+#set default number of deployments when missing
+{{ if not ( hasKey .Values  "scaling" ) }}
+{{ $_ := set .Values "scaling" dict }}
+{{ end }}
+{{ if not ( hasKey ( .Values | get "scaling" dict ) "deployments" ) }}
+{{ $_ := set .Values.scaling "deployments" .Values._defaults.scaling.deployments }}
+{{ end }}
 
 environments:
   {{ .Environment.Name }}:
-    values: []
+    values:
+      - features: {{ .Values.features | toYaml | nindent 10 }}
+      - scaling:
+          deployments: {{ .Values.scaling.deployments }}
 
 ---
 {{- $_tplTransforms := (print `
@@ -108,9 +122,12 @@ kubeVersion: {{ .Values.kubeVersion }}
 #set default namespace
 {{ $_defaultNamespace := .Values._defaults.targetNamespace }}
 
-
+{{- $_templatedValue_0 :=  .Values.flavor  }}
 {{- $_commonLabels := dict 
 `launchpad.graphops.xyz/namespace` `polygon`
+`app.launchpad.graphops.xyz/type` `blockchain`
+`app.launchpad.graphops.xyz/chain` `polygon`
+`app.launchpad.graphops.xyz/network` $_templatedValue_0
 }}
 
 {{- $_commonResourceLabels := dict 
@@ -171,6 +188,21 @@ templates:
     version: "1.2.0"
     {{- end }}
   
+  heimdall-ha-svc:
+    {{- if ( .Values | get "heimdall-ha-svc" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "heimdall-ha-svc" | get "chartUrl" }}
+    {{- else }}
+    chart: "graphops/resource-injector"
+    {{- end }}
+    inherit:
+    - template: "defaults"
+    {{- if ( .Values | get "heimdall-ha-svc" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "heimdall-ha-svc" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "heimdall-ha-svc" dict | get "chartVersion" false ) ( .Values | get "heimdall-ha-svc" dict | get "chartUrl" false ) )) }}
+    version: "0.2.0"
+    {{- end }}
+  
   proxyd:
     {{- if ( .Values | get "proxyd" dict | get "chartUrl" false ) }}
     chart: {{ .Values | get "proxyd" | get "chartUrl" }}
@@ -187,14 +219,30 @@ templates:
     {{- end }}
   
 releases:
+  {{ if has "erigon" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "erigon" }}
-  {{- $release := "erigon" }}
-  {{- $_releaseResourceLabels := dict }}
+  {{- range $index := until (.Values.scaling | get $canonicalRelease dict | get "deployments" .Values.scaling.deployments) }}
+  {{- $deploymentIndex := (add . 1) }}
+  {{- $release := (printf "%s%v" "erigon-" $deploymentIndex) }}
+  {{- $_templatedValue_0 :=  $canonicalRelease  }}
+  {{- $_templatedValue_1 :=  $release  }}
+  {{- $_templatedValue_2 :=  $deploymentIndex  }}
+  {{- $_releaseResourceLabels := dict 
+  `app.launchpad.graphops.xyz/layer` `execution`
+  `app.launchpad.graphops.xyz/component` $_templatedValue_0
+  `app.launchpad.graphops.xyz/release` $_templatedValue_1
+  `app.launchpad.graphops.xyz/scalingIndex` $_templatedValue_2
+  }}
   {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
     - template: "{{ $canonicalRelease }}"
     labels:
+      app.launchpad.graphops.xyz/layer: execution
+      app.launchpad.graphops.xyz/release: '{{ $release }}'
+      app.launchpad.graphops.xyz/component: '{{ $canonicalRelease }}'
+      app.launchpad.graphops.xyz/scalingIndex: '{{ $deploymentIndex }}'
+      
     {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "labels" dict ) }}
       {{ $key }}: {{ $value }}
     {{- $_ := set $_releaseResourceLabels $key $value }}
@@ -216,15 +264,74 @@ releases:
     {{- tpl $_tplTransforms (dict "Values" $.Values "release" $release "canonicalRelease" $canonicalRelease "resourceLabels" $_releaseResourceLabels  )  | indent 4 -}}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
-  
+  {{- end -}}
+  {{- end -}}
+  {{ if has "heimdall" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "heimdall" }}
-  {{- $release := "heimdall" }}
-  {{- $_releaseResourceLabels := dict }}
+  {{- range $index := until (.Values.scaling | get $canonicalRelease dict | get "deployments" .Values.scaling.deployments) }}
+  {{- $deploymentIndex := (add . 1) }}
+  {{- $release := (printf "%s%v" "heimdall-" $deploymentIndex) }}
+  {{- $_templatedValue_0 :=  $canonicalRelease  }}
+  {{- $_templatedValue_1 :=  $release  }}
+  {{- $_templatedValue_2 :=  $deploymentIndex  }}
+  {{- $_releaseResourceLabels := dict 
+  `app.launchpad.graphops.xyz/layer` `consensus`
+  `app.launchpad.graphops.xyz/component` $_templatedValue_0
+  `app.launchpad.graphops.xyz/release` $_templatedValue_1
+  `app.launchpad.graphops.xyz/scalingIndex` $_templatedValue_2
+  }}
   {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
     - template: "{{ $canonicalRelease }}"
     labels:
+      app.launchpad.graphops.xyz/layer: consensus
+      app.launchpad.graphops.xyz/release: '{{ $release }}'
+      app.launchpad.graphops.xyz/component: '{{ $canonicalRelease }}'
+      app.launchpad.graphops.xyz/scalingIndex: '{{ $deploymentIndex }}'
+      
+    {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "labels" dict ) }}
+      {{ $key }}: {{ $value }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- if (ne $release $canonicalRelease) }}
+    {{- range $key,$value := ( $.Values | get $release dict | get "labels" dict ) }}
+      {{ $key }}: {{ $value }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- end }}
+    {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "resourceLabels" dict ) }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- if (ne $release $canonicalRelease) }}
+    {{- range $key,$value := ( $.Values | get $release dict | get "resourceLabels" dict ) }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- end }}
+    {{- tpl $_tplTransforms (dict "Values" $.Values "release" $release "canonicalRelease" $canonicalRelease "resourceLabels" $_releaseResourceLabels  )  | indent 4 -}}
+    values:
+    {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
+  {{- end -}}
+  {{- end -}}
+  {{ if has "heimdall-ha-svc" ( .Values | get "features" list ) }}
+  {{- $canonicalRelease := "heimdall-ha-svc" }}
+  {{- $release := "heimdall-ha-svc" }}
+  {{- $_templatedValue_0 :=  $canonicalRelease  }}
+  {{- $_templatedValue_1 :=  $release  }}
+  {{- $_releaseResourceLabels := dict 
+  `app.launchpad.graphops.xyz/layer` `consensus`
+  `app.launchpad.graphops.xyz/component` $_templatedValue_0
+  `app.launchpad.graphops.xyz/release` $_templatedValue_1
+  }}
+  {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
+  - name: "{{ $release }}"
+    inherit:
+    - template: "{{ $canonicalRelease }}"
+    labels:
+      app.launchpad.graphops.xyz/layer: consensus
+      app.launchpad.graphops.xyz/release: '{{ $release }}'
+      app.launchpad.graphops.xyz/component: '{{ $canonicalRelease }}'
+      
     {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "labels" dict ) }}
       {{ $key }}: {{ $value }}
     {{- $_ := set $_releaseResourceLabels $key $value }}
@@ -247,14 +354,26 @@ releases:
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
   
+  {{- end -}}
+  {{ if has "proxyd" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "proxyd" }}
   {{- $release := "proxyd" }}
-  {{- $_releaseResourceLabels := dict }}
+  {{- $_templatedValue_0 :=  $canonicalRelease  }}
+  {{- $_templatedValue_1 :=  $release  }}
+  {{- $_releaseResourceLabels := dict 
+  `app.launchpad.graphops.xyz/layer` `proxy`
+  `app.launchpad.graphops.xyz/component` $_templatedValue_0
+  `app.launchpad.graphops.xyz/release` $_templatedValue_1
+  }}
   {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
     inherit:
     - template: "{{ $canonicalRelease }}"
     labels:
+      app.launchpad.graphops.xyz/layer: proxy
+      app.launchpad.graphops.xyz/release: '{{ $release }}'
+      app.launchpad.graphops.xyz/component: '{{ $canonicalRelease }}'
+      
     {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "labels" dict ) }}
       {{ $key }}: {{ $value }}
     {{- $_ := set $_releaseResourceLabels $key $value }}
@@ -277,3 +396,4 @@ releases:
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
   
+  {{- end -}}

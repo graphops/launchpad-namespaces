@@ -1,0 +1,27 @@
+resources:
+  heimdall-svc:
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: heimdall-ha-svc
+    spec:
+      type: ClusterIP
+      ports:
+      - name: http-metrics
+        port: 26660
+        protocol: TCP
+        targetPort: http-metrics
+      - name: http-rest
+        port: 1317
+        protocol: TCP
+        targetPort: http-rest
+      - name: http-rpc
+        port: 26657
+        protocol: TCP
+        targetPort: http-rpc
+      selector:
+        app.launchpad.graphops.xyz/type: blockchain
+        app.launchpad.graphops.xyz/chain: polygon
+        app.launchpad.graphops.xyz/network: "{{ .Values.flavor }}"
+        app.launchpad.graphops.xyz/layer: consensus
+        app.kubernetes.io/component: heimdall
