@@ -123,7 +123,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
 				}
 				feature: #features.#heimdall
-				_template: {version: "1.2.1-canary.1"}
+				_template: {version: "1.2.1"}
 			}
 
 			"heimdall-ha-svc": {
@@ -145,7 +145,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/component": "{{ $canonicalRelease }}"
 				}
 				feature: #features.#proxyd
-				_template: {version: "0.5.4-canary.1"}
+				_template: {version: "0.5.4"}
 			}
 		}
 
