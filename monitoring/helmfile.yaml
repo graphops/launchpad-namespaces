@@ -181,7 +181,7 @@ templates:
     {{- if ( .Values | get "loki" dict | get "chartUrl" false ) }}
     chart: {{ .Values | get "loki" | get "chartUrl" }}
     {{- else }}
-    chart: "grafana/loki-distributed"
+    chart: "grafana/loki"
     {{- end }}
     inherit:
     - template: "defaults"
@@ -189,7 +189,7 @@ templates:
     version: {{ .Values | get "loki" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "loki" dict | get "chartVersion" false ) ( .Values | get "loki" dict | get "chartUrl" false ) )) }}
-    version: "0.79.0"
+    version: "6.6.3"
     {{- end }}
   
   promtail:
