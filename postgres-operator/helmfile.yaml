@@ -149,7 +149,7 @@ templates:
     version: {{ .Values | get "postgres-operator" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "postgres-operator" dict | get "chartVersion" false ) ( .Values | get "postgres-operator" dict | get "chartUrl" false ) )) }}
-    version: "1.12.0"
+    version: "1.12.2"
     {{- end }}
     disableValidationOnInstall: true
   
