@@ -57,7 +57,7 @@ grafana:
     - name: Loki
       access: proxy
       type: loki
-      url: http://loki-loki-distributed-gateway
+      url: http://loki-gateway
       version: 1
   sidecar:
     logLevel: DEBUG

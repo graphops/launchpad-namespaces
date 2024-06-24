@@ -9,7 +9,7 @@ This *Namespace* adds software for log and metrics collection and visualization,
 ## Releases
 - [kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack)<br>
 Installs the kube-prometheus stack, a collection of Kubernetes manifests, Grafana dashboards, and Prometheus rules
-- [loki](https://github.com/grafana/helm-charts/tree/main/charts/loki-distributed)<br>
+- [loki](https://github.com/grafana/loki/tree/main/production/helm/loki)<br>
 Helm chart for Grafana Loki in microservices mode
 - [node-problem-detector](https://github.com/deliveryhero/helm-charts/tree/master/stable/node-problem-detector)<br>
 This chart installs a node-problem-detector daemonset. This tool aims to make various node problems visible to the upstream layers in cluster management stack.

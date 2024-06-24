@@ -160,8 +160,8 @@ package LaunchpadNamespaces
 				url:         "https://github.com/grafana/helm-charts/tree/main/charts/promtail"
 				description: "Promtail is an agent which ships the contents of local logs to a Loki instance"
 			}
-			"loki-distributed": {
-				url:         "https://github.com/grafana/helm-charts/tree/main/charts/loki-distributed"
+			"loki": {
+				url:         "https://github.com/grafana/loki/tree/main/production/helm/loki"
 				description: "Helm chart for Grafana Loki in microservices mode"
 			}
 		}

@@ -4393,7 +4393,7 @@
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
-                                                    "https://github.com/grafana/helm-charts/tree/main/charts/loki-distributed"
+                                                    "https://github.com/grafana/loki/tree/main/production/helm/loki"
                                                 ]
                                             },
                                             "repository": {
@@ -4411,7 +4411,7 @@
                                             "name": {
                                                 "type": "string",
                                                 "enum": [
-                                                    "loki-distributed"
+                                                    "loki"
                                                 ]
                                             }
                                         }
@@ -6832,7 +6832,7 @@
                                 "type": "object",
                                 "required": [
                                     "promtail",
-                                    "loki-distributed"
+                                    "loki"
                                 ],
                                 "properties": {
                                     "promtail": {
@@ -6856,7 +6856,7 @@
                                             }
                                         }
                                     },
-                                    "loki-distributed": {
+                                    "loki": {
                                         "type": "object",
                                         "required": [
                                             "url",
@@ -6866,7 +6866,7 @@
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
-                                                    "https://github.com/grafana/helm-charts/tree/main/charts/loki-distributed"
+                                                    "https://github.com/grafana/loki/tree/main/production/helm/loki"
                                                 ]
                                             },
                                             "description": {
