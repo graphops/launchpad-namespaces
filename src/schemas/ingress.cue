@@ -53,7 +53,7 @@ package LaunchpadNamespaces
 			"ingress-nginx": {
 				chart: {_repositories["ingress-nginx"].charts["ingress-nginx"]}
 				feature: #features.#ingress
-				_template: {version: "4.10.1"}
+				_template: {version: "4.10.2"}
 			}
 			"cert-manager": {
 				chart: {_repositories.jetstack.charts["cert-manager"]}
