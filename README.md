@@ -276,4 +276,5 @@ We welcome and appreciate your contributions! Please see the [Contributor Guide]
 
 - [`graphops/launchpad-charts`](https://github.com/graphops/launchpad-charts)
 - [`graphops/launchpad-starter`](https://github.com/graphops/launchpad-starter)
+- [`graphops/launchpad-taskfiles`](https://github.com/graphops/launchpad-taskfiles)
 
