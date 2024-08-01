@@ -28,7 +28,7 @@ _renovate: {
 		_repo: string
 		_url:  _repositories[_repo].url
 		_struct: {
-			matchDepPatterns: "\(_repo)\\/.*"
+			matchDepNames: "\(_repo)\\/.*"
 			registryUrls: ["\(_url)"]
 		} & {if _repositories[_repo]._renovate != _|_ {_repositories[_repo]._renovate}}
 		render: json.Marshal(_struct)
