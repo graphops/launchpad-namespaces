@@ -107,7 +107,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
 				}
 				feature: #features.#arbitrum_nitro
-				_template: {version: "0.4.3"}
+				_template: {version: "0.4.4-canary.1"}
 			}
 
 			"arbitrum-classic": {
@@ -119,7 +119,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
 				}
 				feature: #features.#arbitrum_classic
-				_template: {version: "0.2.0"}
+				_template: {version: "0.2.1-canary.1"}
 			}
 
 			"proxyd-nitro": {
@@ -130,7 +130,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/release":   "{{ $release }}"
 				}
 				feature: #features.#proxyd_nitro
-				_template: {version: "0.5.5-canary.1"}
+				_template: {version: "0.5.5-canary.2"}
 			}
 
 			"proxyd-classic": {
@@ -141,7 +141,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/release":   "{{ $release }}"
 				}
 				feature: #features.#proxyd_classic
-				_template: {version: "0.5.5-canary.1"}
+				_template: {version: "0.5.5-canary.2"}
 			}
 		}
 
