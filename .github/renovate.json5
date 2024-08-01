@@ -51,17 +51,17 @@
 
       // **auto-genereated** section, don't edit manually
       // #### BEGIN Helm Chart repositories ####
-      {"matchDepNames":"graphops\\/.*","ignoreUnstable":false,"registryUrls":["https://graphops.github.io/launchpad-charts/canary"]},
-      {"matchDepNames":"ingress-nginx\\/.*","registryUrls":["https://kubernetes.github.io/ingress-nginx"]},
-      {"matchDepNames":"jetstack\\/.*","registryUrls":["https://charts.jetstack.io"]},
-      {"matchDepNames":"prometheus-community\\/.*","registryUrls":["https://prometheus-community.github.io/helm-charts"]},
-      {"matchDepNames":"deliveryhero\\/.*","registryUrls":["https://charts.deliveryhero.io"]},
-      {"matchDepNames":"grafana\\/.*","registryUrls":["https://grafana.github.io/helm-charts"]},
-      {"matchDepNames":"postgres-operator-charts\\/.*","registryUrls":["https://opensource.zalando.com/postgres-operator/charts/postgres-operator"]},
-      {"matchDepNames":"sealed-secrets\\/.*","registryUrls":["https://bitnami-labs.github.io/sealed-secrets"]},
-      {"matchDepNames":"openebs\\/.*","registryUrls":["https://openebs.github.io/charts"]},
-      {"matchDepNames":"openebs-zfs-localpv\\/.*","registryUrls":["https://openebs.github.io/zfs-localpv"]},
-      {"matchDepNames":"openebs-monitoring\\/.*","registryUrls":["https://openebs.github.io/monitoring/"]}
+      {"matchDepTypes":"graphops","ignoreUnstable":false,"registryUrls":["https://graphops.github.io/launchpad-charts/canary"]},
+      {"matchDepTypes":"ingress-nginx","registryUrls":["https://kubernetes.github.io/ingress-nginx"]},
+      {"matchDepTypes":"jetstack","registryUrls":["https://charts.jetstack.io"]},
+      {"matchDepTypes":"prometheus-community","registryUrls":["https://prometheus-community.github.io/helm-charts"]},
+      {"matchDepTypes":"deliveryhero","registryUrls":["https://charts.deliveryhero.io"]},
+      {"matchDepTypes":"grafana","registryUrls":["https://grafana.github.io/helm-charts"]},
+      {"matchDepTypes":"postgres-operator-charts","registryUrls":["https://opensource.zalando.com/postgres-operator/charts/postgres-operator"]},
+      {"matchDepTypes":"sealed-secrets","registryUrls":["https://bitnami-labs.github.io/sealed-secrets"]},
+      {"matchDepTypes":"openebs","registryUrls":["https://openebs.github.io/charts"]},
+      {"matchDepTypes":"openebs-zfs-localpv","registryUrls":["https://openebs.github.io/zfs-localpv"]},
+      {"matchDepTypes":"openebs-monitoring","registryUrls":["https://openebs.github.io/monitoring/"]}
       // #### END Helm Chart repositories ####
     ],
 
