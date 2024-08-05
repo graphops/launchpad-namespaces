@@ -40,7 +40,7 @@ jobs:
         env:
           NAMESPACE: ${{ steps.namespace.outputs.name }}
         run: |
-          export GIT_CLIFF_TAG_PATTERN="$NAMESPACE-v[0-9]+\.[0-9]+\.[0-9]+$"
+          export GIT_CLIFF_TAG_PATTERN="${NAMESPACE}-v[0-9]+\\.[0-9]+\\.[0-9]+\$"
 
           yarn git-cliff -c ".cliff.toml" --include-path "$NAMESPACE/**" -o "RELEASE-NOTES.md" -s all -l"
 
