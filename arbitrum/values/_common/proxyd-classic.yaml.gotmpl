@@ -1,5 +1,5 @@
 backendGroups:
-  consensus_aware: false
+  routing_strategy: fallback
 
 backends:
   {{ range $elem := until ( .Values.scaling | get "arbitrum-classic" dict | get "deployments" .Values.scaling.deployments ) }}
