@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 . "$(dirname "$0")/_/husky.sh"
 
-set -ex
+set -e
 
 readonly BASEDIR="$(dirname -- "$0")"
 readonly REPOROOT="$(realpath "$BASEDIR/../")"
