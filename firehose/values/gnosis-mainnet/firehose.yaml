@@ -1,0 +1,8 @@
+image:
+  pullPolicy: Always
+
+reader:
+  config:
+    reader-node-path: /usr/bin/erigon
+    reader-node-data-dir: /var/lib/erigon
+  extraArgs: "--snapshot=true --mainnet --txlookuplimit=1000 --cache=8192 --maxpeers=100"

@@ -1,0 +1,8 @@
+image:
+  pullPolicy: Always
+
+reader:
+  config:
+    reader-node-path: /usr/bin/geth
+    reader-node-data-dir: /var/lib/geth
+  extraArgs: "--snapshot=true --holesky  --txlookuplimit=1000 --cache=8192 --maxpeers=100"

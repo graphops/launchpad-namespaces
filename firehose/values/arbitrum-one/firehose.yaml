@@ -1,0 +1,7 @@
+image:
+  pullPolicy: Always
+
+reader:
+  config:
+    reader-node-path: /usr/bin/nitro
+    reader-node-data-dir: /var/lib/nitro
