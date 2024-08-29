@@ -2690,6 +2690,312 @@
                     }
                 ]
             },
+            "namespaces.firehoseEvm": {
+                "description": "Firehose-EVM *Namespace*",
+                "type": "object",
+                "required": [
+                    "meta",
+                    "defaults",
+                    "releases",
+                    "labels",
+                    "resourceLabels"
+                ],
+                "properties": {
+                    "meta": {
+                        "type": "object",
+                        "required": [
+                            "name",
+                            "url",
+                            "description"
+                        ],
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "enum": [
+                                    "firehose-evm"
+                                ]
+                            },
+                            "url": {
+                                "type": "string",
+                                "enum": [
+                                    "https://github.com/graphops/launchpad-namespaces/firehose-evm"
+                                ]
+                            },
+                            "description": {
+                                "type": "string",
+                                "enum": [
+                                    "This *Namespace* provides the necessary software to run the full constellation of Firehose services for EVM based chains"
+                                ]
+                            }
+                        }
+                    },
+                    "defaults": {
+                        "type": "object",
+                        "required": [
+                            "flavor",
+                            "eth_mainnet",
+                            "eth_sepolia"
+                        ],
+                        "properties": {
+                            "flavor": {
+                                "type": "string",
+                                "enum": [
+                                    "eth-mainnet"
+                                ]
+                            },
+                            "eth_mainnet": {
+                                "type": "object",
+                                "properties": {
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "firehose-eth-mainnet"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.firehoseEvm.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "targetNamespace"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "eth_sepolia": {
+                                "type": "object",
+                                "properties": {
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "firehose-eth-sepolia"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.firehoseEvm.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "targetNamespace"
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "releases": {
+                        "type": "object",
+                        "required": [
+                            "firehose-evm"
+                        ],
+                        "properties": {
+                            "firehose-evm": {
+                                "type": "object",
+                                "required": [
+                                    "chart"
+                                ],
+                                "properties": {
+                                    "chart": {
+                                        "type": "object",
+                                        "required": [
+                                            "url",
+                                            "repository",
+                                            "description",
+                                            "name"
+                                        ],
+                                        "properties": {
+                                            "url": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "https://github.com/graphprotocol/graph-node"
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "Graph Node is an open source Rust implementation that event sources the Ethereum blockchain to deterministically update a data store that can be queried via the GraphQL endpoint."
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graph-node"
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "labels": {
+                        "type": "object",
+                        "properties": {
+                            "launchpad.graphops.xyz/namespace": {
+                                "type": "string",
+                                "enum": [
+                                    "firehose-evm"
+                                ]
+                            }
+                        },
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/base.labels"
+                            },
+                            {
+                                "required": [
+                                    "launchpad.graphops.xyz/namespace"
+                                ]
+                            }
+                        ]
+                    },
+                    "resourceLabels": {
+                        "type": "object"
+                    }
+                }
+            },
+            "namespaces.firehoseEvm.defaults.common": {
+                "type": "object",
+                "required": [
+                    "features"
+                ],
+                "properties": {
+                    "features": {
+                        "type": "array",
+                        "items": [
+                            {
+                                "$ref": "#/components/schemas/namespaces.firehoseEvm.features.consensus_lighthouse"
+                            }
+                        ],
+                        "enum": [
+                            [
+                                "consensus-lighthouse"
+                            ]
+                        ],
+                        "default": [
+                            "consensus-lighthouse"
+                        ]
+                    }
+                }
+            },
+            "namespaces.firehoseEvm.features": {
+                "description": "ethereum namespace features schema",
+                "type": "object"
+            },
+            "namespaces.firehoseEvm.features.consensus_lighthouse": {
+                "description": "",
+                "type": "string",
+                "enum": [
+                    "consensus-lighthouse"
+                ]
+            },
+            "namespaces.firehoseEvm.features.consensus_nimbus": {
+                "description": "",
+                "type": "string",
+                "enum": [
+                    "consensus-nimbus"
+                ]
+            },
+            "namespaces.firehoseEvm.features.enum": {
+                "type": "string",
+                "enum": [
+                    "consensus-nimbus",
+                    "consensus-lighthouse"
+                ]
+            },
+            "namespaces.firehoseEvm.flavor": {
+                "type": "object"
+            },
+            "namespaces.firehoseEvm.flavor.enum": {
+                "type": "string",
+                "enum": [
+                    "eth-mainnet",
+                    "eth-sepolia"
+                ]
+            },
+            "namespaces.firehoseEvm.flavor.eth_mainnet": {
+                "description": "suitable defaults for an ethereum mainnet indexer",
+                "type": "string",
+                "enum": [
+                    "eth-mainnet"
+                ]
+            },
+            "namespaces.firehoseEvm.flavor.eth_sepolia": {
+                "type": "string",
+                "enum": [
+                    "eth-sepolia"
+                ]
+            },
+            "namespaces.firehoseEvm.helmfiles": {
+                "description": "Graph helmfile API",
+                "type": "object",
+                "properties": {
+                    "path": {
+                        "type": "string",
+                        "pattern": "*github.com/graphops/launchpad-namespaces.git@firehose-evm/helmfile.yaml*"
+                    },
+                    "values": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/namespaces.firehoseEvm.values"
+                            },
+                            {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/namespaces.firehoseEvm.values"
+                                }
+                            }
+                        ]
+                    }
+                },
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/base.helmfiles"
+                    },
+                    {
+                        "required": [
+                            "path"
+                        ]
+                    }
+                ]
+            },
+            "namespaces.firehoseEvm.values": {
+                "description": "Graph namespace values schema",
+                "type": "object",
+                "properties": {
+                    "flavor": {
+                        "$ref": "#/components/schemas/namespaces.firehoseEvm.flavor.enum"
+                    },
+                    "targetNamespace": {
+                        "description": "the default is graph-<flavor>",
+                        "type": "string"
+                    },
+                    "firehose-evm": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
+                    "features": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/namespaces.firehoseEvm.features.enum"
+                        }
+                    }
+                },
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/base.values"
+                    }
+                ]
+            },
             "namespaces.gnosis": {
                 "description": "Gnosis *Namespace*",
                 "type": "object",

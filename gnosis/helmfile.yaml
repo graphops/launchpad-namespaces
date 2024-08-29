@@ -15,7 +15,7 @@ environments:
 environments:
   {{ .Environment.Name }}:
     values:
-      - _defaults: {{ .Values._namespaceDefaults | get .Values.flavor | toYaml | nindent 10 }}
+      - _defaults: {{ .Values._namespaceDefaults | get ( .Values.flavor | replace "-" "_" ) | toYaml | nindent 10 }}
 
 ---
 # Define default features when undefined
