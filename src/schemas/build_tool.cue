@@ -18,7 +18,7 @@ command: {
 		print: cli.Print & {text: _out.out}
 	}
 	"build:renovate": {
-		_out:                     _renovate.render
+		_out: _renovate.render
 		print: cli.Print & {text: _out.out}
 	}
 }
@@ -244,7 +244,7 @@ _helmfile: {
 				"_defaults": "{{ .Values._namespaceDefaults.common | toYaml | nindent 10 }}"
 			}
 			if _namespaces[this].values.flavor != _|_ {
-				"_defaults": "{{ .Values._namespaceDefaults | get .Values.flavor | toYaml | nindent 10 }}"
+				"_defaults": "{{ .Values._namespaceDefaults | get ( .Values.flavor | replace \"-\" \"_\" ) | toYaml | nindent 10 }}"
 			}
 		}
 
