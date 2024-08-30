@@ -13,6 +13,6 @@ indexerAgent:
     epoch-subgraph-endpoint: "https://api.thegraph.com/subgraphs/name/graphprotocol/arbitrum-sepolia-ebo" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
     epoch-subgraph-deployment: "QmTpu2mVquoMpr4SWSM77nGkU3tcUS1Bhk1sVHpjDrAUAx"
 
-indexerService:
-  config:
-    client-signer-address: "0xe1EC4339019eC9628438F8755f847e3023e4ff9c" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
+# indexerService:
+#   config:
+#     client-signer-address: "0xe1EC4339019eC9628438F8755f847e3023e4ff9c" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
