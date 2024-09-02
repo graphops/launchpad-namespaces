@@ -19,7 +19,11 @@ package LaunchpadNamespaces
 
 			#eth_sepolia: "eth-sepolia"
 
-			#enum: ( #eth_mainnet | #eth_sepolia )
+			#arbitrum_one: "arbitrum-one"
+
+			#arbitrum_sepolia: "arbitrum-sepolia"
+
+			#enum: ( #eth_mainnet | #eth_sepolia | #arbitrum_one | #arbitrum_sepolia )
 		}
 
 		// ethereum namespace features schema
@@ -62,14 +66,24 @@ package LaunchpadNamespaces
 				features: [#features.#consensus_lighthouse]
 			}
 
-			eth_mainnet: {
+			"eth-mainnet": {
 				#common
-				targetNamespace: "firehose-eth-mainnet"
+				targetNamespace: "fh-eth-mainnet"
 			}
 
-			eth_sepolia: {
+			"eth-sepolia": {
 				#common
-				targetNamespace: "firehose-eth-sepolia"
+				targetNamespace: "fh-eth-sepolia"
+			}
+
+			"arbitrum-one": {
+				#common
+				targetNamespace: "fh-arbitrum-one"
+			}
+
+			"arbitrum-sepolia": {
+				#common
+				targetNamespace: "fh-arbitrum-sepolia"
 			}
 		}
 

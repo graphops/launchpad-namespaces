@@ -2733,8 +2733,10 @@
                         "type": "object",
                         "required": [
                             "flavor",
-                            "eth_mainnet",
-                            "eth_sepolia"
+                            "eth-mainnet",
+                            "eth-sepolia",
+                            "arbitrum-one",
+                            "arbitrum-sepolia"
                         ],
                         "properties": {
                             "flavor": {
@@ -2743,13 +2745,13 @@
                                     "eth-mainnet"
                                 ]
                             },
-                            "eth_mainnet": {
+                            "eth-mainnet": {
                                 "type": "object",
                                 "properties": {
                                     "targetNamespace": {
                                         "type": "string",
                                         "enum": [
-                                            "firehose-eth-mainnet"
+                                            "fh-eth-mainnet"
                                         ]
                                     }
                                 },
@@ -2764,13 +2766,55 @@
                                     }
                                 ]
                             },
-                            "eth_sepolia": {
+                            "eth-sepolia": {
                                 "type": "object",
                                 "properties": {
                                     "targetNamespace": {
                                         "type": "string",
                                         "enum": [
-                                            "firehose-eth-sepolia"
+                                            "fh-eth-sepolia"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.firehoseEvm.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "targetNamespace"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "arbitrum-one": {
+                                "type": "object",
+                                "properties": {
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "fh-arbitrum-one"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.firehoseEvm.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "targetNamespace"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "arbitrum-sepolia": {
+                                "type": "object",
+                                "properties": {
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "fh-arbitrum-sepolia"
                                         ]
                                     }
                                 },
@@ -2916,11 +2960,25 @@
             "namespaces.firehoseEvm.flavor": {
                 "type": "object"
             },
+            "namespaces.firehoseEvm.flavor.arbitrum_one": {
+                "type": "string",
+                "enum": [
+                    "arbitrum-one"
+                ]
+            },
+            "namespaces.firehoseEvm.flavor.arbitrum_sepolia": {
+                "type": "string",
+                "enum": [
+                    "arbitrum-sepolia"
+                ]
+            },
             "namespaces.firehoseEvm.flavor.enum": {
                 "type": "string",
                 "enum": [
                     "eth-mainnet",
-                    "eth-sepolia"
+                    "eth-sepolia",
+                    "arbitrum-one",
+                    "arbitrum-sepolia"
                 ]
             },
             "namespaces.firehoseEvm.flavor.eth_mainnet": {
@@ -2978,7 +3036,8 @@
                     },
                     "targetNamespace": {
                         "description": "the default is graph-<flavor>",
-                        "type": "string"
+                        "type": "string",
+                        "default": "fh-eth-mainnet"
                     },
                     "firehose-evm": {
                         "$ref": "#/components/schemas/base.releaseValues"
@@ -2987,7 +3046,10 @@
                         "type": "array",
                         "items": {
                             "$ref": "#/components/schemas/namespaces.firehoseEvm.features.enum"
-                        }
+                        },
+                        "default": [
+                            "consensus-lighthouse"
+                        ]
                     }
                 },
                 "allOf": [
