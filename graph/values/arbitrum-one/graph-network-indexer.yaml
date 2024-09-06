@@ -2,6 +2,10 @@
 
 indexerDefaults:
   config:
+    graph-node-query-endpoint: "http://graph-node-query:8000"
+    graph-node-status-endpoint: "http://graph-node-block-ingestor:8030/graphql"
+    postgres-host: "pg-indexer-metadata"
+    postgres-database: "indexer"
     ethereum: "http://proxyd-nitro-proxyd.arbitrum-one:8545"
     ethereum-network: "arbitrum-one"
     network-subgraph-endpoint: "https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-arbitrum"
@@ -21,3 +25,14 @@ indexerAgent:
 indexerService:
   config:
     client-signer-address: "0xc483960d4D58eabc434Dc88a620AdFd883D6Dd4e" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
+  
+  secretEnv:
+    INDEXER_SERVICE_MNEMONIC:
+      secretName: graph-operator-mnemonic
+      key: mnemonic
+    INDEXER_SERVICE_POSTGRES_USERNAME:
+      secretName: indexer.pg-indexer-metadata.credentials.postgresql.acid.zalan.do
+      key: username
+    INDEXER_SERVICE_POSTGRES_PASSWORD:
+      secretName: indexer.pg-indexer-metadata.credentials.postgresql.acid.zalan.do
+      key: password
