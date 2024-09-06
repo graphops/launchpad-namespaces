@@ -34,7 +34,7 @@ indexerDefaults:
 indexerAgent:
   config:
     allocation-management: manual
-    collect-receipts-endpoint: https://graph-gateway-arbitrum-sepolia.graphops.xyz/collect-receipts
+    collect-receipts-endpoint: "https://gateway-testnet-arbitrum.network.thegraph.com/collect-receipts"
     epoch-subgraph-deployment: "QmTpu2mVquoMpr4SWSM77nGkU3tcUS1Bhk1sVHpjDrAUAx"
     epoch-subgraph-endpoint: https://gateway-arbitrum.network.thegraph.com/api/YOUR_API_KEY/subgraphs/id/BhnsdeZihU4SuokxZMLF4FQBVJ3jgtZf6v51gHvz3bSS
     ethereum: http://proxyd-nitro-proxyd.arbitrum-sepolia.svc.cluster.local.:8545
