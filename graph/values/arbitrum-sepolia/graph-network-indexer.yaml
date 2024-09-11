@@ -1,18 +1,73 @@
 # This is a values.yaml override file for https://github.com/graphops/launchpad-charts/tree/main/charts/graph-network-indexer
 
 indexerDefaults:
+  postgresConfig:
+    host: "pg-indexer-metadata"
+    database: "indexer"
+
   config:
-    ethereum: "http://proxyd-nitro-proxyd.arbitrum-sepolia:8545"
-    ethereum-network: "arbitrum-sepolia"
-    network-subgraph-endpoint: "https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-arbitrum-sepolia"
-    network-subgraph-deployment: "QmXnGVrg6DvscnvJd86aHAPLGyGrkM17weMrAsFAEMmQLL" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
+    indexer:
+      indexer_address: "0x0000000000000000000000000000000000000000" # your indexer address
+
+    graph_node:
+      query_url: "http://graph-node-query.graph-arbitrum-sepolia.svc.cluster.local.:8000"
+      status_url: "http://graph-node-block-ingestor:8030/graphql"
+
+    subgraphs.network:
+      query_url: "https://gateway-arbitrum.network.thegraph.com/api/YOUR_API_KEY/subgraphs/id/3xQHhMudr1oh69ut36G2mbzpYmYxwqCeU6wwqyCDCnqV"
+      recently_closed_allocation_buffer_secs: 100
+
+    subgraphs.escrow:
+      query_url: "https://gateway-arbitrum.network.thegraph.com/api/YOUR_API_KEY/subgraphs/id/7ubx365MiqBH5iUz6XWXWT8PTof5BVAyEzdb8m17RvbD"
+
+    service.tap:
+      max_receipt_value_grt: 0.001
+
+    blockchain:
+      chain_id: 421614
+      # find TAPVerifier address at https://github.com/semiotic-ai/timeline-aggregation-protocol-contracts/blob/main/addresses.json
+      receipts_verifier_address: "0xfC24cE7a4428A6B89B52645243662A02BA734ECF"
+
+    tap.sender_aggregator_endpoints:
+      0xC3dDf37906724732FfD748057FEBe23379b0710D: "https://tap-aggregator.testnet.thegraph.com/"
 
 indexerAgent:
   config:
+    allocation-management: manual
     collect-receipts-endpoint: "https://gateway-testnet-arbitrum.network.thegraph.com/collect-receipts"
-    epoch-subgraph-endpoint: "https://api.thegraph.com/subgraphs/name/graphprotocol/arbitrum-sepolia-ebo" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
     epoch-subgraph-deployment: "QmTpu2mVquoMpr4SWSM77nGkU3tcUS1Bhk1sVHpjDrAUAx"
+    epoch-subgraph-endpoint: https://gateway-arbitrum.network.thegraph.com/api/YOUR_API_KEY/subgraphs/id/BhnsdeZihU4SuokxZMLF4FQBVJ3jgtZf6v51gHvz3bSS
+    ethereum: http://proxyd-nitro-proxyd.arbitrum-sepolia.svc.cluster.local.:8545
+    ethereum-network: arbitrum-sepolia
+    graph-node-admin-endpoint: http://graph-node-block-ingestor:8020
+    index-node-ids: graph-node-index-0
+    network-subgraph-deployment: QmXnGVrg6DvscnvJd86aHAPLGyGrkM17weMrAsFAEMmQLL
+    public-indexer-url: "XXX_CHANGEME_XXX"
 
 indexerService:
-  config:
-    client-signer-address: "0xe1EC4339019eC9628438F8755f847e3023e4ff9c" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
+  replicas: 1 # scale me
+
+  secretEnv:
+    INDEXER_SERVICE_INDEXER__OPERATOR_MNEMONIC:
+      secretName: graph-operator-mnemonic
+      key: mnemonic
+    POSTGRES_USERNAME:
+      secretName: indexer.pg-indexer-metadata.credentials.postgresql.acid.zalan.do
+      key: username
+    POSTGRES_PASSWORD:
+      secretName: indexer.pg-indexer-metadata.credentials.postgresql.acid.zalan.do
+      key: password
+
+indexerTapAgent:
+  replicas: 1 # scale me
+
+  secretEnv:
+    TAP_AGENT_INDEXER__OPERATOR_MNEMONIC:
+      secretName: graph-operator-mnemonic
+      key: mnemonic
+    POSTGRES_USERNAME:
+      secretName: indexer.pg-indexer-metadata.credentials.postgresql.acid.zalan.do
+      key: username
+    POSTGRES_PASSWORD:
+      secretName: indexer.pg-indexer-metadata.credentials.postgresql.acid.zalan.do
+      key: password

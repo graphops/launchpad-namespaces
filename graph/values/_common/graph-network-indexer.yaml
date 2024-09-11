@@ -1,12 +1,6 @@
 # This is a values.yaml override file for https://github.com/graphops/launchpad-charts/tree/main/charts/graph-network-indexer
 
 indexerDefaults:
-  config:
-    graph-node-query-endpoint: "http://graph-node-query:8000"
-    graph-node-status-endpoint: "http://graph-node-block-ingestor:8030/graphql"
-    postgres-host: "pg-indexer-metadata"
-    postgres-database: "indexer"
-
   env: {}
   secretEnv: {}
 
@@ -15,8 +9,6 @@ indexerAgent:
     graph-node-admin-endpoint: "http://graph-node-block-ingestor:8020"
     public-indexer-url: "XXX_CHANGEME_XXX"
     index-node-ids: "graph-node-index-0" # TODO this should be removed as a requirement, in the mean time it should be a comma delimited list of index node ids
-
-  env: {}
 
   secretEnv:
     INDEXER_AGENT_MNEMONIC:
@@ -32,19 +24,6 @@ indexerAgent:
 
 indexerService:
   replicas: 1 # scale me
-
-  env: {}
-
-  secretEnv:
-    INDEXER_SERVICE_MNEMONIC:
-      secretName: graph-operator-mnemonic
-      key: mnemonic
-    INDEXER_SERVICE_POSTGRES_USERNAME:
-      secretName: indexer.pg-indexer-metadata.credentials.postgresql.acid.zalan.do
-      key: username
-    INDEXER_SERVICE_POSTGRES_PASSWORD:
-      secretName: indexer.pg-indexer-metadata.credentials.postgresql.acid.zalan.do
-      key: password
 
 prometheus:
   serviceMonitors:
