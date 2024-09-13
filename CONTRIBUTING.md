@@ -19,7 +19,12 @@ To contribute code, there's a few requirements you need to go through first:
 
 ### yarn
 
-Our Git hooks system and some of our dependencies for tasks such as code generating or templating are being managed by [*yarn*](https://github.com/yarnpkg/berry), so that will be required
+Our Git hooks system and some of our dependencies for tasks such as code generating or templating are being managed by [*yarn*](https://github.com/yarnpkg/berry) with zero-installs support. Using corepack is advised:
+
+```shell
+corepack enable
+corepack yarn prepare
+```
 
 ### tera-cli
 
