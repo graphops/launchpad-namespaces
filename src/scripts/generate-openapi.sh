@@ -50,7 +50,7 @@ function cue_export {
 function resolve_refs {
   input="${1:-$(</dev/stdin)}";
   echo "$input" > /tmp/swagger-input.json
-  yarn swagger-cli bundle -r /tmp/swagger-input.json
+  corepack yarn swagger-cli bundle -r /tmp/swagger-input.json
   rm /tmp/swagger-input.json
 }
 
