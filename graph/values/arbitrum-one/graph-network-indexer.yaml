@@ -8,7 +8,7 @@ indexerDefaults:
 
     graph_node:
       query_url: "http://graph-node-query.graph-arbitrum-one.svc.cluster.local.:8000"
-      status_url: "http://graph-node-block-ingestor.svc.cluster.local.:8030/graphql"
+      status_url: "http://graph-node-block-ingestor.graph-arbitrum-one.svc.cluster.local.:8030/graphql"
 
     subgraphs.network:
       query_url: "https://gateway-arbitrum.network.thegraph.com/api/YOUR_API_KEY/subgraphs/id/DZz4kDTdmzWLWsV373w2bSmoar3umKKH9y82SUKr5qmp"

@@ -8,7 +8,7 @@ indexerDefaults:
 
     graph_node:
       query_url: "http://graph-node-query.graph-arbitrum-sepolia.svc.cluster.local.:8000"
-      status_url: "http://graph-node-block-ingestor:8030/graphql"
+      status_url: "http://graph-node-block-ingestor.graph-arbitrum-sepolia.svc.cluster.local.:8030/graphql"
 
     subgraphs.network:
       query_url: "https://gateway-arbitrum.network.thegraph.com/api/YOUR_API_KEY/subgraphs/id/3xQHhMudr1oh69ut36G2mbzpYmYxwqCeU6wwqyCDCnqV"
@@ -33,7 +33,7 @@ indexerAgent:
     epoch-subgraph-endpoint: https://gateway-arbitrum.network.thegraph.com/api/YOUR_API_KEY/subgraphs/id/BhnsdeZihU4SuokxZMLF4FQBVJ3jgtZf6v51gHvz3bSS
     ethereum: http://proxyd-nitro-proxyd.arbitrum-sepolia.svc.cluster.local.:8545
     ethereum-network: arbitrum-sepolia
-    graph-node-admin-endpoint: http://graph-node-block-ingestor.svc.cluster.local.:8020
+    graph-node-admin-endpoint: http://graph-node-block-ingestor.graph-arbitrum-sepolia.svc.cluster.local.:8020
     network-subgraph-deployment: QmXnGVrg6DvscnvJd86aHAPLGyGrkM17weMrAsFAEMmQLL
 
 indexerService:
