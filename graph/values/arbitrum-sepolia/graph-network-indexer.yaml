@@ -1,9 +1,6 @@
 # This is a values.yaml override file for https://github.com/graphops/launchpad-charts/tree/main/charts/graph-network-indexer
 
 indexerDefaults:
-  postgresConfig:
-    host: "pg-indexer-metadata"
-    database: "indexer"
 
   config:
     indexer:
@@ -19,9 +16,6 @@ indexerDefaults:
 
     subgraphs.escrow:
       query_url: "https://gateway-arbitrum.network.thegraph.com/api/YOUR_API_KEY/subgraphs/id/7ubx365MiqBH5iUz6XWXWT8PTof5BVAyEzdb8m17RvbD"
-
-    service.tap:
-      max_receipt_value_grt: 0.001
 
     blockchain:
       chain_id: 421614
@@ -39,35 +33,11 @@ indexerAgent:
     epoch-subgraph-endpoint: https://gateway-arbitrum.network.thegraph.com/api/YOUR_API_KEY/subgraphs/id/BhnsdeZihU4SuokxZMLF4FQBVJ3jgtZf6v51gHvz3bSS
     ethereum: http://proxyd-nitro-proxyd.arbitrum-sepolia.svc.cluster.local.:8545
     ethereum-network: arbitrum-sepolia
-    graph-node-admin-endpoint: http://graph-node-block-ingestor:8020
-    index-node-ids: graph-node-index-0
+    graph-node-admin-endpoint: http://graph-node-block-ingestor.svc.cluster.local.:8020
     network-subgraph-deployment: QmXnGVrg6DvscnvJd86aHAPLGyGrkM17weMrAsFAEMmQLL
-    public-indexer-url: "XXX_CHANGEME_XXX"
 
 indexerService:
   replicas: 1 # scale me
 
-  secretEnv:
-    INDEXER_SERVICE_INDEXER__OPERATOR_MNEMONIC:
-      secretName: graph-operator-mnemonic
-      key: mnemonic
-    POSTGRES_USERNAME:
-      secretName: indexer.pg-indexer-metadata.credentials.postgresql.acid.zalan.do
-      key: username
-    POSTGRES_PASSWORD:
-      secretName: indexer.pg-indexer-metadata.credentials.postgresql.acid.zalan.do
-      key: password
-
 indexerTapAgent:
   replicas: 1 # scale me
-
-  secretEnv:
-    TAP_AGENT_INDEXER__OPERATOR_MNEMONIC:
-      secretName: graph-operator-mnemonic
-      key: mnemonic
-    POSTGRES_USERNAME:
-      secretName: indexer.pg-indexer-metadata.credentials.postgresql.acid.zalan.do
-      key: username
-    POSTGRES_PASSWORD:
-      secretName: indexer.pg-indexer-metadata.credentials.postgresql.acid.zalan.do
-      key: password
