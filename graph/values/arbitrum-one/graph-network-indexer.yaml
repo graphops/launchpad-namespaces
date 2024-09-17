@@ -11,11 +11,13 @@ indexerDefaults:
       status_url: "http://graph-node-block-ingestor.graph-arbitrum-one.svc.cluster.local.:8030/graphql"
 
     subgraphs.network:
-      query_url: "https://gateway-arbitrum.network.thegraph.com/api/YOUR_API_KEY/subgraphs/id/DZz4kDTdmzWLWsV373w2bSmoar3umKKH9y82SUKr5qmp"
+      query_url: "http://graph-node-query.graph-arbitrum-one.svc.cluster.local.:8000/subgraphs/id/QmUzRg2HHMpbgf6Q4VHKNDbtBEJnyp5JWCh2gUX9AV6jXv"
+      deployment_id: QmUzRg2HHMpbgf6Q4VHKNDbtBEJnyp5JWCh2gUX9AV6jXv
       recently_closed_allocation_buffer_secs: 100
 
     subgraphs.escrow:
-      query_url: "https://gateway-arbitrum.network.thegraph.com/api/YOUR_API_KEY/subgraphs/id/4sukbNVTzGELnhdnpyPqsf1QqtzNHEYKKmJkgaT8z6M1"
+      query_url: "http://graph-node-query.graph-arbitrum-one.svc.cluster.local.:8000/subgraphs/id/QmUhiH6Z5xo6o3GNzsSvqpGKLmCt6w5WzKQ1yHk6C8AA8S"
+      deployment_id: QmUhiH6Z5xo6o3GNzsSvqpGKLmCt6w5WzKQ1yHk6C8AA8S
 
     blockchain:
       chain_id: 42161
@@ -27,7 +29,8 @@ indexerDefaults:
 
 indexerAgent:
   config:
-    epoch-subgraph-endpoint: https://gateway-arbitrum.network.thegraph.com/api/YOUR_API_KEY/subgraphs/id/4KFYqUWRTZQ9gn7GPHC6YQ2q15chJfVrX43ezYcwkgxB
+    epoch-subgraph-endpoint: http://graph-node-query.graph-arbitrum-one.svc.cluster.local.:8000/subgraphs/id/QmQEGDTb3xeykCXLdWx7pPX3qeeGMUvHmGWP4SpMkv5QJf
+    epoch-subgraph-deployment: QmQEGDTb3xeykCXLdWx7pPX3qeeGMUvHmGWP4SpMkv5QJf
     ethereum: http://proxyd-nitro-proxyd.arbitrum-one.svc.cluster.local.:8545
     ethereum-network: arbitrum-one
     collect-receipts-endpoint: "https://gateway-arbitrum.network.thegraph.com/collect-receipts"
