@@ -14,7 +14,7 @@ indexerAgent:
     index-node-ids: "graph-node-index-0" # TODO this should be removed as a requirement, in the mean time it should be a comma delimited list of index node ids
 
   env:
-    INDEXER_AGENT_SUBGRAPH_MAX_BLOCK_DISTANCE: 100
+    INDEXER_AGENT_SUBGRAPH_MAX_BLOCK_DISTANCE: 1000
     INDEXER_AGENT_SUBGRAPH_FRESHNESS_SLEEP_MILLISECONDS: 10000
 
   secretEnv:

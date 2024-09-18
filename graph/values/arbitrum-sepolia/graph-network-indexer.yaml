@@ -30,12 +30,12 @@ indexerDefaults:
 indexerAgent:
   config:
     allocation-management: manual
-    collect-receipts-endpoint: "https://gateway-testnet-arbitrum.network.thegraph.com/collect-receipts"
     epoch-subgraph-deployment: "Qmc6zPWLPCj42k2vujAYaHaMZBFHAnpfsa4KzUwtFXFLA2"
     epoch-subgraph-endpoint: http://graph-node-query.graph-arbitrum-sepolia.svc.cluster.local.:8000/subgraphs/id/Qmc6zPWLPCj42k2vujAYaHaMZBFHAnpfsa4KzUwtFXFLA2
     ethereum: http://proxyd-nitro-proxyd.arbitrum-sepolia.svc.cluster.local.:8545
     ethereum-network: arbitrum-sepolia
     graph-node-admin-endpoint: http://graph-node-block-ingestor.graph-arbitrum-sepolia.svc.cluster.local.:8020
+    offchain-subgraphs: "Qmc6zPWLPCj42k2vujAYaHaMZBFHAnpfsa4KzUwtFXFLA2,QmUiLdbsk6c51UMdcNBxsP3KadJpkmp6a3k2NCprR4ZFeM,QmXnGVrg6DvscnvJd86aHAPLGyGrkM17weMrAsFAEMmQLL"
 
 indexerService:
   replicas: 1 # scale me
