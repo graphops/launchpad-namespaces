@@ -2856,13 +2856,16 @@
                     "releases": {
                         "type": "object",
                         "required": [
-                            "firehose-ethereum"
+                            "firehose-ethereum",
+                            "nimbus",
+                            "lighthouse"
                         ],
                         "properties": {
                             "firehose-ethereum": {
                                 "type": "object",
                                 "required": [
-                                    "chart"
+                                    "chart",
+                                    "labels"
                                 ],
                                 "properties": {
                                     "chart": {
@@ -2877,7 +2880,7 @@
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
-                                                    "https://github.com/graphprotocol/graph-node"
+                                                    "https://github.com/streamingfast/firehose-ethereum"
                                                 ]
                                             },
                                             "repository": {
@@ -2889,13 +2892,214 @@
                                             "description": {
                                                 "type": "string",
                                                 "enum": [
-                                                    "Graph Node is an open source Rust implementation that event sources the Ethereum blockchain to deterministically update a data store that can be queried via the GraphQL endpoint."
+                                                    "Support for firehose in EVM based chains. Firehose is a blockchain data streaming technology developed by StreamingFast working with The Graph Foundation."
                                                 ]
                                             },
                                             "name": {
                                                 "type": "string",
                                                 "enum": [
-                                                    "graph-node"
+                                                    "firehose-ethereum"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "labels": {
+                                        "type": "object",
+                                        "required": [
+                                            "app.launchpad.graphops.xyz/layer",
+                                            "app.launchpad.graphops.xyz/release",
+                                            "app.launchpad.graphops.xyz/component",
+                                            "app.launchpad.graphops.xyz/scalingIndex"
+                                        ],
+                                        "properties": {
+                                            "app.launchpad.graphops.xyz/layer": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "execution"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/release": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $release }}"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/component": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $canonicalRelease }}"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/scalingIndex": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $deploymentIndex }}"
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "nimbus": {
+                                "type": "object",
+                                "required": [
+                                    "chart",
+                                    "labels",
+                                    "feature"
+                                ],
+                                "properties": {
+                                    "chart": {
+                                        "type": "object",
+                                        "required": [
+                                            "url",
+                                            "repository",
+                                            "description",
+                                            "name"
+                                        ],
+                                        "properties": {
+                                            "url": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "https://github.com/status-im/nimbus-eth2"
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "Nimbus-eth2 is an extremely efficient consensus layer (eth2) client implementation."
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "nimbus"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "labels": {
+                                        "type": "object",
+                                        "required": [
+                                            "app.launchpad.graphops.xyz/layer",
+                                            "app.launchpad.graphops.xyz/release",
+                                            "app.launchpad.graphops.xyz/component",
+                                            "app.launchpad.graphops.xyz/scalingIndex"
+                                        ],
+                                        "properties": {
+                                            "app.launchpad.graphops.xyz/layer": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "consensus"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/release": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $release }}"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/component": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $canonicalRelease }}"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/scalingIndex": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $deploymentIndex }}"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "feature": {
+                                        "$ref": "#/components/schemas/namespaces.firehoseEthereum.features.consensus_nimbus"
+                                    }
+                                }
+                            },
+                            "lighthouse": {
+                                "type": "object",
+                                "required": [
+                                    "chart",
+                                    "feature",
+                                    "labels"
+                                ],
+                                "properties": {
+                                    "chart": {
+                                        "type": "object",
+                                        "required": [
+                                            "url",
+                                            "repository",
+                                            "description",
+                                            "name"
+                                        ],
+                                        "properties": {
+                                            "url": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "https://github.com/sigp/lighthouse"
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "An open-source Ethereum consensus client, written in Rust and maintained by Sigma Prime."
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "lighthouse"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "feature": {
+                                        "$ref": "#/components/schemas/namespaces.firehoseEthereum.features.consensus_lighthouse"
+                                    },
+                                    "labels": {
+                                        "type": "object",
+                                        "required": [
+                                            "app.launchpad.graphops.xyz/layer",
+                                            "app.launchpad.graphops.xyz/release",
+                                            "app.launchpad.graphops.xyz/component",
+                                            "app.launchpad.graphops.xyz/scalingIndex"
+                                        ],
+                                        "properties": {
+                                            "app.launchpad.graphops.xyz/layer": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "consensus"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/release": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $release }}"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/component": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $canonicalRelease }}"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/scalingIndex": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $deploymentIndex }}"
                                                 ]
                                             }
                                         }
@@ -3071,6 +3275,9 @@
                     "firehose-ethereum": {
                         "$ref": "#/components/schemas/base.releaseValues"
                     },
+                    "nimbus": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
                     "features": {
                         "type": "array",
                         "items": {
@@ -3079,6 +3286,9 @@
                         "default": [
                             "consensus-lighthouse"
                         ]
+                    },
+                    "lighthouse": {
+                        "$ref": "#/components/schemas/base.releaseValues"
                     }
                 },
                 "allOf": [
@@ -6679,7 +6889,8 @@
                                     "graph-network-indexer",
                                     "graph-toolbox",
                                     "subgraph-radio",
-                                    "lighthouse"
+                                    "lighthouse",
+                                    "firehose-ethereum"
                                 ],
                                 "properties": {
                                     "erigon": {
@@ -6993,6 +7204,27 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "An open-source Ethereum consensus client, written in Rust and maintained by Sigma Prime."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "firehose-ethereum": {
+                                        "type": "object",
+                                        "required": [
+                                            "url",
+                                            "description"
+                                        ],
+                                        "properties": {
+                                            "url": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "https://github.com/streamingfast/firehose-ethereum"
+                                                ]
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "Support for firehose in EVM based chains. Firehose is a blockchain data streaming technology developed by StreamingFast working with The Graph Foundation."
                                                 ]
                                             }
                                         }

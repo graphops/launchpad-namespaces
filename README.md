@@ -187,8 +187,12 @@ Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by
 ### [:firehose-ethereum](/firehose-ethereum)
 This *Namespace* provides the necessary software to run the full constellation of Firehose services for Ethereum based chains
 
-- [firehose-ethereum](https://github.com/graphprotocol/graph-node)<br>
-Graph Node is an open source Rust implementation that event sources the Ethereum blockchain to deterministically update a data store that can be queried via the GraphQL endpoint.
+- [firehose-ethereum](https://github.com/streamingfast/firehose-ethereum)<br>
+Support for firehose in EVM based chains. Firehose is a blockchain data streaming technology developed by StreamingFast working with The Graph Foundation.
+- [lighthouse](https://github.com/sigp/lighthouse)<br>
+An open-source Ethereum consensus client, written in Rust and maintained by Sigma Prime.
+- [nimbus](https://github.com/status-im/nimbus-eth2)<br>
+Nimbus-eth2 is an extremely efficient consensus layer (eth2) client implementation.
 ### [:gnosis](/gnosis)
 This *Namespace* provides a suitable stack to operate Gnosis mainnet archive nodes.
 

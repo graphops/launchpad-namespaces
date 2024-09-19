@@ -96,8 +96,38 @@ package LaunchpadNamespaces
 
 		releases: {
 			"firehose-ethereum": {
-				chart: {_repositories.graphops.charts["graph-node"]}
-				_template: {version: "0.5.3"}
+				chart: {_repositories.graphops.charts["firehose-ethereum"]}
+				labels: {
+					"app.launchpad.graphops.xyz/layer":        "execution"
+					"app.launchpad.graphops.xyz/release":      "{{ $release }}"
+					"app.launchpad.graphops.xyz/component":    "{{ $canonicalRelease }}"
+					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
+				}
+				_template: {version: "0.1.0-canary.1"}
+			}
+
+			nimbus: {
+				chart: {_repositories.graphops.charts.nimbus}
+				labels: {
+					"app.launchpad.graphops.xyz/layer":        "consensus"
+					"app.launchpad.graphops.xyz/release":      "{{ $release }}"
+					"app.launchpad.graphops.xyz/component":    "{{ $canonicalRelease }}"
+					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
+				}
+				feature: #features.#consensus_nimbus
+				_template: {version: "0.5.17"}
+			}
+
+			lighthouse: {
+				chart: {_repositories.graphops.charts.lighthouse}
+				feature: #features.#consensus_lighthouse
+				labels: {
+					"app.launchpad.graphops.xyz/layer":        "consensus"
+					"app.launchpad.graphops.xyz/release":      "{{ $release }}"
+					"app.launchpad.graphops.xyz/component":    "{{ $canonicalRelease }}"
+					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
+				}
+				_template: {version: "0.5.9"}
 			}
 		}
 
