@@ -2736,7 +2736,8 @@
                             "eth-mainnet",
                             "eth-sepolia",
                             "arbitrum-one",
-                            "arbitrum-sepolia"
+                            "arbitrum-sepolia",
+                            "polygon-mainnet"
                         ],
                         "properties": {
                             "flavor": {
@@ -2815,6 +2816,27 @@
                                         "type": "string",
                                         "enum": [
                                             "fh-arbitrum-sepolia"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.firehoseEvm.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "targetNamespace"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "polygon-mainnet": {
+                                "type": "object",
+                                "properties": {
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "fh-polygon-mainnet"
                                         ]
                                     }
                                 },
@@ -2978,7 +3000,8 @@
                     "eth-mainnet",
                     "eth-sepolia",
                     "arbitrum-one",
-                    "arbitrum-sepolia"
+                    "arbitrum-sepolia",
+                    "polygon-mainnet"
                 ]
             },
             "namespaces.firehoseEvm.flavor.eth_mainnet": {
@@ -2992,6 +3015,12 @@
                 "type": "string",
                 "enum": [
                     "eth-sepolia"
+                ]
+            },
+            "namespaces.firehoseEvm.flavor.polygon_mainnet": {
+                "type": "string",
+                "enum": [
+                    "polygon-mainnet"
                 ]
             },
             "namespaces.firehoseEvm.helmfiles": {

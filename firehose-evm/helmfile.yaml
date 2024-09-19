@@ -1,5 +1,5 @@
 #namespace defaults
-{{ $_ := set .Values "_namespaceDefaults" ( `{"flavor":"eth-mainnet","eth-mainnet":{"targetNamespace":"fh-eth-mainnet","features":["consensus-lighthouse"]},"eth-sepolia":{"targetNamespace":"fh-eth-sepolia","features":["consensus-lighthouse"]},"arbitrum-one":{"targetNamespace":"fh-arbitrum-one","features":["consensus-lighthouse"]},"common":{"features":["consensus-lighthouse"]},"arbitrum-sepolia":{"targetNamespace":"fh-arbitrum-sepolia","features":["consensus-lighthouse"]}}` | fromJson ) }}
+{{ $_ := set .Values "_namespaceDefaults" ( `{"flavor":"eth-mainnet","eth-mainnet":{"targetNamespace":"fh-eth-mainnet","features":["consensus-lighthouse"]},"eth-sepolia":{"targetNamespace":"fh-eth-sepolia","features":["consensus-lighthouse"]},"arbitrum-one":{"targetNamespace":"fh-arbitrum-one","features":["consensus-lighthouse"]},"arbitrum-sepolia":{"targetNamespace":"fh-arbitrum-sepolia","features":["consensus-lighthouse"]},"common":{"features":["consensus-lighthouse"]},"polygon-mainnet":{"targetNamespace":"fh-polygon-mainnet","features":["consensus-lighthouse"]}}` | fromJson ) }}
 #set default flavor when missing
 {{ if not ( hasKey .Values "flavor" ) }}
 {{ $_ := set .Values "flavor" "eth-mainnet" }}

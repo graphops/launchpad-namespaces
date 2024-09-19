@@ -23,7 +23,9 @@ package LaunchpadNamespaces
 
 			#arbitrum_sepolia: "arbitrum-sepolia"
 
-			#enum: ( #eth_mainnet | #eth_sepolia | #arbitrum_one | #arbitrum_sepolia )
+			#polygon_mainnet: "polygon-mainnet"
+
+			#enum: ( #eth_mainnet | #eth_sepolia | #arbitrum_one | #arbitrum_sepolia | #polygon_mainnet)
 		}
 
 		// ethereum namespace features schema
@@ -84,6 +86,11 @@ package LaunchpadNamespaces
 			"arbitrum-sepolia": {
 				#common
 				targetNamespace: "fh-arbitrum-sepolia"
+			}
+
+			"polygon-mainnet": {
+				#common
+				targetNamespace: "fh-polygon-mainnet"
 			}
 		}
 
