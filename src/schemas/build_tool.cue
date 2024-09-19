@@ -18,7 +18,7 @@ command: {
 		print: cli.Print & {text: _out.out}
 	}
 	"build:renovate": {
-		_out: _renovate.render
+		_out:                     _renovate.render
 		print: cli.Print & {text: _out.out}
 	}
 }

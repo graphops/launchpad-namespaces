@@ -1,14 +1,14 @@
-// schema:type=namespace schema:namespace=firehose-evm
+// schema:type=namespace schema:namespace=firehose-ethereum
 package LaunchpadNamespaces
 
 #namespaces: {
-	// Firehose-EVM *Namespace*
-	#firehoseEvm: {
+	// Firehose-Ethereum *Namespace*
+	#firehoseEthereum: {
 		meta: {
-			name: "firehose-evm"
+			name: "firehose-ethereum"
 			url:  "https://github.com/graphops/launchpad-namespaces/\(name)"
 			description: """
-				This *Namespace* provides the necessary software to run the full constellation of Firehose services for EVM based chains
+				This *Namespace* provides the necessary software to run the full constellation of Firehose services for Ethereum based chains
 				"""
 		}
 
@@ -57,8 +57,8 @@ package LaunchpadNamespaces
 
 		// Graph helmfile API
 		#helmfiles: #base.#helmfiles & {
-			path: =~"*github.com/graphops/launchpad-namespaces.git@firehose-evm/helmfile.yaml*"
-			values?: #firehoseEvm.#values | [...#firehoseEvm.#values]
+			path: =~"*github.com/graphops/launchpad-namespaces.git@firehose-ethereum/helmfile.yaml*"
+			values?: #firehoseEthereum.#values | [...#firehoseEthereum.#values]
 		}
 
 		defaults: {
@@ -95,7 +95,7 @@ package LaunchpadNamespaces
 		}
 
 		releases: {
-			"firehose-evm": {
+			"firehose-ethereum": {
 				chart: {_repositories.graphops.charts["graph-node"]}
 				_template: {version: "0.5.3"}
 			}
@@ -103,7 +103,7 @@ package LaunchpadNamespaces
 
 		labels: {
 			#base.#labels
-			"launchpad.graphops.xyz/namespace": "firehose-evm"
+			"launchpad.graphops.xyz/namespace": "firehose-ethereum"
 		}
 
 		resourceLabels: {
@@ -113,4 +113,4 @@ package LaunchpadNamespaces
 }
 
 // instantiate namespace ojects for internal usage
-_namespaces: "firehose-evm": _#namespaceTemplate & {_key: #namespaces.#firehoseEvm}
+_namespaces: "firehose-ethereum": _#namespaceTemplate & {_key: #namespaces.#firehoseEthereum}

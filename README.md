@@ -184,10 +184,10 @@ Erigon is an implementation of Ethereum (execution client with light client for 
 Nimbus-eth2 is an extremely efficient consensus layer (eth2) client implementation.
 - [proxyd](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
 Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
-### [:firehose-evm](/firehose-evm)
-This *Namespace* provides the necessary software to run the full constellation of Firehose services for EVM based chains
+### [:firehose-ethereum](/firehose-ethereum)
+This *Namespace* provides the necessary software to run the full constellation of Firehose services for Ethereum based chains
 
-- [firehose-evm](https://github.com/graphprotocol/graph-node)<br>
+- [firehose-ethereum](https://github.com/graphprotocol/graph-node)<br>
 Graph Node is an open source Rust implementation that event sources the Ethereum blockchain to deterministically update a data store that can be queried via the GraphQL endpoint.
 ### [:gnosis](/gnosis)
 This *Namespace* provides a suitable stack to operate Gnosis mainnet archive nodes.

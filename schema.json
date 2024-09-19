@@ -2690,8 +2690,8 @@
                     }
                 ]
             },
-            "namespaces.firehoseEvm": {
-                "description": "Firehose-EVM *Namespace*",
+            "namespaces.firehoseEthereum": {
+                "description": "Firehose-Ethereum *Namespace*",
                 "type": "object",
                 "required": [
                     "meta",
@@ -2712,19 +2712,19 @@
                             "name": {
                                 "type": "string",
                                 "enum": [
-                                    "firehose-evm"
+                                    "firehose-ethereum"
                                 ]
                             },
                             "url": {
                                 "type": "string",
                                 "enum": [
-                                    "https://github.com/graphops/launchpad-namespaces/firehose-evm"
+                                    "https://github.com/graphops/launchpad-namespaces/firehose-ethereum"
                                 ]
                             },
                             "description": {
                                 "type": "string",
                                 "enum": [
-                                    "This *Namespace* provides the necessary software to run the full constellation of Firehose services for EVM based chains"
+                                    "This *Namespace* provides the necessary software to run the full constellation of Firehose services for Ethereum based chains"
                                 ]
                             }
                         }
@@ -2758,7 +2758,7 @@
                                 },
                                 "allOf": [
                                     {
-                                        "$ref": "#/components/schemas/namespaces.firehoseEvm.defaults.common"
+                                        "$ref": "#/components/schemas/namespaces.firehoseEthereum.defaults.common"
                                     },
                                     {
                                         "required": [
@@ -2779,7 +2779,7 @@
                                 },
                                 "allOf": [
                                     {
-                                        "$ref": "#/components/schemas/namespaces.firehoseEvm.defaults.common"
+                                        "$ref": "#/components/schemas/namespaces.firehoseEthereum.defaults.common"
                                     },
                                     {
                                         "required": [
@@ -2800,7 +2800,7 @@
                                 },
                                 "allOf": [
                                     {
-                                        "$ref": "#/components/schemas/namespaces.firehoseEvm.defaults.common"
+                                        "$ref": "#/components/schemas/namespaces.firehoseEthereum.defaults.common"
                                     },
                                     {
                                         "required": [
@@ -2821,7 +2821,7 @@
                                 },
                                 "allOf": [
                                     {
-                                        "$ref": "#/components/schemas/namespaces.firehoseEvm.defaults.common"
+                                        "$ref": "#/components/schemas/namespaces.firehoseEthereum.defaults.common"
                                     },
                                     {
                                         "required": [
@@ -2842,7 +2842,7 @@
                                 },
                                 "allOf": [
                                     {
-                                        "$ref": "#/components/schemas/namespaces.firehoseEvm.defaults.common"
+                                        "$ref": "#/components/schemas/namespaces.firehoseEthereum.defaults.common"
                                     },
                                     {
                                         "required": [
@@ -2856,10 +2856,10 @@
                     "releases": {
                         "type": "object",
                         "required": [
-                            "firehose-evm"
+                            "firehose-ethereum"
                         ],
                         "properties": {
-                            "firehose-evm": {
+                            "firehose-ethereum": {
                                 "type": "object",
                                 "required": [
                                     "chart"
@@ -2910,7 +2910,7 @@
                             "launchpad.graphops.xyz/namespace": {
                                 "type": "string",
                                 "enum": [
-                                    "firehose-evm"
+                                    "firehose-ethereum"
                                 ]
                             }
                         },
@@ -2930,7 +2930,7 @@
                     }
                 }
             },
-            "namespaces.firehoseEvm.defaults.common": {
+            "namespaces.firehoseEthereum.defaults.common": {
                 "type": "object",
                 "required": [
                     "features"
@@ -2940,7 +2940,7 @@
                         "type": "array",
                         "items": [
                             {
-                                "$ref": "#/components/schemas/namespaces.firehoseEvm.features.consensus_lighthouse"
+                                "$ref": "#/components/schemas/namespaces.firehoseEthereum.features.consensus_lighthouse"
                             }
                         ],
                         "enum": [
@@ -2954,47 +2954,47 @@
                     }
                 }
             },
-            "namespaces.firehoseEvm.features": {
+            "namespaces.firehoseEthereum.features": {
                 "description": "ethereum namespace features schema",
                 "type": "object"
             },
-            "namespaces.firehoseEvm.features.consensus_lighthouse": {
+            "namespaces.firehoseEthereum.features.consensus_lighthouse": {
                 "description": "",
                 "type": "string",
                 "enum": [
                     "consensus-lighthouse"
                 ]
             },
-            "namespaces.firehoseEvm.features.consensus_nimbus": {
+            "namespaces.firehoseEthereum.features.consensus_nimbus": {
                 "description": "",
                 "type": "string",
                 "enum": [
                     "consensus-nimbus"
                 ]
             },
-            "namespaces.firehoseEvm.features.enum": {
+            "namespaces.firehoseEthereum.features.enum": {
                 "type": "string",
                 "enum": [
                     "consensus-nimbus",
                     "consensus-lighthouse"
                 ]
             },
-            "namespaces.firehoseEvm.flavor": {
+            "namespaces.firehoseEthereum.flavor": {
                 "type": "object"
             },
-            "namespaces.firehoseEvm.flavor.arbitrum_one": {
+            "namespaces.firehoseEthereum.flavor.arbitrum_one": {
                 "type": "string",
                 "enum": [
                     "arbitrum-one"
                 ]
             },
-            "namespaces.firehoseEvm.flavor.arbitrum_sepolia": {
+            "namespaces.firehoseEthereum.flavor.arbitrum_sepolia": {
                 "type": "string",
                 "enum": [
                     "arbitrum-sepolia"
                 ]
             },
-            "namespaces.firehoseEvm.flavor.enum": {
+            "namespaces.firehoseEthereum.flavor.enum": {
                 "type": "string",
                 "enum": [
                     "eth-mainnet",
@@ -3004,42 +3004,42 @@
                     "polygon-mainnet"
                 ]
             },
-            "namespaces.firehoseEvm.flavor.eth_mainnet": {
+            "namespaces.firehoseEthereum.flavor.eth_mainnet": {
                 "description": "suitable defaults for an ethereum mainnet indexer",
                 "type": "string",
                 "enum": [
                     "eth-mainnet"
                 ]
             },
-            "namespaces.firehoseEvm.flavor.eth_sepolia": {
+            "namespaces.firehoseEthereum.flavor.eth_sepolia": {
                 "type": "string",
                 "enum": [
                     "eth-sepolia"
                 ]
             },
-            "namespaces.firehoseEvm.flavor.polygon_mainnet": {
+            "namespaces.firehoseEthereum.flavor.polygon_mainnet": {
                 "type": "string",
                 "enum": [
                     "polygon-mainnet"
                 ]
             },
-            "namespaces.firehoseEvm.helmfiles": {
+            "namespaces.firehoseEthereum.helmfiles": {
                 "description": "Graph helmfile API",
                 "type": "object",
                 "properties": {
                     "path": {
                         "type": "string",
-                        "pattern": "*github.com/graphops/launchpad-namespaces.git@firehose-evm/helmfile.yaml*"
+                        "pattern": "*github.com/graphops/launchpad-namespaces.git@firehose-ethereum/helmfile.yaml*"
                     },
                     "values": {
                         "oneOf": [
                             {
-                                "$ref": "#/components/schemas/namespaces.firehoseEvm.values"
+                                "$ref": "#/components/schemas/namespaces.firehoseEthereum.values"
                             },
                             {
                                 "type": "array",
                                 "items": {
-                                    "$ref": "#/components/schemas/namespaces.firehoseEvm.values"
+                                    "$ref": "#/components/schemas/namespaces.firehoseEthereum.values"
                                 }
                             }
                         ]
@@ -3056,25 +3056,25 @@
                     }
                 ]
             },
-            "namespaces.firehoseEvm.values": {
+            "namespaces.firehoseEthereum.values": {
                 "description": "Graph namespace values schema",
                 "type": "object",
                 "properties": {
                     "flavor": {
-                        "$ref": "#/components/schemas/namespaces.firehoseEvm.flavor.enum"
+                        "$ref": "#/components/schemas/namespaces.firehoseEthereum.flavor.enum"
                     },
                     "targetNamespace": {
                         "description": "the default is graph-<flavor>",
                         "type": "string",
                         "default": "fh-eth-mainnet"
                     },
-                    "firehose-evm": {
+                    "firehose-ethereum": {
                         "$ref": "#/components/schemas/base.releaseValues"
                     },
                     "features": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/namespaces.firehoseEvm.features.enum"
+                            "$ref": "#/components/schemas/namespaces.firehoseEthereum.features.enum"
                         },
                         "default": [
                             "consensus-lighthouse"

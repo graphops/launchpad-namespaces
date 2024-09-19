@@ -115,7 +115,7 @@ kubeVersion: {{ .Values.kubeVersion }}
 
 
 {{- $_commonLabels := dict 
-`launchpad.graphops.xyz/namespace` `firehose-evm`
+`launchpad.graphops.xyz/namespace` `firehose-ethereum`
 }}
 
 {{- $_commonResourceLabels := dict 
@@ -146,24 +146,24 @@ templates:
     namespace: '{{ .Values | get "targetNamespace" $_defaultNamespace }}'
     missingFileHandler: Warn
   
-  firehose-evm:
-    {{- if ( .Values | get "firehose-evm" dict | get "chartUrl" false ) }}
-    chart: {{ .Values | get "firehose-evm" | get "chartUrl" }}
+  firehose-ethereum:
+    {{- if ( .Values | get "firehose-ethereum" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "firehose-ethereum" | get "chartUrl" }}
     {{- else }}
     chart: "graphops/graph-node"
     {{- end }}
     inherit:
     - template: "defaults"
-    {{- if ( .Values | get "firehose-evm" dict | get "chartVersion" false ) }}
-    version: {{ .Values | get "firehose-evm" | get "chartVersion" }}
+    {{- if ( .Values | get "firehose-ethereum" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "firehose-ethereum" | get "chartVersion" }}
     {{- end }}
-    {{- if (not (or ( .Values | get "firehose-evm" dict | get "chartVersion" false ) ( .Values | get "firehose-evm" dict | get "chartUrl" false ) )) }}
+    {{- if (not (or ( .Values | get "firehose-ethereum" dict | get "chartVersion" false ) ( .Values | get "firehose-ethereum" dict | get "chartUrl" false ) )) }}
     version: "0.5.3"
     {{- end }}
   
 releases:
-  {{- $canonicalRelease := "firehose-evm" }}
-  {{- $release := "firehose-evm" }}
+  {{- $canonicalRelease := "firehose-ethereum" }}
+  {{- $release := "firehose-ethereum" }}
   {{- $_releaseResourceLabels := dict }}
   {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
   - name: "{{ $release }}"
