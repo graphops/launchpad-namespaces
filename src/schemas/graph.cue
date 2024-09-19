@@ -93,7 +93,7 @@ package LaunchpadNamespaces
 
 			"graph-toolbox": {
 				chart: {_repositories.graphops.charts["graph-toolbox"]}
-				_template: {version: "0.1.0"}
+				_template: {version: "0.1.1"}
 			}
 
 			"graph-operator-mnemonic": {
