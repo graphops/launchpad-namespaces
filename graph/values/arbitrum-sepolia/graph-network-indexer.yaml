@@ -7,8 +7,8 @@ indexerDefaults:
       indexer_address: "0x0000000000000000000000000000000000000000" # your indexer address
 
     graph_node:
-      query_url: "http://graph-node-query.graph-arbitrum-sepolia.svc.cluster.local.:8000"
-      status_url: "http://graph-node-block-ingestor.graph-arbitrum-sepolia.svc.cluster.local.:8030/graphql"
+      query_url: "http://graph-node-query:8000"
+      status_url: "http://graph-node-block-ingestor:8030/graphql"
 
     subgraphs.network:
       query_url: "http://graph-node-query:8000/subgraphs/id/QmbGVqFCqgh83NpW4kHFAJuE9mAbVfhXdY59NrevSCaCeN"
