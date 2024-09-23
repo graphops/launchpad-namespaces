@@ -2,37 +2,36 @@
 
 indexerDefaults:
   config:
-    graph-node-query-endpoint: "http://graph-node-query:8000"
-    graph-node-status-endpoint: "http://graph-node-block-ingestor:8030/graphql"
-    postgres-host: "pg-indexer-metadata"
-    postgres-database: "indexer"
-    ethereum: "http://proxyd-nitro-proxyd.arbitrum-one:8545"
-    ethereum-network: "arbitrum-one"
-    network-subgraph-endpoint: "https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-arbitrum"
-    network-subgraph-deployment: "QmSWxvd8SaQK6qZKJ7xtfxCCGoRzGnoi2WNzmJYYJW9BXY" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
+    indexer:
+      indexer_address: "0x0000000000000000000000000000000000000000" # your indexer address
+
+    graph_node:
+      query_url: "http://graph-node-query:8000"
+      status_url: "http://graph-node-block-ingestor:8030/graphql"
+
+    subgraphs.network:
+      query_url: "http://graph-node-query:8000/subgraphs/id/QmUzRg2HHMpbgf6Q4VHKNDbtBEJnyp5JWCh2gUX9AV6jXv"
+      recently_closed_allocation_buffer_secs: 100
+
+    subgraphs.escrow:
+      query_url: "http://graph-node-query:8000/subgraphs/id/QmUhiH6Z5xo6o3GNzsSvqpGKLmCt6w5WzKQ1yHk6C8AA8S"
+
+    blockchain:
+      chain_id: 42161
+      # find TAPVerifier address at https://github.com/semiotic-ai/timeline-aggregation-protocol-contracts/blob/main/addresses.json
+      receipts_verifier_address: "0x33f9E93266ce0E108fc85DdE2f71dab555A0F05a"
+
+    tap.sender_aggregator_endpoints:
+      0xDDE4cfFd3D9052A9cb618fC05a1Cd02be1f2F467: "https://tap-aggregator.network.thegraph.com/"
 
 indexerAgent:
-  # fixes "Network Subgraph is not fresh" error https://github.com/graphprotocol/indexer/pull/799
-  # TODO: choosing higher than upstream recommendation because reportedly 60 is still low, potentially tune in the future.
-  env:
-    INDEXER_AGENT_SUBGRAPH_MAX_BLOCK_DISTANCE: 100
-    INDEXER_AGENT_SUBGRAPH_FRESHNESS_SLEEP_MILLISECONDS: 10000
-
   config:
     collect-receipts-endpoint: "https://gateway-arbitrum.network.thegraph.com/collect-receipts"
-    epoch-subgraph-endpoint: "https://api.thegraph.com/subgraphs/name/graphprotocol/arbitrum-epoch-block-oracle" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
+    epoch-subgraph-endpoint: http://graph-node-query:8000/subgraphs/id/QmQEGDTb3xeykCXLdWx7pPX3qeeGMUvHmGWP4SpMkv5QJf
+    ethereum: http://proxyd-nitro-proxyd.arbitrum-one:8545
+    ethereum-network: arbitrum-one
+    graph-node-admin-endpoint: http://graph-node-block-ingestor:8020
+    offchain-subgraphs: "QmQEGDTb3xeykCXLdWx7pPX3qeeGMUvHmGWP4SpMkv5QJf,QmUhiH6Z5xo6o3GNzsSvqpGKLmCt6w5WzKQ1yHk6C8AA8S,QmUzRg2HHMpbgf6Q4VHKNDbtBEJnyp5JWCh2gUX9AV6jXv"
 
 indexerService:
-  config:
-    client-signer-address: "0xc483960d4D58eabc434Dc88a620AdFd883D6Dd4e" # find at https://github.com/graphprotocol/indexer/blob/main/docs/networks.md
-  
-  secretEnv:
-    INDEXER_SERVICE_MNEMONIC:
-      secretName: graph-operator-mnemonic
-      key: mnemonic
-    INDEXER_SERVICE_POSTGRES_USERNAME:
-      secretName: indexer.pg-indexer-metadata.credentials.postgresql.acid.zalan.do
-      key: username
-    INDEXER_SERVICE_POSTGRES_PASSWORD:
-      secretName: indexer.pg-indexer-metadata.credentials.postgresql.acid.zalan.do
-      key: password
+  replicas: 1 # scale me

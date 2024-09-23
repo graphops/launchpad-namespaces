@@ -1,6 +1,9 @@
 # This is a values.yaml override file for https://github.com/graphops/launchpad-charts/tree/main/charts/graph-network-indexer
 
 indexerDefaults:
+  postgresConfig:
+    host: "pg-indexer-metadata"
+    database: "indexer"
   env: {}
   secretEnv: {}
 
@@ -9,6 +12,10 @@ indexerAgent:
     graph-node-admin-endpoint: "http://graph-node-block-ingestor:8020"
     public-indexer-url: "XXX_CHANGEME_XXX"
     index-node-ids: "graph-node-index-0" # TODO this should be removed as a requirement, in the mean time it should be a comma delimited list of index node ids
+
+  env:
+    INDEXER_AGENT_SUBGRAPH_MAX_BLOCK_DISTANCE: 1000
+    INDEXER_AGENT_SUBGRAPH_FRESHNESS_SLEEP_MILLISECONDS: 10000
 
   secretEnv:
     INDEXER_AGENT_MNEMONIC:
@@ -24,6 +31,29 @@ indexerAgent:
 
 indexerService:
   replicas: 1 # scale me
+
+  secretEnv:
+    INDEXER_SERVICE_INDEXER__OPERATOR_MNEMONIC:
+      secretName: graph-operator-mnemonic
+      key: mnemonic
+    POSTGRES_USERNAME:
+      secretName: indexer.pg-indexer-metadata.credentials.postgresql.acid.zalan.do
+      key: username
+    POSTGRES_PASSWORD:
+      secretName: indexer.pg-indexer-metadata.credentials.postgresql.acid.zalan.do
+      key: password
+
+indexerTapAgent:
+  secretEnv:
+    TAP_AGENT_INDEXER__OPERATOR_MNEMONIC:
+      secretName: graph-operator-mnemonic
+      key: mnemonic
+    POSTGRES_USERNAME:
+      secretName: indexer.pg-indexer-metadata.credentials.postgresql.acid.zalan.do
+      key: username
+    POSTGRES_PASSWORD:
+      secretName: indexer.pg-indexer-metadata.credentials.postgresql.acid.zalan.do
+      key: password
 
 prometheus:
   serviceMonitors:
