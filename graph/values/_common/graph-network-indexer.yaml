@@ -44,8 +44,6 @@ indexerService:
       key: password
 
 indexerTapAgent:
-  replicas: 1 # scale me
-
   secretEnv:
     TAP_AGENT_INDEXER__OPERATOR_MNEMONIC:
       secretName: graph-operator-mnemonic
