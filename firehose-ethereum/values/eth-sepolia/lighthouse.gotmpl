@@ -1,0 +1,5 @@
+{{ $scalingIndex := splitList "-" .Release.Name | last }}
+lighthouse:
+  extraArgs:
+    - --checkpoint-sync-url=https://beaconstate-sepolia.chainsafe.io/
+    - --network=sepolia

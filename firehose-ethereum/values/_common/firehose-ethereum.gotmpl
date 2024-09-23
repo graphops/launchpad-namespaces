@@ -1,0 +1,124 @@
+{{ $scalingIndex := splitList "-" .Release.Name | last }}
+
+firehoseComponents:
+  grpc:
+    enabled: true
+    replicas: 1
+    fireeth:
+      services:
+        - firehose
+
+  relayer:
+    enabled: true
+    replicas: 1
+    fireeth:
+      services:
+        - relayer
+
+  merger:
+    enabled: true
+    replicas: 1
+    fireeth:
+      services:
+        - merger
+
+  index-builder:
+    enabled: true
+    replicas: 1
+    fireeth:
+      services:
+        - index-builder
+
+  reader-node:
+    enabled: true
+    replicas: 1
+    fireeth:
+      services:
+        - reader-node
+
+firehoseServiceDefaults:
+  reader-node:
+    kind: StatefulSet
+    fireeth:
+      jwt:
+        enabled: true
+      p2p:
+        enabled: true
+      genesisJson:
+        enabled: false
+      config:
+        reader-node-grpc-listen-addr: "0.0.0.0:10010"
+        reader-node-manager-api-addr: "127.0.0.1:10011"
+        reader-node-data-dir: "/var/lib/geth"
+        reader-node-path: "/app/geth"
+        reader-node-bootstrap-data-url: '{{ with .Pod.fireeth.genesisJson }}{{ .enabled | ternary "/genesis/genesis.json" nil }}{{ end }}'
+      nodeMetrics:
+        enabled: true
+        addr: 0.0.0.0
+        port: 6061
+      nodeArgs:
+        __prefix: "--"
+        __separator: "="
+        datadir: "{node-data-dir}"
+        firehose-enabled: "__none"
+        networkid: "11155111"
+        sepolia: "__none"
+        syncmode: "full"
+        snapshot: "true"
+        http: "__none"
+        http.api: net,web3,eth,debug
+        http.addr: 0.0.0.0
+        http.port: 8545
+        http.vhosts: "*"
+        txlookuplimit: 1000
+        cache: 8192
+        maxpeers: 100
+        metrics.addr: '{{ with .Pod.fireeth.nodeMetrics }}{{ .enabled | ternary .addr nil }}{{ end }}'
+        metrics.port: '{{ with .Pod.fireeth.nodeMetrics }}{{ .enabled | ternary (.port | int) nil }}{{ end }}'
+        port: '{{ .Pod.fireeth.p2p.enabled | ternary "${EXTERNAL_PORT}" nil }}'
+        discovery.port: '{{ .Pod.fireeth.p2p.enabled | ternary "${EXTERNAL_PORT}" nil }}'
+        nat: '{{ .Pod.fireeth.p2p.enabled | ternary "extip:${EXTERNAL_IP}" nil }}'
+    configMap:
+      options:
+        useEnvSubst: true
+
+firehoseComponentDefaults:
+  # -- Image configuration for firehose-evm
+  image:
+    # -- Docker image repository
+    repository: "ghcr.io/streamingfast/firehose-ethereum"
+    # -- Image pull policy
+    pullPolicy: "IfNotPresent"
+    # -- Overrides the image reference using a tag
+    # digest takes precedence over tag if both are set
+    tag: "v2.6.7-geth-v1.13.15-fh2.4"
+
+  # -- Firehose-specific configuration
+  fireeth:
+    metrics:
+      enabled: true
+    pprof:
+      enabled: true
+    p2p:
+      enabled: false
+    jwt:
+      enabled: false
+    # -- Fireeth configuration paramaters
+    config:
+      data-dir: "/var/lib/fireeth"
+      metrics-listen-addr: '{{ with .Pod.fireeth.metrics }}{{ .enabled | ternary (printf "%s:%d" .addr ( .port | int ) ) nil }}{{ end }}'
+      pprof-listen-addr: '{{ with .Pod.fireeth.pprof }}{{ .enabled | ternary (printf "%s:%d" .addr (.port | int)) nil }}{{ end }}'
+      log-to-file: false
+      common-index-block-sizes: 10000
+      firehose-rate-limit-bucket-size: 20
+      firehose-rate-limit-bucket-fill-rate: "1s"
+      common-one-block-store-url: null
+      common-forked-blocks-store-url: null
+      common-merged-blocks-store-url: null
+      common-live-blocks-addr: "relayer:10014"
+
+  configMap:
+    enabled: true
+    options:
+      # -- Run an envsubst initcontainer at runtime
+      useEnvSubst: false

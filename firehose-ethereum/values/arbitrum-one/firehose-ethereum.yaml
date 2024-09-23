@@ -1,0 +1,35 @@
+global:
+  labels:
+    version.firehose.graphops.xyz/fireeth: "2.7.4"
+    version.firehose.graphops.xyz/node: "1.13.15"
+    version.firehose.graphops.xyz/protocol: "3.1.2"
+
+firehoseComponentDefaults:
+  image:
+    repository: "ghcr.io/streamingfast/firehose-ethereum"
+    tag: "v2.7.4-nitro-nitro-v3.1.2-fh"
+  command:
+    - /app/fireeth
+  fireeth:
+    nodeArgs:
+      auth.addr: 0.0.0.0
+      auth.port: 8551
+      auth.origins: '*'
+      auth.jwtsecret: '{{ with .Pod.fireeth.jwt }}{{ .enabled | ternary "/secrets/jwt/jwt.hex" nil }}{{ end }}'
+
+firehoseServiceDefaults:
+  reader-node:
+    fireeth:
+      config:
+        reader-node-path: "/app/nitro"
+
+    service:
+      spec:
+        ports:
+          node-authrpc:
+            port: '{{ with .Pod.fireeth.nodeArgs }}{{ hasKey . "auth.port" | ternary (index . "auth.port" | int) nil }}{{ end }}'
+            protocol: '{{ with .Pod.fireeth.nodeArgs }}{{ hasKey . "auth.port" | ternary "TCP" nil }}{{ end }}'
+    ports:
+      node-authrpc:
+        containerPort: '{{ with .Pod.fireeth.nodeArgs }}{{ hasKey . "auth.port" | ternary (index . "auth.port" | int) nil }}{{ end }}'
+        protocol: TCP

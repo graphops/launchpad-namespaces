@@ -1,0 +1,10 @@
+global:
+  labels:
+    version.firehose.graphops.xyz/fireeth: "2.7.4"
+    version.firehose.graphops.xyz/node: "1.13.15"
+    version.firehose.graphops.xyz/protocol: "3.1.2"
+
+firehoseComponentDefaults:
+  image:
+    repository: "ghcr.io/streamingfast/firehose-ethereum"
+    tag: "v2.7.4-nitro-nitro-v3.1.2-fh "

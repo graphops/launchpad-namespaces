@@ -1,5 +1,5 @@
 #namespace defaults
-{{ $_ := set .Values "_namespaceDefaults" ( `{"flavor":"eth-mainnet","eth-mainnet":{"targetNamespace":"fh-eth-mainnet","features":["consensus-lighthouse"]},"eth-sepolia":{"targetNamespace":"fh-eth-sepolia","features":["consensus-lighthouse"]},"arbitrum-one":{"targetNamespace":"fh-arbitrum-one","features":["consensus-lighthouse"]},"arbitrum-sepolia":{"targetNamespace":"fh-arbitrum-sepolia","features":["consensus-lighthouse"]},"common":{"features":["consensus-lighthouse"]},"polygon-mainnet":{"targetNamespace":"fh-polygon-mainnet","features":["consensus-lighthouse"]}}` | fromJson ) }}
+{{ $_ := set .Values "_namespaceDefaults" ( `{"flavor":"eth-mainnet","eth-mainnet":{"features":["consensus-lighthouse"],"scaling":{"deployments":1,"firehose-ethereum":{},"lighthouse":{},"nimbus":{}},"targetNamespace":"fh-eth-mainnet"},"eth-mainnet-ha":{"features":["consensus-lighthouse"],"scaling":{"deployments":1,"firehose-ethereum":{},"lighthouse":{},"nimbus":{}},"targetNamespace":"fh-eth-mainnet"},"eth-sepolia":{"features":["consensus-lighthouse"],"scaling":{"deployments":1,"firehose-ethereum":{},"lighthouse":{},"nimbus":{}},"targetNamespace":"fh-eth-sepolia"},"eth-sepolia-ha":{"features":["consensus-lighthouse"],"scaling":{"deployments":1,"firehose-ethereum":{},"lighthouse":{},"nimbus":{}},"targetNamespace":"fh-eth-sepolia"},"arbitrum-one":{"features":[],"scaling":{"deployments":1,"firehose-ethereum":{},"lighthouse":{},"nimbus":{}},"targetNamespace":"fh-arbitrum-one"},"arbitrum-sepolia":{"features":[],"scaling":{"deployments":1,"firehose-ethereum":{},"lighthouse":{},"nimbus":{}},"targetNamespace":"fh-arbitrum-sepolia"},"common":{"scaling":{"deployments":1,"firehose-ethereum":{},"lighthouse":{},"nimbus":{}}},"polygon-mainnet":{"features":[],"scaling":{"deployments":1,"firehose-ethereum":{},"lighthouse":{},"nimbus":{}},"targetNamespace":"fh-polygon-mainnet"}}` | fromJson ) }}
 #set default flavor when missing
 {{ if not ( hasKey .Values "flavor" ) }}
 {{ $_ := set .Values "flavor" "eth-mainnet" }}
@@ -23,11 +23,20 @@ environments:
 {{ $_ := set .Values "features" .Values._defaults.features }}
 {{ end }}
 
+#set default number of deployments when missing
+{{ if not ( hasKey .Values  "scaling" ) }}
+{{ $_ := set .Values "scaling" dict }}
+{{ end }}
+{{ if not ( hasKey ( .Values | get "scaling" dict ) "deployments" ) }}
+{{ $_ := set .Values.scaling "deployments" .Values._defaults.scaling.deployments }}
+{{ end }}
 
 environments:
   {{ .Environment.Name }}:
     values:
       - features: {{ .Values.features | toYaml | nindent 10 }}
+      - scaling:
+          deployments: {{ .Values.scaling.deployments }}
 
 ---
 {{- $_tplTransforms := (print `
@@ -193,7 +202,9 @@ templates:
   
 releases:
   {{- $canonicalRelease := "firehose-ethereum" }}
-  {{- $release := "firehose-ethereum" }}
+  {{- range $index := until (.Values.scaling | get $canonicalRelease dict | get "deployments" .Values.scaling.deployments) }}
+  {{- $deploymentIndex := (add . 1) }}
+  {{- $release := (printf "%s%v" "firehose-ethereum-" $deploymentIndex) }}
   {{- $_templatedValue_0 :=  $canonicalRelease  }}
   {{- $_templatedValue_1 :=  $release  }}
   {{- $_templatedValue_2 :=  $deploymentIndex  }}
@@ -234,10 +245,12 @@ releases:
     {{- tpl $_tplTransforms (dict "Values" $.Values "release" $release "canonicalRelease" $canonicalRelease "resourceLabels" $_releaseResourceLabels  )  | indent 4 -}}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
-  
+  {{- end -}}
   {{ if has "consensus-nimbus" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "nimbus" }}
-  {{- $release := "nimbus" }}
+  {{- range $index := until (.Values.scaling | get $canonicalRelease dict | get "deployments" .Values.scaling.deployments) }}
+  {{- $deploymentIndex := (add . 1) }}
+  {{- $release := (printf "%s%v" "nimbus-" $deploymentIndex) }}
   {{- $_templatedValue_0 :=  $canonicalRelease  }}
   {{- $_templatedValue_1 :=  $release  }}
   {{- $_templatedValue_2 :=  $deploymentIndex  }}
@@ -278,11 +291,13 @@ releases:
     {{- tpl $_tplTransforms (dict "Values" $.Values "release" $release "canonicalRelease" $canonicalRelease "resourceLabels" $_releaseResourceLabels  )  | indent 4 -}}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
-  
+  {{- end -}}
   {{- end -}}
   {{ if has "consensus-lighthouse" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "lighthouse" }}
-  {{- $release := "lighthouse" }}
+  {{- range $index := until (.Values.scaling | get $canonicalRelease dict | get "deployments" .Values.scaling.deployments) }}
+  {{- $deploymentIndex := (add . 1) }}
+  {{- $release := (printf "%s%v" "lighthouse-" $deploymentIndex) }}
   {{- $_templatedValue_0 :=  $canonicalRelease  }}
   {{- $_templatedValue_1 :=  $release  }}
   {{- $_templatedValue_2 :=  $deploymentIndex  }}
@@ -323,5 +338,5 @@ releases:
     {{- tpl $_tplTransforms (dict "Values" $.Values "release" $release "canonicalRelease" $canonicalRelease "resourceLabels" $_releaseResourceLabels  )  | indent 4 -}}
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
-  
+  {{- end -}}
   {{- end -}}

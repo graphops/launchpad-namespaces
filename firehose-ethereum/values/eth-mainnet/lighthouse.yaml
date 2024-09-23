@@ -1,0 +1,4 @@
+lighthouse:
+  extraArgs:
+    - --checkpoint-sync-url=https://beaconstate.info/
+    - --network=mainnet

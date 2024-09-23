@@ -1,14 +1,10 @@
 lighthouse:
   {{ $scalingIndex := splitList "-" .Release.Name | last }}
-  executionClientUrl: http://erigon-{{ $scalingIndex }}-stateful-node:8551
+  executionClientUrl: http://firehose-ethereum-1-reader-node-{{ $scalingIndex }}:8551
   jwt:
-    # Generate me with: openssl rand -hex 32
-    # Must match EL client jwt
-    fromLiteral: "XXX_CHANGEME_XXX"
-    # Instead specifying the JWT in plain text using fromLiteral, you can also reference an existing Kubernetes Secret
-    # existingSecret:
-    #   name: eth-goerli-jwt
-    #   key: jwt
+    existingSecret:
+      name: firehose-ethereum-1-reader-node-{{ $scalingIndex }}-jwt
+      key: jwt.hex
 
   # -- [PersistentVolumeClaimSpec](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.23/#persistentvolumeclaimspec-v1-core) for storage
   volumeClaimSpec:

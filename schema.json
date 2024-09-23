@@ -2734,7 +2734,9 @@
                         "required": [
                             "flavor",
                             "eth-mainnet",
+                            "eth-mainnet-ha",
                             "eth-sepolia",
+                            "eth-sepolia-ha",
                             "arbitrum-one",
                             "arbitrum-sepolia",
                             "polygon-mainnet"
@@ -2749,6 +2751,22 @@
                             "eth-mainnet": {
                                 "type": "object",
                                 "properties": {
+                                    "features": {
+                                        "type": "array",
+                                        "items": [
+                                            {
+                                                "$ref": "#/components/schemas/namespaces.firehoseEthereum.features.consensus_lighthouse"
+                                            }
+                                        ],
+                                        "enum": [
+                                            [
+                                                "consensus-lighthouse"
+                                            ]
+                                        ],
+                                        "default": [
+                                            "consensus-lighthouse"
+                                        ]
+                                    },
                                     "targetNamespace": {
                                         "type": "string",
                                         "enum": [
@@ -2762,6 +2780,45 @@
                                     },
                                     {
                                         "required": [
+                                            "features",
+                                            "targetNamespace"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "eth-mainnet-ha": {
+                                "type": "object",
+                                "properties": {
+                                    "features": {
+                                        "type": "array",
+                                        "items": [
+                                            {
+                                                "$ref": "#/components/schemas/namespaces.firehoseEthereum.features.consensus_lighthouse"
+                                            }
+                                        ],
+                                        "enum": [
+                                            [
+                                                "consensus-lighthouse"
+                                            ]
+                                        ],
+                                        "default": [
+                                            "consensus-lighthouse"
+                                        ]
+                                    },
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "fh-eth-mainnet"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.firehoseEthereum.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "features",
                                             "targetNamespace"
                                         ]
                                     }
@@ -2770,6 +2827,22 @@
                             "eth-sepolia": {
                                 "type": "object",
                                 "properties": {
+                                    "features": {
+                                        "type": "array",
+                                        "items": [
+                                            {
+                                                "$ref": "#/components/schemas/namespaces.firehoseEthereum.features.consensus_lighthouse"
+                                            }
+                                        ],
+                                        "enum": [
+                                            [
+                                                "consensus-lighthouse"
+                                            ]
+                                        ],
+                                        "default": [
+                                            "consensus-lighthouse"
+                                        ]
+                                    },
                                     "targetNamespace": {
                                         "type": "string",
                                         "enum": [
@@ -2783,6 +2856,45 @@
                                     },
                                     {
                                         "required": [
+                                            "features",
+                                            "targetNamespace"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "eth-sepolia-ha": {
+                                "type": "object",
+                                "properties": {
+                                    "features": {
+                                        "type": "array",
+                                        "items": [
+                                            {
+                                                "$ref": "#/components/schemas/namespaces.firehoseEthereum.features.consensus_lighthouse"
+                                            }
+                                        ],
+                                        "enum": [
+                                            [
+                                                "consensus-lighthouse"
+                                            ]
+                                        ],
+                                        "default": [
+                                            "consensus-lighthouse"
+                                        ]
+                                    },
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "fh-eth-sepolia"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.firehoseEthereum.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "features",
                                             "targetNamespace"
                                         ]
                                     }
@@ -2791,6 +2903,12 @@
                             "arbitrum-one": {
                                 "type": "object",
                                 "properties": {
+                                    "features": {
+                                        "type": "array",
+                                        "enum": [
+                                            []
+                                        ]
+                                    },
                                     "targetNamespace": {
                                         "type": "string",
                                         "enum": [
@@ -2804,6 +2922,7 @@
                                     },
                                     {
                                         "required": [
+                                            "features",
                                             "targetNamespace"
                                         ]
                                     }
@@ -2812,6 +2931,12 @@
                             "arbitrum-sepolia": {
                                 "type": "object",
                                 "properties": {
+                                    "features": {
+                                        "type": "array",
+                                        "enum": [
+                                            []
+                                        ]
+                                    },
                                     "targetNamespace": {
                                         "type": "string",
                                         "enum": [
@@ -2825,6 +2950,7 @@
                                     },
                                     {
                                         "required": [
+                                            "features",
                                             "targetNamespace"
                                         ]
                                     }
@@ -2833,6 +2959,12 @@
                             "polygon-mainnet": {
                                 "type": "object",
                                 "properties": {
+                                    "features": {
+                                        "type": "array",
+                                        "enum": [
+                                            []
+                                        ]
+                                    },
                                     "targetNamespace": {
                                         "type": "string",
                                         "enum": [
@@ -2846,6 +2978,7 @@
                                     },
                                     {
                                         "required": [
+                                            "features",
                                             "targetNamespace"
                                         ]
                                     }
@@ -3137,23 +3270,28 @@
             "namespaces.firehoseEthereum.defaults.common": {
                 "type": "object",
                 "required": [
-                    "features"
+                    "scaling"
                 ],
                 "properties": {
-                    "features": {
-                        "type": "array",
-                        "items": [
-                            {
-                                "$ref": "#/components/schemas/namespaces.firehoseEthereum.features.consensus_lighthouse"
+                    "scaling": {
+                        "type": "object",
+                        "properties": {
+                            "deployments": {
+                                "type": "integer",
+                                "enum": [
+                                    1
+                                ]
                             }
-                        ],
-                        "enum": [
-                            [
-                                "consensus-lighthouse"
-                            ]
-                        ],
-                        "default": [
-                            "consensus-lighthouse"
+                        },
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/namespaces.firehoseEthereum.scaling"
+                            },
+                            {
+                                "required": [
+                                    "deployments"
+                                ]
+                            }
                         ]
                     }
                 }
@@ -3260,6 +3398,55 @@
                     }
                 ]
             },
+            "namespaces.firehoseEthereum.scaling": {
+                "description": "firehose-ethereum scaling interface",
+                "type": "object",
+                "required": [
+                    "deployments",
+                    "firehose-ethereum",
+                    "lighthouse",
+                    "nimbus"
+                ],
+                "properties": {
+                    "deployments": {
+                        "description": "number of independent stateful sets to deploy",
+                        "type": "integer",
+                        "minimum": 1,
+                        "default": 1
+                    },
+                    "startP2PPort": {
+                        "description": "A beggining port for the range to use in P2P NodePorts",
+                        "type": "integer"
+                    },
+                    "firehose-ethereum": {
+                        "type": "object",
+                        "properties": {
+                            "deployments": {
+                                "type": "integer",
+                                "minimum": 1
+                            }
+                        }
+                    },
+                    "lighthouse": {
+                        "type": "object",
+                        "properties": {
+                            "deployments": {
+                                "type": "integer",
+                                "minimum": 1
+                            }
+                        }
+                    },
+                    "nimbus": {
+                        "type": "object",
+                        "properties": {
+                            "deployments": {
+                                "type": "integer",
+                                "minimum": 1
+                            }
+                        }
+                    }
+                }
+            },
             "namespaces.firehoseEthereum.values": {
                 "description": "Graph namespace values schema",
                 "type": "object",
@@ -3272,12 +3459,6 @@
                         "type": "string",
                         "default": "fh-eth-mainnet"
                     },
-                    "firehose-ethereum": {
-                        "$ref": "#/components/schemas/base.releaseValues"
-                    },
-                    "nimbus": {
-                        "$ref": "#/components/schemas/base.releaseValues"
-                    },
                     "features": {
                         "type": "array",
                         "items": {
@@ -3286,6 +3467,15 @@
                         "default": [
                             "consensus-lighthouse"
                         ]
+                    },
+                    "firehose-ethereum": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
+                    "nimbus": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
+                    "scaling": {
+                        "$ref": "#/components/schemas/namespaces.firehoseEthereum.scaling"
                     },
                     "lighthouse": {
                         "$ref": "#/components/schemas/base.releaseValues"

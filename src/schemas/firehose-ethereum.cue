@@ -39,6 +39,26 @@ package LaunchpadNamespaces
 			#enum: ( #consensus_nimbus | #consensus_lighthouse )
 		}
 
+		// firehose-ethereum scaling interface
+		#scaling: {
+			// number of independent stateful sets to deploy
+			deployments: *1 | ( int & >=1)
+			// A beggining port for the range to use in P2P NodePorts
+			startP2PPort?: int
+
+			"firehose-ethereum": {
+				deployments?: int & >=1
+			}
+
+			lighthouse: {
+				deployments?: int & >=1
+			}
+
+			nimbus: {
+				deployments?: int & >=1
+			}
+		}
+
 		// Graph namespace values schema
 		#values: #base.#values & {
 			flavor?: *defaults.flavor | #flavor.#enum
@@ -47,6 +67,8 @@ package LaunchpadNamespaces
 			targetNamespace?: *defaults["\(defaults.flavor)"].targetNamespace | string
 
 			features?: *defaults["\(defaults.flavor)"].features | [...#features.#enum]
+
+			scaling?: *defaults["\(defaults.flavor)"].scaling | #scaling
 
 			// For overriding this release's values
 			for key, _ in releases {
@@ -65,31 +87,48 @@ package LaunchpadNamespaces
 			flavor: "eth-mainnet"
 
 			#common: {
-				features: [#features.#consensus_lighthouse]
+				scaling: #scaling & {deployments: 1}
 			}
 
 			"eth-mainnet": {
 				#common
+				features: [#features.#consensus_lighthouse]
+				targetNamespace: "fh-eth-mainnet"
+			}
+
+			"eth-mainnet-ha": {
+				#common
+				features: [#features.#consensus_lighthouse]
 				targetNamespace: "fh-eth-mainnet"
 			}
 
 			"eth-sepolia": {
 				#common
+				features: [#features.#consensus_lighthouse]
+				targetNamespace: "fh-eth-sepolia"
+			}
+
+			"eth-sepolia-ha": {
+				#common
+				features: [#features.#consensus_lighthouse]
 				targetNamespace: "fh-eth-sepolia"
 			}
 
 			"arbitrum-one": {
 				#common
+				features: []
 				targetNamespace: "fh-arbitrum-one"
 			}
 
 			"arbitrum-sepolia": {
 				#common
+				features: []
 				targetNamespace: "fh-arbitrum-sepolia"
 			}
 
 			"polygon-mainnet": {
 				#common
+				features: []
 				targetNamespace: "fh-polygon-mainnet"
 			}
 		}
