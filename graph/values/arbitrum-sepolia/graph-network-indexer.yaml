@@ -32,7 +32,7 @@ indexerAgent:
     allocation-management: manual
     epoch-subgraph-deployment: "Qmc6zPWLPCj42k2vujAYaHaMZBFHAnpfsa4KzUwtFXFLA2"
     epoch-subgraph-endpoint: http://graph-node-query:8000/subgraphs/id/Qmc6zPWLPCj42k2vujAYaHaMZBFHAnpfsa4KzUwtFXFLA2
-    ethereum: http://proxyd-nitro-proxyd.arbitrum-sepolia.:8545
+    ethereum: http://proxyd-nitro-proxyd.arbitrum-sepolia:8545
     ethereum-network: arbitrum-sepolia
     graph-node-admin-endpoint: http://graph-node-block-ingestor:8020
     offchain-subgraphs: "Qmc6zPWLPCj42k2vujAYaHaMZBFHAnpfsa4KzUwtFXFLA2,QmUiLdbsk6c51UMdcNBxsP3KadJpkmp6a3k2NCprR4ZFeM,QmbGVqFCqgh83NpW4kHFAJuE9mAbVfhXdY59NrevSCaCeN"
