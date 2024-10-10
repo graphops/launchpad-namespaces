@@ -63,7 +63,7 @@ package LaunchpadNamespaces
 			loki: {
 				chart: {_repositories.grafana.charts["loki"]}
 				feature: #features.#logs
-				_template: {version: "6.16.1"}
+				_template: {version: "6.16.0"}
 			}
 			promtail: {
 				chart: {_repositories.grafana.charts.promtail}
