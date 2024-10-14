@@ -1,5 +1,5 @@
 env:
-  GRAPH_NODE_STATUS_ENDPOINT: http://graph-node-block-ingestor:8030/graphql
+  GRAPH_NODE_STATUS_ENDPOINT: http://graph-node-query:8030/graphql
   INDEXER_MANAGEMENT_SERVER_ENDPOINT: http://graph-network-indexer-agent:8000
 secretEnv:
   MNEMONIC:
