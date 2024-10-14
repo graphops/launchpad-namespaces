@@ -4,12 +4,24 @@ indexerDefaults:
   postgresConfig:
     host: "pg-indexer-metadata"
     database: "indexer"
+
+  config:
+    indexer:
+      indexer_address: "0x0000000000000000000000000000000000000000" # your indexer address
+
+    graph_node:
+      query_url: "http://graph-node-query:8000"
+      status_url: "http://graph-node-query:8030/graphql"
+
+    subgraphs.network:
+      recently_closed_allocation_buffer_secs: 100
+
   env: {}
   secretEnv: {}
 
 indexerAgent:
   config:
-    graph-node-admin-endpoint: "http://graph-node-block-ingestor:8020"
+    graph-node-admin-endpoint: "http://graph-node-index:8020"
     public-indexer-url: "XXX_CHANGEME_XXX"
     index-node-ids: "graph-node-index-0" # TODO this should be removed as a requirement, in the mean time it should be a comma delimited list of index node ids
 

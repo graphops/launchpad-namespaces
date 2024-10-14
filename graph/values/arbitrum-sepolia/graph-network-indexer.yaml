@@ -1,19 +1,10 @@
 # This is a values.yaml override file for https://github.com/graphops/launchpad-charts/tree/main/charts/graph-network-indexer
 
 indexerDefaults:
-
   config:
-    indexer:
-      indexer_address: "0x0000000000000000000000000000000000000000" # your indexer address
-
-    graph_node:
-      query_url: "http://graph-node-query:8000"
-      status_url: "http://graph-node-block-ingestor:8030/graphql"
-
     subgraphs.network:
       query_url: "http://graph-node-query:8000/subgraphs/id/QmbGVqFCqgh83NpW4kHFAJuE9mAbVfhXdY59NrevSCaCeN"
       deployment_id: QmbGVqFCqgh83NpW4kHFAJuE9mAbVfhXdY59NrevSCaCeN
-      recently_closed_allocation_buffer_secs: 100
 
     subgraphs.escrow:
       query_url: "http://graph-node-query:8000/subgraphs/id/QmUiLdbsk6c51UMdcNBxsP3KadJpkmp6a3k2NCprR4ZFeM"
@@ -29,13 +20,8 @@ indexerDefaults:
 
 indexerAgent:
   config:
-    allocation-management: manual
     epoch-subgraph-deployment: "Qmc6zPWLPCj42k2vujAYaHaMZBFHAnpfsa4KzUwtFXFLA2"
     epoch-subgraph-endpoint: http://graph-node-query:8000/subgraphs/id/Qmc6zPWLPCj42k2vujAYaHaMZBFHAnpfsa4KzUwtFXFLA2
     ethereum: http://proxyd-nitro-proxyd.arbitrum-sepolia:8545
     ethereum-network: arbitrum-sepolia
-    graph-node-admin-endpoint: http://graph-node-block-ingestor:8020
     offchain-subgraphs: "Qmc6zPWLPCj42k2vujAYaHaMZBFHAnpfsa4KzUwtFXFLA2,QmUiLdbsk6c51UMdcNBxsP3KadJpkmp6a3k2NCprR4ZFeM,QmbGVqFCqgh83NpW4kHFAJuE9mAbVfhXdY59NrevSCaCeN"
-
-indexerService:
-  replicas: 1 # scale me
