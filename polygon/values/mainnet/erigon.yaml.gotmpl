@@ -4,12 +4,13 @@ statefulNode:
   extraArgs:
     - --chain=bor-mainnet
     - --bor.heimdall=http://heimdall-ha-svc:1317
-    - --http.api=eth,debug,net,trace
+    - --http.api=eth,erigon,web3,net,debug,txpool,trace
     - --http.corsdomain=*
     - --torrent.download.rate=100mb # Download snapshot files faster
     - --torrent.download.slots=6 # 3 is default
     - --db.read.concurrency=16 # Does limit amount of parallel db reads. Default: equal to GOMAXPROCS (or number of CPU) (default: 10)
     - --db.pagesize=16KB
+    - --db.size.limit=16TB
     - --rpc.batch.concurrency=16
     - --ws # enable ws
     - --trace.maxtraces=10000
