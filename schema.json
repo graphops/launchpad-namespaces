@@ -3353,7 +3353,6 @@
                         "type": "object",
                         "required": [
                             "flavor",
-                            "mainnet",
                             "arbitrum-one",
                             "arbitrum-sepolia"
                         ],
@@ -3361,28 +3360,7 @@
                             "flavor": {
                                 "type": "string",
                                 "enum": [
-                                    "mainnet"
-                                ]
-                            },
-                            "mainnet": {
-                                "type": "object",
-                                "properties": {
-                                    "targetNamespace": {
-                                        "type": "string",
-                                        "enum": [
-                                            "graph-mainnet"
-                                        ]
-                                    }
-                                },
-                                "allOf": [
-                                    {
-                                        "$ref": "#/components/schemas/namespaces.graph.defaults.common"
-                                    },
-                                    {
-                                        "required": [
-                                            "targetNamespace"
-                                        ]
-                                    }
+                                    "arbitrum-one"
                                 ]
                             },
                             "arbitrum-one": {
@@ -3788,16 +3766,8 @@
             "namespaces.graph.flavor.enum": {
                 "type": "string",
                 "enum": [
-                    "mainnet",
                     "arbitrum-one",
                     "arbitrum-sepolia"
-                ]
-            },
-            "namespaces.graph.flavor.mainnet": {
-                "description": "suitable defaults for a mainnet indexer",
-                "type": "string",
-                "enum": [
-                    "mainnet"
                 ]
             },
             "namespaces.graph.helmfiles": {
@@ -3843,7 +3813,7 @@
                     "targetNamespace": {
                         "description": "the default is graph-<flavor>",
                         "type": "string",
-                        "default": "graph-mainnet"
+                        "default": "graph-arbitrum-one"
                     },
                     "graph-node": {
                         "$ref": "#/components/schemas/base.releaseValues"
