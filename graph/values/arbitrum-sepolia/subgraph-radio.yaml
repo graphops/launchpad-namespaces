@@ -1,5 +1,5 @@
 env:
   GRAPHCAST_NETWORK: "testnet"
-  REGISTRY_SUBGRAPH: https://api.thegraph.com/subgraphs/name/hopeyen/graphcast-registry-arb-se
-  NETWORK_SUBGRAPH: https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-arbitrum-sepolia
+  REGISTRY_SUBGRAPH: "http://graph-node-query:8000/subgraphs/id/QmQq6gJJnwkpdkfudVquJXPjALv11FarGwgeErQuBHXAYR"
+  NETWORK_SUBGRAPH: "http://graph-node-query:8000/subgraphs/id/QmbGVqFCqgh83NpW4kHFAJuE9mAbVfhXdY59NrevSCaCeN"
 
