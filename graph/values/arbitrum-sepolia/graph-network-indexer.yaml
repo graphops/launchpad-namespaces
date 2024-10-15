@@ -24,4 +24,4 @@ indexerAgent:
     epoch-subgraph-endpoint: http://graph-node-query:8000/subgraphs/id/Qmc6zPWLPCj42k2vujAYaHaMZBFHAnpfsa4KzUwtFXFLA2
     ethereum: http://proxyd-nitro-proxyd.arbitrum-sepolia:8545
     ethereum-network: arbitrum-sepolia
-    offchain-subgraphs: "Qmc6zPWLPCj42k2vujAYaHaMZBFHAnpfsa4KzUwtFXFLA2,QmUiLdbsk6c51UMdcNBxsP3KadJpkmp6a3k2NCprR4ZFeM,QmbGVqFCqgh83NpW4kHFAJuE9mAbVfhXdY59NrevSCaCeN"
+    offchain-subgraphs: "Qmc6zPWLPCj42k2vujAYaHaMZBFHAnpfsa4KzUwtFXFLA2,QmUiLdbsk6c51UMdcNBxsP3KadJpkmp6a3k2NCprR4ZFeM,QmbGVqFCqgh83NpW4kHFAJuE9mAbVfhXdY59NrevSCaCeN,QmQq6gJJnwkpdkfudVquJXPjALv11FarGwgeErQuBHXAYR"
