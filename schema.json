@@ -3421,7 +3421,8 @@
                             "graph-node": {
                                 "type": "object",
                                 "required": [
-                                    "chart"
+                                    "chart",
+                                    "feature"
                                 ],
                                 "properties": {
                                     "chart": {
@@ -3458,13 +3459,17 @@
                                                 ]
                                             }
                                         }
+                                    },
+                                    "feature": {
+                                        "$ref": "#/components/schemas/namespaces.graph.features.node"
                                     }
                                 }
                             },
                             "graph-network-indexer": {
                                 "type": "object",
                                 "required": [
-                                    "chart"
+                                    "chart",
+                                    "feature"
                                 ],
                                 "properties": {
                                     "chart": {
@@ -3501,13 +3506,17 @@
                                                 ]
                                             }
                                         }
+                                    },
+                                    "feature": {
+                                        "$ref": "#/components/schemas/namespaces.graph.features.network_indexer"
                                     }
                                 }
                             },
                             "graph-toolbox": {
                                 "type": "object",
                                 "required": [
-                                    "chart"
+                                    "chart",
+                                    "feature"
                                 ],
                                 "properties": {
                                     "chart": {
@@ -3544,6 +3553,9 @@
                                                 ]
                                             }
                                         }
+                                    },
+                                    "feature": {
+                                        "$ref": "#/components/schemas/namespaces.graph.features.toolbox"
                                     }
                                 }
                             },
@@ -3593,7 +3605,8 @@
                             "graph-database": {
                                 "type": "object",
                                 "required": [
-                                    "chart"
+                                    "chart",
+                                    "feature"
                                 ],
                                 "properties": {
                                     "chart": {
@@ -3630,6 +3643,9 @@
                                                 ]
                                             }
                                         }
+                                    },
+                                    "feature": {
+                                        "$ref": "#/components/schemas/namespaces.graph.features.database"
                                     }
                                 }
                             },
@@ -3718,15 +3734,35 @@
                         "type": "array",
                         "items": [
                             {
+                                "$ref": "#/components/schemas/namespaces.graph.features.node"
+                            },
+                            {
+                                "$ref": "#/components/schemas/namespaces.graph.features.network_indexer"
+                            },
+                            {
+                                "$ref": "#/components/schemas/namespaces.graph.features.toolbox"
+                            },
+                            {
+                                "$ref": "#/components/schemas/namespaces.graph.features.database"
+                            },
+                            {
                                 "$ref": "#/components/schemas/namespaces.graph.features.subgraph_radio"
                             }
                         ],
                         "enum": [
                             [
+                                "node",
+                                "network-indexer",
+                                "toolbox",
+                                "database",
                                 "subgraph-radio"
                             ]
                         ],
                         "default": [
+                            "node",
+                            "network-indexer",
+                            "toolbox",
+                            "database",
                             "subgraph-radio"
                         ]
                     }
@@ -3736,14 +3772,49 @@
                 "description": "ethereum namespace features schema",
                 "type": "object"
             },
+            "namespaces.graph.features.database": {
+                "description": "Deploy a database based on postgres-operator",
+                "type": "string",
+                "enum": [
+                    "database"
+                ]
+            },
             "namespaces.graph.features.enum": {
-                "$ref": "#/components/schemas/namespaces.graph.features.subgraph_radio"
+                "type": "string",
+                "enum": [
+                    "node",
+                    "network-indexer",
+                    "toolbox",
+                    "database",
+                    "subgraph-radio"
+                ]
+            },
+            "namespaces.graph.features.network_indexer": {
+                "description": "Deploy graph-network-indexer, service and agent parts of the indexing stack",
+                "type": "string",
+                "enum": [
+                    "network-indexer"
+                ]
+            },
+            "namespaces.graph.features.node": {
+                "description": "Deploy graph-node, part of the indexing stack",
+                "type": "string",
+                "enum": [
+                    "node"
+                ]
             },
             "namespaces.graph.features.subgraph_radio": {
                 "description": "Deploy Subgraph Radio",
                 "type": "string",
                 "enum": [
                     "subgraph-radio"
+                ]
+            },
+            "namespaces.graph.features.toolbox": {
+                "description": "Deploy graph-toolbox, a toolkit container with the CLI utilities",
+                "type": "string",
+                "enum": [
+                    "toolbox"
                 ]
             },
             "namespaces.graph.flavor": {
@@ -3836,6 +3907,10 @@
                             "$ref": "#/components/schemas/namespaces.graph.features.enum"
                         },
                         "default": [
+                            "node",
+                            "network-indexer",
+                            "toolbox",
+                            "database",
                             "subgraph-radio"
                         ]
                     },

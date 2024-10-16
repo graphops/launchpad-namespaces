@@ -1,5 +1,5 @@
 #namespace defaults
-{{ $_ := set .Values "_namespaceDefaults" ( `{"flavor":"arbitrum-one","arbitrum-one":{"targetNamespace":"graph-arbitrum-one","features":["subgraph-radio"]},"common":{"features":["subgraph-radio"]},"arbitrum-sepolia":{"targetNamespace":"graph-arbitrum-sepolia","features":["subgraph-radio"]}}` | fromJson ) }}
+{{ $_ := set .Values "_namespaceDefaults" ( `{"flavor":"arbitrum-one","arbitrum-one":{"targetNamespace":"graph-arbitrum-one","features":["node","network-indexer","toolbox","database","subgraph-radio"]},"common":{"features":["node","network-indexer","toolbox","database","subgraph-radio"]},"arbitrum-sepolia":{"targetNamespace":"graph-arbitrum-sepolia","features":["node","network-indexer","toolbox","database","subgraph-radio"]}}` | fromJson ) }}
 #set default flavor when missing
 {{ if not ( hasKey .Values "flavor" ) }}
 {{ $_ := set .Values "flavor" "arbitrum-one" }}
@@ -237,6 +237,7 @@ templates:
     {{- end }}
   
 releases:
+  {{ if has "node" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "graph-node" }}
   {{- $release := "graph-node" }}
   {{- $_releaseResourceLabels := dict }}
@@ -267,6 +268,8 @@ releases:
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
   
+  {{- end -}}
+  {{ if has "network-indexer" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "graph-network-indexer" }}
   {{- $release := "graph-network-indexer" }}
   {{- $_releaseResourceLabels := dict }}
@@ -297,6 +300,8 @@ releases:
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
   
+  {{- end -}}
+  {{ if has "toolbox" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "graph-toolbox" }}
   {{- $release := "graph-toolbox" }}
   {{- $_releaseResourceLabels := dict }}
@@ -327,6 +332,7 @@ releases:
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
   
+  {{- end -}}
   {{- $canonicalRelease := "graph-operator-mnemonic" }}
   {{- $release := "graph-operator-mnemonic" }}
   {{- $_releaseResourceLabels := dict }}
@@ -357,6 +363,7 @@ releases:
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
   
+  {{ if has "database" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "graph-database" }}
   {{- $release := "graph-database" }}
   {{- $_releaseResourceLabels := dict }}
@@ -387,6 +394,7 @@ releases:
     values:
     {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
   
+  {{- end -}}
   {{ if has "subgraph-radio" ( .Values | get "features" list ) }}
   {{- $canonicalRelease := "subgraph-radio" }}
   {{- $release := "subgraph-radio" }}
