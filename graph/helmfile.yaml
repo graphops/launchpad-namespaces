@@ -1,8 +1,8 @@
 #namespace defaults
-{{ $_ := set .Values "_namespaceDefaults" ( `{"flavor":"mainnet","mainnet":{"targetNamespace":"graph-mainnet","features":["subgraph-radio"]},"arbitrum-one":{"targetNamespace":"graph-arbitrum-one","features":["subgraph-radio"]},"common":{"features":["subgraph-radio"]},"arbitrum-sepolia":{"targetNamespace":"graph-arbitrum-sepolia","features":["subgraph-radio"]}}` | fromJson ) }}
+{{ $_ := set .Values "_namespaceDefaults" ( `{"flavor":"arbitrum-one","arbitrum-one":{"targetNamespace":"graph-arbitrum-one","features":["subgraph-radio"]},"common":{"features":["subgraph-radio"]},"arbitrum-sepolia":{"targetNamespace":"graph-arbitrum-sepolia","features":["subgraph-radio"]}}` | fromJson ) }}
 #set default flavor when missing
 {{ if not ( hasKey .Values "flavor" ) }}
-{{ $_ := set .Values "flavor" "mainnet" }}
+{{ $_ := set .Values "flavor" "arbitrum-one" }}
 {{ end }}
 
 environments:

@@ -169,7 +169,7 @@ subgraph&#8209;radio.labels | object |  | Adds helmfile labels to this release |
 subgraph&#8209;radio.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
 subgraph&#8209;radio.resourceLabels | object |  | Adds labels to resources on this release |
 subgraph&#8209;radio.values | (object *or* list of objects) |  | Pass values to the release helm chart |
-targetNamespace | string | graph-mainnet | the default is graph-<flavor> |
+targetNamespace | string | graph-arbitrum-one | the default is graph-<flavor> |
 helmDefaults | object |  |  |
 helmDefaults.args | list of strings |  |  |
 helmDefaults.cleanupOnFail | boolean |  |  |
