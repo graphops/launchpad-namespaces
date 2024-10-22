@@ -88,7 +88,7 @@ package LaunchpadNamespaces
 			"graph-node": {
 				chart: {_repositories.graphops.charts["graph-node"]}
 				feature: #features.#node
-				_template: {version: "0.5.4"}
+				_template: {version: "0.5.5"}
 			}
 
 			"graph-network-indexer": {
