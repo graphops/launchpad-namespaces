@@ -4,7 +4,6 @@ indexerDefaults:
   config:
     subgraphs.network:
       query_url: "http://graph-node-query:8000/subgraphs/id/QmUzRg2HHMpbgf6Q4VHKNDbtBEJnyp5JWCh2gUX9AV6jXv"
-      deployment_id: QmUzRg2HHMpbgf6Q4VHKNDbtBEJnyp5JWCh2gUX9AV6jXv
 
     subgraphs.escrow:
       query_url: "http://graph-node-query:8000/subgraphs/id/QmUhiH6Z5xo6o3GNzsSvqpGKLmCt6w5WzKQ1yHk6C8AA8S"
