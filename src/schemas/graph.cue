@@ -117,7 +117,7 @@ package LaunchpadNamespaces
 			"subgraph-radio": {
 				chart: {_repositories.graphops.charts["subgraph-radio"]}
 				feature: #features.#subgraph_radio
-				_template: {version: "0.2.14"}
+				_template: {version: "0.2.15-canary.1"}
 			}
 		}
 
