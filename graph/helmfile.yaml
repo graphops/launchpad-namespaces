@@ -173,7 +173,7 @@ templates:
     version: {{ .Values | get "graph-network-indexer" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "graph-network-indexer" dict | get "chartVersion" false ) ( .Values | get "graph-network-indexer" dict | get "chartUrl" false ) )) }}
-    version: "0.5.11-canary.2"
+    version: "0.5.11"
     {{- end }}
   
   graph-toolbox:
@@ -188,7 +188,7 @@ templates:
     version: {{ .Values | get "graph-toolbox" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "graph-toolbox" dict | get "chartVersion" false ) ( .Values | get "graph-toolbox" dict | get "chartUrl" false ) )) }}
-    version: "0.1.1"
+    version: "0.1.2-canary.1"
     {{- end }}
   
   graph-operator-mnemonic:
