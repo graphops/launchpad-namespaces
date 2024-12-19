@@ -170,7 +170,7 @@ templates:
     version: {{ .Values | get "celo" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "celo" dict | get "chartVersion" false ) ( .Values | get "celo" dict | get "chartUrl" false ) )) }}
-    version: "0.1.8-canary.4"
+    version: "0.1.8-canary.5"
     {{- end }}
   
   proxyd:
