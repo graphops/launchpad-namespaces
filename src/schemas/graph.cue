@@ -94,13 +94,13 @@ package LaunchpadNamespaces
 			"graph-network-indexer": {
 				chart: {_repositories.graphops.charts["graph-network-indexer"]}
 				feature: #features.#network_indexer
-				_template: {version: "0.5.12-canary.2"}
+				_template: {version: "0.5.12"}
 			}
 
 			"graph-toolbox": {
 				chart: {_repositories.graphops.charts["graph-toolbox"]}
 				feature: #features.#toolbox
-				_template: {version: "0.1.2-canary.1"}
+				_template: {version: "0.1.2"}
 			}
 
 			"graph-operator-mnemonic": {
