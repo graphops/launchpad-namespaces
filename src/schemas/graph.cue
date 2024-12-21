@@ -94,7 +94,7 @@ package LaunchpadNamespaces
 			"graph-network-indexer": {
 				chart: {_repositories.graphops.charts["graph-network-indexer"]}
 				feature: #features.#network_indexer
-				_template: {version: "0.5.12"}
+				_template: {version: "0.5.13"}
 			}
 
 			"graph-toolbox": {
@@ -117,7 +117,7 @@ package LaunchpadNamespaces
 			"subgraph-radio": {
 				chart: {_repositories.graphops.charts["subgraph-radio"]}
 				feature: #features.#subgraph_radio
-				_template: {version: "0.2.15"}
+				_template: {version: "0.2.16"}
 			}
 		}
 
