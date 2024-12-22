@@ -58,7 +58,7 @@ package LaunchpadNamespaces
 			"node-problem-detector": {
 				chart: {_repositories.deliveryhero.charts["node-problem-detector"]}
 				feature: #features.#metrics
-				_template: {version: "2.3.15"}
+				_template: {version: "2.3.14"}
 			}
 			loki: {
 				chart: {_repositories.grafana.charts["loki"]}
