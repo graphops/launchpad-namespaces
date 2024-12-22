@@ -849,14 +849,6 @@
                                                 "$ref": "#/components/schemas/namespaces.arbitrum.features.arbitrum_nitro"
                                             }
                                         ],
-                                        "enum": [
-                                            [
-                                                "proxyd-classic",
-                                                "proxyd-nitro",
-                                                "arbitrum-classic",
-                                                "arbitrum-nitro"
-                                            ]
-                                        ],
                                         "default": [
                                             "proxyd-classic",
                                             "proxyd-nitro",
@@ -895,12 +887,6 @@
                                             {
                                                 "$ref": "#/components/schemas/namespaces.arbitrum.features.arbitrum_nitro"
                                             }
-                                        ],
-                                        "enum": [
-                                            [
-                                                "proxyd-nitro",
-                                                "arbitrum-nitro"
-                                            ]
                                         ],
                                         "default": [
                                             "proxyd-nitro",
@@ -1848,11 +1834,6 @@
                                 "$ref": "#/components/schemas/namespaces.celo.features.proxyd"
                             }
                         ],
-                        "enum": [
-                            [
-                                "proxyd"
-                            ]
-                        ],
                         "default": [
                             "proxyd"
                         ]
@@ -2478,12 +2459,6 @@
                                 "$ref": "#/components/schemas/namespaces.ethereum.features.proxyd"
                             }
                         ],
-                        "enum": [
-                            [
-                                "nimbus",
-                                "proxyd"
-                            ]
-                        ],
                         "default": [
                             "nimbus",
                             "proxyd"
@@ -3105,13 +3080,6 @@
                             {
                                 "$ref": "#/components/schemas/namespaces.gnosis.features.proxyd"
                             }
-                        ],
-                        "enum": [
-                            [
-                                "erigon",
-                                "lighthouse",
-                                "proxyd"
-                            ]
                         ],
                         "default": [
                             "erigon",
@@ -3743,11 +3711,6 @@
                                 "$ref": "#/components/schemas/namespaces.graph.features.subgraph_radio"
                             }
                         ],
-                        "enum": [
-                            [
-                                "subgraph-radio"
-                            ]
-                        ],
                         "default": [
                             "subgraph-radio"
                         ]
@@ -4126,12 +4089,6 @@
                             {
                                 "$ref": "#/components/schemas/namespaces.ingress.features.certManager"
                             }
-                        ],
-                        "enum": [
-                            [
-                                "ingress",
-                                "cert-manager"
-                            ]
                         ],
                         "default": [
                             "ingress",
@@ -4525,12 +4482,6 @@
                             {
                                 "$ref": "#/components/schemas/namespaces.monitoring.features.logs"
                             }
-                        ],
-                        "enum": [
-                            [
-                                "metrics",
-                                "logs"
-                            ]
                         ],
                         "default": [
                             "metrics",
@@ -5128,14 +5079,6 @@
                             {
                                 "$ref": "#/components/schemas/namespaces.polygon.features.heimdall_ha_svc"
                             }
-                        ],
-                        "enum": [
-                            [
-                                "proxyd",
-                                "erigon",
-                                "heimdall",
-                                "heimdall-ha-svc"
-                            ]
                         ],
                         "default": [
                             "proxyd",
@@ -6119,11 +6062,6 @@
                             {
                                 "$ref": "#/components/schemas/namespaces.storage.features.rawfile"
                             }
-                        ],
-                        "enum": [
-                            [
-                                "rawfile"
-                            ]
                         ],
                         "default": [
                             "rawfile"
