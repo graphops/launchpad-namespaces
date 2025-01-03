@@ -51,7 +51,7 @@ package LaunchpadNamespaces
 				chart: {_repositories["prometheus-community"].charts["kube-prometheus-stack"]}
 				feature: #features.#metrics
 				_template: {
-					version:                    "67.5.0"
+					version:                    "67.6.0"
 					disableValidationOnInstall: true
 				}
 			}
