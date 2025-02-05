@@ -88,7 +88,7 @@ package LaunchpadNamespaces
 			"graph-node": {
 				chart: {_repositories.graphops.charts["graph-node"]}
 				feature: #features.#node
-				_template: {version: "0.5.9-canary.3"}
+				_template: {version: "0.5.9"}
 			}
 
 			"graph-network-indexer": {
@@ -117,7 +117,7 @@ package LaunchpadNamespaces
 			"subgraph-radio": {
 				chart: {_repositories.graphops.charts["subgraph-radio"]}
 				feature: #features.#subgraph_radio
-				_template: {version: "0.2.17"}
+				_template: {version: "v0.2.18-canary.3"}
 			}
 		}
 
