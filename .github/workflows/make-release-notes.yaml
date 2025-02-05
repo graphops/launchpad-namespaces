@@ -44,7 +44,7 @@ jobs:
 
           yarn git-cliff -c ".cliff.toml" --include-path "$NAMESPACE/**" -o "RELEASE-NOTES.md" -s all -l
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: "${{ inputs.tag }}.release-notes"
           path: RELEASE-NOTES.md
