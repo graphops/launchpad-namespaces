@@ -80,7 +80,7 @@ jobs:
           tar -czf ${{ needs.init.outputs.tag }}.tar.gz "RELEASE-NOTES.md" "${{ needs.init.outputs.name}}/"
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: "${{ needs.init.outputs.tag }}.release"
           path: "${{ needs.init.outputs.tag }}.tar.gz"
