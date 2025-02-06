@@ -51,7 +51,7 @@
 
       // **auto-genereated** section, don't edit manually
       // #### BEGIN Helm Chart repositories ####
-      {"matchDepTypes":"graphops","ignoreUnstable":false,"registryUrls":["https://graphops.github.io/launchpad-charts/canary"]},
+      {"matchDepTypes":"graphops","registryUrls":["https://graphops.github.io/launchpad-charts/canary"],"ignoreUnstable":false},
       {"matchDepTypes":"ingress-nginx","registryUrls":["https://kubernetes.github.io/ingress-nginx"]},
       {"matchDepTypes":"jetstack","registryUrls":["https://charts.jetstack.io"]},
       {"matchDepTypes":"prometheus-community","registryUrls":["https://prometheus-community.github.io/helm-charts"]},
