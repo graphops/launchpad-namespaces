@@ -143,8 +143,8 @@ repositories:
   
 templates:
   defaults:
-    namespace: '{{ .Values | get "targetNamespace" $_defaultNamespace }}'
     missingFileHandler: Warn
+    namespace: '{{ .Values | get "targetNamespace" $_defaultNamespace }}'
   
   ingress-nginx:
     {{- if ( .Values | get "ingress-nginx" dict | get "chartUrl" false ) }}
