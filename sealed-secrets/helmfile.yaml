@@ -134,8 +134,8 @@ repositories:
   
 templates:
   defaults:
-    missingFileHandler: Warn
     namespace: '{{ .Values | get "targetNamespace" $_defaultNamespace }}'
+    missingFileHandler: Warn
   
   sealed-secrets:
     {{- if ( .Values | get "sealed-secrets" dict | get "chartUrl" false ) }}
