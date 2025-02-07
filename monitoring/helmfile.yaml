@@ -143,8 +143,8 @@ repositories:
   
 templates:
   defaults:
-    missingFileHandler: Warn
     namespace: '{{ .Values | get "targetNamespace" $_defaultNamespace }}'
+    missingFileHandler: Warn
   
   kube-prometheus-stack:
     {{- if ( .Values | get "kube-prometheus-stack" dict | get "chartUrl" false ) }}
