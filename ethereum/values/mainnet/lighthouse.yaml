@@ -1,0 +1,3 @@
+lighthouse:
+  extraArgs:
+    - --network=mainnet

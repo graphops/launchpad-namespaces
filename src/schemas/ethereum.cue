@@ -34,10 +34,13 @@ package LaunchpadNamespaces
 			// Use nimbus as consensus layer
 			#nimbus: "nimbus"
 
+			// Use lighthouse as consensus layer
+			#lighthouse: "lighthouse"
+
 			// Deploy proxyd
 			#proxyd: "proxyd"
 
-			#enum: ( #nimbus | #proxyd )
+			#enum: ( #nimbus | #lighthouse | #proxyd )
 		}
 
 		// ethereum scaling interface
@@ -52,6 +55,10 @@ package LaunchpadNamespaces
 			}
 
 			nimbus: {
+				deployments?: int & >=1
+			}
+
+			lighthouse: {
 				deployments?: int & >=1
 			}
 		}
@@ -87,7 +94,7 @@ package LaunchpadNamespaces
 			flavor: "mainnet"
 
 			#common: {
-				features: [#features.#nimbus, #features.#proxyd]
+				features: [#features.#proxyd]
 				scaling: #scaling & {deployments: 1}
 			}
 
@@ -134,6 +141,18 @@ package LaunchpadNamespaces
 				}
 				feature: #features.#nimbus
 				_template: {version: "0.5.23"}
+			}
+
+			lighthouse: {
+				chart: {_repositories.graphops.charts.lighthouse}
+				feature: #features.#lighthouse
+				labels: {
+					"app.launchpad.graphops.xyz/layer":        "consensus"
+					"app.launchpad.graphops.xyz/release":      "{{ $release }}"
+					"app.launchpad.graphops.xyz/component":    "{{ $canonicalRelease }}"
+					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
+				}
+				_template: {version: "0.5.12"}
 			}
 
 			proxyd: {

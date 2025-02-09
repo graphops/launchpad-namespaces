@@ -180,6 +180,8 @@ This *Namespace* provides a suitable stack to operate Ethereum mainnet, göerli,
 
 - [erigon](https://github.com/ledgerwatch/erigon)<br>
 Erigon is an implementation of Ethereum (execution client with light client for consensus layer), on the efficiency frontier.
+- [lighthouse](https://github.com/sigp/lighthouse)<br>
+An open-source Ethereum consensus client, written in Rust and maintained by Sigma Prime.
 - [nimbus](https://github.com/status-im/nimbus-eth2)<br>
 Nimbus-eth2 is an extremely efficient consensus layer (eth2) client implementation.
 - [proxyd](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
