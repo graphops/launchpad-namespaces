@@ -75,7 +75,7 @@ package LaunchpadNamespaces
 			"openebs-zfs-localpv": {
 				chart: {_repositories["openebs-zfs-localpv"].charts["zfs-localpv"]}
 				feature: #features.#zfs
-				_template: {version: "2.7.0"}
+				_template: {version: "2.7.1"}
 			}
 			"openebs-zfs-storageclass": {
 				chart: {_repositories.graphops.charts["resource-injector"]}
