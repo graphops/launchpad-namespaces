@@ -1,4 +1,4 @@
 env:
   GRAPHCAST_NETWORK: "mainnet"
   REGISTRY_SUBGRAPH: "http://graph-node-query:8000/subgraphs/id/QmTiai398HETp6qKhMph6t8bZihgTTaRG3roKEYDG5CCN7"
-  NETWORK_SUBGRAPH: "http://graph-node-query:8000/subgraphs/id/QmUzRg2HHMpbgf6Q4VHKNDbtBEJnyp5JWCh2gUX9AV6jXv"
+  NETWORK_SUBGRAPH: "http://graph-node-query:8000/subgraphs/id/QmdKXcBUHR3UyURqVRQHu1oV6VUkBrhi2vNvMx3bNDnUCc"

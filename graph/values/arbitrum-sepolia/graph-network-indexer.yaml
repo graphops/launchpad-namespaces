@@ -3,8 +3,8 @@
 indexerDefaults:
   config:
     subgraphs.network:
-      query_url: "http://graph-node-query:8000/subgraphs/id/QmbGVqFCqgh83NpW4kHFAJuE9mAbVfhXdY59NrevSCaCeN"
-      deployment_id: QmbGVqFCqgh83NpW4kHFAJuE9mAbVfhXdY59NrevSCaCeN
+      query_url: "http://graph-node-query:8000/subgraphs/id/QmRRKcjRN9BP51SEecq2AM1VXqjoS939ApE1mE4KtcZZtT"
+      deployment_id: QmRRKcjRN9BP51SEecq2AM1VXqjoS939ApE1mE4KtcZZtT
 
     subgraphs.escrow:
       query_url: "http://graph-node-query:8000/subgraphs/id/QmUiLdbsk6c51UMdcNBxsP3KadJpkmp6a3k2NCprR4ZFeM"
@@ -24,4 +24,4 @@ indexerAgent:
     epoch-subgraph-endpoint: http://graph-node-query:8000/subgraphs/id/Qmez8QWAHHBDCb5bsAZdBuWLwB42PH24WrgifB89gLisW7
     ethereum: http://proxyd-nitro-proxyd.arbitrum-sepolia:8545
     ethereum-network: arbitrum-sepolia
-    offchain-subgraphs: "Qmez8QWAHHBDCb5bsAZdBuWLwB42PH24WrgifB89gLisW7,QmUiLdbsk6c51UMdcNBxsP3KadJpkmp6a3k2NCprR4ZFeM,QmbGVqFCqgh83NpW4kHFAJuE9mAbVfhXdY59NrevSCaCeN"
+    offchain-subgraphs: "Qmez8QWAHHBDCb5bsAZdBuWLwB42PH24WrgifB89gLisW7,QmUiLdbsk6c51UMdcNBxsP3KadJpkmp6a3k2NCprR4ZFeM,QmRRKcjRN9BP51SEecq2AM1VXqjoS939ApE1mE4KtcZZtT"
