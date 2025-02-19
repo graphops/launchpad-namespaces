@@ -1,5 +1,5 @@
 #namespace defaults
-{{ $_ := set .Values "_namespaceDefaults" ( `{"common":{"features":["erigon","lighthouse","proxyd"],"scaling":{"deployments":1,"erigon":{},"lighthouse":{}}},"flavor":"mainnet","mainnet":{"features":["erigon","lighthouse","proxyd"],"scaling":{"deployments":1,"erigon":{},"lighthouse":{}},"targetNamespace":"gnosis-mainnet"},"chiado":{"features":["erigon","lighthouse","proxyd"],"scaling":{"deployments":1,"erigon":{},"lighthouse":{}},"targetNamespace":"gnosis-chiado"}}` | fromJson ) }}
+{{ $_ := set .Values "_namespaceDefaults" ( `{"flavor":"mainnet","mainnet":{"targetNamespace":"gnosis-mainnet","features":["erigon","lighthouse","proxyd"],"scaling":{"deployments":1,"erigon":{},"lighthouse":{}}},"common":{"features":["erigon","lighthouse","proxyd"],"scaling":{"deployments":1,"erigon":{},"lighthouse":{}}},"chiado":{"targetNamespace":"gnosis-chiado","features":["erigon","lighthouse","proxyd"],"scaling":{"deployments":1,"erigon":{},"lighthouse":{}}}}` | fromJson ) }}
 #set default flavor when missing
 {{ if not ( hasKey .Values "flavor" ) }}
 {{ $_ := set .Values "flavor" "mainnet" }}
@@ -155,8 +155,8 @@ repositories:
   
 templates:
   defaults:
-    missingFileHandler: Warn
     namespace: '{{ .Values | get "targetNamespace" $_defaultNamespace }}'
+    missingFileHandler: Warn
   
   erigon:
     {{- if ( .Values | get "erigon" dict | get "chartUrl" false ) }}
