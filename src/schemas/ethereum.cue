@@ -17,16 +17,13 @@ package LaunchpadNamespaces
 			// suitable defaults for a mainnet archive node
 			#mainnet: "mainnet"
 
-			// suitable defaults for a göerli archive node
-			#goerli: "goerli"
-
 			// suitable defaults for a holeśky ethereum testnet node
 			#holesky: "holesky"
 
 			// suitable defaults for a sepolia ethereum testnet node
 			#sepolia: "sepolia"
 
-			#enum: ( #mainnet | #goerli | #holesky | #sepolia )
+			#enum: ( #mainnet | #holesky | #sepolia )
 		}
 
 		// ethereum namespace features schema
@@ -34,10 +31,13 @@ package LaunchpadNamespaces
 			// Use nimbus as consensus layer
 			#nimbus: "nimbus"
 
+			// Use lighthouse as consensus layer
+			#lighthouse: "lighthouse"
+
 			// Deploy proxyd
 			#proxyd: "proxyd"
 
-			#enum: ( #nimbus | #proxyd )
+			#enum: ( #nimbus | #lighthouse | #proxyd )
 		}
 
 		// ethereum scaling interface
@@ -52,6 +52,10 @@ package LaunchpadNamespaces
 			}
 
 			nimbus: {
+				deployments?: int & >=1
+			}
+
+			lighthouse: {
 				deployments?: int & >=1
 			}
 		}
@@ -87,18 +91,13 @@ package LaunchpadNamespaces
 			flavor: "mainnet"
 
 			#common: {
-				features: [#features.#nimbus, #features.#proxyd]
+				features: [#features.#proxyd]
 				scaling: #scaling & {deployments: 1}
 			}
 
 			mainnet: {
 				#common
 				targetNamespace: "eth-mainnet"
-			}
-
-			goerli: {
-				#common
-				targetNamespace: "eth-goerli"
 			}
 
 			holesky: {
@@ -134,6 +133,18 @@ package LaunchpadNamespaces
 				}
 				feature: #features.#nimbus
 				_template: {version: "0.6.1"}
+			}
+
+			lighthouse: {
+				chart: {_repositories.graphops.charts.lighthouse}
+				feature: #features.#lighthouse
+				labels: {
+					"app.launchpad.graphops.xyz/layer":        "consensus"
+					"app.launchpad.graphops.xyz/release":      "{{ $release }}"
+					"app.launchpad.graphops.xyz/component":    "{{ $canonicalRelease }}"
+					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
+				}
+				_template: {version: "0.6.0"}
 			}
 
 			proxyd: {
