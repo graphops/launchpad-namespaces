@@ -1,5 +1,5 @@
 #namespace defaults
-{{ $_ := set .Values "_namespaceDefaults" ( `{"flavor":"mainnet","mainnet":{"targetNamespace":"eth-mainnet","features":["nimbus","proxyd"],"scaling":{"deployments":1,"erigon":{},"nimbus":{}}},"goerli":{"targetNamespace":"eth-goerli","features":["nimbus","proxyd"],"scaling":{"deployments":1,"erigon":{},"nimbus":{}}},"holesky":{"targetNamespace":"eth-holesky","features":["nimbus","proxyd"],"scaling":{"deployments":1,"erigon":{},"nimbus":{}}},"common":{"features":["nimbus","proxyd"],"scaling":{"deployments":1,"erigon":{},"nimbus":{}}},"sepolia":{"targetNamespace":"eth-sepolia","features":["nimbus","proxyd"],"scaling":{"deployments":1,"erigon":{},"nimbus":{}}}}` | fromJson ) }}
+{{ $_ := set .Values "_namespaceDefaults" ( `{"common":{"features":["nimbus","proxyd"],"scaling":{"deployments":1,"erigon":{},"nimbus":{}}},"flavor":"mainnet","mainnet":{"features":["nimbus","proxyd"],"scaling":{"deployments":1,"erigon":{},"nimbus":{}},"targetNamespace":"eth-mainnet"},"goerli":{"features":["nimbus","proxyd"],"scaling":{"deployments":1,"erigon":{},"nimbus":{}},"targetNamespace":"eth-goerli"},"holesky":{"features":["nimbus","proxyd"],"scaling":{"deployments":1,"erigon":{},"nimbus":{}},"targetNamespace":"eth-holesky"},"sepolia":{"features":["nimbus","proxyd"],"scaling":{"deployments":1,"erigon":{},"nimbus":{}},"targetNamespace":"eth-sepolia"}}` | fromJson ) }}
 #set default flavor when missing
 {{ if not ( hasKey .Values "flavor" ) }}
 {{ $_ := set .Values "flavor" "mainnet" }}
@@ -155,8 +155,8 @@ repositories:
   
 templates:
   defaults:
-    namespace: '{{ .Values | get "targetNamespace" $_defaultNamespace }}'
     missingFileHandler: Warn
+    namespace: '{{ .Values | get "targetNamespace" $_defaultNamespace }}'
   
   erigon:
     {{- if ( .Values | get "erigon" dict | get "chartUrl" false ) }}
