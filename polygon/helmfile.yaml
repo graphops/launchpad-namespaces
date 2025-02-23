@@ -1,5 +1,5 @@
 #namespace defaults
-{{ $_ := set .Values "_namespaceDefaults" ( `{"flavor":"mainnet","mainnet":{"targetNamespace":"polygon-mainnet","features":["proxyd","erigon","heimdall","heimdall-ha-svc"],"scaling":{"deployments":1,"erigon":{},"heimdall":{}}},"common":{"features":["proxyd","erigon","heimdall","heimdall-ha-svc"],"scaling":{"deployments":1,"erigon":{},"heimdall":{}}},"amoy":{"targetNamespace":"polygon-amoy","features":["proxyd","erigon","heimdall","heimdall-ha-svc"],"scaling":{"deployments":1,"erigon":{},"heimdall":{}}}}` | fromJson ) }}
+{{ $_ := set .Values "_namespaceDefaults" ( `{"common":{"features":["proxyd","erigon","heimdall","heimdall-ha-svc"],"scaling":{"deployments":1,"erigon":{},"heimdall":{}}},"flavor":"mainnet","mainnet":{"features":["proxyd","erigon","heimdall","heimdall-ha-svc"],"scaling":{"deployments":1,"erigon":{},"heimdall":{}},"targetNamespace":"polygon-mainnet"},"amoy":{"features":["proxyd","erigon","heimdall","heimdall-ha-svc"],"scaling":{"deployments":1,"erigon":{},"heimdall":{}},"targetNamespace":"polygon-amoy"}}` | fromJson ) }}
 #set default flavor when missing
 {{ if not ( hasKey .Values "flavor" ) }}
 {{ $_ := set .Values "flavor" "mainnet" }}
@@ -155,8 +155,8 @@ repositories:
   
 templates:
   defaults:
-    namespace: '{{ .Values | get "targetNamespace" $_defaultNamespace }}'
     missingFileHandler: Warn
+    namespace: '{{ .Values | get "targetNamespace" $_defaultNamespace }}'
   
   erigon:
     {{- if ( .Values | get "erigon" dict | get "chartUrl" false ) }}

@@ -1,5 +1,5 @@
 #namespace defaults
-{{ $_ := set .Values "_namespaceDefaults" ( `{"flavor":"mainnet","mainnet":{"targetNamespace":"celo-mainnet","features":["proxyd"],"scaling":{"deployments":1,"celo":{}}},"alfajores":{"targetNamespace":"celo-alfajores","features":["proxyd"],"scaling":{"deployments":1,"celo":{}}},"common":{"features":["proxyd"],"scaling":{"deployments":1,"celo":{}}},"baklava":{"targetNamespace":"celo-baklava","features":["proxyd"],"scaling":{"deployments":1,"celo":{}}}}` | fromJson ) }}
+{{ $_ := set .Values "_namespaceDefaults" ( `{"common":{"features":["proxyd"],"scaling":{"deployments":1,"celo":{}}},"flavor":"mainnet","mainnet":{"features":["proxyd"],"scaling":{"deployments":1,"celo":{}},"targetNamespace":"celo-mainnet"},"alfajores":{"features":["proxyd"],"scaling":{"deployments":1,"celo":{}},"targetNamespace":"celo-alfajores"},"baklava":{"features":["proxyd"],"scaling":{"deployments":1,"celo":{}},"targetNamespace":"celo-baklava"}}` | fromJson ) }}
 #set default flavor when missing
 {{ if not ( hasKey .Values "flavor" ) }}
 {{ $_ := set .Values "flavor" "mainnet" }}
@@ -155,8 +155,8 @@ repositories:
   
 templates:
   defaults:
-    namespace: '{{ .Values | get "targetNamespace" $_defaultNamespace }}'
     missingFileHandler: Warn
+    namespace: '{{ .Values | get "targetNamespace" $_defaultNamespace }}'
   
   celo:
     {{- if ( .Values | get "celo" dict | get "chartUrl" false ) }}
