@@ -1,5 +1,5 @@
 #namespace defaults
-{{ $_ := set .Values "_namespaceDefaults" ( `{"common":{"features":["proxyd"],"scaling":{"deployments":1,"erigon":{},"nimbus":{},"lighthouse":{}}},"flavor":"mainnet","mainnet":{"features":["proxyd"],"scaling":{"deployments":1,"erigon":{},"nimbus":{},"lighthouse":{}},"targetNamespace":"eth-mainnet"},"holesky":{"features":["proxyd"],"scaling":{"deployments":1,"erigon":{},"nimbus":{},"lighthouse":{}},"targetNamespace":"eth-holesky"},"sepolia":{"features":["proxyd"],"scaling":{"deployments":1,"erigon":{},"nimbus":{},"lighthouse":{}},"targetNamespace":"eth-sepolia"}}` | fromJson ) }}
+{{ $_ := set .Values "_namespaceDefaults" ( `{"flavor":"mainnet","mainnet":{"targetNamespace":"eth-mainnet","features":["proxyd"],"scaling":{"deployments":1,"erigon":{},"nimbus":{},"lighthouse":{}}},"holesky":{"targetNamespace":"eth-holesky","features":["proxyd"],"scaling":{"deployments":1,"erigon":{},"nimbus":{},"lighthouse":{}}},"common":{"features":["proxyd"],"scaling":{"deployments":1,"erigon":{},"nimbus":{},"lighthouse":{}}},"sepolia":{"targetNamespace":"eth-sepolia","features":["proxyd"],"scaling":{"deployments":1,"erigon":{},"nimbus":{},"lighthouse":{}}}}` | fromJson ) }}
 #set default flavor when missing
 {{ if not ( hasKey .Values "flavor" ) }}
 {{ $_ := set .Values "flavor" "mainnet" }}
@@ -155,8 +155,8 @@ repositories:
   
 templates:
   defaults:
-    missingFileHandler: Warn
     namespace: '{{ .Values | get "targetNamespace" $_defaultNamespace }}'
+    missingFileHandler: Warn
   
   erigon:
     {{- if ( .Values | get "erigon" dict | get "chartUrl" false ) }}
