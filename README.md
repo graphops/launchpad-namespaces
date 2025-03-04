@@ -164,16 +164,16 @@ This *Namespace* provides a suitable stack to operate Arbitrum One and Arbitrum 
 The old "classic" Arbitrum tech stack.
 - [arbitrum-nitro](https://github.com/OffchainLabs/nitro/)<br>
 Nitro is the latest iteration of the Arbitrum technology. It is a fully integrated, complete layer 2 optimistic rollup system, including fraud proofs, the sequencer, the token bridges, advanced calldata compression, and more.
-- [proxyd-classic](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
+- [proxyd-classic](https://github.com/ethereum-optimism/infra/tree/main/proxyd)<br>
 Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
-- [proxyd-nitro](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
+- [proxyd-nitro](https://github.com/ethereum-optimism/infra/tree/main/proxyd)<br>
 Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
 ### [:celo](/celo)
 This *Namespace* provides a suitable stack to operate Celo mainnet archive nodes.
 
 - [celo](https://github.com/celo-org/celo-blockchain)<br>
 Official golang implementation of the Celo blockchain
-- [proxyd](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
+- [proxyd](https://github.com/ethereum-optimism/infra/tree/main/proxyd)<br>
 Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
 ### [:ethereum](/ethereum)
 This *Namespace* provides a suitable stack to operate Ethereum mainnet, göerli, holesky and sepolia archive nodes.
@@ -184,7 +184,7 @@ Erigon is an implementation of Ethereum (execution client with light client for 
 An open-source Ethereum consensus client, written in Rust and maintained by Sigma Prime.
 - [nimbus](https://github.com/status-im/nimbus-eth2)<br>
 Nimbus-eth2 is an extremely efficient consensus layer (eth2) client implementation.
-- [proxyd](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
+- [proxyd](https://github.com/ethereum-optimism/infra/tree/main/proxyd)<br>
 Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
 ### [:gnosis](/gnosis)
 This *Namespace* provides a suitable stack to operate Gnosis mainnet archive nodes.
@@ -193,7 +193,7 @@ This *Namespace* provides a suitable stack to operate Gnosis mainnet archive nod
 Erigon is an implementation of Ethereum (execution client with light client for consensus layer), on the efficiency frontier.
 - [lighthouse](https://github.com/sigp/lighthouse)<br>
 An open-source Ethereum consensus client, written in Rust and maintained by Sigma Prime.
-- [proxyd](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
+- [proxyd](https://github.com/ethereum-optimism/infra/tree/main/proxyd)<br>
 Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
 ### [:graph](/graph)
 This *Namespace* provides the necessary software to run a Graph Node and participate
@@ -240,7 +240,7 @@ Erigon is an implementation of Ethereum (execution client with light client for 
 Validator node for Matic Network.
 - [heimdall-ha-svc](https://github.com/graphops/launchpad-charts/tree/main/charts/resource-injector)<br>
 Manage Raw Kubernetes Resources using Helm
-- [proxyd](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
+- [proxyd](https://github.com/ethereum-optimism/infra/tree/main/proxyd)<br>
 Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
 ### [:postgres-operator](/postgres-operator)
 This *Namespace* extends your Kubernetes cluster with custom resources for easily creating and managing Postgres databases

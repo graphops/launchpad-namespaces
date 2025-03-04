@@ -143,8 +143,8 @@ repositories:
   
 templates:
   defaults:
-    namespace: '{{ .Values | get "targetNamespace" $_defaultNamespace }}'
     missingFileHandler: Warn
+    namespace: '{{ .Values | get "targetNamespace" $_defaultNamespace }}'
   
   openebs:
     {{- if ( .Values | get "openebs" dict | get "chartUrl" false ) }}

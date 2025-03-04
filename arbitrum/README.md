@@ -11,9 +11,9 @@ This *Namespace* provides a suitable stack to operate Arbitrum One and Arbitrum 
 The old "classic" Arbitrum tech stack.
 - [arbitrum-nitro](https://github.com/OffchainLabs/nitro/)<br>
 Nitro is the latest iteration of the Arbitrum technology. It is a fully integrated, complete layer 2 optimistic rollup system, including fraud proofs, the sequencer, the token bridges, advanced calldata compression, and more.
-- [proxyd-classic](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
+- [proxyd-classic](https://github.com/ethereum-optimism/infra/tree/main/proxyd)<br>
 Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
-- [proxyd-nitro](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
+- [proxyd-nitro](https://github.com/ethereum-optimism/infra/tree/main/proxyd)<br>
 Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
 
 ## Features

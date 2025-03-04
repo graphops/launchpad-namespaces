@@ -13,7 +13,7 @@ Erigon is an implementation of Ethereum (execution client with light client for 
 Validator node for Matic Network.
 - [heimdall-ha-svc](https://github.com/graphops/launchpad-charts/tree/main/charts/resource-injector)<br>
 Manage Raw Kubernetes Resources using Helm
-- [proxyd](https://github.com/ethereum-optimism/optimism/tree/develop/proxyd)<br>
+- [proxyd](https://github.com/ethereum-optimism/infra/tree/main/proxyd)<br>
 Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
 
 ## Features

@@ -23,7 +23,7 @@ package LaunchpadNamespaces
 					"""
 			}
 			proxyd: {
-				url: "https://github.com/ethereum-optimism/optimism/tree/develop/proxyd"
+				url: "https://github.com/ethereum-optimism/infra/tree/main/proxyd"
 				description: """
 					Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
 					"""
