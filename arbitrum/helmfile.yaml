@@ -1,5 +1,5 @@
 #namespace defaults
-{{ $_ := set .Values "_namespaceDefaults" ( `{"flavor":"one","one":{"targetNamespace":"arbitrum-one","scaling":{"deployments":1,"arbitrum-classic":{},"arbitrum-nitro":{}},"features":["proxyd-classic","proxyd-nitro","arbitrum-classic","arbitrum-nitro"]},"common":{"scaling":{"deployments":1,"arbitrum-classic":{},"arbitrum-nitro":{}}},"sepolia":{"targetNamespace":"arbitrum-sepolia","scaling":{"deployments":1,"arbitrum-classic":{},"arbitrum-nitro":{}},"features":["proxyd-nitro","arbitrum-nitro"]}}` | fromJson ) }}
+{{ $_ := set .Values "_namespaceDefaults" ( `{"common":{"scaling":{"deployments":1,"arbitrum-classic":{},"arbitrum-nitro":{}}},"flavor":"one","one":{"scaling":{"deployments":1,"arbitrum-classic":{},"arbitrum-nitro":{}},"targetNamespace":"arbitrum-one","features":["proxyd-classic","proxyd-nitro","arbitrum-classic","arbitrum-nitro"]},"sepolia":{"scaling":{"deployments":1,"arbitrum-classic":{},"arbitrum-nitro":{}},"targetNamespace":"arbitrum-sepolia","features":["proxyd-nitro","arbitrum-nitro"]}}` | fromJson ) }}
 #set default flavor when missing
 {{ if not ( hasKey .Values "flavor" ) }}
 {{ $_ := set .Values "flavor" "one" }}
@@ -155,8 +155,8 @@ repositories:
   
 templates:
   defaults:
-    namespace: '{{ .Values | get "targetNamespace" $_defaultNamespace }}'
     missingFileHandler: Warn
+    namespace: '{{ .Values | get "targetNamespace" $_defaultNamespace }}'
   
   arbitrum-nitro:
     {{- if ( .Values | get "arbitrum-nitro" dict | get "chartUrl" false ) }}
