@@ -98,6 +98,12 @@ package LaunchpadNamespaces
 					An open-source Ethereum consensus client, written in Rust and maintained by Sigma Prime.
 					"""
 			}
+			"scroll": {
+				url: "https://github.com/scroll-tech/go-ethereum"
+				description: """
+					Scroll is its own Layer 2 network built on Ethereum (more specifically, a “zero-knowledge rollup”).
+					"""
+			}
 		}
 	}
 
