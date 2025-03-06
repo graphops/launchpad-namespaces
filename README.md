@@ -247,6 +247,13 @@ This *Namespace* extends your Kubernetes cluster with custom resources for easil
 
 - [postgres-operator](https://github.com/zalando/postgres-operator)<br>
 The Postgres Operator delivers an easy to run highly-available PostgreSQL clusters on Kubernetes (K8s) powered by Patroni.
+### [:scroll](/scroll)
+This *Namespace* provides a suitable stack to operate Scroll mainnet archive nodes.
+
+- [proxyd](https://github.com/ethereum-optimism/infra/tree/main/proxyd)<br>
+Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
+- [scroll](https://github.com/scroll-tech/go-ethereum)<br>
+Scroll is its own Layer 2 network built on Ethereum (more specifically, a “zero-knowledge rollup”).
 ### [:sealed-secrets](/sealed-secrets)
 This *Namespace* provides a Kubernetes controller and tool for one-way encrypted Secrets
 

@@ -1,0 +1,4 @@
+scrollDefaults:
+  config:
+    args:
+      scroll: "__none"

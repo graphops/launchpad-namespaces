@@ -1,0 +1,12 @@
+{{ $scalingIndex := splitList "-" .Release.Name | last }}
+
+scrollDefaults:
+  config:
+    args:
+      l1.endpoint: http://proxyd-proxyd.eth-mainnet.svc.cluster.local.:8545
+      da.blob.beaconnode: http://lighthouse.eth-mainnet.svc.cluster.local.:5052
+{{- if (hasKey .Values.scaling "p2pStartPort") }}
+    p2p:
+      enabled: true
+      port: {{ add (mul (sub $scalingIndex 1) 1) .Values.scaling.p2pStartPort }}
+{{- end }}

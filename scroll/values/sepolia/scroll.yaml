@@ -1,0 +1,5 @@
+scrollDefaults:
+  config:
+    args:
+      scroll: null
+      scroll-sepolia: "__none"

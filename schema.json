@@ -5593,6 +5593,459 @@
                     }
                 ]
             },
+            "namespaces.scroll": {
+                "description": "Scroll *Namespace*",
+                "type": "object",
+                "required": [
+                    "meta",
+                    "defaults",
+                    "releases",
+                    "labels",
+                    "resourceLabels"
+                ],
+                "properties": {
+                    "meta": {
+                        "type": "object",
+                        "required": [
+                            "name",
+                            "url",
+                            "description"
+                        ],
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "enum": [
+                                    "scroll"
+                                ]
+                            },
+                            "url": {
+                                "type": "string",
+                                "enum": [
+                                    "https://github.com/graphops/launchpad-namespaces/scroll"
+                                ]
+                            },
+                            "description": {
+                                "type": "string",
+                                "enum": [
+                                    "This *Namespace* provides a suitable stack to operate Scroll mainnet archive nodes."
+                                ]
+                            }
+                        }
+                    },
+                    "defaults": {
+                        "type": "object",
+                        "required": [
+                            "flavor",
+                            "mainnet"
+                        ],
+                        "properties": {
+                            "flavor": {
+                                "type": "string",
+                                "enum": [
+                                    "mainnet"
+                                ]
+                            },
+                            "mainnet": {
+                                "type": "object",
+                                "properties": {
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "scroll-mainnet"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.scroll.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "targetNamespace"
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "releases": {
+                        "type": "object",
+                        "required": [
+                            "scroll",
+                            "proxyd"
+                        ],
+                        "properties": {
+                            "scroll": {
+                                "type": "object",
+                                "required": [
+                                    "chart",
+                                    "labels"
+                                ],
+                                "properties": {
+                                    "chart": {
+                                        "type": "object",
+                                        "required": [
+                                            "url",
+                                            "description",
+                                            "repository",
+                                            "name"
+                                        ],
+                                        "properties": {
+                                            "url": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "https://github.com/scroll-tech/go-ethereum"
+                                                ]
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "Scroll is its own Layer 2 network built on Ethereum (more specifically, a “zero-knowledge rollup”)."
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "scroll"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "labels": {
+                                        "type": "object",
+                                        "required": [
+                                            "app.launchpad.graphops.xyz/layer",
+                                            "app.launchpad.graphops.xyz/release",
+                                            "app.launchpad.graphops.xyz/component",
+                                            "app.launchpad.graphops.xyz/scalingIndex"
+                                        ],
+                                        "properties": {
+                                            "app.launchpad.graphops.xyz/layer": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "execution"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/release": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $release }}"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/component": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $canonicalRelease }}"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/scalingIndex": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $deploymentIndex }}"
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "proxyd": {
+                                "type": "object",
+                                "required": [
+                                    "chart",
+                                    "labels",
+                                    "feature"
+                                ],
+                                "properties": {
+                                    "chart": {
+                                        "type": "object",
+                                        "required": [
+                                            "url",
+                                            "description",
+                                            "repository",
+                                            "name"
+                                        ],
+                                        "properties": {
+                                            "url": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "https://github.com/ethereum-optimism/infra/tree/main/proxyd"
+                                                ]
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching."
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "proxyd"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "labels": {
+                                        "type": "object",
+                                        "required": [
+                                            "app.launchpad.graphops.xyz/layer",
+                                            "app.launchpad.graphops.xyz/release",
+                                            "app.launchpad.graphops.xyz/component"
+                                        ],
+                                        "properties": {
+                                            "app.launchpad.graphops.xyz/layer": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "proxy"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/release": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $release }}"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/component": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $canonicalRelease }}"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "feature": {
+                                        "$ref": "#/components/schemas/namespaces.scroll.features.proxyd"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "labels": {
+                        "type": "object",
+                        "properties": {
+                            "launchpad.graphops.xyz/namespace": {
+                                "type": "string",
+                                "enum": [
+                                    "scroll"
+                                ]
+                            },
+                            "app.launchpad.graphops.xyz/type": {
+                                "type": "string",
+                                "enum": [
+                                    "blockchain"
+                                ]
+                            },
+                            "app.launchpad.graphops.xyz/chain": {
+                                "type": "string",
+                                "enum": [
+                                    "scroll"
+                                ]
+                            },
+                            "app.launchpad.graphops.xyz/network": {
+                                "type": "string",
+                                "enum": [
+                                    "{{ .Values.flavor }}"
+                                ]
+                            }
+                        },
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/base.labels"
+                            },
+                            {
+                                "required": [
+                                    "launchpad.graphops.xyz/namespace",
+                                    "app.launchpad.graphops.xyz/type",
+                                    "app.launchpad.graphops.xyz/chain",
+                                    "app.launchpad.graphops.xyz/network"
+                                ]
+                            }
+                        ]
+                    },
+                    "resourceLabels": {
+                        "type": "object"
+                    }
+                }
+            },
+            "namespaces.scroll.defaults.common": {
+                "type": "object",
+                "required": [
+                    "features",
+                    "scaling"
+                ],
+                "properties": {
+                    "features": {
+                        "type": "array",
+                        "items": [
+                            {
+                                "$ref": "#/components/schemas/namespaces.scroll.features.proxyd"
+                            }
+                        ],
+                        "default": [
+                            "proxyd"
+                        ]
+                    },
+                    "scaling": {
+                        "type": "object",
+                        "properties": {
+                            "deployments": {
+                                "type": "integer",
+                                "enum": [
+                                    1
+                                ]
+                            }
+                        },
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/namespaces.scroll.scaling"
+                            },
+                            {
+                                "required": [
+                                    "deployments"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            },
+            "namespaces.scroll.features": {
+                "description": "scroll namespace features schema",
+                "type": "object"
+            },
+            "namespaces.scroll.features.enum": {
+                "$ref": "#/components/schemas/namespaces.scroll.features.proxyd"
+            },
+            "namespaces.scroll.features.proxyd": {
+                "description": "Deploy proxyd",
+                "type": "string",
+                "enum": [
+                    "proxyd"
+                ]
+            },
+            "namespaces.scroll.flavor": {
+                "type": "object"
+            },
+            "namespaces.scroll.flavor.enum": {
+                "$ref": "#/components/schemas/namespaces.scroll.flavor.mainnet"
+            },
+            "namespaces.scroll.flavor.mainnet": {
+                "description": "suitable defaults for a mainnet archive node",
+                "type": "string",
+                "enum": [
+                    "mainnet"
+                ]
+            },
+            "namespaces.scroll.helmfiles": {
+                "description": "scroll helmfile API",
+                "type": "object",
+                "properties": {
+                    "path": {
+                        "type": "string",
+                        "pattern": "*github.com/graphops/launchpad-namespaces.git@scroll/helmfile.yaml*"
+                    },
+                    "values": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/namespaces.scroll.values"
+                            },
+                            {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/namespaces.scroll.values"
+                                }
+                            }
+                        ]
+                    }
+                },
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/base.helmfiles"
+                    },
+                    {
+                        "required": [
+                            "path"
+                        ]
+                    }
+                ]
+            },
+            "namespaces.scroll.scaling": {
+                "description": "scroll scaling interface",
+                "type": "object",
+                "required": [
+                    "deployments",
+                    "scroll"
+                ],
+                "properties": {
+                    "deployments": {
+                        "description": "number of independent stateful sets to deploy",
+                        "type": "integer",
+                        "minimum": 1,
+                        "default": 1
+                    },
+                    "startP2PPort": {
+                        "description": "A beggining port for the range to use in P2P NodePorts",
+                        "type": "integer"
+                    },
+                    "scroll": {
+                        "type": "object",
+                        "properties": {
+                            "deployments": {
+                                "type": "integer",
+                                "minimum": 1
+                            }
+                        }
+                    }
+                }
+            },
+            "namespaces.scroll.values": {
+                "description": "scroll namespace values schema",
+                "type": "object",
+                "properties": {
+                    "flavor": {
+                        "$ref": "#/components/schemas/namespaces.scroll.flavor.enum"
+                    },
+                    "targetNamespace": {
+                        "description": "the default is scroll-<flavor>",
+                        "type": "string",
+                        "default": "scroll-mainnet"
+                    },
+                    "features": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/namespaces.scroll.features.enum"
+                        },
+                        "default": [
+                            "proxyd"
+                        ]
+                    },
+                    "scaling": {
+                        "$ref": "#/components/schemas/namespaces.scroll.scaling"
+                    },
+                    "scroll": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
+                    "proxyd": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    }
+                },
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/base.values"
+                    }
+                ]
+            },
             "namespaces.sealedSecrets": {
                 "type": "object",
                 "required": [
@@ -6331,7 +6784,8 @@
                                     "graph-network-indexer",
                                     "graph-toolbox",
                                     "subgraph-radio",
-                                    "lighthouse"
+                                    "lighthouse",
+                                    "scroll"
                                 ],
                                 "properties": {
                                     "erigon": {
@@ -6645,6 +7099,27 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "An open-source Ethereum consensus client, written in Rust and maintained by Sigma Prime."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "scroll": {
+                                        "type": "object",
+                                        "required": [
+                                            "url",
+                                            "description"
+                                        ],
+                                        "properties": {
+                                            "url": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "https://github.com/scroll-tech/go-ethereum"
+                                                ]
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "Scroll is its own Layer 2 network built on Ethereum (more specifically, a “zero-knowledge rollup”)."
                                                 ]
                                             }
                                         }
