@@ -1,0 +1,20 @@
+{{ $scalingIndex := splitList "-" .Release.Name | last }}
+
+firehoseComponents:
+{{/*
+  reader-node:
+    __enabled: false
+  reader-node-1:
+    __enabled: true
+    fireeth:
+      services:
+        - reader-node
+      config:
+        reader-node-one-block-suffix: "node1"
+*/}}
+{{- if (has "substreams" $.Values.features) }}
+  substreams-tier1:
+    __enabled: true
+  substreams-tier2:
+    __enabled: true
+{{- end }}

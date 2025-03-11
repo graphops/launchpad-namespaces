@@ -98,6 +98,12 @@ package LaunchpadNamespaces
 					An open-source Ethereum consensus client, written in Rust and maintained by Sigma Prime.
 					"""
 			}
+			"firehose-ethereum": {
+				url: "https://github.com/streamingfast/firehose-ethereum"
+				description: """
+					Support for firehose in EVM based chains. Firehose is a blockchain data streaming technology developed by StreamingFast working with The Graph Foundation.
+					"""
+			}
 		}
 	}
 

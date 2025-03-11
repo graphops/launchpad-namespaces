@@ -186,6 +186,15 @@ An open-source Ethereum consensus client, written in Rust and maintained by Sigm
 Nimbus-eth2 is an extremely efficient consensus layer (eth2) client implementation.
 - [proxyd](https://github.com/ethereum-optimism/infra/tree/main/proxyd)<br>
 Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
+### [:firehose-ethereum](/firehose-ethereum)
+This *Namespace* provides the necessary software to run the full constellation of Firehose services for Ethereum based chains
+
+- [firehose-ethereum](https://github.com/streamingfast/firehose-ethereum)<br>
+Support for firehose in EVM based chains. Firehose is a blockchain data streaming technology developed by StreamingFast working with The Graph Foundation.
+- [lighthouse](https://github.com/sigp/lighthouse)<br>
+An open-source Ethereum consensus client, written in Rust and maintained by Sigma Prime.
+- [nimbus](https://github.com/status-im/nimbus-eth2)<br>
+Nimbus-eth2 is an extremely efficient consensus layer (eth2) client implementation.
 ### [:gnosis](/gnosis)
 This *Namespace* provides a suitable stack to operate Gnosis mainnet archive nodes.
 
