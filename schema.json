@@ -2735,6 +2735,713 @@
                     }
                 ]
             },
+            "namespaces.firehoseEthereum": {
+                "description": "Firehose-Ethereum *Namespace*",
+                "type": "object",
+                "required": [
+                    "meta",
+                    "defaults",
+                    "releases",
+                    "labels",
+                    "resourceLabels"
+                ],
+                "properties": {
+                    "meta": {
+                        "type": "object",
+                        "required": [
+                            "name",
+                            "url",
+                            "description"
+                        ],
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "enum": [
+                                    "firehose-ethereum"
+                                ]
+                            },
+                            "url": {
+                                "type": "string",
+                                "enum": [
+                                    "https://github.com/graphops/launchpad-namespaces/firehose-ethereum"
+                                ]
+                            },
+                            "description": {
+                                "type": "string",
+                                "enum": [
+                                    "This *Namespace* provides the necessary software to run the full constellation of Firehose services for Ethereum based chains"
+                                ]
+                            }
+                        }
+                    },
+                    "defaults": {
+                        "type": "object",
+                        "required": [
+                            "flavor",
+                            "eth-mainnet",
+                            "eth-sepolia",
+                            "arbitrum-one",
+                            "arbitrum-sepolia",
+                            "polygon-mainnet"
+                        ],
+                        "properties": {
+                            "flavor": {
+                                "type": "string",
+                                "enum": [
+                                    "eth-mainnet"
+                                ]
+                            },
+                            "eth-mainnet": {
+                                "type": "object",
+                                "properties": {
+                                    "features": {
+                                        "type": "array",
+                                        "items": [
+                                            {
+                                                "$ref": "#/components/schemas/namespaces.firehoseEthereum.features.consensus_lighthouse"
+                                            }
+                                        ],
+                                        "default": [
+                                            "consensus-lighthouse"
+                                        ]
+                                    },
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "fh-eth-mainnet"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.firehoseEthereum.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "features",
+                                            "targetNamespace"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "eth-sepolia": {
+                                "type": "object",
+                                "properties": {
+                                    "features": {
+                                        "type": "array",
+                                        "items": [
+                                            {
+                                                "$ref": "#/components/schemas/namespaces.firehoseEthereum.features.consensus_lighthouse"
+                                            }
+                                        ],
+                                        "default": [
+                                            "consensus-lighthouse"
+                                        ]
+                                    },
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "fh-eth-sepolia"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.firehoseEthereum.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "features",
+                                            "targetNamespace"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "arbitrum-one": {
+                                "type": "object",
+                                "properties": {
+                                    "features": {
+                                        "type": "array"
+                                    },
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "fh-arbitrum-one"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.firehoseEthereum.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "features",
+                                            "targetNamespace"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "arbitrum-sepolia": {
+                                "type": "object",
+                                "properties": {
+                                    "features": {
+                                        "type": "array"
+                                    },
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "fh-arbitrum-sepolia"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.firehoseEthereum.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "features",
+                                            "targetNamespace"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "polygon-mainnet": {
+                                "type": "object",
+                                "properties": {
+                                    "features": {
+                                        "type": "array"
+                                    },
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "fh-polygon-mainnet"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.firehoseEthereum.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "features",
+                                            "targetNamespace"
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "releases": {
+                        "type": "object",
+                        "required": [
+                            "firehose-ethereum",
+                            "nimbus",
+                            "lighthouse"
+                        ],
+                        "properties": {
+                            "firehose-ethereum": {
+                                "type": "object",
+                                "required": [
+                                    "chart",
+                                    "labels"
+                                ],
+                                "properties": {
+                                    "chart": {
+                                        "type": "object",
+                                        "required": [
+                                            "url",
+                                            "description",
+                                            "repository",
+                                            "name"
+                                        ],
+                                        "properties": {
+                                            "url": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "https://github.com/streamingfast/firehose-ethereum"
+                                                ]
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "Support for firehose in EVM based chains. Firehose is a blockchain data streaming technology developed by StreamingFast working with The Graph Foundation."
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "firehose-ethereum"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "labels": {
+                                        "type": "object",
+                                        "required": [
+                                            "app.launchpad.graphops.xyz/layer",
+                                            "app.launchpad.graphops.xyz/release",
+                                            "app.launchpad.graphops.xyz/component",
+                                            "app.launchpad.graphops.xyz/scalingIndex"
+                                        ],
+                                        "properties": {
+                                            "app.launchpad.graphops.xyz/layer": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "execution"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/release": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $release }}"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/component": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $canonicalRelease }}"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/scalingIndex": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $deploymentIndex }}"
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "nimbus": {
+                                "type": "object",
+                                "required": [
+                                    "chart",
+                                    "labels",
+                                    "feature"
+                                ],
+                                "properties": {
+                                    "chart": {
+                                        "type": "object",
+                                        "required": [
+                                            "url",
+                                            "description",
+                                            "repository",
+                                            "name"
+                                        ],
+                                        "properties": {
+                                            "url": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "https://github.com/status-im/nimbus-eth2"
+                                                ]
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "Nimbus-eth2 is an extremely efficient consensus layer (eth2) client implementation."
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "nimbus"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "labels": {
+                                        "type": "object",
+                                        "required": [
+                                            "app.launchpad.graphops.xyz/layer",
+                                            "app.launchpad.graphops.xyz/release",
+                                            "app.launchpad.graphops.xyz/component",
+                                            "app.launchpad.graphops.xyz/scalingIndex"
+                                        ],
+                                        "properties": {
+                                            "app.launchpad.graphops.xyz/layer": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "consensus"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/release": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $release }}"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/component": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $canonicalRelease }}"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/scalingIndex": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $deploymentIndex }}"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "feature": {
+                                        "$ref": "#/components/schemas/namespaces.firehoseEthereum.features.consensus_nimbus"
+                                    }
+                                }
+                            },
+                            "lighthouse": {
+                                "type": "object",
+                                "required": [
+                                    "chart",
+                                    "feature",
+                                    "labels"
+                                ],
+                                "properties": {
+                                    "chart": {
+                                        "type": "object",
+                                        "required": [
+                                            "url",
+                                            "description",
+                                            "repository",
+                                            "name"
+                                        ],
+                                        "properties": {
+                                            "url": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "https://github.com/sigp/lighthouse"
+                                                ]
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "An open-source Ethereum consensus client, written in Rust and maintained by Sigma Prime."
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "lighthouse"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "feature": {
+                                        "$ref": "#/components/schemas/namespaces.firehoseEthereum.features.consensus_lighthouse"
+                                    },
+                                    "labels": {
+                                        "type": "object",
+                                        "required": [
+                                            "app.launchpad.graphops.xyz/layer",
+                                            "app.launchpad.graphops.xyz/release",
+                                            "app.launchpad.graphops.xyz/component",
+                                            "app.launchpad.graphops.xyz/scalingIndex"
+                                        ],
+                                        "properties": {
+                                            "app.launchpad.graphops.xyz/layer": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "consensus"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/release": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $release }}"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/component": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $canonicalRelease }}"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/scalingIndex": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $deploymentIndex }}"
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "labels": {
+                        "type": "object",
+                        "properties": {
+                            "launchpad.graphops.xyz/namespace": {
+                                "type": "string",
+                                "enum": [
+                                    "firehose-ethereum"
+                                ]
+                            }
+                        },
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/base.labels"
+                            },
+                            {
+                                "required": [
+                                    "launchpad.graphops.xyz/namespace"
+                                ]
+                            }
+                        ]
+                    },
+                    "resourceLabels": {
+                        "type": "object"
+                    }
+                }
+            },
+            "namespaces.firehoseEthereum.defaults.common": {
+                "type": "object",
+                "required": [
+                    "scaling"
+                ],
+                "properties": {
+                    "scaling": {
+                        "type": "object",
+                        "properties": {
+                            "deployments": {
+                                "type": "integer",
+                                "enum": [
+                                    1
+                                ]
+                            }
+                        },
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/namespaces.firehoseEthereum.scaling"
+                            },
+                            {
+                                "required": [
+                                    "deployments"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            },
+            "namespaces.firehoseEthereum.features": {
+                "description": "ethereum namespace features schema",
+                "type": "object"
+            },
+            "namespaces.firehoseEthereum.features.consensus_lighthouse": {
+                "description": "",
+                "type": "string",
+                "enum": [
+                    "consensus-lighthouse"
+                ]
+            },
+            "namespaces.firehoseEthereum.features.consensus_nimbus": {
+                "description": "",
+                "type": "string",
+                "enum": [
+                    "consensus-nimbus"
+                ]
+            },
+            "namespaces.firehoseEthereum.features.enum": {
+                "type": "string",
+                "enum": [
+                    "consensus-nimbus",
+                    "consensus-lighthouse",
+                    "substreams"
+                ]
+            },
+            "namespaces.firehoseEthereum.features.substreams": {
+                "type": "string",
+                "enum": [
+                    "substreams"
+                ]
+            },
+            "namespaces.firehoseEthereum.flavor": {
+                "type": "object"
+            },
+            "namespaces.firehoseEthereum.flavor.arbitrum_one": {
+                "type": "string",
+                "enum": [
+                    "arbitrum-one"
+                ]
+            },
+            "namespaces.firehoseEthereum.flavor.arbitrum_sepolia": {
+                "type": "string",
+                "enum": [
+                    "arbitrum-sepolia"
+                ]
+            },
+            "namespaces.firehoseEthereum.flavor.enum": {
+                "type": "string",
+                "enum": [
+                    "eth-mainnet",
+                    "eth-sepolia",
+                    "arbitrum-one",
+                    "arbitrum-sepolia",
+                    "polygon-mainnet"
+                ]
+            },
+            "namespaces.firehoseEthereum.flavor.eth_mainnet": {
+                "description": "suitable defaults for an ethereum mainnet indexer",
+                "type": "string",
+                "enum": [
+                    "eth-mainnet"
+                ]
+            },
+            "namespaces.firehoseEthereum.flavor.eth_sepolia": {
+                "type": "string",
+                "enum": [
+                    "eth-sepolia"
+                ]
+            },
+            "namespaces.firehoseEthereum.flavor.polygon_mainnet": {
+                "type": "string",
+                "enum": [
+                    "polygon-mainnet"
+                ]
+            },
+            "namespaces.firehoseEthereum.helmfiles": {
+                "description": "Graph helmfile API",
+                "type": "object",
+                "properties": {
+                    "path": {
+                        "type": "string",
+                        "pattern": "*github.com/graphops/launchpad-namespaces.git@firehose-ethereum/helmfile.yaml*"
+                    },
+                    "values": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/namespaces.firehoseEthereum.values"
+                            },
+                            {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/namespaces.firehoseEthereum.values"
+                                }
+                            }
+                        ]
+                    }
+                },
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/base.helmfiles"
+                    },
+                    {
+                        "required": [
+                            "path"
+                        ]
+                    }
+                ]
+            },
+            "namespaces.firehoseEthereum.scaling": {
+                "description": "firehose-ethereum scaling interface",
+                "type": "object",
+                "required": [
+                    "deployments",
+                    "firehose-ethereum",
+                    "lighthouse",
+                    "nimbus"
+                ],
+                "properties": {
+                    "deployments": {
+                        "description": "number of independent stateful sets to deploy",
+                        "type": "integer",
+                        "minimum": 1,
+                        "default": 1
+                    },
+                    "startP2PPort": {
+                        "description": "A beggining port for the range to use in P2P NodePorts",
+                        "type": "integer"
+                    },
+                    "firehose-ethereum": {
+                        "type": "object",
+                        "properties": {
+                            "deployments": {
+                                "type": "integer",
+                                "minimum": 1
+                            }
+                        }
+                    },
+                    "lighthouse": {
+                        "type": "object",
+                        "properties": {
+                            "deployments": {
+                                "type": "integer",
+                                "minimum": 1
+                            }
+                        }
+                    },
+                    "nimbus": {
+                        "type": "object",
+                        "properties": {
+                            "deployments": {
+                                "type": "integer",
+                                "minimum": 1
+                            }
+                        }
+                    }
+                }
+            },
+            "namespaces.firehoseEthereum.values": {
+                "description": "Graph namespace values schema",
+                "type": "object",
+                "properties": {
+                    "flavor": {
+                        "$ref": "#/components/schemas/namespaces.firehoseEthereum.flavor.enum"
+                    },
+                    "targetNamespace": {
+                        "description": "the default is graph-<flavor>",
+                        "type": "string",
+                        "default": "fh-eth-mainnet"
+                    },
+                    "features": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/namespaces.firehoseEthereum.features.enum"
+                        },
+                        "default": [
+                            "consensus-lighthouse"
+                        ]
+                    },
+                    "scaling": {
+                        "$ref": "#/components/schemas/namespaces.firehoseEthereum.scaling"
+                    },
+                    "firehose-ethereum": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
+                    "nimbus": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
+                    "lighthouse": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    }
+                },
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/base.values"
+                    }
+                ]
+            },
             "namespaces.gnosis": {
                 "description": "Gnosis *Namespace*",
                 "type": "object",
@@ -6331,7 +7038,8 @@
                                     "graph-network-indexer",
                                     "graph-toolbox",
                                     "subgraph-radio",
-                                    "lighthouse"
+                                    "lighthouse",
+                                    "firehose-ethereum"
                                 ],
                                 "properties": {
                                     "erigon": {
@@ -6645,6 +7353,27 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "An open-source Ethereum consensus client, written in Rust and maintained by Sigma Prime."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "firehose-ethereum": {
+                                        "type": "object",
+                                        "required": [
+                                            "url",
+                                            "description"
+                                        ],
+                                        "properties": {
+                                            "url": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "https://github.com/streamingfast/firehose-ethereum"
+                                                ]
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "Support for firehose in EVM based chains. Firehose is a blockchain data streaming technology developed by StreamingFast working with The Graph Foundation."
                                                 ]
                                             }
                                         }

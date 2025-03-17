@@ -1,0 +1,176 @@
+firehoseComponents:
+  grpc:
+    __enabled: true
+    fireeth:
+      services:
+        - firehose
+    workload:
+      spec:
+        replicas: 1
+        template:
+          spec:
+            containers:
+              fireeth:
+                resources:
+                  requests:
+                    cpu: 1
+                    memory: 2Gi
+                  limits:
+                    cpu: 1
+                    memory: 2Gi
+
+  relayer:
+    __enabled: true
+    fireeth:
+      services:
+        - relayer
+    workload:
+      spec:
+        replicas: 1
+        template:
+          spec:
+            containers:
+              fireeth:
+                resources:
+                  requests:
+                    cpu: 1
+                    memory: 2Gi
+                  limits:
+                    cpu: 1
+                    memory: 2Gi
+
+  merger:
+    __enabled: true
+    fireeth:
+      services:
+        - merger
+    workload:
+      spec:
+        replicas: 1
+        template:
+          spec:
+            containers:
+              fireeth:
+                resources:
+                  requests:
+                    cpu: 2
+                    memory: 8Gi
+                  limits:
+                    cpu: 2
+                    memory: 8Gi
+
+  index-builder:
+    __enabled: true
+    fireeth:
+      services:
+        - index-builder
+    workload:
+      spec:
+        replicas: 1
+        template:
+          spec:
+            containers:
+              fireeth:
+                resources:
+                  requests:
+                    cpu: 2
+                    memory: 8Gi
+                  limits:
+                    cpu: 2
+                    memory: 8Gi
+
+  reader-node:
+    __enabled: true
+    fireeth:
+      services:
+        - reader-node
+    workload:
+      spec:
+        replicas: 1
+
+firehoseServiceDefaults:
+  reader-node:
+    workload:
+      spec:
+        template:
+          spec:
+            containers:
+              fireeth:
+                resources:
+                  requests:
+                    cpu: 4
+                    memory: 24Gi
+                  limits:
+                    cpu: 4
+                    memory: 24Gi
+    fireeth:
+      jwt:
+        enabled: true
+      p2p:
+        enabled: true
+      genesis-json:
+        enabled: false
+      config:
+        reader-node-grpc-listen-addr: "0.0.0.0:10010"
+        reader-node-manager-api-addr: "127.0.0.1:10011"
+        reader-node-data-dir: "/var/lib/geth"
+        reader-node-path: "/app/geth"
+      nodeMetrics:
+        enabled: true
+        addr: 0.0.0.0
+        port: 6061
+      nodeArgs:
+        __prefix: "--"
+        __separator: "="
+        datadir: "{node-data-dir}"
+        vmtrace: firehose
+        syncmode: "full"
+        snapshot: "true"
+        http: "__none"
+        http.api: net,web3,eth,debug
+        http.addr: 0.0.0.0
+        http.port: 8545
+        http.vhosts: "*"
+        cache: 8192
+        maxpeers: 100
+    configMap:
+      __options:
+        useEnvSubst: true
+
+firehoseComponentDefaults:
+  # -- Image configuration for firehose-evm
+  image:
+    # -- Docker image repository
+    repository: "ghcr.io/streamingfast/firehose-ethereum"
+    # -- Image pull policy
+    pullPolicy: "IfNotPresent"
+    # -- Overrides the image reference using a tag
+    # digest takes precedence over tag if both are set
+
+  # -- Firehose-specific configuration
+  fireeth:
+    metrics:
+      enabled: true
+    pprof:
+      enabled: true
+    p2p:
+      enabled: false
+    jwt:
+      enabled: false
+    # -- Fireeth configuration paramaters
+    config:
+      data-dir: "/var/lib/fireeth"
+      log-to-file: false
+      common-index-block-sizes: 10000
+      firehose-rate-limit-bucket-size: 20
+      firehose-rate-limit-bucket-fill-rate: "1s"
+      common-one-block-store-url: null
+      common-forked-blocks-store-url: null
+      common-merged-blocks-store-url: null
+      common-live-blocks-addr: "relayer:10014"
+
+  configMap:
+    __enabled: true
+    __options:
+      # -- Run an envsubst initcontainer at runtime
+      useEnvSubst: false

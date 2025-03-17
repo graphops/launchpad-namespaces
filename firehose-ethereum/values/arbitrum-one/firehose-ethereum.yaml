@@ -1,0 +1,18 @@
+global:
+  labels:
+    version.firehose.graphops.xyz/fireeth: "2.11.1"
+    version.firehose.graphops.xyz/node: "3.5.2"
+    version.firehose.graphops.xyz/protocol: "3.0"
+
+firehoseComponentDefaults:
+  image:
+    repository: "ghcr.io/streamingfast/firehose-ethereum"
+    tag: "v2.11.1-nitro-nitro-v3.5.2-fh3.0"
+  command:
+    - /app/fireeth
+
+firehoseServiceDefaults:
+  reader-node:
+    fireeth:
+      config:
+        reader-node-path: /app/nitro

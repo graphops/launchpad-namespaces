@@ -1,0 +1,342 @@
+#namespace defaults
+{{ $_ := set .Values "_namespaceDefaults" ( `{"common":{"scaling":{"deployments":1,"firehose-ethereum":{},"lighthouse":{},"nimbus":{}}},"flavor":"eth-mainnet","eth-mainnet":{"features":["consensus-lighthouse"],"scaling":{"deployments":1,"firehose-ethereum":{},"lighthouse":{},"nimbus":{}},"targetNamespace":"fh-eth-mainnet"},"eth-sepolia":{"features":["consensus-lighthouse"],"scaling":{"deployments":1,"firehose-ethereum":{},"lighthouse":{},"nimbus":{}},"targetNamespace":"fh-eth-sepolia"},"arbitrum-one":{"features":[],"scaling":{"deployments":1,"firehose-ethereum":{},"lighthouse":{},"nimbus":{}},"targetNamespace":"fh-arbitrum-one"},"arbitrum-sepolia":{"features":[],"scaling":{"deployments":1,"firehose-ethereum":{},"lighthouse":{},"nimbus":{}},"targetNamespace":"fh-arbitrum-sepolia"},"polygon-mainnet":{"features":[],"scaling":{"deployments":1,"firehose-ethereum":{},"lighthouse":{},"nimbus":{}},"targetNamespace":"fh-polygon-mainnet"}}` | fromJson ) }}
+#set default flavor when missing
+{{ if not ( hasKey .Values "flavor" ) }}
+{{ $_ := set .Values "flavor" "eth-mainnet" }}
+{{ end }}
+
+environments:
+  {{ .Environment.Name }}:
+    values:
+      - flavor: {{ .Values.flavor }}
+      - _namespaceDefaults: {{ .Values._namespaceDefaults | toYaml | nindent 10 }}
+
+---
+environments:
+  {{ .Environment.Name }}:
+    values:
+      - _defaults: {{ .Values._namespaceDefaults | get .Values.flavor | toYaml | nindent 10 }}
+
+---
+# Define default features when undefined
+{{ if not (hasKey .Values "features") }}
+{{ $_ := set .Values "features" .Values._defaults.features }}
+{{ end }}
+
+#set default number of deployments when missing
+{{ if not ( hasKey .Values  "scaling" ) }}
+{{ $_ := set .Values "scaling" dict }}
+{{ end }}
+{{ if not ( hasKey ( .Values | get "scaling" dict ) "deployments" ) }}
+{{ $_ := set .Values.scaling "deployments" .Values._defaults.scaling.deployments }}
+{{ end }}
+
+environments:
+  {{ .Environment.Name }}:
+    values:
+      - features: {{ .Values.features | toYaml | nindent 10 }}
+      - scaling:
+          deployments: {{ .Values.scaling.deployments }}
+
+---
+{{- $_tplTransforms := (print `
+{{- $_TemplatedResources := list "Deployment" "StatefulSet" "DaemonSet" -}}
+{{- $_labels := .resourceLabels }}
+{{- $_annotations := merge ( .Values | get .release dict | get "annotations" dict ) ( .Values | get .canonicalRelease dict | get "annotations" dict ) ( .Values | get "annotations" dict ) }}
+transformers:
+- apiVersion: builtin
+  kind: AnnotationsTransformer
+  metadata:
+    name: AddAnnotations
+  annotations:
+{{- $_annotations | toYaml | nindent 4 }}
+  fieldSpecs:
+  - path: metadata/annotations
+    create: true
+{{- range $kind := $_TemplatedResources }}
+  - kind: {{ $kind }}
+    path: spec/template/metadata/annotations
+    create: true
+{{- end }}
+  - path: spec/volumeClaimTemplates[]/metadata/annotations
+    kind: StatefulSet
+    create: true
+- apiVersion: builtin
+  kind: LabelTransformer
+  metadata:
+    name: AddLabels
+  labels:
+{{- $_labels | toYaml | nindent 4 }}
+  fieldSpecs:
+  - path: metadata/labels
+    create: true
+{{- range $kind := $_TemplatedResources }}
+  - kind: {{ $kind }}
+    path: spec/template/metadata/labels
+    create: true
+{{- end }}
+  - path: spec/volumeClaimTemplates[]/metadata/labels
+    kind: StatefulSet
+    create: true
+`) -}}
+{{- $_tplReleaseValues := (print `
+{{- if ( .Values | get .release dict | get "mergeValues" true ) -}}
+{{- if ( hasKey .Values "flavor" ) }}
+- ./values/_common/{{ .canonicalRelease }}.yaml
+- ./values/_common/{{ .canonicalRelease }}.yaml.gotmpl
+- ./values/{{ .Values.flavor }}/{{ .canonicalRelease }}.yaml
+- ./values/{{ .Values.flavor }}/{{ .canonicalRelease }}.yaml.gotmpl
+{{- else }}
+- ./values/{{ .canonicalRelease }}.yaml
+- ./values/{{ .canonicalRelease }}.yaml.gotmpl
+{{- end -}}
+{{- if typeIs ( typeOf list ) ( .Values | get .canonicalRelease dict | get "values" dict ) -}}
+ {{- range $element := ( .Values | get .canonicalRelease dict | get "values" dict ) }}
+- {{- $element | toYaml | nindent 2 }}
+ {{- end -}}
+{{- else }}
+- {{- .Values | get .canonicalRelease dict | get "values" dict | toYaml | nindent 2 }}
+{{- end -}}
+{{- end -}}
+{{- if typeIs ( typeOf list ) ( .Values | get .release dict | get "values" dict ) -}}
+ {{- range $element := ( .Values | get .release dict | get "values" dict ) }}
+- {{- $element | toYaml | nindent 2 }}
+ {{- end -}}
+{{- else }}
+- {{- .Values | get .release dict | get "values" dict | toYaml | nindent 2 }}
+{{- end -}}
+`) -}}
+{{ $__helmDefaults := `{"recreatePods":true}` | fromJson }}
+
+{{ with ( .Values | get "helmDefaults" dict ) }}
+{{ $_ := (deepCopy . | mergeOverwrite $__helmDefaults) }}
+{{ end }}
+
+helmDefaults:
+{{ $__helmDefaults | toYaml | indent 2 }}
+
+{{ if ( hasKey .Values "kubeVersion" ) }}
+kubeVersion: {{ .Values.kubeVersion }}
+{{ end }}
+
+#set default namespace
+{{ $_defaultNamespace := .Values._defaults.targetNamespace }}
+
+
+{{- $_commonLabels := dict 
+`launchpad.graphops.xyz/namespace` `firehose-ethereum`
+}}
+
+{{- $_commonResourceLabels := dict 
+
+}}
+{{ $_ := mergeOverwrite $_commonResourceLabels $_commonLabels }}
+{{- if hasKey .Values "labels" }}
+{{- range $key, $value := $.Values.labels }}
+{{- $_ := set $_commonLabels $key $value }}
+{{- $_ := set $_commonResourceLabels $key $value }}
+{{- end }}
+{{- end }}
+{{- if hasKey .Values "resourceLabels" }}
+{{- range $key, $value := $.Values.resourceLabels }}
+{{- $_ := set $_commonResourceLabels $key $value }}
+{{- end }}
+{{- end }}
+commonLabels:
+{{- range $key, $value := $_commonLabels }}
+  {{ $key }}: {{ $value }}
+{{- end }}
+repositories:
+  - name: graphops
+    url: https://graphops.github.io/launchpad-charts/canary
+  
+templates:
+  defaults:
+    missingFileHandler: Warn
+    namespace: '{{ .Values | get "targetNamespace" $_defaultNamespace }}'
+  
+  firehose-ethereum:
+    {{- if ( .Values | get "firehose-ethereum" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "firehose-ethereum" | get "chartUrl" }}
+    {{- else }}
+    chart: "graphops/firehose-ethereum"
+    {{- end }}
+    inherit:
+    - template: "defaults"
+    {{- if ( .Values | get "firehose-ethereum" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "firehose-ethereum" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "firehose-ethereum" dict | get "chartVersion" false ) ( .Values | get "firehose-ethereum" dict | get "chartUrl" false ) )) }}
+    version: "0.1.0-canary.11"
+    {{- end }}
+  
+  nimbus:
+    {{- if ( .Values | get "nimbus" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "nimbus" | get "chartUrl" }}
+    {{- else }}
+    chart: "graphops/nimbus"
+    {{- end }}
+    inherit:
+    - template: "defaults"
+    {{- if ( .Values | get "nimbus" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "nimbus" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "nimbus" dict | get "chartVersion" false ) ( .Values | get "nimbus" dict | get "chartUrl" false ) )) }}
+    version: "0.6.2"
+    {{- end }}
+  
+  lighthouse:
+    {{- if ( .Values | get "lighthouse" dict | get "chartUrl" false ) }}
+    chart: {{ .Values | get "lighthouse" | get "chartUrl" }}
+    {{- else }}
+    chart: "graphops/lighthouse"
+    {{- end }}
+    inherit:
+    - template: "defaults"
+    {{- if ( .Values | get "lighthouse" dict | get "chartVersion" false ) }}
+    version: {{ .Values | get "lighthouse" | get "chartVersion" }}
+    {{- end }}
+    {{- if (not (or ( .Values | get "lighthouse" dict | get "chartVersion" false ) ( .Values | get "lighthouse" dict | get "chartUrl" false ) )) }}
+    version: "0.7.0"
+    {{- end }}
+  
+releases:
+  {{- $canonicalRelease := "firehose-ethereum" }}
+  {{- range $index := until (.Values.scaling | get $canonicalRelease dict | get "deployments" .Values.scaling.deployments) }}
+  {{- $deploymentIndex := (add . 1) }}
+  {{- $release := (printf "%s%v" "firehose-ethereum-" $deploymentIndex) }}
+  {{- $_templatedValue_0 :=  $canonicalRelease  }}
+  {{- $_templatedValue_1 :=  $release  }}
+  {{- $_templatedValue_2 :=  $deploymentIndex  }}
+  {{- $_releaseResourceLabels := dict 
+  `app.launchpad.graphops.xyz/layer` `execution`
+  `app.launchpad.graphops.xyz/component` $_templatedValue_0
+  `app.launchpad.graphops.xyz/release` $_templatedValue_1
+  `app.launchpad.graphops.xyz/scalingIndex` $_templatedValue_2
+  }}
+  {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
+  - name: "{{ $release }}"
+    inherit:
+    - template: "{{ $canonicalRelease }}"
+    labels:
+      app.launchpad.graphops.xyz/layer: execution
+      app.launchpad.graphops.xyz/release: '{{ $release }}'
+      app.launchpad.graphops.xyz/component: '{{ $canonicalRelease }}'
+      app.launchpad.graphops.xyz/scalingIndex: '{{ $deploymentIndex }}'
+      
+    {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "labels" dict ) }}
+      {{ $key }}: {{ $value }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- if (ne $release $canonicalRelease) }}
+    {{- range $key,$value := ( $.Values | get $release dict | get "labels" dict ) }}
+      {{ $key }}: {{ $value }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- end }}
+    {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "resourceLabels" dict ) }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- if (ne $release $canonicalRelease) }}
+    {{- range $key,$value := ( $.Values | get $release dict | get "resourceLabels" dict ) }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- end }}
+    {{- tpl $_tplTransforms (dict "Values" $.Values "release" $release "canonicalRelease" $canonicalRelease "resourceLabels" $_releaseResourceLabels  )  | indent 4 -}}
+    values:
+    {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
+  {{- end -}}
+  {{ if has "consensus-nimbus" ( .Values | get "features" list ) }}
+  {{- $canonicalRelease := "nimbus" }}
+  {{- range $index := until (.Values.scaling | get $canonicalRelease dict | get "deployments" .Values.scaling.deployments) }}
+  {{- $deploymentIndex := (add . 1) }}
+  {{- $release := (printf "%s%v" "nimbus-" $deploymentIndex) }}
+  {{- $_templatedValue_0 :=  $canonicalRelease  }}
+  {{- $_templatedValue_1 :=  $release  }}
+  {{- $_templatedValue_2 :=  $deploymentIndex  }}
+  {{- $_releaseResourceLabels := dict 
+  `app.launchpad.graphops.xyz/layer` `consensus`
+  `app.launchpad.graphops.xyz/component` $_templatedValue_0
+  `app.launchpad.graphops.xyz/release` $_templatedValue_1
+  `app.launchpad.graphops.xyz/scalingIndex` $_templatedValue_2
+  }}
+  {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
+  - name: "{{ $release }}"
+    inherit:
+    - template: "{{ $canonicalRelease }}"
+    labels:
+      app.launchpad.graphops.xyz/layer: consensus
+      app.launchpad.graphops.xyz/release: '{{ $release }}'
+      app.launchpad.graphops.xyz/component: '{{ $canonicalRelease }}'
+      app.launchpad.graphops.xyz/scalingIndex: '{{ $deploymentIndex }}'
+      
+    {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "labels" dict ) }}
+      {{ $key }}: {{ $value }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- if (ne $release $canonicalRelease) }}
+    {{- range $key,$value := ( $.Values | get $release dict | get "labels" dict ) }}
+      {{ $key }}: {{ $value }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- end }}
+    {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "resourceLabels" dict ) }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- if (ne $release $canonicalRelease) }}
+    {{- range $key,$value := ( $.Values | get $release dict | get "resourceLabels" dict ) }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- end }}
+    {{- tpl $_tplTransforms (dict "Values" $.Values "release" $release "canonicalRelease" $canonicalRelease "resourceLabels" $_releaseResourceLabels  )  | indent 4 -}}
+    values:
+    {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
+  {{- end -}}
+  {{- end -}}
+  {{ if has "consensus-lighthouse" ( .Values | get "features" list ) }}
+  {{- $canonicalRelease := "lighthouse" }}
+  {{- range $index := until (.Values.scaling | get $canonicalRelease dict | get "deployments" .Values.scaling.deployments) }}
+  {{- $deploymentIndex := (add . 1) }}
+  {{- $release := (printf "%s%v" "lighthouse-" $deploymentIndex) }}
+  {{- $_templatedValue_0 :=  $canonicalRelease  }}
+  {{- $_templatedValue_1 :=  $release  }}
+  {{- $_templatedValue_2 :=  $deploymentIndex  }}
+  {{- $_releaseResourceLabels := dict 
+  `app.launchpad.graphops.xyz/layer` `consensus`
+  `app.launchpad.graphops.xyz/component` $_templatedValue_0
+  `app.launchpad.graphops.xyz/release` $_templatedValue_1
+  `app.launchpad.graphops.xyz/scalingIndex` $_templatedValue_2
+  }}
+  {{- $_releaseResourceLabels = mergeOverwrite $_commonLabels $_commonResourceLabels $_releaseResourceLabels }}
+  - name: "{{ $release }}"
+    inherit:
+    - template: "{{ $canonicalRelease }}"
+    labels:
+      app.launchpad.graphops.xyz/layer: consensus
+      app.launchpad.graphops.xyz/release: '{{ $release }}'
+      app.launchpad.graphops.xyz/component: '{{ $canonicalRelease }}'
+      app.launchpad.graphops.xyz/scalingIndex: '{{ $deploymentIndex }}'
+      
+    {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "labels" dict ) }}
+      {{ $key }}: {{ $value }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- if (ne $release $canonicalRelease) }}
+    {{- range $key,$value := ( $.Values | get $release dict | get "labels" dict ) }}
+      {{ $key }}: {{ $value }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- end }}
+    {{- range $key,$value := ( $.Values | get $canonicalRelease dict | get "resourceLabels" dict ) }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- if (ne $release $canonicalRelease) }}
+    {{- range $key,$value := ( $.Values | get $release dict | get "resourceLabels" dict ) }}
+    {{- $_ := set $_releaseResourceLabels $key $value }}
+    {{- end }}
+    {{- end }}
+    {{- tpl $_tplTransforms (dict "Values" $.Values "release" $release "canonicalRelease" $canonicalRelease "resourceLabels" $_releaseResourceLabels  )  | indent 4 -}}
+    values:
+    {{- tpl $_tplReleaseValues (dict "Values" $.Values "canonicalRelease" $canonicalRelease "release" $release) | indent 4 -}}
+  {{- end -}}
+  {{- end -}}
