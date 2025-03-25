@@ -167,7 +167,7 @@ templates:
     version: {{ .Values | get "firehose-ethereum" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "firehose-ethereum" dict | get "chartVersion" false ) ( .Values | get "firehose-ethereum" dict | get "chartUrl" false ) )) }}
-    version: "0.1.0-canary.11"
+    version: "0.1.0-canary.12"
     {{- end }}
   
   nimbus:
