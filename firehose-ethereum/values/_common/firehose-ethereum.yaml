@@ -89,6 +89,10 @@ firehoseComponents:
         replicas: 1
 
 firehoseServiceDefaults:
+  merger:
+    fireeth:
+      config:
+        merger-delete-threads: 50
   reader-node:
     workload:
       spec:

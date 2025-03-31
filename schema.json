@@ -2782,7 +2782,8 @@
                             "eth-sepolia",
                             "arbitrum-one",
                             "arbitrum-sepolia",
-                            "polygon-mainnet"
+                            "polygon-mainnet",
+                            "geo-one"
                         ],
                         "properties": {
                             "flavor": {
@@ -2917,6 +2918,31 @@
                                         "type": "string",
                                         "enum": [
                                             "fh-polygon-mainnet"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.firehoseEthereum.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "features",
+                                            "targetNamespace"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "geo-one": {
+                                "type": "object",
+                                "properties": {
+                                    "features": {
+                                        "type": "array"
+                                    },
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "fh-geo-one"
                                         ]
                                     }
                                 },
@@ -3298,7 +3324,8 @@
                     "eth-sepolia",
                     "arbitrum-one",
                     "arbitrum-sepolia",
-                    "polygon-mainnet"
+                    "polygon-mainnet",
+                    "geo-one"
                 ]
             },
             "namespaces.firehoseEthereum.flavor.eth_mainnet": {
@@ -3312,6 +3339,12 @@
                 "type": "string",
                 "enum": [
                     "eth-sepolia"
+                ]
+            },
+            "namespaces.firehoseEthereum.flavor.geo_one": {
+                "type": "string",
+                "enum": [
+                    "geo-one"
                 ]
             },
             "namespaces.firehoseEthereum.flavor.polygon_mainnet": {
