@@ -2735,6 +2735,473 @@
                     }
                 ]
             },
+            "namespaces.geo": {
+                "type": "object",
+                "required": [
+                    "meta",
+                    "defaults",
+                    "releases",
+                    "labels",
+                    "resourceLabels"
+                ],
+                "properties": {
+                    "meta": {
+                        "type": "object",
+                        "required": [
+                            "name",
+                            "url",
+                            "description"
+                        ],
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "enum": [
+                                    "geo"
+                                ]
+                            },
+                            "url": {
+                                "type": "string",
+                                "enum": [
+                                    "https://github.com/graphops/launchpad-namespaces/geo"
+                                ]
+                            },
+                            "description": {
+                                "type": "string",
+                                "enum": [
+                                    "This *Namespace* provides a suitable stack to operate a Geo Browser Orbit L3 archive node."
+                                ]
+                            }
+                        }
+                    },
+                    "defaults": {
+                        "type": "object",
+                        "required": [
+                            "flavor",
+                            "one"
+                        ],
+                        "properties": {
+                            "flavor": {
+                                "type": "string",
+                                "enum": [
+                                    "one"
+                                ]
+                            },
+                            "one": {
+                                "type": "object",
+                                "properties": {
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "geo-one"
+                                        ]
+                                    },
+                                    "features": {
+                                        "type": "array",
+                                        "items": [
+                                            {
+                                                "$ref": "#/components/schemas/namespaces.geo.features.geo"
+                                            },
+                                            {
+                                                "$ref": "#/components/schemas/namespaces.geo.features.proxyd"
+                                            }
+                                        ],
+                                        "default": [
+                                            "geo",
+                                            "proxyd"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.geo.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "targetNamespace",
+                                            "features"
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "releases": {
+                        "type": "object",
+                        "required": [
+                            "geo",
+                            "proxyd"
+                        ],
+                        "properties": {
+                            "geo": {
+                                "type": "object",
+                                "required": [
+                                    "chart",
+                                    "labels",
+                                    "feature"
+                                ],
+                                "properties": {
+                                    "chart": {
+                                        "type": "object",
+                                        "required": [
+                                            "url",
+                                            "description",
+                                            "repository",
+                                            "name"
+                                        ],
+                                        "properties": {
+                                            "url": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "https://github.com/OffchainLabs/nitro/"
+                                                ]
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "Nitro is the latest iteration of the Arbitrum technology. It is a fully integrated, complete layer 2 optimistic rollup system, including fraud proofs, the sequencer, the token bridges, advanced calldata compression, and more."
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "arbitrum-nitro"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "labels": {
+                                        "type": "object",
+                                        "required": [
+                                            "app.launchpad.graphops.xyz/layer",
+                                            "app.launchpad.graphops.xyz/release",
+                                            "app.launchpad.graphops.xyz/component",
+                                            "app.launchpad.graphops.xyz/scalingIndex"
+                                        ],
+                                        "properties": {
+                                            "app.launchpad.graphops.xyz/layer": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "execution"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/release": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $release }}"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/component": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $canonicalRelease }}"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/scalingIndex": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $deploymentIndex }}"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "feature": {
+                                        "$ref": "#/components/schemas/namespaces.geo.features.geo"
+                                    }
+                                }
+                            },
+                            "proxyd": {
+                                "type": "object",
+                                "required": [
+                                    "chart",
+                                    "labels",
+                                    "feature"
+                                ],
+                                "properties": {
+                                    "chart": {
+                                        "type": "object",
+                                        "required": [
+                                            "url",
+                                            "description",
+                                            "repository",
+                                            "name"
+                                        ],
+                                        "properties": {
+                                            "url": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "https://github.com/ethereum-optimism/infra/tree/main/proxyd"
+                                                ]
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching."
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "proxyd"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "labels": {
+                                        "type": "object",
+                                        "required": [
+                                            "app.launchpad.graphops.xyz/layer",
+                                            "app.launchpad.graphops.xyz/component",
+                                            "app.launchpad.graphops.xyz/release"
+                                        ],
+                                        "properties": {
+                                            "app.launchpad.graphops.xyz/layer": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "proxy"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/component": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $canonicalRelease }}"
+                                                ]
+                                            },
+                                            "app.launchpad.graphops.xyz/release": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "{{ $release }}"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "feature": {
+                                        "$ref": "#/components/schemas/namespaces.geo.features.proxyd"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "labels": {
+                        "type": "object",
+                        "properties": {
+                            "launchpad.graphops.xyz/namespace": {
+                                "type": "string",
+                                "enum": [
+                                    "geo"
+                                ]
+                            },
+                            "app.launchpad.graphops.xyz/type": {
+                                "type": "string",
+                                "enum": [
+                                    "blockchain"
+                                ]
+                            },
+                            "app.launchpad.graphops.xyz/chain": {
+                                "type": "string",
+                                "enum": [
+                                    "geo"
+                                ]
+                            },
+                            "app.launchpad.graphops.xyz/network": {
+                                "type": "string",
+                                "enum": [
+                                    "{{ .Values.flavor }}"
+                                ]
+                            }
+                        },
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/base.labels"
+                            },
+                            {
+                                "required": [
+                                    "launchpad.graphops.xyz/namespace",
+                                    "app.launchpad.graphops.xyz/type",
+                                    "app.launchpad.graphops.xyz/chain",
+                                    "app.launchpad.graphops.xyz/network"
+                                ]
+                            }
+                        ]
+                    },
+                    "resourceLabels": {
+                        "type": "object"
+                    }
+                }
+            },
+            "namespaces.geo.defaults.common": {
+                "type": "object",
+                "required": [
+                    "scaling"
+                ],
+                "properties": {
+                    "scaling": {
+                        "type": "object",
+                        "properties": {
+                            "deployments": {
+                                "type": "integer",
+                                "enum": [
+                                    1
+                                ]
+                            }
+                        },
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/namespaces.geo.scaling"
+                            },
+                            {
+                                "required": [
+                                    "deployments"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            },
+            "namespaces.geo.features": {
+                "description": "arbitrum namespace features schema",
+                "type": "object"
+            },
+            "namespaces.geo.features.enum": {
+                "type": "string",
+                "enum": [
+                    "proxyd",
+                    "geo"
+                ]
+            },
+            "namespaces.geo.features.geo": {
+                "type": "string",
+                "enum": [
+                    "geo"
+                ]
+            },
+            "namespaces.geo.features.proxyd": {
+                "description": "Deploy proxyd",
+                "type": "string",
+                "enum": [
+                    "proxyd"
+                ]
+            },
+            "namespaces.geo.flavor": {
+                "type": "object"
+            },
+            "namespaces.geo.flavor.enum": {
+                "$ref": "#/components/schemas/namespaces.geo.flavor.one"
+            },
+            "namespaces.geo.flavor.one": {
+                "description": "suitable defaults for an geo mainnet archive node",
+                "type": "string",
+                "enum": [
+                    "one"
+                ]
+            },
+            "namespaces.geo.helmfiles": {
+                "description": "arbitrum helmfile API",
+                "type": "object",
+                "properties": {
+                    "path": {
+                        "type": "string",
+                        "pattern": "*github.com/graphops/launchpad-namespaces.git@geo/helmfile.yaml*"
+                    },
+                    "values": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/namespaces.geo.values"
+                            },
+                            {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/namespaces.geo.values"
+                                }
+                            }
+                        ]
+                    }
+                },
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/base.helmfiles"
+                    },
+                    {
+                        "required": [
+                            "path"
+                        ]
+                    }
+                ]
+            },
+            "namespaces.geo.scaling": {
+                "description": "arbitrum scaling interface",
+                "type": "object",
+                "required": [
+                    "deployments",
+                    "geo"
+                ],
+                "properties": {
+                    "deployments": {
+                        "description": "number of independent stateful sets to deploy",
+                        "type": "integer",
+                        "minimum": 1,
+                        "default": 1
+                    },
+                    "geo": {
+                        "type": "object",
+                        "properties": {
+                            "deployments": {
+                                "type": "integer",
+                                "minimum": 1
+                            }
+                        }
+                    }
+                }
+            },
+            "namespaces.geo.values": {
+                "description": "arbitrum namespace values schema",
+                "type": "object",
+                "properties": {
+                    "flavor": {
+                        "$ref": "#/components/schemas/namespaces.geo.flavor.enum"
+                    },
+                    "targetNamespace": {
+                        "description": "the default is arbitrum-<flavor>",
+                        "type": "string",
+                        "default": "geo-one"
+                    },
+                    "features": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/namespaces.geo.features.enum"
+                        },
+                        "default": [
+                            "geo",
+                            "proxyd"
+                        ]
+                    },
+                    "scaling": {
+                        "$ref": "#/components/schemas/namespaces.geo.scaling"
+                    },
+                    "geo": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    },
+                    "proxyd": {
+                        "$ref": "#/components/schemas/base.releaseValues"
+                    }
+                },
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/base.values"
+                    }
+                ]
+            },
             "namespaces.gnosis": {
                 "description": "Gnosis *Namespace*",
                 "type": "object",

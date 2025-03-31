@@ -1,0 +1,24 @@
+{{ $scalingIndex := splitList "-" .Release.Name | last }}
+nitro:
+  config:
+    chain: 80451
+    chainInfo: true
+    chainInfoJson: |
+      [{"chain-id":80451,"parent-chain-id":42161,"chain-name":"conduit-orbit-deployer","chain-config":{"chainId":80451,"homesteadBlock":0,"daoForkBlock":null,"daoForkSupport":true,"eip150Block":0,"eip150Hash":"0x0000000000000000000000000000000000000000000000000000000000000000","eip155Block":0,"eip158Block":0,"byzantiumBlock":0,"constantinopleBlock":0,"petersburgBlock":0,"istanbulBlock":0,"muirGlacierBlock":0,"berlinBlock":0,"londonBlock":0,"clique":{"period":0,"epoch":0},"arbitrum":{"EnableArbOS":true,"AllowDebugPrecompiles":false,"DataAvailabilityCommittee":true,"InitialArbOSVersion":11,"InitialChainOwner":"0xf810488e59877Ae5CBb17F9457bd0857Be5D0de8","GenesisBlockNum":0}},"rollup":{"bridge":"0xbed02aB5cEBa5F5bd74AbC51439f4EB50F355B89","inbox":"0x5cB17AAC4B023598Ad0a3a7D69a7B29606FF16a4","sequencer-inbox":"0xfAffbe0Ebe4dd641bEa4207120B04fD991b6b6d7","rollup":"0xfE37f9409b9881d7334685f0306319E100DC08E8","validator-utils":"0x6c21303F5986180B1394d2C89f3e883890E2867b","validator-wallet-creator":"0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF","deployed-at":212348003}}]
+    defaultArgs:
+      - --execution.caching.archive
+      - --node.bold.enable=true
+      - --ws.addr=0.0.0.0
+      - --ws.port=8548
+      - --execution.forwarding-target=https://rpc-geo-genesis-h0q2s21xx8.t.conduit.xyz
+      - --node.data-availability.enable=true
+      - --node.data-availability.sequencer-inbox-address=0xfAffbe0Ebe4dd641bEa4207120B04fD991b6b6d7
+      - --node.data-availability.rest-aggregator.enable=true
+      - --node.data-availability.rest-aggregator.urls="https://das-geo-genesis-h0q2s21xx8.t.conduit.xyz"
+      - --node.feed.input.url="wss://relay-geo-genesis-h0q2s21xx8.t.conduit.xyz"
+
+  restoreSnapshot:
+    enabled: false
+
+  affinityPresets:
+    antiAffinityByHostname: false
