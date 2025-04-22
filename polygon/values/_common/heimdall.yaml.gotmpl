@@ -115,7 +115,7 @@ heimdall:
 {{- if (hasKey .Values.scaling "p2pStartPort") }}
   p2pNodePort:
     enabled: true
-    port: {{ add (mul (sub $scalingIndex 1) 2) .Values.scaling.p2pStartPort 1 }}
+    port: {{ add (mul (sub $scalingIndex 1) 3) .Values.scaling.p2pStartPort 2 }}
 {{- end }}
 
 prometheus:
