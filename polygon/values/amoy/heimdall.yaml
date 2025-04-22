@@ -1,3 +1,7 @@
 heimdall:
   config:
     network: amoy
+  volumeClaimSpec:
+    resources:
+      requests:
+        storage: 500Gi
