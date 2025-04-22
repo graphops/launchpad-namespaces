@@ -1,0 +1,10 @@
+statefulNode:
+  extraArgs:
+    - --http.api=eth,debug,net,trace
+    - --chain=hoodi
+    - --ws
+
+  volumeClaimSpec:
+    resources:
+      requests:
+        storage: 1Ti

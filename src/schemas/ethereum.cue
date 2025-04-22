@@ -23,7 +23,10 @@ package LaunchpadNamespaces
 			// suitable defaults for a sepolia ethereum testnet node
 			#sepolia: "sepolia"
 
-			#enum: ( #mainnet | #holesky | #sepolia )
+			// suitable defaults for a hoodi ethereum testnet node
+			#hoodi: "hoodi"
+
+			#enum: ( #mainnet | #holesky | #sepolia | #hoodi )
 		}
 
 		// ethereum namespace features schema
@@ -108,6 +111,11 @@ package LaunchpadNamespaces
 			sepolia: {
 				#common
 				targetNamespace: "eth-sepolia"
+			}
+
+			hoodi: {
+				#common
+				targetNamespace: "eth-hoodi"
 			}
 		}
 

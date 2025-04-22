@@ -2051,7 +2051,8 @@
                             "flavor",
                             "mainnet",
                             "holesky",
-                            "sepolia"
+                            "sepolia",
+                            "hoodi"
                         ],
                         "properties": {
                             "flavor": {
@@ -2109,6 +2110,27 @@
                                         "type": "string",
                                         "enum": [
                                             "eth-sepolia"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/namespaces.ethereum.defaults.common"
+                                    },
+                                    {
+                                        "required": [
+                                            "targetNamespace"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "hoodi": {
+                                "type": "object",
+                                "properties": {
+                                    "targetNamespace": {
+                                        "type": "string",
+                                        "enum": [
+                                            "eth-hoodi"
                                         ]
                                     }
                                 },
@@ -2586,7 +2608,8 @@
                 "enum": [
                     "mainnet",
                     "holesky",
-                    "sepolia"
+                    "sepolia",
+                    "hoodi"
                 ]
             },
             "namespaces.ethereum.flavor.holesky": {
@@ -2594,6 +2617,13 @@
                 "type": "string",
                 "enum": [
                     "holesky"
+                ]
+            },
+            "namespaces.ethereum.flavor.hoodi": {
+                "description": "suitable defaults for a hoodi ethereum testnet node",
+                "type": "string",
+                "enum": [
+                    "hoodi"
                 ]
             },
             "namespaces.ethereum.flavor.mainnet": {
@@ -5039,7 +5069,7 @@
                                         }
                                     },
                                     "feature": {
-                                        "$ref": "#/components/schemas/namespaces.polygon.features.heimdall_ha_svc"
+                                        "$ref": "#/components/schemas/namespaces.polygon.features.heimdall"
                                     }
                                 }
                             },
@@ -5183,19 +5213,11 @@
                             },
                             {
                                 "$ref": "#/components/schemas/namespaces.polygon.features.erigon"
-                            },
-                            {
-                                "$ref": "#/components/schemas/namespaces.polygon.features.heimdall"
-                            },
-                            {
-                                "$ref": "#/components/schemas/namespaces.polygon.features.heimdall_ha_svc"
                             }
                         ],
                         "default": [
                             "proxyd",
-                            "erigon",
-                            "heimdall",
-                            "heimdall-ha-svc"
+                            "erigon"
                         ]
                     },
                     "scaling": {
@@ -5230,8 +5252,7 @@
                 "enum": [
                     "proxyd",
                     "erigon",
-                    "heimdall",
-                    "heimdall-ha-svc"
+                    "heimdall"
                 ]
             },
             "namespaces.polygon.features.erigon": {
@@ -5246,13 +5267,6 @@
                 "type": "string",
                 "enum": [
                     "heimdall"
-                ]
-            },
-            "namespaces.polygon.features.heimdall_ha_svc": {
-                "description": "Provide an heimdall front SVC for HA",
-                "type": "string",
-                "enum": [
-                    "heimdall-ha-svc"
                 ]
             },
             "namespaces.polygon.features.proxyd": {
@@ -5377,9 +5391,7 @@
                         },
                         "default": [
                             "proxyd",
-                            "erigon",
-                            "heimdall",
-                            "heimdall-ha-svc"
+                            "erigon"
                         ]
                     },
                     "scaling": {

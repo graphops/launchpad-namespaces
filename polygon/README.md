@@ -119,7 +119,7 @@ erigon.labels | object |  | Adds helmfile labels to this release |
 erigon.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
 erigon.resourceLabels | object |  | Adds labels to resources on this release |
 erigon.values | (object *or* list of objects) |  | Pass values to the release helm chart |
-features | list of strings | [proxyd, erigon, heimdall, heimdall-ha-svc] | *enum of:&nbsp;&nbsp;(proxyd \| erigon \| heimdall \| heimdall-ha-svc)* |
+features | list of strings | [proxyd, erigon] | *enum of:&nbsp;&nbsp;(proxyd \| erigon \| heimdall)* |
 flavor | string |  |  |
 heimdall | object |  |  |
 heimdall.annotations | object |  | Add annotations to resources on this release |
