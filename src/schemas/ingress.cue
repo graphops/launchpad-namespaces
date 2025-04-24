@@ -59,7 +59,7 @@ package LaunchpadNamespaces
 				chart: {_repositories.jetstack.charts["cert-manager"]}
 				feature: #features.#certManager
 				_template: {
-					version: "v1.17.1"
+					version: "v1.17.2"
 					// so that it can be installed in the absence of the CRDs
 					disableValidationOnInstall: true
 				}
