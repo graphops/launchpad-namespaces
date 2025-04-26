@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: sealed-secrets
+  labels:
+    launchpad.graphops.xyz/namespace: sealed-secrets
+    launchpad.graphops.xyz/layer: base
+spec:
+  generators:
+  - list:
+      elements:
+      - name: sealed-secrets
+  template:
+    metadata:
+      name: 'sealed-secrets'
+      labels:
+        launchpad.graphops.xyz/namespace: sealed-secrets
+        launchpad.graphops.xyz/layer: base
+    spec:
+      project: default
+      source:
+        repoURL: https://bitnami-labs.github.io/sealed-secrets
+        chart: sealed-secrets
+        targetRevision: 2.17.2
+        helm:
+          releaseName: sealed-secrets
+          values: {}
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: sealed-secrets
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
