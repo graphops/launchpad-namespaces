@@ -24,11 +24,11 @@ spec:
         targetRevision: 2.17.2
         helm:
           releaseName: sealed-secrets
-          values: {}
+          values: |
+            {}
       destination:
         server: https://kubernetes.default.svc
         namespace: sealed-secrets
       syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true
