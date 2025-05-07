@@ -130,7 +130,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/release":   "{{ $release }}"
 				}
 				feature: #features.#proxyd_nitro
-				_template: {version: "0.6.10-canary.1"}
+				_template: {version: "0.6.10-canary.2"}
 			}
 
 			"proxyd-classic": {
@@ -141,7 +141,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/release":   "{{ $release }}"
 				}
 				feature: #features.#proxyd_classic
-				_template: {version: "0.6.10-canary.1"}
+				_template: {version: "0.6.10-canary.2"}
 			}
 		}
 
