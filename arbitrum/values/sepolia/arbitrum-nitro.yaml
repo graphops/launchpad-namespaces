@@ -3,6 +3,8 @@ nitro:
     chain: 421614 # determines Arbitrum network - 421614 Sepolia
     parentChainUrl: http://your-eth-sepolia-url:8545  ## changeme
     parentChainBeaconUrl: http://your-eth-consensus-node-url:5052  ## changeme
+    extraArgs:
+      - --execution.rpc.gas-cap=10000000000
 
   # -- [PersistentVolumeClaimSpec](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.23/#persistentvolumeclaimspec-v1-core) for Arbitrum Nitro storage
   volumeClaimSpec:
