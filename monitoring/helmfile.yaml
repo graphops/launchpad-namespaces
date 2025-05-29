@@ -204,7 +204,7 @@ templates:
     version: {{ .Values | get "promtail" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "promtail" dict | get "chartVersion" false ) ( .Values | get "promtail" dict | get "chartUrl" false ) )) }}
-    version: "6.16.6"
+    version: "6.17.0"
     {{- end }}
   
 releases:
