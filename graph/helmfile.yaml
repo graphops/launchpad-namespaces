@@ -158,7 +158,7 @@ templates:
     version: {{ .Values | get "graph-node" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "graph-node" dict | get "chartVersion" false ) ( .Values | get "graph-node" dict | get "chartUrl" false ) )) }}
-    version: "0.5.10-canary.3"
+    version: "0.5.10-canary.4"
     {{- end }}
   
   graph-network-indexer:
@@ -173,7 +173,7 @@ templates:
     version: {{ .Values | get "graph-network-indexer" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "graph-network-indexer" dict | get "chartVersion" false ) ( .Values | get "graph-network-indexer" dict | get "chartUrl" false ) )) }}
-    version: "0.5.19-canary.3"
+    version: "0.5.19-canary.4"
     {{- end }}
   
   graph-toolbox:
