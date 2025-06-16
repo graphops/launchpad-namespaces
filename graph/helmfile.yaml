@@ -1,5 +1,5 @@
 #namespace defaults
-{{ $_ := set .Values "_namespaceDefaults" ( `{"flavor":"mainnet","mainnet":{"targetNamespace":"graph-mainnet","features":["subgraph-radio"]},"arbitrum-one":{"targetNamespace":"graph-arbitrum-one","features":["subgraph-radio"]},"common":{"features":["subgraph-radio"]},"arbitrum-sepolia":{"targetNamespace":"graph-arbitrum-sepolia","features":["subgraph-radio"]}}` | fromJson ) }}
+{{ $_ := set .Values "_namespaceDefaults" ( `{"common":{"features":["subgraph-radio"]},"flavor":"mainnet","mainnet":{"features":["subgraph-radio"],"targetNamespace":"graph-mainnet"},"arbitrum-one":{"features":["subgraph-radio"],"targetNamespace":"graph-arbitrum-one"},"arbitrum-sepolia":{"features":["subgraph-radio"],"targetNamespace":"graph-arbitrum-sepolia"}}` | fromJson ) }}
 #set default flavor when missing
 {{ if not ( hasKey .Values "flavor" ) }}
 {{ $_ := set .Values "flavor" "mainnet" }}
@@ -143,8 +143,8 @@ repositories:
   
 templates:
   defaults:
-    namespace: '{{ .Values | get "targetNamespace" $_defaultNamespace }}'
     missingFileHandler: Warn
+    namespace: '{{ .Values | get "targetNamespace" $_defaultNamespace }}'
   
   graph-node:
     {{- if ( .Values | get "graph-node" dict | get "chartUrl" false ) }}

@@ -134,8 +134,8 @@ repositories:
   
 templates:
   defaults:
-    namespace: '{{ .Values | get "targetNamespace" $_defaultNamespace }}'
     missingFileHandler: Warn
+    namespace: '{{ .Values | get "targetNamespace" $_defaultNamespace }}'
   
   postgres-operator:
     {{- if ( .Values | get "postgres-operator" dict | get "chartUrl" false ) }}
