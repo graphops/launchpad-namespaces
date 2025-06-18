@@ -111,7 +111,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
 				}
 				feature: #features.#erigon
-				_template: {version: "0.11.4-canary.2"}
+				_template: {version: "0.11.4-canary.3"}
 			}
 
 			heimdall: {
