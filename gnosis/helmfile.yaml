@@ -170,7 +170,7 @@ templates:
     version: {{ .Values | get "erigon" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "erigon" dict | get "chartVersion" false ) ( .Values | get "erigon" dict | get "chartUrl" false ) )) }}
-    version: "0.11.4-canary.4"
+    version: "0.11.4"
     {{- end }}
   
   lighthouse:
@@ -200,7 +200,7 @@ templates:
     version: {{ .Values | get "proxyd" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "proxyd" dict | get "chartVersion" false ) ( .Values | get "proxyd" dict | get "chartUrl" false ) )) }}
-    version: "0.6.12-canary.2"
+    version: "0.6.12"
     {{- end }}
   
 releases:
