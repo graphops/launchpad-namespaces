@@ -170,7 +170,7 @@ templates:
     version: {{ .Values | get "erigon" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "erigon" dict | get "chartVersion" false ) ( .Values | get "erigon" dict | get "chartUrl" false ) )) }}
-    version: "0.11.6-canary.1"
+    version: "0.11.6-canary.2"
     {{- end }}
   
   heimdall:
@@ -185,7 +185,7 @@ templates:
     version: {{ .Values | get "heimdall" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "heimdall" dict | get "chartVersion" false ) ( .Values | get "heimdall" dict | get "chartUrl" false ) )) }}
-    version: "1.2.9-canary.2"
+    version: "1.2.9-canary.4"
     {{- end }}
   
   heimdall-ha-svc:
