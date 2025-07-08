@@ -111,7 +111,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
 				}
 				feature: #features.#erigon
-				_template: {version: "0.11.6-canary.2"}
+				_template: {version: "0.11.6"}
 			}
 
 			heimdall: {
@@ -123,7 +123,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
 				}
 				feature: #features.#heimdall
-				_template: {version: "1.2.9-canary.4"}
+				_template: {version: "1.3.0"}
 			}
 
 			"heimdall-ha-svc": {
@@ -145,7 +145,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/component": "{{ $canonicalRelease }}"
 				}
 				feature: #features.#proxyd
-				_template: {version: "0.6.12"}
+				_template: {version: "0.6.13-canary.1"}
 			}
 		}
 
