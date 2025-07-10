@@ -170,7 +170,7 @@ templates:
     version: {{ .Values | get "erigon" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "erigon" dict | get "chartVersion" false ) ( .Values | get "erigon" dict | get "chartUrl" false ) )) }}
-    version: "0.11.6"
+    version: "0.11.7-canary.1"
     {{- end }}
   
   heimdall:
