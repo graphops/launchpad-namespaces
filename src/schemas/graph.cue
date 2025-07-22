@@ -88,13 +88,13 @@ package LaunchpadNamespaces
 			"graph-node": {
 				chart: {_repositories.graphops.charts["graph-node"]}
 				feature: #features.#node
-				_template: {version: "0.5.10-canary.7"}
+				_template: {version: "0.6.0"}
 			}
 
 			"graph-network-indexer": {
 				chart: {_repositories.graphops.charts["graph-network-indexer"]}
 				feature: #features.#network_indexer
-				_template: {version: "0.5.20-canary.2"}
+				_template: {version: "0.5.20-canary.4"}
 			}
 
 			"graph-toolbox": {
