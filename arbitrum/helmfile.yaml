@@ -200,7 +200,7 @@ templates:
     version: {{ .Values | get "proxyd-nitro" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "proxyd-nitro" dict | get "chartVersion" false ) ( .Values | get "proxyd-nitro" dict | get "chartUrl" false ) )) }}
-    version: "0.6.13"
+    version: "0.6.14-canary.1"
     {{- end }}
   
   proxyd-classic:
@@ -215,7 +215,7 @@ templates:
     version: {{ .Values | get "proxyd-classic" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "proxyd-classic" dict | get "chartVersion" false ) ( .Values | get "proxyd-classic" dict | get "chartUrl" false ) )) }}
-    version: "0.6.13"
+    version: "0.6.14-canary.1"
     {{- end }}
   
 releases:
