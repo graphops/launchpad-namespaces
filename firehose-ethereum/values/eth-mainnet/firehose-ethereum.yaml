@@ -1,13 +1,13 @@
 global:
   labels:
-    version.firehose.graphops.xyz/fireeth: "2.11.1"
-    version.firehose.graphops.xyz/node: "1.15.5"
+    version.firehose.graphops.xyz/fireeth: "2.12.4"
+    version.firehose.graphops.xyz/node: "1.16.1"
     version.firehose.graphops.xyz/protocol: "3.0"
 
 firehoseComponentDefaults:
   image:
     repository: "ghcr.io/streamingfast/firehose-ethereum"
-    tag: "v2.11.1-geth-v1.15.5-fh3.0"
+    tag: "v2.12.4-geth-v1.16.1-fh3.0-2"
 
 firehoseServiceDefaults:
   reader-node:
