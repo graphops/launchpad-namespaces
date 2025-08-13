@@ -21,8 +21,8 @@ indexerDefaults:
 indexerAgent:
   config:
     gateway-endpoint: "https://gateway-arbitrum.network.thegraph.com/collect-receipts"
-    epoch-subgraph-deployment: "QmW26TG5s9myd1gzio9fkgVHEEjZ7u5ktWDpkNePzbusNo"
-    epoch-subgraph-endpoint: http://graph-node-query:8000/subgraphs/id/QmW26TG5s9myd1gzio9fkgVHEEjZ7u5ktWDpkNePzbusNo
+    epoch-subgraph-deployment: "QmeqJqJTZg3xqYaYhvc35JzyB7RBqEyJeexjTBDykvxNkJ"
+    epoch-subgraph-endpoint: http://graph-node-query:8000/subgraphs/id/QmeqJqJTZg3xqYaYhvc35JzyB7RBqEyJeexjTBDykvxNkJ
     ethereum: http://proxyd-nitro-proxyd.arbitrum-one:8545
     ethereum-network: arbitrum-one
-    offchain-subgraphs: "QmW26TG5s9myd1gzio9fkgVHEEjZ7u5ktWDpkNePzbusNo,QmUhiH6Z5xo6o3GNzsSvqpGKLmCt6w5WzKQ1yHk6C8AA8S,QmdKXcBUHR3UyURqVRQHu1oV6VUkBrhi2vNvMx3bNDnUCc"
+    offchain-subgraphs: "QmeqJqJTZg3xqYaYhvc35JzyB7RBqEyJeexjTBDykvxNkJ,QmUhiH6Z5xo6o3GNzsSvqpGKLmCt6w5WzKQ1yHk6C8AA8S,QmdKXcBUHR3UyURqVRQHu1oV6VUkBrhi2vNvMx3bNDnUCc"
