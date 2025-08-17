@@ -2866,7 +2866,6 @@
                         "type": "object",
                         "required": [
                             "erigon",
-                            "lighthouse",
                             "proxyd"
                         ],
                         "properties": {
@@ -2929,89 +2928,6 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "execution"
-                                                ]
-                                            },
-                                            "app.launchpad.graphops.xyz/release": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "{{ $release }}"
-                                                ]
-                                            },
-                                            "app.launchpad.graphops.xyz/component": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "{{ $canonicalRelease }}"
-                                                ]
-                                            },
-                                            "app.launchpad.graphops.xyz/scalingIndex": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "{{ $deploymentIndex }}"
-                                                ]
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            "lighthouse": {
-                                "type": "object",
-                                "required": [
-                                    "chart",
-                                    "feature",
-                                    "labels"
-                                ],
-                                "properties": {
-                                    "chart": {
-                                        "type": "object",
-                                        "required": [
-                                            "url",
-                                            "description",
-                                            "repository",
-                                            "name"
-                                        ],
-                                        "properties": {
-                                            "url": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "https://github.com/sigp/lighthouse"
-                                                ]
-                                            },
-                                            "description": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "An open-source Ethereum consensus client, written in Rust and maintained by Sigma Prime."
-                                                ]
-                                            },
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "graphops"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "lighthouse"
-                                                ]
-                                            }
-                                        }
-                                    },
-                                    "feature": {
-                                        "$ref": "#/components/schemas/namespaces.gnosis.features.lighthouse"
-                                    },
-                                    "labels": {
-                                        "type": "object",
-                                        "required": [
-                                            "app.launchpad.graphops.xyz/layer",
-                                            "app.launchpad.graphops.xyz/release",
-                                            "app.launchpad.graphops.xyz/component",
-                                            "app.launchpad.graphops.xyz/scalingIndex"
-                                        ],
-                                        "properties": {
-                                            "app.launchpad.graphops.xyz/layer": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "consensus"
                                                 ]
                                             },
                                             "app.launchpad.graphops.xyz/release": {
@@ -3175,15 +3091,11 @@
                                 "$ref": "#/components/schemas/namespaces.gnosis.features.erigon"
                             },
                             {
-                                "$ref": "#/components/schemas/namespaces.gnosis.features.lighthouse"
-                            },
-                            {
                                 "$ref": "#/components/schemas/namespaces.gnosis.features.proxyd"
                             }
                         ],
                         "default": [
                             "erigon",
-                            "lighthouse",
                             "proxyd"
                         ]
                     },
@@ -3217,7 +3129,6 @@
             "namespaces.gnosis.features.enum": {
                 "type": "string",
                 "enum": [
-                    "lighthouse",
                     "erigon",
                     "proxyd"
                 ]
@@ -3227,13 +3138,6 @@
                 "type": "string",
                 "enum": [
                     "erigon"
-                ]
-            },
-            "namespaces.gnosis.features.lighthouse": {
-                "description": "Use lighthouse as consensus layer",
-                "type": "string",
-                "enum": [
-                    "lighthouse"
                 ]
             },
             "namespaces.gnosis.features.proxyd": {
@@ -3305,8 +3209,7 @@
                 "type": "object",
                 "required": [
                     "deployments",
-                    "erigon",
-                    "lighthouse"
+                    "erigon"
                 ],
                 "properties": {
                     "deployments": {
@@ -3320,15 +3223,6 @@
                         "type": "integer"
                     },
                     "erigon": {
-                        "type": "object",
-                        "properties": {
-                            "deployments": {
-                                "type": "integer",
-                                "minimum": 1
-                            }
-                        }
-                    },
-                    "lighthouse": {
                         "type": "object",
                         "properties": {
                             "deployments": {
@@ -3358,14 +3252,10 @@
                         },
                         "default": [
                             "erigon",
-                            "lighthouse",
                             "proxyd"
                         ]
                     },
                     "erigon": {
-                        "$ref": "#/components/schemas/base.releaseValues"
-                    },
-                    "lighthouse": {
                         "$ref": "#/components/schemas/base.releaseValues"
                     },
                     "proxyd": {

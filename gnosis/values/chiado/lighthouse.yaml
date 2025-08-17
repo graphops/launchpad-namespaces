@@ -1,4 +1,0 @@
-lighthouse:
-  extraArgs:
-    - --checkpoint-sync-url=https://checkpoint.chiadochain.net
-    - --network=chiado

@@ -1,15 +1,6 @@
 {{ $scalingIndex := splitList "-" .Release.Name | last }}
 
 statefulNode:
-  jwt:
-    # Generate me with: openssl rand -hex 32
-    # Must match CL client jwt
-    fromLiteral: "XXX_CHANGEME_XXX"
-    # Instead specifying the JWT in plain text using fromLiteral, you can also reference an existing Kubernetes Secret
-    # existingSecret:
-    #   name: eth-goerli-jwt
-    #   key: jwt
-
   # -- [PersistentVolumeClaimSpec](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.23/#persistentvolumeclaimspec-v1-core) for Erigon storage
   volumeClaimSpec:
     # -- The storage class to use when provisioning a persistent volume for Erigon
@@ -21,21 +12,6 @@ statefulNode:
   affinityPresets:
     antiAffinityByHostname: false
   affinity:
-    podAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-      - weight: 90 # try to schedule on same node as consensus node if possible
-        podAffinityTerm:
-          topologyKey: "kubernetes.io/hostname"
-          labelSelector:
-            matchExpressions:
-            - key: app.launchpad.graphops.xyz/component # release name
-              operator: In
-              values:
-              - lighthouse
-            - key: app.launchpad.graphops.xyz/scalingIndex
-              operator: In
-              values:
-              - "{{ $scalingIndex }}"
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
       - topologyKey: "kubernetes.io/hostname" # never run 2x execution nodes of the same namespace on same machine
@@ -145,10 +121,6 @@ statefulNode:
     enabled: true
     port: {{ add (mul (sub $scalingIndex 1) 3) .Values.scaling.p2pStartPort }}
 {{- end }}
-
-rpcdaemon:
-  enabled: false
-  replicaCount: 2 # scale me
 
 prometheus:
   serviceMonitors:

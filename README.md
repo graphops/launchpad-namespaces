@@ -191,8 +191,6 @@ This *Namespace* provides a suitable stack to operate Gnosis mainnet archive nod
 
 - [erigon](https://github.com/ledgerwatch/erigon)<br>
 Erigon is an implementation of Ethereum (execution client with light client for consensus layer), on the efficiency frontier.
-- [lighthouse](https://github.com/sigp/lighthouse)<br>
-An open-source Ethereum consensus client, written in Rust and maintained by Sigma Prime.
 - [proxyd](https://github.com/ethereum-optimism/infra/tree/main/proxyd)<br>
 Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
 ### [:graph](/graph)

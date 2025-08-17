@@ -9,8 +9,6 @@ This *Namespace* provides a suitable stack to operate Gnosis mainnet archive nod
 ## Releases
 - [erigon](https://github.com/ledgerwatch/erigon)<br>
 Erigon is an implementation of Ethereum (execution client with light client for consensus layer), on the efficiency frontier.
-- [lighthouse](https://github.com/sigp/lighthouse)<br>
-An open-source Ethereum consensus client, written in Rust and maintained by Sigma Prime.
 - [proxyd](https://github.com/ethereum-optimism/infra/tree/main/proxyd)<br>
 Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching.
 
@@ -117,18 +115,10 @@ erigon.labels | object |  | Adds helmfile labels to this release |
 erigon.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
 erigon.resourceLabels | object |  | Adds labels to resources on this release |
 erigon.values | (object *or* list of objects) |  | Pass values to the release helm chart |
-features | list of strings | [erigon, lighthouse, proxyd] | *enum of:&nbsp;&nbsp;(lighthouse \| erigon \| proxyd)* |
+features | list of strings | [erigon, proxyd] | *enum of:&nbsp;&nbsp;(erigon \| proxyd)* |
 flavor | string |  |  |
 kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
 labels | object |  | Adds helmfile labels to releases on this namespace |
-lighthouse | object |  |  |
-lighthouse.annotations | object |  | Add annotations to resources on this release |
-lighthouse.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |
-lighthouse.chartVersion | string |  | Specify a specific chart version to use for this release |
-lighthouse.labels | object |  | Adds helmfile labels to this release |
-lighthouse.mergeValues | boolean | true | Merges passed values with namespace's defaults if true, overrides if false |
-lighthouse.resourceLabels | object |  | Adds labels to resources on this release |
-lighthouse.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 proxyd | object |  |  |
 proxyd.annotations | object |  | Add annotations to resources on this release |
 proxyd.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |

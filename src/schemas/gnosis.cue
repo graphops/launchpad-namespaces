@@ -25,16 +25,13 @@ package LaunchpadNamespaces
 
 		// ethereum namespace features schema
 		#features: {
-			// Use lighthouse as consensus layer
-			#lighthouse: "lighthouse"
-
 			// Use erigon as execution layer
 			#erigon: "erigon"
 
 			// Use proxyd
 			#proxyd: "proxyd"
 
-			#enum: ( #lighthouse | #erigon | #proxyd )
+			#enum: ( #erigon | #proxyd )
 		}
 
 		// gnosis scaling interface
@@ -45,10 +42,6 @@ package LaunchpadNamespaces
 			startP2PPort?: int
 
 			erigon: {
-				deployments?: int & >=1
-			}
-
-			lighthouse: {
 				deployments?: int & >=1
 			}
 		}
@@ -79,7 +72,7 @@ package LaunchpadNamespaces
 			flavor: "mainnet"
 
 			#common: {
-				features: [#features.#erigon, #features.#lighthouse, #features.#proxyd]
+				features: [#features.#erigon, #features.#proxyd]
 				scaling: #scaling & {deployments: 1}
 			}
 
@@ -105,18 +98,6 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
 				}
 				_template: {version: "0.11.8"}
-			}
-
-			lighthouse: {
-				chart: {_repositories.graphops.charts.lighthouse}
-				feature: #features.#lighthouse
-				labels: {
-					"app.launchpad.graphops.xyz/layer":        "consensus"
-					"app.launchpad.graphops.xyz/release":      "{{ $release }}"
-					"app.launchpad.graphops.xyz/component":    "{{ $canonicalRelease }}"
-					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
-				}
-				_template: {version: "0.7.2"}
 			}
 
 			proxyd: {
