@@ -29,7 +29,13 @@ package LaunchpadNamespaces
 					"""
 			}
 			heimdall: {
-				url: "https://github.com/maticnetwork/heimdall"
+				url: "https://github.com/0xPolygon/heimdall-v2"
+				description: """
+					Validator node for Matic Network.
+					"""
+			}
+			"heimdall-v2": {
+				url: "https://github.com/0xPolygon/heimdall-v2"
 				description: """
 					Validator node for Matic Network.
 					"""

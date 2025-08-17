@@ -177,7 +177,7 @@ templates:
     {{- if ( .Values | get "heimdall" dict | get "chartUrl" false ) }}
     chart: {{ .Values | get "heimdall" | get "chartUrl" }}
     {{- else }}
-    chart: "graphops/heimdall"
+    chart: "graphops/heimdall-v2"
     {{- end }}
     inherit:
     - template: "defaults"
@@ -185,7 +185,7 @@ templates:
     version: {{ .Values | get "heimdall" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "heimdall" dict | get "chartVersion" false ) ( .Values | get "heimdall" dict | get "chartUrl" false ) )) }}
-    version: "1.3.0"
+    version: "0.0.4"
     {{- end }}
   
   heimdall-ha-svc:

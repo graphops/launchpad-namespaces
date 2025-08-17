@@ -4824,7 +4824,7 @@
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
-                                                    "https://github.com/maticnetwork/heimdall"
+                                                    "https://github.com/0xPolygon/heimdall-v2"
                                                 ]
                                             },
                                             "description": {
@@ -4842,7 +4842,7 @@
                                             "name": {
                                                 "type": "string",
                                                 "enum": [
-                                                    "heimdall"
+                                                    "heimdall-v2"
                                                 ]
                                             }
                                         }
@@ -6241,6 +6241,7 @@
                                     "nimbus",
                                     "proxyd",
                                     "heimdall",
+                                    "heimdall-v2",
                                     "celo",
                                     "arbitrum-nitro",
                                     "arbitrum-classic",
@@ -6327,7 +6328,28 @@
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
-                                                    "https://github.com/maticnetwork/heimdall"
+                                                    "https://github.com/0xPolygon/heimdall-v2"
+                                                ]
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "Validator node for Matic Network."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "heimdall-v2": {
+                                        "type": "object",
+                                        "required": [
+                                            "url",
+                                            "description"
+                                        ],
+                                        "properties": {
+                                            "url": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "https://github.com/0xPolygon/heimdall-v2"
                                                 ]
                                             },
                                             "description": {

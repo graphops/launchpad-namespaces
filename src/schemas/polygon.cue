@@ -115,7 +115,7 @@ package LaunchpadNamespaces
 			}
 
 			heimdall: {
-				chart: {_repositories.graphops.charts.heimdall}
+				chart: {_repositories.graphops.charts["heimdall-v2"]}
 				labels: {
 					"app.launchpad.graphops.xyz/layer":        "consensus"
 					"app.launchpad.graphops.xyz/release":      "{{ $release }}"
@@ -123,7 +123,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
 				}
 				feature: #features.#heimdall
-				_template: {version: "1.3.0"}
+				_template: {version: "0.0.4"}
 			}
 
 			"heimdall-ha-svc": {

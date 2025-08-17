@@ -9,7 +9,7 @@ This *Namespace* provides a suitable stack to operate Polygon mainnet and amoy t
 ## Releases
 - [erigon](https://github.com/ledgerwatch/erigon)<br>
 Erigon is an implementation of Ethereum (execution client with light client for consensus layer), on the efficiency frontier.
-- [heimdall](https://github.com/maticnetwork/heimdall)<br>
+- [heimdall](https://github.com/0xPolygon/heimdall-v2)<br>
 Validator node for Matic Network.
 - [heimdall-ha-svc](https://github.com/graphops/launchpad-charts/tree/main/charts/resource-injector)<br>
 Manage Raw Kubernetes Resources using Helm
