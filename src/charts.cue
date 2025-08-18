@@ -139,7 +139,8 @@ package LaunchpadNamespaces
 	}
 
 	"deliveryhero": {
-		url: "https://charts.deliveryhero.io"
+		url: "ghcr.io/deliveryhero/helm-charts/node-problem-detector"
+		oci: true
 		description: """
 			Delivery Hero are big fans of Kubernetes and use Helm extensively. Here we have collected a few charts that are used across our organisation.
 			"""

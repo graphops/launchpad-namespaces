@@ -55,7 +55,7 @@
       {"matchDepPatterns":"ingress-nginx\\/.*","registryUrls":["https://kubernetes.github.io/ingress-nginx"]},
       {"matchDepPatterns":"jetstack\\/.*","registryUrls":["https://charts.jetstack.io"]},
       {"matchDepPatterns":"prometheus-community\\/.*","registryUrls":["https://prometheus-community.github.io/helm-charts"]},
-      {"matchDepPatterns":"deliveryhero\\/.*","registryUrls":["https://charts.deliveryhero.io"]},
+      {"matchDepPatterns":"deliveryhero\\/.*","registryUrls":["ghcr.io/deliveryhero/helm-charts/node-problem-detector"]},
       {"matchDepPatterns":"grafana\\/.*","registryUrls":["https://grafana.github.io/helm-charts"]},
       {"matchDepPatterns":"postgres-operator-charts\\/.*","registryUrls":["https://opensource.zalando.com/postgres-operator/charts/postgres-operator"]},
       {"matchDepPatterns":"sealed-secrets\\/.*","registryUrls":["https://bitnami-labs.github.io/sealed-secrets"]},

@@ -18,7 +18,7 @@ command: {
 		print: cli.Print & {text: _out.out}
 	}
 	"build:renovate": {
-		_out:                     _renovate.render
+		_out: _renovate.render
 		print: cli.Print & {text: _out.out}
 	}
 }
@@ -119,6 +119,9 @@ _helmfile: {
 				"\(releaseName)": {
 					name: release.chart.repository
 					url:  _repositories[release.chart.repository].url
+					if _repositories[release.chart.repository].oci != _|_ {
+						oci: true
+					}
 				}
 			}
 		}
