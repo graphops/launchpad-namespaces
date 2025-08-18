@@ -6699,7 +6699,6 @@
                         "type": "object",
                         "required": [
                             "url",
-                            "oci",
                             "description",
                             "charts"
                         ],
@@ -6707,13 +6706,7 @@
                             "url": {
                                 "type": "string",
                                 "enum": [
-                                    "ghcr.io/deliveryhero/helm-charts/node-problem-detector"
-                                ]
-                            },
-                            "oci": {
-                                "type": "boolean",
-                                "enum": [
-                                    true
+                                    "https://raw.githubusercontent.com/deliveryhero/helm-charts/refs/heads/master/"
                                 ]
                             },
                             "description": {
