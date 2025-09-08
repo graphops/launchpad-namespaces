@@ -170,7 +170,7 @@ templates:
     version: {{ .Values | get "erigon" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "erigon" dict | get "chartVersion" false ) ( .Values | get "erigon" dict | get "chartUrl" false ) )) }}
-    version: "0.12.0-canary.8"
+    version: "0.12.0-canary.10"
     {{- end }}
   
   proxyd:
