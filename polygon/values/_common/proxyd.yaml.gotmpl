@@ -16,6 +16,9 @@ backends:
 backendGroups:
   routing_strategy: fallback
 
+rpcMethodMappings:
+  bor_getRootHash: main
+
 proxyd:
   affinityPresets:
     antiAffinityByHostname: false
