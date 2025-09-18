@@ -107,7 +107,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
 				}
 				feature: #features.#arbitrum_nitro
-				_template: {version: "0.7.0"}
+				_template: {version: "0.7.1-canary.1"}
 			}
 
 			"arbitrum-classic": {
@@ -119,7 +119,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
 				}
 				feature: #features.#arbitrum_classic
-				_template: {version: "0.2.2-canary.1"}
+				_template: {version: "0.2.2-canary.2"}
 			}
 
 			"proxyd-nitro": {
