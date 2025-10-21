@@ -3,31 +3,44 @@
 | Key | Type | Default | Description |
 | :--- | :---: | :--- | :--- |
 {%- set schema_name = utils::getSchemaName(namespace=name, schemas=schemas) -%}
+{%- set_global __current_schema_name = schema_name -%}
+{%- set_global __current_schemas = schemas -%}
 {%- set values_key = schema_name ~ ".values" -%}
 {%- for p_name, p in schemas[values_key].properties -%}
 {%- if p_name != "helmDefaults" -%}
-{{ self::renderProperty(name=p_name, obj=p) }}
+{{ self::renderProperty(name=p_name, obj=p, schema_name=schema_name, schemas=schemas) }}
 {%- endif -%}
 {%- endfor -%}
 {%- set helmDefaults = schemas[values_key].properties | get(key="helmDefaults", default="") -%}
 {%- if helmDefaults != "" -%}
-{{ self::renderProperty(name="helmDefaults", obj=helmDefaults) }}
+{{ self::renderProperty(name="helmDefaults", obj=helmDefaults, schema_name=schema_name, schemas=schemas) }}
 {%- endif -%}
 {%- endmacro renderTable -%}
 
-{%- macro renderProperty(name, obj, prefix="") -%}
-{{ self::renderName(name=name, obj=obj, prefix=prefix) }} | {{ self::renderType(obj=obj) }} | {{ self::renderDef(obj=obj) }} | {{ self::renderDesc(name=name, obj=obj) }} |
+{%- macro renderProperty(name, obj, prefix="", schema_name="", schemas) -%}
+{{ self::renderName(name=name, obj=obj, prefix=prefix) }} | {{ self::renderType(obj=obj) }} | {{ self::renderDef(obj=obj) }} | {{ self::renderDesc(name=name, obj=obj, schema_name=schema_name, schemas=schemas) }} |
 {%- if obj.type is defined and obj.type == "object" and obj.properties is defined and prefix == "" -%}
 {%- for subname, property in obj.properties -%}
-{{ self::renderProperty(name=subname, obj=property, prefix=name) }}
+{{ self::renderProperty(name=subname, obj=property, prefix=name, schema_name=schema_name, schemas=schemas) }}
 {%- endfor -%}
 {%- endif -%}
 {%- endmacro renderProperty -%}
 
-{%- macro renderDesc(name, obj) -%}
-{%- if obj.type is defined and obj.type == "array" and obj.items.enum is defined -%}
-{%- set enumStr = obj.items.enum | join(sep=" \| ") -%}
-{{ "*enum of:&nbsp;&nbsp;" ~ "(" ~ enumStr ~ ")*" }}
+{%- macro renderDesc(name, obj, schema_name="", schemas) -%}
+{# Emit at most one enum-of line, preferring sibling schema enums when present #}
+{%- set _enumStr = "" -%}
+{%- if obj.type is defined and obj.type == "array" and name is defined -%}
+  {# 1) Prefer sibling schema enum: <schema>.<name>.enum #}
+  {%- set _enumKey = schema_name ~ "." ~ name ~ ".enum" -%}
+  {%- if (schemas[_enumKey] is defined) and (schemas[_enumKey].enum is defined) -%}
+    {%- set _enumStr = schemas[_enumKey].enum | join(sep=" \| ") -%}
+  {%- elif obj.items is defined and obj.items.enum is defined -%}
+    {# 2) Direct items enum when available #}
+    {%- set _enumStr = obj.items.enum | join(sep=" \| ") -%}
+  {%- endif -%}
+{%- endif -%}
+{%- if _enumStr != "" -%}
+*enum of:&nbsp;&nbsp;({{ _enumStr }})*
 {%- endif -%}
 {%- if obj.description is defined -%}
 {{ obj.description | linebreaksbr }}
@@ -37,7 +50,57 @@
 {%- macro renderType(obj) -%}
 {%- if obj.type is defined -%}
 {%- if obj.type == "array" -%}
+  {%- if obj.items is defined and obj.items.type is defined -%}
 list of {{ obj.items.type }}s
+  {%- elif obj.items is defined and obj.items.oneOf is defined -%}
+{%- set_global listTypes = "" -%}
+{%- for it in obj.items.oneOf -%}
+{%- set itStr = self::renderType(obj=it) -%}
+{%- set_global listTypes = listTypes ~ itStr ~ " *or* " -%}
+{%- endfor -%}
+list of ({{ listTypes | trim_end_matches(pat=" *or* ") }})
+  {%- elif obj.items is defined -%}
+{%- set_global __is_string_list_items = false -%}
+{%- for it in obj.items -%}
+  {%- if it.type is defined and it.type == "string" -%}
+    {%- set_global __is_string_list_items = true -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- if __is_string_list_items -%}
+list of strings
+{%- else -%}
+list
+{%- endif -%}
+  {%- elif obj.oneOf is defined -%}
+{%- set_global __is_string_list = false -%}
+{%- for alt in obj.oneOf -%}
+  {%- if alt.items is defined -%}
+    {%- if alt.items.type is defined and alt.items.type == "string" -%}
+      {%- set_global __is_string_list = true -%}
+    {%- endif -%}
+    {%- if alt.items.oneOf is defined -%}
+      {%- for it in alt.items.oneOf -%}
+        {%- if it.type is defined and it.type == "string" -%}
+          {%- set_global __is_string_list = true -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- elif alt.items is iterable -%}
+      {%- for it in alt.items -%}
+        {%- if it.type is defined and it.type == "string" -%}
+          {%- set_global __is_string_list = true -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- if __is_string_list -%}
+list of strings
+{%- else -%}
+list
+{%- endif -%}
+  {%- else -%}
+list
+  {%- endif -%}
 {%- else -%}
 {{ obj.type }}
 {%- endif -%}
