@@ -117,7 +117,7 @@ helmfiles:
 | :--- | :---: | :--- | :--- |
 annotations | object |  | Add annotations to release resources on this namespace |
 features | list of strings | [node, network-indexer, toolbox, database, subgraph-radio] | *enum of:&nbsp;&nbsp;(node \| network-indexer \| toolbox \| database \| subgraph-radio)* |
-flavor | string |  |  |
+flavor | string | arbitrum-one |  |
 graph&#8209;database | object |  |  |
 graph&#8209;database.annotations | object |  | Add annotations to resources on this release |
 graph&#8209;database.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |

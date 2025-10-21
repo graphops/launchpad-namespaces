@@ -120,7 +120,7 @@ erigon.mergeValues | boolean | true | Merges passed values with namespace's defa
 erigon.resourceLabels | object |  | Adds labels to resources on this release |
 erigon.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 features | list of strings | [proxyd] | *enum of:&nbsp;&nbsp;(nimbus \| lighthouse \| proxyd)* |
-flavor | string |  |  |
+flavor | string | mainnet |  |
 kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
 labels | object |  | Adds helmfile labels to releases on this namespace |
 lighthouse | object |  |  |

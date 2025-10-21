@@ -120,7 +120,7 @@ erigon.mergeValues | boolean | true | Merges passed values with namespace's defa
 erigon.resourceLabels | object |  | Adds labels to resources on this release |
 erigon.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 features | list of strings | [proxyd, erigon, heimdall, heimdall-ha-svc] | *enum of:&nbsp;&nbsp;(proxyd \| erigon \| heimdall \| heimdall-ha-svc)* |
-flavor | string |  |  |
+flavor | string | mainnet |  |
 heimdall | object |  |  |
 heimdall.annotations | object |  | Add annotations to resources on this release |
 heimdall.chartUrl | string |  | Override this release's chart URL (i.e: an absolute like /path/to/chart.tgz or /path/to/chart_dir. Or a remote like git::https://github.com/bitnami/charts.git@bitnami/apache?ref=main) |

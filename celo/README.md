@@ -116,7 +116,7 @@ celo.mergeValues | boolean | true | Merges passed values with namespace's defaul
 celo.resourceLabels | object |  | Adds labels to resources on this release |
 celo.values | (object *or* list of objects) |  | Pass values to the release helm chart |
 features | list of strings | [proxyd] | *enum of:&nbsp;&nbsp;(proxyd)* |
-flavor | string |  |  |
+flavor | string | mainnet |  |
 kubeVersion | string |  | Specifies the kubernetes API version, useful in helm templating environment |
 labels | object |  | Adds helmfile labels to releases on this namespace |
 proxyd | object |  |  |
