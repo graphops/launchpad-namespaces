@@ -928,24 +928,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "graphops"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "arbitrum-nitro"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -956,6 +944,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "Nitro is the latest iteration of the Arbitrum technology. It is a fully integrated, complete layer 2 optimistic rollup system, including fraud proofs, the sequencer, the token bridges, advanced calldata compression, and more."
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "arbitrum-nitro"
                                                 ]
                                             }
                                         }
@@ -1011,24 +1011,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "graphops"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "arbitrum-classic"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -1039,6 +1027,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "The old \"classic\" Arbitrum tech stack."
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "arbitrum-classic"
                                                 ]
                                             }
                                         }
@@ -1094,24 +1094,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "graphops"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "proxyd"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -1122,6 +1110,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching."
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "proxyd"
                                                 ]
                                             }
                                         }
@@ -1170,24 +1170,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "graphops"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "proxyd"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -1198,6 +1186,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching."
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "proxyd"
                                                 ]
                                             }
                                         }
@@ -1449,12 +1449,7 @@
                 "type": "object",
                 "properties": {
                     "flavor": {
-                        "type": "string",
-                        "enum": [
-                            "one",
-                            "sepolia"
-                        ],
-                        "default": "one"
+                        "$ref": "#/components/schemas/namespaces.arbitrum.flavor.enum"
                     },
                     "targetNamespace": {
                         "description": "the default is arbitrum-<flavor>",
@@ -1463,60 +1458,14 @@
                     },
                     "features": {
                         "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/namespaces.arbitrum.features.enum"
+                        },
                         "default": [
                             "proxyd-classic",
                             "proxyd-nitro",
                             "arbitrum-classic",
                             "arbitrum-nitro"
-                        ],
-                        "oneOf": [
-                            {
-                                "items": [
-                                    {
-                                        "$ref": "#/components/schemas/namespaces.arbitrum.features.proxyd_classic"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/namespaces.arbitrum.features.proxyd_nitro"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/namespaces.arbitrum.features.arbitrum_classic"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/namespaces.arbitrum.features.arbitrum_nitro"
-                                    }
-                                ]
-                            },
-                            {
-                                "allOf": [
-                                    {
-                                        "items": {
-                                            "$ref": "#/components/schemas/namespaces.arbitrum.features.enum"
-                                        }
-                                    },
-                                    {
-                                        "not": {
-                                            "anyOf": [
-                                                {
-                                                    "items": [
-                                                        {
-                                                            "$ref": "#/components/schemas/namespaces.arbitrum.features.proxyd_classic"
-                                                        },
-                                                        {
-                                                            "$ref": "#/components/schemas/namespaces.arbitrum.features.proxyd_nitro"
-                                                        },
-                                                        {
-                                                            "$ref": "#/components/schemas/namespaces.arbitrum.features.arbitrum_classic"
-                                                        },
-                                                        {
-                                                            "$ref": "#/components/schemas/namespaces.arbitrum.features.arbitrum_nitro"
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
                         ]
                     },
                     "scaling": {
@@ -1677,24 +1626,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "graphops"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "celo"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -1705,6 +1642,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "Official golang implementation of the Celo blockchain"
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "celo"
                                                 ]
                                             }
                                         }
@@ -1757,24 +1706,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "graphops"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "proxyd"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -1785,6 +1722,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching."
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "proxyd"
                                                 ]
                                             }
                                         }
@@ -2025,13 +1974,7 @@
                 "type": "object",
                 "properties": {
                     "flavor": {
-                        "type": "string",
-                        "enum": [
-                            "mainnet",
-                            "alfajores",
-                            "baklava"
-                        ],
-                        "default": "mainnet"
+                        "$ref": "#/components/schemas/namespaces.celo.flavor.enum"
                     },
                     "targetNamespace": {
                         "description": "the default is celo-<flavor>",
@@ -2223,24 +2166,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "graphops"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "erigon"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -2251,6 +2182,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "Erigon is an implementation of Ethereum (execution client with light client for consensus layer), on the efficiency frontier."
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "erigon"
                                                 ]
                                             }
                                         }
@@ -2303,24 +2246,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "graphops"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "nimbus"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -2331,6 +2262,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "Nimbus-eth2 is an extremely efficient consensus layer (eth2) client implementation."
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "nimbus"
                                                 ]
                                             }
                                         }
@@ -2386,24 +2329,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "graphops"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "lighthouse"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -2414,6 +2345,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "An open-source Ethereum consensus client, written in Rust and maintained by Sigma Prime."
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "lighthouse"
                                                 ]
                                             }
                                         }
@@ -2469,24 +2412,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "graphops"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "proxyd"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -2497,6 +2428,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching."
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "proxyd"
                                                 ]
                                             }
                                         }
@@ -2784,14 +2727,7 @@
                 "type": "object",
                 "properties": {
                     "flavor": {
-                        "type": "string",
-                        "enum": [
-                            "mainnet",
-                            "holesky",
-                            "sepolia",
-                            "hoodi"
-                        ],
-                        "default": "mainnet"
+                        "$ref": "#/components/schemas/namespaces.ethereum.flavor.enum"
                     },
                     "targetNamespace": {
                         "description": "the default is eth-<flavor>",
@@ -2800,39 +2736,11 @@
                     },
                     "features": {
                         "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/namespaces.ethereum.features.enum"
+                        },
                         "default": [
                             "proxyd"
-                        ],
-                        "oneOf": [
-                            {
-                                "items": [
-                                    {
-                                        "$ref": "#/components/schemas/namespaces.ethereum.features.proxyd"
-                                    }
-                                ]
-                            },
-                            {
-                                "allOf": [
-                                    {
-                                        "items": {
-                                            "$ref": "#/components/schemas/namespaces.ethereum.features.enum"
-                                        }
-                                    },
-                                    {
-                                        "not": {
-                                            "anyOf": [
-                                                {
-                                                    "items": [
-                                                        {
-                                                            "$ref": "#/components/schemas/namespaces.ethereum.features.proxyd"
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
                         ]
                     },
                     "scaling": {
@@ -2972,24 +2880,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "graphops"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "erigon"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -3000,6 +2896,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "Erigon is an implementation of Ethereum (execution client with light client for consensus layer), on the efficiency frontier."
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "erigon"
                                                 ]
                                             }
                                         }
@@ -3055,24 +2963,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "graphops"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "proxyd"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -3083,6 +2979,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching."
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "proxyd"
                                                 ]
                                             }
                                         }
@@ -3330,12 +3238,7 @@
                 "type": "object",
                 "properties": {
                     "flavor": {
-                        "type": "string",
-                        "enum": [
-                            "mainnet",
-                            "chiado"
-                        ],
-                        "default": "mainnet"
+                        "$ref": "#/components/schemas/namespaces.gnosis.flavor.enum"
                     },
                     "targetNamespace": {
                         "description": "the default is gnosis-<flavor>",
@@ -3344,46 +3247,12 @@
                     },
                     "features": {
                         "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/namespaces.gnosis.features.enum"
+                        },
                         "default": [
                             "erigon",
                             "proxyd"
-                        ],
-                        "oneOf": [
-                            {
-                                "items": [
-                                    {
-                                        "$ref": "#/components/schemas/namespaces.gnosis.features.erigon"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/namespaces.gnosis.features.proxyd"
-                                    }
-                                ]
-                            },
-                            {
-                                "allOf": [
-                                    {
-                                        "items": {
-                                            "$ref": "#/components/schemas/namespaces.gnosis.features.enum"
-                                        }
-                                    },
-                                    {
-                                        "not": {
-                                            "anyOf": [
-                                                {
-                                                    "items": [
-                                                        {
-                                                            "$ref": "#/components/schemas/namespaces.gnosis.features.erigon"
-                                                        },
-                                                        {
-                                                            "$ref": "#/components/schemas/namespaces.gnosis.features.proxyd"
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
                         ]
                     },
                     "erigon": {
@@ -3517,24 +3386,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "graphops"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "graph-node"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -3545,6 +3402,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "Graph Node is an open source Rust implementation that event sources the Ethereum blockchain to deterministically update a data store that can be queried via the GraphQL endpoint."
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graph-node"
                                                 ]
                                             }
                                         }
@@ -3564,24 +3433,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "graphops"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "graph-network-indexer"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -3592,6 +3449,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "Graph protocol indexer components"
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graph-network-indexer"
                                                 ]
                                             }
                                         }
@@ -3611,24 +3480,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "graphops"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "graph-toolbox"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -3639,6 +3496,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "Utility kit for interacting and managing the Graph indexer stack."
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graph-toolbox"
                                                 ]
                                             }
                                         }
@@ -3657,24 +3526,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "graphops"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "resource-injector"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -3685,6 +3542,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "Manage Raw Kubernetes Resources using Helm"
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "resource-injector"
                                                 ]
                                             }
                                         }
@@ -3701,24 +3570,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "graphops"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "resource-injector"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -3729,6 +3586,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "Manage Raw Kubernetes Resources using Helm"
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "resource-injector"
                                                 ]
                                             }
                                         }
@@ -3748,24 +3617,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "graphops"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "subgraph-radio"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -3776,6 +3633,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "Gossip about Subgraphs with other Graph Protocol Indexers"
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "subgraph-radio"
                                                 ]
                                             }
                                         }
@@ -3959,12 +3828,7 @@
                 "type": "object",
                 "properties": {
                     "flavor": {
-                        "type": "string",
-                        "enum": [
-                            "arbitrum-one",
-                            "arbitrum-sepolia"
-                        ],
-                        "default": "arbitrum-one"
+                        "$ref": "#/components/schemas/namespaces.graph.flavor.enum"
                     },
                     "targetNamespace": {
                         "description": "the default is graph-<flavor>",
@@ -3973,67 +3837,15 @@
                     },
                     "features": {
                         "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/namespaces.graph.features.enum"
+                        },
                         "default": [
                             "node",
                             "network-indexer",
                             "toolbox",
                             "database",
                             "subgraph-radio"
-                        ],
-                        "oneOf": [
-                            {
-                                "items": [
-                                    {
-                                        "$ref": "#/components/schemas/namespaces.graph.features.node"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/namespaces.graph.features.network_indexer"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/namespaces.graph.features.toolbox"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/namespaces.graph.features.database"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/namespaces.graph.features.subgraph_radio"
-                                    }
-                                ]
-                            },
-                            {
-                                "allOf": [
-                                    {
-                                        "items": {
-                                            "$ref": "#/components/schemas/namespaces.graph.features.enum"
-                                        }
-                                    },
-                                    {
-                                        "not": {
-                                            "anyOf": [
-                                                {
-                                                    "items": [
-                                                        {
-                                                            "$ref": "#/components/schemas/namespaces.graph.features.node"
-                                                        },
-                                                        {
-                                                            "$ref": "#/components/schemas/namespaces.graph.features.network_indexer"
-                                                        },
-                                                        {
-                                                            "$ref": "#/components/schemas/namespaces.graph.features.toolbox"
-                                                        },
-                                                        {
-                                                            "$ref": "#/components/schemas/namespaces.graph.features.database"
-                                                        },
-                                                        {
-                                                            "$ref": "#/components/schemas/namespaces.graph.features.subgraph_radio"
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
                         ]
                     },
                     "graph-node": {
@@ -4120,24 +3932,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "ingress-nginx"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "ingress-nginx"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -4148,6 +3948,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "ingress-nginx is an Ingress controller for Kubernetes using NGINX as a reverse proxy and load balancer."
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "ingress-nginx"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "ingress-nginx"
                                                 ]
                                             }
                                         }
@@ -4167,24 +3979,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "jetstack"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "cert-manager"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -4195,6 +3995,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "cert-manager adds certificates and certificate issuers as resource types in Kubernetes clusters, and simplifies the process of obtaining, renewing and using those certificates."
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "jetstack"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "cert-manager"
                                                 ]
                                             }
                                         }
@@ -4214,24 +4026,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "graphops"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "resource-injector"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -4242,6 +4042,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "Manage Raw Kubernetes Resources using Helm"
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "resource-injector"
                                                 ]
                                             }
                                         }
@@ -4382,46 +4194,12 @@
                     },
                     "features": {
                         "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/namespaces.ingress.features.enum"
+                        },
                         "default": [
                             "ingress",
                             "cert-manager"
-                        ],
-                        "oneOf": [
-                            {
-                                "items": [
-                                    {
-                                        "$ref": "#/components/schemas/namespaces.ingress.features.ingress"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/namespaces.ingress.features.certManager"
-                                    }
-                                ]
-                            },
-                            {
-                                "allOf": [
-                                    {
-                                        "items": {
-                                            "$ref": "#/components/schemas/namespaces.ingress.features.enum"
-                                        }
-                                    },
-                                    {
-                                        "not": {
-                                            "anyOf": [
-                                                {
-                                                    "items": [
-                                                        {
-                                                            "$ref": "#/components/schemas/namespaces.ingress.features.ingress"
-                                                        },
-                                                        {
-                                                            "$ref": "#/components/schemas/namespaces.ingress.features.certManager"
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
                         ]
                     },
                     "ingress-nginx": {
@@ -4500,24 +4278,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "prometheus-community"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "kube-prometheus-stack"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -4528,6 +4294,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "Installs the kube-prometheus stack, a collection of Kubernetes manifests, Grafana dashboards, and Prometheus rules"
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "prometheus-community"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "kube-prometheus-stack"
                                                 ]
                                             }
                                         }
@@ -4547,24 +4325,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "deliveryhero"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "node-problem-detector"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -4575,6 +4341,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "This chart installs a node-problem-detector daemonset. This tool aims to make various node problems visible to the upstream layers in cluster management stack."
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "deliveryhero"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "node-problem-detector"
                                                 ]
                                             }
                                         }
@@ -4594,24 +4372,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "grafana"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "loki-distributed"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -4622,6 +4388,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "Helm chart for Grafana Loki in microservices mode"
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "grafana"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "loki-distributed"
                                                 ]
                                             }
                                         }
@@ -4641,24 +4419,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "grafana"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "promtail"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -4669,6 +4435,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "Promtail is an agent which ships the contents of local logs to a Loki instance"
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "grafana"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "promtail"
                                                 ]
                                             }
                                         }
@@ -4810,46 +4588,12 @@
                     },
                     "features": {
                         "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/namespaces.monitoring.features.enum"
+                        },
                         "default": [
                             "metrics",
                             "logs"
-                        ],
-                        "oneOf": [
-                            {
-                                "items": [
-                                    {
-                                        "$ref": "#/components/schemas/namespaces.monitoring.features.metrics"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/namespaces.monitoring.features.logs"
-                                    }
-                                ]
-                            },
-                            {
-                                "allOf": [
-                                    {
-                                        "items": {
-                                            "$ref": "#/components/schemas/namespaces.monitoring.features.enum"
-                                        }
-                                    },
-                                    {
-                                        "not": {
-                                            "anyOf": [
-                                                {
-                                                    "items": [
-                                                        {
-                                                            "$ref": "#/components/schemas/namespaces.monitoring.features.metrics"
-                                                        },
-                                                        {
-                                                            "$ref": "#/components/schemas/namespaces.monitoring.features.logs"
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
                         ]
                     },
                     "kube-prometheus-stack": {
@@ -4988,24 +4732,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "graphops"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "erigon"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -5016,6 +4748,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "Erigon is an implementation of Ethereum (execution client with light client for consensus layer), on the efficiency frontier."
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "erigon"
                                                 ]
                                             }
                                         }
@@ -5071,24 +4815,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "graphops"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "heimdall-v2"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -5099,6 +4831,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "Validator node for Matic Network."
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "heimdall-v2"
                                                 ]
                                             }
                                         }
@@ -5154,24 +4898,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "graphops"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "resource-injector"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -5182,6 +4914,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "Manage Raw Kubernetes Resources using Helm"
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "resource-injector"
                                                 ]
                                             }
                                         }
@@ -5230,24 +4974,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "graphops"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "proxyd"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -5258,6 +4990,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "Proxyd is an EVM-blockchain JSON-RPC router and load balancer developed in Go by Optimism. It is capable of load balancing, automatic failover, intelligent request routing and very basic caching."
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "proxyd"
                                                 ]
                                             }
                                         }
@@ -5539,12 +5283,7 @@
                 "type": "object",
                 "properties": {
                     "flavor": {
-                        "type": "string",
-                        "enum": [
-                            "mainnet",
-                            "amoy"
-                        ],
-                        "default": "mainnet"
+                        "$ref": "#/components/schemas/namespaces.polygon.flavor.enum"
                     },
                     "targetNamespace": {
                         "description": "the default is polygon-<flavor>",
@@ -5553,60 +5292,14 @@
                     },
                     "features": {
                         "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/namespaces.polygon.features.enum"
+                        },
                         "default": [
                             "proxyd",
                             "erigon",
                             "heimdall",
                             "heimdall-ha-svc"
-                        ],
-                        "oneOf": [
-                            {
-                                "items": [
-                                    {
-                                        "$ref": "#/components/schemas/namespaces.polygon.features.proxyd"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/namespaces.polygon.features.erigon"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/namespaces.polygon.features.heimdall"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/namespaces.polygon.features.heimdall_ha_svc"
-                                    }
-                                ]
-                            },
-                            {
-                                "allOf": [
-                                    {
-                                        "items": {
-                                            "$ref": "#/components/schemas/namespaces.polygon.features.enum"
-                                        }
-                                    },
-                                    {
-                                        "not": {
-                                            "anyOf": [
-                                                {
-                                                    "items": [
-                                                        {
-                                                            "$ref": "#/components/schemas/namespaces.polygon.features.proxyd"
-                                                        },
-                                                        {
-                                                            "$ref": "#/components/schemas/namespaces.polygon.features.erigon"
-                                                        },
-                                                        {
-                                                            "$ref": "#/components/schemas/namespaces.polygon.features.heimdall"
-                                                        },
-                                                        {
-                                                            "$ref": "#/components/schemas/namespaces.polygon.features.heimdall_ha_svc"
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
                         ]
                     },
                     "scaling": {
@@ -5687,24 +5380,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "postgres-operator-charts"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "postgres-operator"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -5715,6 +5396,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "The Postgres Operator delivers an easy to run highly-available PostgreSQL clusters on Kubernetes (K8s) powered by Patroni."
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "postgres-operator-charts"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "postgres-operator"
                                                 ]
                                             }
                                         }
@@ -5876,24 +5569,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "sealed-secrets"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "sealed-secrets"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -5904,6 +5585,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "Sealed Secrets are 'one-way' encrypted K8s Secrets that can be created by anyone, but can only be decrypted by the controller running in the target cluster recovering the original object."
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "sealed-secrets"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "sealed-secrets"
                                                 ]
                                             }
                                         }
@@ -6108,24 +5801,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "openebs"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "openebs"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -6136,6 +5817,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "OpenEBS is the leading open-source example of a category of cloud native storage solutions sometimes called Container Attached Storage."
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "openebs"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "openebs"
                                                 ]
                                             }
                                         }
@@ -6152,24 +5845,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "graphops"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "openebs-rawfile-localpv"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -6180,6 +5861,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "RawFile Driver Container Storage Interface"
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "openebs-rawfile-localpv"
                                                 ]
                                             }
                                         }
@@ -6199,24 +5892,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "graphops"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "resource-injector"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -6227,6 +5908,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "Manage Raw Kubernetes Resources using Helm"
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "resource-injector"
                                                 ]
                                             }
                                         }
@@ -6246,24 +5939,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "openebs-zfs-localpv"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "zfs-localpv"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -6274,6 +5955,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "CSI driver for provisioning Local PVs backed by ZFS and more."
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "openebs-zfs-localpv"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "zfs-localpv"
                                                 ]
                                             }
                                         }
@@ -6293,24 +5986,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "graphops"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "resource-injector"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -6321,6 +6002,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "Manage Raw Kubernetes Resources using Helm"
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "resource-injector"
                                                 ]
                                             }
                                         }
@@ -6340,24 +6033,12 @@
                                     "chart": {
                                         "type": "object",
                                         "required": [
-                                            "repository",
-                                            "name",
                                             "url",
-                                            "description"
+                                            "description",
+                                            "repository",
+                                            "name"
                                         ],
                                         "properties": {
-                                            "repository": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "graphops"
-                                                ]
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "resource-injector"
-                                                ]
-                                            },
                                             "url": {
                                                 "type": "string",
                                                 "enum": [
@@ -6368,6 +6049,18 @@
                                                 "type": "string",
                                                 "enum": [
                                                     "Manage Raw Kubernetes Resources using Helm"
+                                                ]
+                                            },
+                                            "repository": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "graphops"
+                                                ]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "resource-injector"
                                                 ]
                                             }
                                         }
@@ -6473,39 +6166,11 @@
                     },
                     "features": {
                         "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/namespaces.storage.features.enum"
+                        },
                         "default": [
                             "rawfile"
-                        ],
-                        "oneOf": [
-                            {
-                                "items": [
-                                    {
-                                        "$ref": "#/components/schemas/namespaces.storage.features.rawfile"
-                                    }
-                                ]
-                            },
-                            {
-                                "allOf": [
-                                    {
-                                        "items": {
-                                            "$ref": "#/components/schemas/namespaces.storage.features.enum"
-                                        }
-                                    },
-                                    {
-                                        "not": {
-                                            "anyOf": [
-                                                {
-                                                    "items": [
-                                                        {
-                                                            "$ref": "#/components/schemas/namespaces.storage.features.rawfile"
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
                         ]
                     },
                     "openebs": {
