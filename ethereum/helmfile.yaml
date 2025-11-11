@@ -170,7 +170,7 @@ templates:
     version: {{ .Values | get "erigon" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "erigon" dict | get "chartVersion" false ) ( .Values | get "erigon" dict | get "chartUrl" false ) )) }}
-    version: "0.12.3-canary.1"
+    version: "0.12.3"
     {{- end }}
   
   nimbus:
@@ -185,7 +185,7 @@ templates:
     version: {{ .Values | get "nimbus" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "nimbus" dict | get "chartVersion" false ) ( .Values | get "nimbus" dict | get "chartUrl" false ) )) }}
-    version: "0.6.10-canary.2"
+    version: "0.6.10"
     {{- end }}
   
   lighthouse:
@@ -200,7 +200,7 @@ templates:
     version: {{ .Values | get "lighthouse" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "lighthouse" dict | get "chartVersion" false ) ( .Values | get "lighthouse" dict | get "chartUrl" false ) )) }}
-    version: "0.8.0-canary.3"
+    version: "0.8.0"
     {{- end }}
   
   proxyd:
