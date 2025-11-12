@@ -185,7 +185,7 @@ templates:
     version: {{ .Values | get "heimdall" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "heimdall" dict | get "chartVersion" false ) ( .Values | get "heimdall" dict | get "chartUrl" false ) )) }}
-    version: "0.0.9"
+    version: "0.0.10-canary.1"
     {{- end }}
   
   heimdall-ha-svc:
@@ -215,7 +215,7 @@ templates:
     version: {{ .Values | get "proxyd" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "proxyd" dict | get "chartVersion" false ) ( .Values | get "proxyd" dict | get "chartUrl" false ) )) }}
-    version: "0.7.4-canary.1"
+    version: "0.7.4"
     {{- end }}
   
 releases:
