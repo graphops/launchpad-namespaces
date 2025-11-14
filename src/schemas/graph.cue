@@ -94,7 +94,7 @@ package LaunchpadNamespaces
 			"graph-network-indexer": {
 				chart: {_repositories.graphops.charts["graph-network-indexer"]}
 				feature: #features.#network_indexer
-				_template: {version: "0.5.22-canary.11"}
+				_template: {version: "0.5.22-canary.12"}
 			}
 
 			"graph-toolbox": {
