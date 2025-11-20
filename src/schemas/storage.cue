@@ -65,7 +65,7 @@ package LaunchpadNamespaces
 			"openebs-rawfile-localpv": {
 				chart: {_repositories.graphops.charts["openebs-rawfile-localpv"]}
 				feature: #features.#rawfile
-				_template: {version: "0.9.0"}
+				_template: {version: "0.9.1-canary.1"}
 			}
 			"openebs-rawfile-storageclass": {
 				chart: {_repositories.graphops.charts["resource-injector"]}
