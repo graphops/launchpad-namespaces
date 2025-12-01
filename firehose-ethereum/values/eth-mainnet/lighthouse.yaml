@@ -1,4 +1,5 @@
 lighthouse:
+  superNode: false
   extraArgs:
     - --checkpoint-sync-url=https://beaconstate.info/
     - --network=mainnet
