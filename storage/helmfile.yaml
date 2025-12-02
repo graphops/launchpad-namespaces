@@ -173,7 +173,7 @@ templates:
     version: {{ .Values | get "openebs-rawfile-localpv" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "openebs-rawfile-localpv" dict | get "chartVersion" false ) ( .Values | get "openebs-rawfile-localpv" dict | get "chartUrl" false ) )) }}
-    version: "0.9.1-canary.1"
+    version: "0.9.1-canary.2"
     {{- end }}
   
   openebs-rawfile-storageclass:
