@@ -173,7 +173,7 @@ templates:
     version: {{ .Values | get "cert-manager" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "cert-manager" dict | get "chartVersion" false ) ( .Values | get "cert-manager" dict | get "chartUrl" false ) )) }}
-    version: "v1.19.1"
+    version: "v1.19.2"
     {{- end }}
     disableValidationOnInstall: true
   
