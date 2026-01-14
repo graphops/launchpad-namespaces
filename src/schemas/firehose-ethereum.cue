@@ -27,7 +27,9 @@ package LaunchpadNamespaces
 
 			#geo_one: "geo-one"
 
-			#enum: ( #eth_mainnet | #eth_sepolia | #arbitrum_one | #arbitrum_sepolia | #polygon_mainnet | #geo_one )
+			#base_mainnet: "base-mainnet"
+
+			#enum: ( #eth_mainnet | #eth_sepolia | #arbitrum_one | #arbitrum_sepolia | #polygon_mainnet | #geo_one | #base_mainnet)
 		}
 
 		// ethereum namespace features schema
@@ -128,6 +130,12 @@ package LaunchpadNamespaces
 				#common
 				features: []
 				targetNamespace: "fh-geo-one"
+			}
+
+			"base-mainnet": {
+				#common
+				features: []
+				targetNamespace: "fh-base-mainnet"
 			}
 		}
 
