@@ -152,7 +152,7 @@ scaling | object |  | polygon scaling interface |
 scaling.deployments | integer | 1 | number of independent stateful sets to deploy |
 scaling.erigon | object |  |  |
 scaling.heimdall | object |  |  |
-scaling.startP2PPort | integer |  | A beggining port for the range to use in P2P NodePorts |
+scaling.startP2PPort | integer |  | A beginning port for the range to use in P2P NodePorts |
 targetNamespace | string | polygon-mainnet | the default is polygon-<flavor> |
 helmDefaults | object |  |  |
 helmDefaults.args | list of strings |  |  |
