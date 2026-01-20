@@ -158,7 +158,7 @@ templates:
     version: {{ .Values | get "kube-prometheus-stack" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "kube-prometheus-stack" dict | get "chartVersion" false ) ( .Values | get "kube-prometheus-stack" dict | get "chartUrl" false ) )) }}
-    version: "81.0.1"
+    version: "81.1.0"
     {{- end }}
     disableValidationOnInstall: true
   
