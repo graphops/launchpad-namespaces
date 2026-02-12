@@ -149,7 +149,7 @@ templates:
     version: {{ .Values | get "sealed-secrets" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "sealed-secrets" dict | get "chartVersion" false ) ( .Values | get "sealed-secrets" dict | get "chartUrl" false ) )) }}
-    version: "2.18.0"
+    version: "2.18.1"
     {{- end }}
   
 releases:
