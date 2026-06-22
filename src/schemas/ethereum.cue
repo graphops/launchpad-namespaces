@@ -140,7 +140,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
 				}
 				feature: #features.#nimbus
-				_template: {version: "0.6.15"}
+				_template: {version: "0.6.16-canary.1"}
 			}
 
 			lighthouse: {
@@ -152,7 +152,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/component":    "{{ $canonicalRelease }}"
 					"app.launchpad.graphops.xyz/scalingIndex": "{{ $deploymentIndex }}"
 				}
-				_template: {version: "0.8.6"}
+				_template: {version: "0.8.7-canary.1"}
 			}
 
 			proxyd: {
