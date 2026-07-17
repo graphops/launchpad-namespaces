@@ -163,7 +163,7 @@ package LaunchpadNamespaces
 					"app.launchpad.graphops.xyz/component": "{{ $canonicalRelease }}"
 				}
 				feature: #features.#proxyd
-				_template: {version: "0.7.11"}
+				_template: {version: "0.7.12-canary.1"}
 			}
 		}
 
