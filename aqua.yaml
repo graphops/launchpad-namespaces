@@ -1,0 +1,14 @@
+---
+checksum:
+  enabled: true
+  require_checksum: true
+  supported_envs:
+    - linux
+    - darwin
+
+registries:
+  - type: standard
+    ref: v4.452.0
+
+packages:
+  - name: cue-lang/cue@v0.12.0

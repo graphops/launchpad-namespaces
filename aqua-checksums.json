@@ -1,0 +1,29 @@
+{
+  "checksums": [
+    {
+      "id": "github_release/github.com/cue-lang/cue/v0.12.0/cue_v0.12.0_darwin_amd64.tar.gz",
+      "checksum": "8474E522A978ECADEF49B06D706FF276CD07629B1AA107B88ADFC1284D3F93CC",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/cue-lang/cue/v0.12.0/cue_v0.12.0_darwin_arm64.tar.gz",
+      "checksum": "7055A6423F753C8EA763699D48D78D341E8543397399DAEE281C66ECDC9EC5A5",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/cue-lang/cue/v0.12.0/cue_v0.12.0_linux_amd64.tar.gz",
+      "checksum": "E55CD5ABD98A592C110F87A7DA9EF15BC72515200AECFE1BED04BF86311F5BA1",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/cue-lang/cue/v0.12.0/cue_v0.12.0_linux_arm64.tar.gz",
+      "checksum": "488012BB0E5C080E2A9694EF8765403DD1075A4EC373DDA618EFA2D37B47F14F",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "registries/github_content/github.com/aquaproj/aqua-registry/v4.452.0/registry.yaml",
+      "checksum": "899E98B2D05DA1D90058234CDBFBF6130619BA4E39774C68C016A71B43EE8ED7",
+      "algorithm": "sha256"
+    }
+  ]
+}
