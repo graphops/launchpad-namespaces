@@ -200,7 +200,7 @@ templates:
     version: {{ .Values | get "lighthouse" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "lighthouse" dict | get "chartVersion" false ) ( .Values | get "lighthouse" dict | get "chartUrl" false ) )) }}
-    version: "0.8.10-canary.4"
+    version: "0.8.10-canary.5"
     {{- end }}
   
   proxyd:
@@ -215,7 +215,7 @@ templates:
     version: {{ .Values | get "proxyd" | get "chartVersion" }}
     {{- end }}
     {{- if (not (or ( .Values | get "proxyd" dict | get "chartVersion" false ) ( .Values | get "proxyd" dict | get "chartUrl" false ) )) }}
-    version: "0.7.14-canary.9"
+    version: "0.7.14-canary.11"
     {{- end }}
   
 releases:
